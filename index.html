@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -54,7 +53,6 @@
             font-weight: 700;
             border: 2px solid #fec233;
             cursor: pointer;
-            font-size: 1.1rem;
         }
 
         .nav-item.active {
@@ -84,14 +82,9 @@
             box-shadow: none;
         }
 
-        .product-card i {
-            font-size: 2rem;
-            color: #c53a1f;
-            margin-bottom: 8px;
-        }
-
         .product-name {
             font-weight: 700;
+            font-size: 1.1rem;
         }
 
         .product-price {
@@ -162,24 +155,23 @@
             font-size: 1.2rem;
         }
 
-        .qr-section {
+        .order-number-display {
             background: white;
             border-radius: 40px;
-            padding: 24px;
+            padding: 30px;
             text-align: center;
             margin-top: 20px;
-            display: none;
             border: 3px solid #4CAF50;
         }
 
-        .qr-section.active {
-            display: block;
-        }
-
-        #qrCode {
-            width: 200px;
-            height: 200px;
-            margin: 16px auto;
+        .big-number {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #c53a1f;
+            background: #fff2d7;
+            padding: 20px;
+            border-radius: 40px;
+            margin: 20px 0;
         }
 
         .status {
@@ -189,15 +181,9 @@
             margin: 16px 0;
         }
 
-        .status-waiting {
-            background: #ff9800;
-            color: white;
-        }
-
-        .status-ready {
-            background: #4CAF50;
-            color: white;
-        }
+        .status-waiting { background: #ff9800; color: white; }
+        .status-ready { background: #4CAF50; color: white; }
+        .status-done { background: #808080; color: white; }
 
         .toast {
             position: fixed;
@@ -236,16 +222,16 @@
             <div class="cart-items" id="cartItems"></div>
             <div class="cart-total" id="cartTotal">0 ₽</div>
             <button class="order-btn" onclick="placeOrder()">
-                <i class="fas fa-qrcode"></i> ПОЛУЧИТЬ QR
+                <i class="fas fa-check-circle"></i> ЗАКАЗАТЬ
             </button>
 
-            <div class="qr-section" id="qrSection">
-                <h3>✅ ЗАКАЗ ОФОРМЛЕН</h3>
-                <div id="qrCode"></div>
-                <div class="status status-waiting" id="orderStatus">
-                    ⏳ Ожидает приготовления
+            <div id="orderInfo" style="display: none;">
+                <div class="order-number-display">
+                    <h3>✅ ВАШ ЗАКАЗ ОФОРМЛЕН</h3>
+                    <div class="big-number" id="orderNumberDisplay">1234</div>
+                    <div class="status" id="orderStatus">⏳ Ожидает приготовления</div>
+                    <p>Сообщите этот номер кассиру</p>
                 </div>
-                <p>Покажите QR-код кассиру</p>
             </div>
         </div>
     </div>
@@ -265,16 +251,16 @@
         const db = firebase.database();
 
         const products = [
-            { id: 1, name: 'Воппер', price: 199, icon: 'fa-burger' },
-            { id: 2, name: 'Чизбургер', price: 89, icon: 'fa-cheese' },
-            { id: 3, name: 'Двойной Воппер', price: 329, icon: 'fa-burger' },
-            { id: 4, name: 'Лонг Чикен', price: 219, icon: 'fa-drumstick-bite' },
-            { id: 5, name: 'Стрипсы 3шт', price: 149, icon: 'fa-drumstick' },
-            { id: 6, name: 'Наггетсы 6шт', price: 159, icon: 'fa-cubes' },
-            { id: 7, name: 'Картофель фри', price: 119, icon: 'fa-french-fries' },
-            { id: 8, name: 'Кола', price: 99, icon: 'fa-wine-bottle' },
-            { id: 9, name: 'Морс', price: 109, icon: 'fa-mug-hot' },
-            { id: 10, name: 'Пирожок', price: 89, icon: 'fa-cake-candles' }
+            { id: 1, name: 'Воппер', price: 199 },
+            { id: 2, name: 'Чизбургер', price: 89 },
+            { id: 3, name: 'Двойной Воппер', price: 329 },
+            { id: 4, name: 'Лонг Чикен', price: 219 },
+            { id: 5, name: 'Стрипсы 3шт', price: 149 },
+            { id: 6, name: 'Наггетсы 6шт', price: 159 },
+            { id: 7, name: 'Картофель фри', price: 119 },
+            { id: 8, name: 'Кола', price: 99 },
+            { id: 9, name: 'Морс', price: 109 },
+            { id: 10, name: 'Пирожок', price: 89 }
         ];
 
         let cart = [];
@@ -287,7 +273,6 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <i class="fas ${p.icon}"></i>
                     <div class="product-name">${p.name}</div>
                     <div class="product-price">${p.price} ₽</div>
                 `;
@@ -361,33 +346,39 @@
                 createdAt: Date.now()
             }).then(() => {
                 currentOrderNum = orderNum;
-                document.getElementById('qrSection').classList.add('active');
                 
-                // Ссылка для отслеживания (ЗАМЕНИТЕ ваш-логин)
-                const trackUrl = `https://ваш-логин.github.io/bk-tracker/track.html?order=${orderNum}`;
+                // Показываем номер заказа
+                document.getElementById('orderInfo').style.display = 'block';
+                document.getElementById('orderNumberDisplay').innerText = orderNum;
                 
-                QRCode.toCanvas(trackUrl, { width: 200 }, (err, canvas) => {
-                    if (!err) {
-                        document.getElementById('qrCode').innerHTML = '';
-                        document.getElementById('qrCode').appendChild(canvas);
-                    }
-                });
-
+                // Скрываем кнопку заказа
+                document.querySelector('.order-btn').style.display = 'none';
+                
                 listenToOrder(orderNum);
                 cart = [];
                 updateCart();
-                showPanel('cart');
             });
         }
 
         function listenToOrder(orderNum) {
             db.ref('orders/' + orderNum).on('value', (snapshot) => {
                 const order = snapshot.val();
-                if (order && order.status === 'ready') {
-                    document.getElementById('orderStatus').innerHTML = '✅ ЗАКАЗ ГОТОВ!';
-                    document.getElementById('orderStatus').className = 'status status-ready';
-                    showToast('✅ Ваш заказ готов!');
-                    if (navigator.vibrate) navigator.vibrate(200);
+                if (order) {
+                    const statusDiv = document.getElementById('orderStatus');
+                    
+                    if (order.status === 'ready') {
+                        statusDiv.innerHTML = '✅ ЗАКАЗ ГОТОВ!';
+                        statusDiv.className = 'status status-ready';
+                        showToast('✅ Ваш заказ готов!');
+                        if (navigator.vibrate) navigator.vibrate(200);
+                    } else if (order.status === 'done') {
+                        statusDiv.innerHTML = '🛒 ЗАКАЗ ВЫДАН';
+                        statusDiv.className = 'status status-done';
+                        showToast('✅ Заказ получен');
+                    } else {
+                        statusDiv.innerHTML = '⏳ Готовится';
+                        statusDiv.className = 'status status-waiting';
+                    }
                 }
             });
         }
