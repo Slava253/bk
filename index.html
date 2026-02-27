@@ -21,7 +21,7 @@
             padding: 10px;
         }
 
-        /* АВТОРИЗАЦИЯ */
+        /* ЭКРАН ВХОДА */
         .auth-screen {
             background: linear-gradient(145deg, #4a3a2a, #2d1d0c);
             min-height: 100vh;
@@ -29,6 +29,12 @@
             justify-content: center;
             align-items: center;
             padding: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
         }
 
         .auth-card {
@@ -39,18 +45,19 @@
             max-width: 400px;
             border: 5px solid #fec233;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .auth-card h2 {
             color: #c53a1f;
-            font-size: clamp(1.5rem, 6vw, 2rem);
-            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
 
         .auth-input {
             width: 100%;
             padding: 15px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             border: 3px solid #ba6b3c;
             border-radius: 50px;
             margin: 10px 0;
@@ -62,12 +69,18 @@
             color: white;
             border: none;
             padding: 15px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             border-radius: 50px;
             width: 100%;
             cursor: pointer;
             font-weight: 700;
-            margin: 8px 0;
+            margin: 10px 0;
+            box-shadow: 0 4px 0 #7e491e;
+        }
+
+        .auth-btn:active {
+            transform: translateY(4px);
+            box-shadow: none;
         }
 
         /* ОСНОВНОЙ ИНТЕРФЕЙС */
@@ -75,6 +88,7 @@
             display: none;
         }
 
+        /* ШАПКА */
         .header {
             background: #d62323;
             color: white;
@@ -82,14 +96,16 @@
             border-radius: 30px;
             margin-bottom: 15px;
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            border: 3px solid #fec233;
         }
 
-        .header h1 {
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
             font-weight: 800;
         }
 
@@ -97,14 +113,16 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 30px;
         }
 
         .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
+            background: none;
+            border: 2px solid white;
             color: white;
-            padding: 6px 15px;
+            padding: 5px 15px;
             border-radius: 30px;
             cursor: pointer;
             font-size: 0.9rem;
@@ -115,11 +133,10 @@
             display: flex;
             gap: 8px;
             margin-bottom: 15px;
-            flex-wrap: wrap;
         }
 
         .nav-item {
-            flex: 1 1 auto;
+            flex: 1;
             background: #5c3e1f;
             color: white;
             padding: 12px;
@@ -128,8 +145,7 @@
             font-weight: 700;
             border: 2px solid #fec233;
             cursor: pointer;
-            font-size: clamp(0.9rem, 3vw, 1rem);
-            min-width: 90px;
+            font-size: 1rem;
         }
 
         .nav-item.active {
@@ -137,23 +153,39 @@
             color: #2d1d0c;
         }
 
-        /* СЕТКА ТОВАРОВ */
+        /* МЕНЮ */
+        .menu-section {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            border: 3px solid #fec233;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d1d0c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            margin-bottom: 15px;
         }
 
         .product-card {
-            background: white;
-            border-radius: 25px;
+            background: #fff2d7;
+            border-radius: 20px;
             padding: 15px 8px;
             text-align: center;
             border: 2px solid #d8a76b;
             cursor: pointer;
             box-shadow: 0 4px 0 #b57c42;
-            -webkit-tap-highlight-color: transparent;
+            transition: 0.1s;
         }
 
         .product-card:active {
@@ -163,14 +195,14 @@
 
         .product-name {
             font-weight: 700;
-            font-size: clamp(0.9rem, 3vw, 1rem);
+            font-size: 1rem;
             margin-bottom: 5px;
         }
 
         .product-price {
             font-weight: 800;
             color: #c1411b;
-            font-size: clamp(1rem, 3vw, 1.1rem);
+            font-size: 1.1rem;
         }
 
         /* КОРЗИНА */
@@ -184,7 +216,7 @@
         .cart-items {
             background: #fff2d7;
             border-radius: 20px;
-            padding: 12px;
+            padding: 15px;
             margin: 15px 0;
             max-height: 350px;
             overflow-y: auto;
@@ -196,39 +228,37 @@
             align-items: center;
             padding: 10px;
             border-bottom: 1px solid #cbad86;
-            font-size: clamp(0.9rem, 3vw, 1rem);
-            gap: 8px;
-            flex-wrap: wrap;
         }
 
-        .cart-total {
-            font-size: clamp(1.5rem, 5vw, 2rem);
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-qty {
+            background: #c1411b;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
             font-weight: 800;
-            color: #c53a1f;
-            text-align: right;
-            margin: 15px 0;
         }
 
-        .order-btn, .new-order-btn {
-            border: none;
-            padding: 15px;
-            border-radius: 50px;
-            font-size: clamp(1rem, 4vw, 1.3rem);
+        .item-name {
+            font-weight: 600;
+        }
+
+        .item-price {
             font-weight: 700;
-            width: 100%;
-            cursor: pointer;
-            margin: 5px 0;
-            box-shadow: 0 4px 0 #6a3f19;
-        }
-
-        .order-btn {
-            background: #d49b3b;
-            color: white;
-        }
-
-        .new-order-btn {
-            background: #4CAF50;
-            color: white;
+            color: #c53a1f;
         }
 
         .remove-btn {
@@ -240,41 +270,101 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 1.2rem;
+            font-weight: 800;
         }
 
-        /* НОМЕР ЗАКАЗА */
-        .order-number-display {
+        .cart-total {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #c53a1f;
+            text-align: right;
+            margin: 15px 0;
+        }
+
+        .order-btn {
+            background: #d49b3b;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #7e491e;
+            margin-bottom: 10px;
+        }
+
+        .new-order-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #2d6a2d;
+        }
+
+        .order-btn:active, .new-order-btn:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        /* ЭКРАН ЗАКАЗА */
+        .order-info {
             background: white;
             border-radius: 30px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
-            margin-top: 15px;
-            border: 3px solid #4CAF50;
+            margin-top: 20px;
+            border: 4px solid #4CAF50;
+            display: none;
         }
 
-        .big-number {
-            font-size: clamp(2.5rem, 10vw, 4rem);
+        .order-number-big {
+            font-size: 4rem;
             font-weight: 900;
             color: #c53a1f;
             background: #fff2d7;
+            padding: 20px;
+            border-radius: 30px;
+            margin: 15px 0;
+            letter-spacing: 5px;
+        }
+
+        .order-status {
+            font-size: 1.3rem;
             padding: 15px;
             border-radius: 30px;
             margin: 15px 0;
-            word-break: break-word;
         }
 
-        .status {
-            font-size: clamp(1rem, 4vw, 1.2rem);
-            padding: 12px;
-            border-radius: 30px;
-            margin: 12px 0;
+        .status-waiting {
+            background: #ff9800;
+            color: white;
         }
 
-        .status-waiting { background: #ff9800; color: white; }
-        .status-ready { background: #4CAF50; color: white; }
-        .status-done { background: #808080; color: white; }
+        .status-ready {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-done {
+            background: #808080;
+            color: white;
+        }
 
         /* ИСТОРИЯ */
+        .history-section {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            border: 3px solid #fec233;
+        }
+
         .orders-history {
             margin-top: 15px;
             max-height: 400px;
@@ -282,44 +372,88 @@
         }
 
         .history-item {
-            background: white;
+            background: #fff2d7;
             border-radius: 20px;
-            padding: 12px;
+            padding: 15px;
             margin-bottom: 10px;
             border: 2px solid #d8a76b;
-            font-size: clamp(0.9rem, 3vw, 1rem);
         }
 
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .history-number {
+            color: #c53a1f;
+            font-size: 1.2rem;
+        }
+
+        .history-status {
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .history-items {
+            margin: 8px 0;
+            color: #2d1d0c;
+        }
+
+        .history-total {
+            font-weight: 800;
+            color: #c53a1f;
+            text-align: right;
+            margin-top: 8px;
+        }
+
+        .history-time {
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        /* УВЕДОМЛЕНИЯ */
         .toast {
             position: fixed;
-            top: 15px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             background: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 50px;
             font-weight: 600;
-            z-index: 1000;
+            z-index: 2000;
             display: none;
-            font-size: clamp(0.9rem, 3vw, 1rem);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             max-width: 90%;
             text-align: center;
         }
 
-        @media (max-width: 480px) {
+        /* ПУСТЫЕ СОСТОЯНИЯ */
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 30px;
+            font-size: 1.1rem;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #cbad86;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 350px) {
             .products-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
             }
             
-            .cart-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .header {
-                flex-direction: column;
-                text-align: center;
+            .order-number-big {
+                font-size: 3rem;
             }
         }
     </style>
@@ -327,68 +461,114 @@
 <body>
     <div id="toast" class="toast"></div>
 
+    <!-- ЭКРАН ВХОДА -->
     <div id="authScreen" class="auth-screen">
         <div class="auth-card">
-            <h2>🔐 BK PRO</h2>
-            <p style="margin-bottom: 15px;">Введите ваше имя</p>
-            <input type="text" id="userName" class="auth-input" placeholder="Ваше имя" value="Гость">
-            <button class="auth-btn" onclick="login()">Войти</button>
+            <i class="fas fa-crown" style="font-size: 3rem; color: #fec233; margin-bottom: 10px;"></i>
+            <h2>BK PRO</h2>
+            <p style="margin-bottom: 20px; color: #666;">Введите ваше имя для заказа</p>
+            <input type="text" id="userName" class="auth-input" placeholder="Ваше имя" value="Гость" autofocus>
+            <button class="auth-btn" onclick="login()">
+                <i class="fas fa-sign-in-alt"></i> Войти
+            </button>
         </div>
     </div>
 
+    <!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
     <div id="mainApp" class="main-app">
+        <!-- ШАПКА -->
         <div class="header">
-            <div>
+            <div class="logo">
                 <i class="fas fa-crown"></i>
-                <span> BK PRO</span>
+                <span>BK PRO</span>
             </div>
             <div class="user-info">
                 <span id="userNameDisplay"></span>
-                <button class="logout-btn" onclick="logout()">Выйти</button>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
             </div>
         </div>
 
+        <!-- НАВИГАЦИЯ -->
         <div class="nav">
-            <div class="nav-item active" onclick="showPanel('menu')">🍔 МЕНЮ</div>
-            <div class="nav-item" onclick="showPanel('cart')">🛒 КОРЗИНА</div>
-            <div class="nav-item" onclick="showPanel('history')">📋 ИСТОРИЯ</div>
+            <div class="nav-item active" onclick="showPanel('menu')">
+                <i class="fas fa-utensils"></i> МЕНЮ
+            </div>
+            <div class="nav-item" onclick="showPanel('cart')">
+                <i class="fas fa-shopping-basket"></i> КОРЗИНА
+                <span id="cartBadge" style="background: #c53a1f; color: white; padding: 2px 8px; border-radius: 20px; margin-left: 5px; font-size: 0.8rem; display: none;">0</span>
+            </div>
+            <div class="nav-item" onclick="showPanel('history')">
+                <i class="fas fa-history"></i> ИСТОРИЯ
+            </div>
         </div>
 
+        <!-- ПАНЕЛЬ МЕНЮ -->
         <div id="menuPanel">
-            <div class="products-grid" id="productsGrid"></div>
+            <div class="menu-section">
+                <div class="section-title">
+                    <i class="fas fa-fire" style="color: #c53a1f;"></i>
+                    <span>Наше меню</span>
+                </div>
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
         </div>
 
+        <!-- ПАНЕЛЬ КОРЗИНЫ -->
         <div id="cartPanel" style="display: none;">
             <div class="cart-section">
-                <div class="cart-items" id="cartItems"></div>
+                <div class="section-title">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span>Ваша корзина</span>
+                </div>
+                
+                <div class="cart-items" id="cartItems">
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-basket"></i>
+                        <p>Корзина пуста</p>
+                        <p style="font-size: 0.9rem;">Добавьте блюда из меню</p>
+                    </div>
+                </div>
+                
                 <div class="cart-total" id="cartTotal">0 ₽</div>
+                
                 <button class="order-btn" onclick="placeOrder()">
                     <i class="fas fa-check-circle"></i> ЗАКАЗАТЬ
                 </button>
+                
                 <button class="new-order-btn" onclick="startNewOrder()" style="display: none;" id="newOrderBtn">
-                    <i class="fas fa-plus-circle"></i> НОВЫЙ ЗАКАЗ
+                    <i class="fas fa-plus-circle"></i> СДЕЛАТЬ НОВЫЙ ЗАКАЗ
                 </button>
 
-                <div id="orderInfo" style="display: none;">
-                    <div class="order-number-display">
-                        <h3>✅ ЗАКАЗ ОФОРМЛЕН</h3>
-                        <div class="big-number" id="orderNumberDisplay">1234</div>
-                        <div class="status" id="orderStatus">⏳ Ожидает приготовления</div>
-                        <p>Сообщите этот номер кассиру</p>
+                <!-- ИНФОРМАЦИЯ О ЗАКАЗЕ -->
+                <div class="order-info" id="orderInfo">
+                    <h3>✅ ЗАКАЗ ОФОРМЛЕН</h3>
+                    <div class="order-number-big" id="orderNumberDisplay">1234</div>
+                    <div class="order-status status-waiting" id="orderStatus">
+                        ⏳ Ожидает приготовления
                     </div>
+                    <p style="color: #666; margin-top: 10px;">
+                        <i class="fas fa-info-circle"></i> Сообщите этот номер кассиру
+                    </p>
                 </div>
             </div>
         </div>
 
+        <!-- ПАНЕЛЬ ИСТОРИИ -->
         <div id="historyPanel" style="display: none;">
-            <div class="cart-section">
-                <h3>📋 История заказов</h3>
+            <div class="history-section">
+                <div class="section-title">
+                    <i class="fas fa-history"></i>
+                    <span>История заказов</span>
+                </div>
                 <div class="orders-history" id="ordersHistory"></div>
             </div>
         </div>
     </div>
 
     <script>
+        // ========== НАСТРОЙКИ FIREBASE ==========
         const firebaseConfig = {
             apiKey: "AIzaSyBlZ5ZtyTXgtXxSXJAx1jOxwhTrzlHRJmo",
             authDomain: "bk-cashier.firebaseapp.com",
@@ -402,6 +582,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // ========== ТОВАРЫ ==========
         const products = [
             { id: 1, name: 'Воппер', price: 199 },
             { id: 2, name: 'Чизбургер', price: 89 },
@@ -415,13 +596,22 @@
             { id: 10, name: 'Пирожок', price: 89 }
         ];
 
+        // ========== ПЕРЕМЕННЫЕ ==========
         let currentUser = null;
         let cart = [];
         let currentOrderNum = null;
         let userOrders = [];
+        let activeListeners = {};
 
+        // ========== ВХОД ==========
         window.login = () => {
-            const name = document.getElementById('userName').value || 'Гость';
+            const name = document.getElementById('userName').value.trim();
+            if (!name) {
+                showToast('Введите имя');
+                return;
+            }
+
+            // Создаём уникальный ID пользователя
             const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
             currentUser = {
@@ -429,23 +619,39 @@
                 name: name
             };
 
+            // Сохраняем в localStorage для возврата
+            localStorage.setItem('bk_user', JSON.stringify(currentUser));
+
+            // Показываем основное приложение
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
             document.getElementById('userNameDisplay').innerText = name;
             
+            // Загружаем данные
             renderProducts();
             updateCart();
             loadUserOrders();
+            
+            showToast(`Добро пожаловать, ${name}!`);
         };
 
+        // ========== ВЫХОД ==========
         window.logout = () => {
+            // Очищаем слушатели
+            Object.values(activeListeners).forEach(callback => callback());
+            activeListeners = {};
+            
             currentUser = null;
             cart = [];
             userOrders = [];
+            localStorage.removeItem('bk_user');
+            
             document.getElementById('authScreen').style.display = 'flex';
             document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('userName').value = 'Гость';
         };
 
+        // ========== НОВЫЙ ЗАКАЗ ==========
         window.startNewOrder = () => {
             document.getElementById('orderInfo').style.display = 'none';
             document.getElementById('newOrderBtn').style.display = 'none';
@@ -455,62 +661,85 @@
             showPanel('menu');
         };
 
+        // ========== ЗАГРУЗКА ИСТОРИИ ==========
         function loadUserOrders() {
             if (!currentUser) return;
             
-            db.ref('orders').orderByChild('userId').equalTo(currentUser.id).on('value', (snapshot) => {
-                const orders = snapshot.val();
-                userOrders = [];
-                
-                for (let num in orders) {
-                    userOrders.push({
-                        number: num,
-                        ...orders[num]
-                    });
-                }
-                
-                userOrders.sort((a, b) => b.createdAt - a.createdAt);
-                displayHistory();
-            });
+            // Убираем старый слушатель если есть
+            if (activeListeners.orders) {
+                activeListeners.orders();
+            }
+            
+            // Слушаем изменения в заказах пользователя
+            const callback = db.ref('orders').orderByChild('userId').equalTo(currentUser.id)
+                .on('value', (snapshot) => {
+                    const orders = snapshot.val();
+                    userOrders = [];
+                    
+                    for (let num in orders) {
+                        userOrders.push({
+                            number: num,
+                            ...orders[num]
+                        });
+                    }
+                    
+                    // Сортируем по дате (сначала новые)
+                    userOrders.sort((a, b) => b.createdAt - a.createdAt);
+                    displayHistory();
+                });
+            
+            activeListeners.orders = callback;
         }
 
+        // ========== ОТОБРАЖЕНИЕ ИСТОРИИ ==========
         function displayHistory() {
             const historyDiv = document.getElementById('ordersHistory');
             
             if (userOrders.length === 0) {
-                historyDiv.innerHTML = '<p style="text-align:center; padding:20px;">У вас пока нет заказов</p>';
+                historyDiv.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <p>У вас пока нет заказов</p>
+                    </div>
+                `;
                 return;
             }
 
             let html = '';
             userOrders.forEach(order => {
                 let statusText = '';
-                let statusColor = '';
+                let statusClass = '';
                 
                 if (order.status === 'waiting') {
                     statusText = '⏳ Готовится';
-                    statusColor = '#ff9800';
+                    statusClass = 'status-waiting';
                 } else if (order.status === 'ready') {
                     statusText = '✅ Готов';
-                    statusColor = '#4CAF50';
+                    statusClass = 'status-ready';
                 } else {
                     statusText = '🛒 Выдан';
-                    statusColor = '#808080';
+                    statusClass = 'status-done';
                 }
+
+                const date = new Date(order.createdAt);
+                const timeStr = date.toLocaleString('ru-RU', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    day: '2-digit',
+                    month: '2-digit'
+                });
 
                 html += `
                     <div class="history-item">
-                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:5px;">
-                            <strong>Заказ #${order.number}</strong>
-                            <span style="color:${statusColor}">${statusText}</span>
+                        <div class="history-header">
+                            <span class="history-number">Заказ #${order.number}</span>
+                            <span class="history-status ${statusClass}">${statusText}</span>
                         </div>
-                        <div style="margin:8px 0;">
-                            ${order.items.map(i => `${i.name} x${i.quantity}`).join(', ')}
+                        <div class="history-items">
+                            ${order.items.map(i => `${i.name} x${i.quantity}`).join(' • ')}
                         </div>
-                        <div><strong>Сумма: ${order.total} ₽</strong></div>
-                        <div style="color:#666; font-size:0.85rem;">
-                            ${new Date(order.createdAt).toLocaleString()}
-                        </div>
+                        <div class="history-total">Сумма: ${order.total} ₽</div>
+                        <div class="history-time">${timeStr}</div>
                     </div>
                 `;
             });
@@ -518,9 +747,11 @@
             historyDiv.innerHTML = html;
         }
 
+        // ========== РЕНДЕР ТОВАРОВ ==========
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
+            
             products.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -533,6 +764,7 @@
             });
         }
 
+        // ========== ДОБАВЛЕНИЕ В КОРЗИНУ ==========
         function addToCart(product) {
             const existing = cart.find(i => i.id === product.id);
             if (existing) {
@@ -541,9 +773,11 @@
                 cart.push({ ...product, quantity: 1 });
             }
             updateCart();
+            updateCartBadge();
             showToast('✅ Товар добавлен');
         }
 
+        // ========== УДАЛЕНИЕ ИЗ КОРЗИНЫ ==========
         function removeFromCart(id) {
             const index = cart.findIndex(i => i.id === id);
             if (cart[index].quantity > 1) {
@@ -552,39 +786,71 @@
                 cart.splice(index, 1);
             }
             updateCart();
+            updateCartBadge();
         }
 
+        // ========== ОБНОВЛЕНИЕ КОРЗИНЫ ==========
         function updateCart() {
             const container = document.getElementById('cartItems');
             const totalSpan = document.getElementById('cartTotal');
 
             if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; padding:20px;">Корзина пуста</p>';
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-basket"></i>
+                        <p>Корзина пуста</p>
+                        <p style="font-size: 0.9rem;">Добавьте блюда из меню</p>
+                    </div>
+                `;
                 totalSpan.innerText = '0 ₽';
                 return;
             }
 
             let html = '';
             let total = 0;
+            
             cart.forEach(item => {
                 total += item.price * item.quantity;
                 html += `
                     <div class="cart-item">
-                        <span>${item.name} x${item.quantity}</span>
-                        <span style="display:flex; align-items:center; gap:8px;">
-                            ${item.price * item.quantity} ₽
+                        <div class="item-info">
+                            <span class="item-qty">${item.quantity}</span>
+                            <span class="item-name">${item.name}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="item-price">${item.price * item.quantity} ₽</span>
                             <button class="remove-btn" onclick="removeFromCart(${item.id})">−</button>
-                        </span>
+                        </div>
                     </div>
                 `;
             });
+            
             container.innerHTML = html;
             totalSpan.innerText = total + ' ₽';
         }
 
+        // ========== ОБНОВЛЕНИЕ ЗНАЧКА КОРЗИНЫ ==========
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const count = cart.reduce((acc, i) => acc + i.quantity, 0);
+            
+            if (count > 0) {
+                badge.style.display = 'inline';
+                badge.innerText = count;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // ========== ОФОРМЛЕНИЕ ЗАКАЗА ==========
         function placeOrder() {
             if (cart.length === 0) {
                 showToast('❌ Корзина пуста');
+                return;
+            }
+
+            if (!currentUser) {
+                showToast('❌ Ошибка авторизации');
                 return;
             }
 
@@ -601,48 +867,71 @@
             }).then(() => {
                 currentOrderNum = orderNum;
                 
+                // Показываем информацию о заказе
                 document.getElementById('orderInfo').style.display = 'block';
                 document.getElementById('orderNumberDisplay').innerText = orderNum;
                 document.querySelector('.order-btn').style.display = 'none';
                 document.getElementById('newOrderBtn').style.display = 'block';
                 
+                // Слушаем изменения статуса
                 listenToOrder(orderNum);
                 
+                // Очищаем корзину
                 cart = [];
                 updateCart();
+                updateCartBadge();
                 
                 showToast('✅ Заказ оформлен!');
+                
+                // Переключаемся на историю
+                showPanel('history');
+            }).catch(error => {
+                console.error('Ошибка:', error);
+                showToast('❌ Ошибка при оформлении');
             });
         }
 
+        // ========== СЛУШАТЕЛЬ СТАТУСА ЗАКАЗА ==========
         function listenToOrder(orderNum) {
-            db.ref('orders/' + orderNum).on('value', (snapshot) => {
+            // Убираем старый слушатель если есть
+            if (activeListeners[orderNum]) {
+                activeListeners[orderNum]();
+            }
+            
+            const callback = db.ref('orders/' + orderNum).on('value', (snapshot) => {
                 const order = snapshot.val();
                 if (order) {
                     const statusDiv = document.getElementById('orderStatus');
                     
                     if (order.status === 'ready') {
-                        statusDiv.innerHTML = '✅ ЗАКАЗ ГОТОВ!';
-                        statusDiv.className = 'status status-ready';
+                        statusDiv.innerHTML = '✅ ЗАКАЗ ГОТОВ! Заберите на кассе';
+                        statusDiv.className = 'order-status status-ready';
                         showToast('✅ Ваш заказ готов!');
                         if (navigator.vibrate) navigator.vibrate(200);
                     } else if (order.status === 'done') {
                         statusDiv.innerHTML = '🛒 ЗАКАЗ ВЫДАН';
-                        statusDiv.className = 'status status-done';
+                        statusDiv.className = 'order-status status-done';
                     }
                     
                     loadUserOrders();
                 }
             });
+            
+            activeListeners[orderNum] = callback;
         }
 
+        // ========== УВЕДОМЛЕНИЕ ==========
         function showToast(text) {
             const toast = document.getElementById('toast');
             toast.innerHTML = text;
             toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 2000);
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
         }
 
+        // ========== ПЕРЕКЛЮЧЕНИЕ ПАНЕЛЕЙ ==========
         window.showPanel = (panel) => {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             event.target.classList.add('active');
@@ -661,8 +950,32 @@
             }
         };
 
+        // ========== ПРОВЕРКА СОХРАНЁННОГО ПОЛЬЗОВАТЕЛЯ ==========
+        function checkSavedUser() {
+            const saved = localStorage.getItem('bk_user');
+            if (saved) {
+                try {
+                    const user = JSON.parse(saved);
+                    currentUser = user;
+                    document.getElementById('authScreen').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    document.getElementById('userNameDisplay').innerText = user.name;
+                    
+                    renderProducts();
+                    updateCart();
+                    loadUserOrders();
+                } catch (e) {
+                    console.log('Ошибка загрузки сохранённого пользователя');
+                }
+            }
+        }
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
         renderProducts();
         updateCart();
+        checkSavedUser();
+        
+        // Глобальные функции для кнопок
         window.removeFromCart = removeFromCart;
     </script>
 </body>
