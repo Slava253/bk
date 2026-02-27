@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>BK • Мобильный заказ</title>
+    <title>🍔 BK PRO • МОБИЛЬНЫЙ ЗАКАЗ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -21,7 +21,6 @@
             padding: 12px;
         }
 
-        /* Экран регистрации */
         .auth-screen {
             background: linear-gradient(145deg, #4a3a2a, #2d1d0c);
             min-height: 100vh;
@@ -70,17 +69,6 @@
             margin: 10px 0;
         }
 
-        .switch-btn {
-            background: none;
-            border: 2px solid #ba6b3c;
-            color: #ba6b3c;
-            padding: 10px;
-            border-radius: 60px;
-            width: 100%;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
         .user-info {
             background: #d62323;
             color: white;
@@ -101,7 +89,6 @@
             cursor: pointer;
         }
 
-        /* Основной интерфейс */
         .main-app {
             display: none;
         }
@@ -211,6 +198,20 @@
             cursor: pointer;
             border: 3px solid #7e491e;
             box-shadow: 0 6px 0 #6a3f19;
+            margin-bottom: 10px;
+        }
+
+        .new-order-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
         .remove-btn {
@@ -255,7 +256,7 @@
 
         .orders-history {
             margin-top: 20px;
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
         }
 
@@ -285,32 +286,20 @@
 <body>
     <div id="toast" class="toast"></div>
 
-    <!-- Экран регистрации/входа -->
     <div id="authScreen" class="auth-screen">
         <div class="auth-card">
-            <h2 id="authTitle">🔐 Вход / Регистрация</h2>
-            
-            <div id="loginForm">
-                <input type="text" id="loginName" class="auth-input" placeholder="Ваше имя" value="Гость">
-                <button class="auth-btn" onclick="login()">Войти как гость</button>
-            </div>
-
-            <div style="margin: 20px 0; color: #666;">или</div>
-
-            <div id="registerForm">
-                <input type="text" id="regName" class="auth-input" placeholder="Имя для регистрации">
-                <input type="text" id="regPhone" class="auth-input" placeholder="Телефон (необязательно)">
-                <button class="auth-btn" onclick="register()">Зарегистрироваться</button>
-            </div>
+            <h2>🔐 BK PRO</h2>
+            <p style="margin-bottom: 20px;">Введите ваше имя</p>
+            <input type="text" id="userName" class="auth-input" placeholder="Ваше имя" value="Гость">
+            <button class="auth-btn" onclick="login()">Войти</button>
         </div>
     </div>
 
-    <!-- Основное приложение -->
     <div id="mainApp" class="main-app">
         <div class="header">
             <div>
                 <i class="fas fa-crown"></i>
-                <span> BURGER KING</span>
+                <span> BK PRO</span>
             </div>
             <div>
                 <span id="userNameDisplay"></span>
@@ -324,12 +313,10 @@
             <div class="nav-item" onclick="showPanel('history')">📋 ИСТОРИЯ</div>
         </div>
 
-        <!-- МЕНЮ -->
         <div id="menuPanel">
             <div class="products-grid" id="productsGrid"></div>
         </div>
 
-        <!-- КОРЗИНА -->
         <div id="cartPanel" style="display: none;">
             <div class="cart-section">
                 <div class="cart-items" id="cartItems"></div>
@@ -337,10 +324,13 @@
                 <button class="order-btn" onclick="placeOrder()">
                     <i class="fas fa-check-circle"></i> ЗАКАЗАТЬ
                 </button>
+                <button class="new-order-btn" onclick="startNewOrder()" style="display: none;" id="newOrderBtn">
+                    <i class="fas fa-plus-circle"></i> СДЕЛАТЬ НОВЫЙ ЗАКАЗ
+                </button>
 
                 <div id="orderInfo" style="display: none;">
                     <div class="order-number-display">
-                        <h3>✅ ВАШ ЗАКАЗ ОФОРМЛЕН</h3>
+                        <h3>✅ ЗАКАЗ ОФОРМЛЕН</h3>
                         <div class="big-number" id="orderNumberDisplay">1234</div>
                         <div class="status" id="orderStatus">⏳ Ожидает приготовления</div>
                         <p>Сообщите этот номер кассиру</p>
@@ -349,10 +339,9 @@
             </div>
         </div>
 
-        <!-- ИСТОРИЯ ЗАКАЗОВ -->
         <div id="historyPanel" style="display: none;">
             <div class="cart-section">
-                <h3>📋 История ваших заказов</h3>
+                <h3>📋 История заказов</h3>
                 <div class="orders-history" id="ordersHistory"></div>
             </div>
         </div>
@@ -390,49 +379,23 @@
         let currentOrderNum = null;
         let userOrders = [];
 
-        // ========== АВТОРИЗАЦИЯ ==========
         window.login = () => {
-            const name = document.getElementById('loginName').value || 'Гость';
-            currentUser = {
-                id: 'guest_' + Date.now(),
-                name: name,
-                isGuest: true
-            };
-            enterApp();
-        };
-
-        window.register = () => {
-            const name = document.getElementById('regName').value;
-            const phone = document.getElementById('regPhone').value;
+            const name = document.getElementById('userName').value || 'Гость';
+            const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
-            if (!name) {
-                showToast('Введите имя');
-                return;
-            }
-
-            const userId = 'user_' + Date.now();
             currentUser = {
                 id: userId,
-                name: name,
-                phone: phone,
-                isGuest: false
+                name: name
             };
 
-            // Сохраняем в Firebase
-            db.ref('users/' + userId).set(currentUser).then(() => {
-                enterApp();
-            });
-        };
-
-        function enterApp() {
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
-            document.getElementById('userNameDisplay').innerText = currentUser.name;
+            document.getElementById('userNameDisplay').innerText = name;
             
             renderProducts();
             updateCart();
             loadUserOrders();
-        }
+        };
 
         window.logout = () => {
             currentUser = null;
@@ -442,7 +405,15 @@
             document.getElementById('mainApp').style.display = 'none';
         };
 
-        // ========== ЗАГРУЗКА ИСТОРИИ ==========
+        window.startNewOrder = () => {
+            document.getElementById('orderInfo').style.display = 'none';
+            document.getElementById('newOrderBtn').style.display = 'none';
+            document.querySelector('.order-btn').style.display = 'block';
+            cart = [];
+            updateCart();
+            showPanel('menu');
+        };
+
         function loadUserOrders() {
             if (!currentUser) return;
             
@@ -457,7 +428,6 @@
                     });
                 }
                 
-                // Сортируем по дате
                 userOrders.sort((a, b) => b.createdAt - a.createdAt);
                 displayHistory();
             });
@@ -507,7 +477,6 @@
             historyDiv.innerHTML = html;
         }
 
-        // ========== ТОВАРЫ И КОРЗИНА ==========
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
@@ -572,7 +541,6 @@
             totalSpan.innerText = total + ' ₽';
         }
 
-        // ========== ОФОРМЛЕНИЕ ЗАКАЗА ==========
         function placeOrder() {
             if (cart.length === 0) {
                 showToast('❌ Корзина пуста');
@@ -594,17 +562,15 @@
                 
                 document.getElementById('orderInfo').style.display = 'block';
                 document.getElementById('orderNumberDisplay').innerText = orderNum;
-                
                 document.querySelector('.order-btn').style.display = 'none';
+                document.getElementById('newOrderBtn').style.display = 'block';
                 
                 listenToOrder(orderNum);
                 
-                // Сохраняем заказ в историю
                 cart = [];
                 updateCart();
                 
-                // Переключаемся на историю
-                showPanel('history');
+                showToast('✅ Заказ оформлен!');
             });
         }
 
@@ -624,7 +590,7 @@
                         statusDiv.className = 'status status-done';
                     }
                     
-                    loadUserOrders(); // Обновляем историю
+                    loadUserOrders();
                 }
             });
         }
