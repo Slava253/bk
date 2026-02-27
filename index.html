@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>🍔 BK PRO • МОБИЛЬНЫЙ ЗАКАЗ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -18,22 +18,23 @@
         body {
             background: #f8f2e6;
             min-height: 100vh;
-            padding: 12px;
+            padding: 10px;
         }
 
+        /* АВТОРИЗАЦИЯ */
         .auth-screen {
             background: linear-gradient(145deg, #4a3a2a, #2d1d0c);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
         }
 
         .auth-card {
             background: white;
-            border-radius: 60px;
-            padding: 40px 30px;
+            border-radius: 50px;
+            padding: 30px 20px;
             width: 100%;
             max-width: 400px;
             border: 5px solid #fec233;
@@ -42,17 +43,17 @@
 
         .auth-card h2 {
             color: #c53a1f;
-            font-size: 2rem;
-            margin-bottom: 30px;
+            font-size: clamp(1.5rem, 6vw, 2rem);
+            margin-bottom: 25px;
         }
 
         .auth-input {
             width: 100%;
             padding: 15px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             border: 3px solid #ba6b3c;
-            border-radius: 60px;
-            margin: 15px 0;
+            border-radius: 50px;
+            margin: 10px 0;
             text-align: center;
         }
 
@@ -61,34 +62,15 @@
             color: white;
             border: none;
             padding: 15px;
-            font-size: 1.2rem;
-            border-radius: 60px;
+            font-size: 1.1rem;
+            border-radius: 50px;
             width: 100%;
             cursor: pointer;
             font-weight: 700;
-            margin: 10px 0;
+            margin: 8px 0;
         }
 
-        .user-info {
-            background: #d62323;
-            color: white;
-            padding: 15px;
-            border-radius: 40px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-        }
-
+        /* ОСНОВНОЙ ИНТЕРФЕЙС */
         .main-app {
             display: none;
         }
@@ -96,35 +78,58 @@
         .header {
             background: #d62323;
             color: white;
-            padding: 16px 20px;
-            border-radius: 40px;
-            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 30px;
+            margin-bottom: 15px;
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             justify-content: space-between;
+            align-items: center;
+            gap: 10px;
         }
 
         .header h1 {
-            font-size: 1.8rem;
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
             font-weight: 800;
         }
 
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* НАВИГАЦИЯ */
         .nav {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .nav-item {
-            flex: 1;
+            flex: 1 1 auto;
             background: #5c3e1f;
             color: white;
-            padding: 14px;
-            border-radius: 40px;
+            padding: 12px;
+            border-radius: 30px;
             text-align: center;
             font-weight: 700;
             border: 2px solid #fec233;
             cursor: pointer;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            min-width: 90px;
         }
 
         .nav-item.active {
@@ -132,40 +137,55 @@
             color: #2d1d0c;
         }
 
+        /* СЕТКА ТОВАРОВ */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .product-card {
             background: white;
-            border-radius: 30px;
-            padding: 16px;
+            border-radius: 25px;
+            padding: 15px 8px;
             text-align: center;
             border: 2px solid #d8a76b;
             cursor: pointer;
-            box-shadow: 0 5px 0 #b57c42;
+            box-shadow: 0 4px 0 #b57c42;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .product-card:active {
-            transform: translateY(5px);
+            transform: translateY(4px);
             box-shadow: none;
         }
 
+        .product-name {
+            font-weight: 700;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            font-weight: 800;
+            color: #c1411b;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+        }
+
+        /* КОРЗИНА */
         .cart-section {
             background: white;
-            border-radius: 40px;
-            padding: 24px;
+            border-radius: 30px;
+            padding: 20px;
             border: 3px solid #fec233;
         }
 
         .cart-items {
             background: #fff2d7;
-            border-radius: 30px;
-            padding: 16px;
-            margin: 16px 0;
+            border-radius: 20px;
+            padding: 12px;
+            margin: 15px 0;
             max-height: 350px;
             overflow-y: auto;
         }
@@ -174,44 +194,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid #cbad86;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .cart-total {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
             font-weight: 800;
             color: #c53a1f;
             text-align: right;
-            margin: 20px 0;
+            margin: 15px 0;
+        }
+
+        .order-btn, .new-order-btn {
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            margin: 5px 0;
+            box-shadow: 0 4px 0 #6a3f19;
         }
 
         .order-btn {
             background: #d49b3b;
             color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 60px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            width: 100%;
-            cursor: pointer;
-            border: 3px solid #7e491e;
-            box-shadow: 0 6px 0 #6a3f19;
-            margin-bottom: 10px;
         }
 
         .new-order-btn {
             background: #4CAF50;
             color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 60px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            width: 100%;
-            cursor: pointer;
-            margin-top: 10px;
         }
 
         .remove-btn {
@@ -222,40 +239,44 @@
             height: 36px;
             border-radius: 50%;
             cursor: pointer;
+            font-size: 1.2rem;
         }
 
+        /* НОМЕР ЗАКАЗА */
         .order-number-display {
             background: white;
-            border-radius: 40px;
-            padding: 30px;
+            border-radius: 30px;
+            padding: 20px;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
             border: 3px solid #4CAF50;
         }
 
         .big-number {
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 10vw, 4rem);
             font-weight: 900;
             color: #c53a1f;
             background: #fff2d7;
-            padding: 20px;
-            border-radius: 40px;
-            margin: 20px 0;
+            padding: 15px;
+            border-radius: 30px;
+            margin: 15px 0;
+            word-break: break-word;
         }
 
         .status {
-            font-size: 1.3rem;
-            padding: 16px;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            padding: 12px;
             border-radius: 30px;
-            margin: 16px 0;
+            margin: 12px 0;
         }
 
         .status-waiting { background: #ff9800; color: white; }
         .status-ready { background: #4CAF50; color: white; }
         .status-done { background: #808080; color: white; }
 
+        /* ИСТОРИЯ */
         .orders-history {
-            margin-top: 20px;
+            margin-top: 15px;
             max-height: 400px;
             overflow-y: auto;
         }
@@ -263,23 +284,43 @@
         .history-item {
             background: white;
             border-radius: 20px;
-            padding: 15px;
+            padding: 12px;
             margin-bottom: 10px;
             border: 2px solid #d8a76b;
+            font-size: clamp(0.9rem, 3vw, 1rem);
         }
 
         .toast {
             position: fixed;
-            top: 20px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
             background: #4CAF50;
             color: white;
-            padding: 12px 24px;
-            border-radius: 60px;
+            padding: 10px 20px;
+            border-radius: 50px;
             font-weight: 600;
             z-index: 1000;
             display: none;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -289,7 +330,7 @@
     <div id="authScreen" class="auth-screen">
         <div class="auth-card">
             <h2>🔐 BK PRO</h2>
-            <p style="margin-bottom: 20px;">Введите ваше имя</p>
+            <p style="margin-bottom: 15px;">Введите ваше имя</p>
             <input type="text" id="userName" class="auth-input" placeholder="Ваше имя" value="Гость">
             <button class="auth-btn" onclick="login()">Войти</button>
         </div>
@@ -301,7 +342,7 @@
                 <i class="fas fa-crown"></i>
                 <span> BK PRO</span>
             </div>
-            <div>
+            <div class="user-info">
                 <span id="userNameDisplay"></span>
                 <button class="logout-btn" onclick="logout()">Выйти</button>
             </div>
@@ -325,7 +366,7 @@
                     <i class="fas fa-check-circle"></i> ЗАКАЗАТЬ
                 </button>
                 <button class="new-order-btn" onclick="startNewOrder()" style="display: none;" id="newOrderBtn">
-                    <i class="fas fa-plus-circle"></i> СДЕЛАТЬ НОВЫЙ ЗАКАЗ
+                    <i class="fas fa-plus-circle"></i> НОВЫЙ ЗАКАЗ
                 </button>
 
                 <div id="orderInfo" style="display: none;">
@@ -459,15 +500,15 @@
 
                 html += `
                     <div class="history-item">
-                        <div style="display:flex; justify-content:space-between;">
+                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:5px;">
                             <strong>Заказ #${order.number}</strong>
                             <span style="color:${statusColor}">${statusText}</span>
                         </div>
-                        <div style="margin:10px 0;">
+                        <div style="margin:8px 0;">
                             ${order.items.map(i => `${i.name} x${i.quantity}`).join(', ')}
                         </div>
                         <div><strong>Сумма: ${order.total} ₽</strong></div>
-                        <div style="color:#666; font-size:0.9rem;">
+                        <div style="color:#666; font-size:0.85rem;">
                             ${new Date(order.createdAt).toLocaleString()}
                         </div>
                     </div>
@@ -530,7 +571,7 @@
                 html += `
                     <div class="cart-item">
                         <span>${item.name} x${item.quantity}</span>
-                        <span>
+                        <span style="display:flex; align-items:center; gap:8px;">
                             ${item.price * item.quantity} ₽
                             <button class="remove-btn" onclick="removeFromCart(${item.id})">−</button>
                         </span>
