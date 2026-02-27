@@ -15,14 +15,16 @@
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
+
         body {
             background: #f8f2e6;
             padding: 12px;
         }
+
         .header {
             background: #d62323;
             color: white;
-            padding: 16px;
+            padding: 16px 20px;
             border-radius: 40px;
             margin-bottom: 20px;
             display: flex;
@@ -30,15 +32,18 @@
             gap: 12px;
             box-shadow: 0 5px 0 #9c1d1d;
         }
+
         .header h1 {
             font-size: 1.8rem;
             font-weight: 800;
         }
+
         .nav {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
+
         .nav-item {
             flex: 1;
             background: #5c3e1f;
@@ -49,17 +54,21 @@
             font-weight: 700;
             border: 2px solid #fec233;
             cursor: pointer;
+            font-size: 1.1rem;
         }
+
         .nav-item.active {
             background: #fec233;
             color: #2d1d0c;
         }
+
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 12px;
             margin-bottom: 20px;
         }
+
         .product-card {
             background: white;
             border-radius: 30px;
@@ -69,21 +78,44 @@
             cursor: pointer;
             box-shadow: 0 5px 0 #b57c42;
         }
+
         .product-card:active {
             transform: translateY(5px);
             box-shadow: none;
         }
+
+        .product-card i {
+            font-size: 2rem;
+            color: #c53a1f;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-weight: 700;
+        }
+
         .product-price {
             font-weight: 800;
             color: #c1411b;
             margin-top: 8px;
         }
+
         .cart-section {
             background: white;
             border-radius: 40px;
-            padding: 20px;
+            padding: 24px;
             border: 3px solid #fec233;
         }
+
+        .cart-items {
+            background: #fff2d7;
+            border-radius: 30px;
+            padding: 16px;
+            margin: 16px 0;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
         .cart-item {
             display: flex;
             justify-content: space-between;
@@ -91,13 +123,15 @@
             padding: 12px;
             border-bottom: 1px solid #cbad86;
         }
+
         .cart-total {
             font-size: 2rem;
             font-weight: 800;
             color: #c53a1f;
             text-align: right;
-            margin: 16px 0;
+            margin: 20px 0;
         }
+
         .order-btn {
             background: #d49b3b;
             color: white;
@@ -111,10 +145,23 @@
             border: 3px solid #7e491e;
             box-shadow: 0 6px 0 #6a3f19;
         }
+
         .order-btn:active {
             transform: translateY(6px);
             box-shadow: none;
         }
+
+        .remove-btn {
+            background: #c53a1f;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
         .qr-section {
             background: white;
             border-radius: 40px;
@@ -124,36 +171,60 @@
             display: none;
             border: 3px solid #4CAF50;
         }
-        .qr-section.active { display: block; }
-        #qrCode { width: 200px; height: 200px; margin: 16px auto; }
+
+        .qr-section.active {
+            display: block;
+        }
+
+        #qrCode {
+            width: 200px;
+            height: 200px;
+            margin: 16px auto;
+        }
+
         .status {
             font-size: 1.3rem;
             padding: 16px;
             border-radius: 30px;
             margin: 16px 0;
         }
-        .status-waiting { background: #ff9800; color: white; }
-        .status-ready { background: #4CAF50; color: white; }
-        .remove-btn {
-            background: #c53a1f;
+
+        .status-waiting {
+            background: #ff9800;
             color: white;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
+        }
+
+        .status-ready {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 600;
+            z-index: 1000;
+            display: none;
         }
     </style>
 </head>
 <body>
+    <div id="toast" class="toast"></div>
+
     <div class="header">
         <i class="fas fa-crown"></i>
         <h1>BURGER KING</h1>
     </div>
 
     <div class="nav">
-        <div class="nav-item active" onclick="showPanel('menu')">🍔 Меню</div>
-        <div class="nav-item" onclick="showPanel('cart')">🛒 Корзина</div>
+        <div class="nav-item active" onclick="showPanel('menu')">🍔 МЕНЮ</div>
+        <div class="nav-item" onclick="showPanel('cart')">🛒 КОРЗИНА</div>
     </div>
 
     <div id="menuPanel">
@@ -162,14 +233,19 @@
 
     <div id="cartPanel" style="display: none;">
         <div class="cart-section">
-            <div id="cartItems"></div>
+            <div class="cart-items" id="cartItems"></div>
             <div class="cart-total" id="cartTotal">0 ₽</div>
-            <button class="order-btn" onclick="placeOrder()">📱 Получить QR-код</button>
-            
+            <button class="order-btn" onclick="placeOrder()">
+                <i class="fas fa-qrcode"></i> ПОЛУЧИТЬ QR
+            </button>
+
             <div class="qr-section" id="qrSection">
-                <h3>✅ Заказ оформлен!</h3>
+                <h3>✅ ЗАКАЗ ОФОРМЛЕН</h3>
                 <div id="qrCode"></div>
-                <div class="status status-waiting" id="orderStatus">⏳ Ожидает приготовления</div>
+                <div class="status status-waiting" id="orderStatus">
+                    ⏳ Ожидает приготовления
+                </div>
+                <p>Покажите QR-код кассиру</p>
             </div>
         </div>
     </div>
@@ -184,20 +260,21 @@
             messagingSenderId: "385000840969",
             appId: "1:385000840969:web:1ec8d09176b6551dc0fdd8"
         };
+
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
         const products = [
-            { id: 1, name: 'Воппер', price: 199 },
-            { id: 2, name: 'Чизбургер', price: 89 },
-            { id: 3, name: 'Двойной Воппер', price: 329 },
-            { id: 4, name: 'Лонг Чикен', price: 219 },
-            { id: 5, name: 'Стрипсы 3шт', price: 149 },
-            { id: 6, name: 'Наггетсы 6шт', price: 159 },
-            { id: 7, name: 'Картофель фри', price: 119 },
-            { id: 8, name: 'Кола', price: 99 },
-            { id: 9, name: 'Морс', price: 109 },
-            { id: 10, name: 'Пирожок', price: 89 }
+            { id: 1, name: 'Воппер', price: 199, icon: 'fa-burger' },
+            { id: 2, name: 'Чизбургер', price: 89, icon: 'fa-cheese' },
+            { id: 3, name: 'Двойной Воппер', price: 329, icon: 'fa-burger' },
+            { id: 4, name: 'Лонг Чикен', price: 219, icon: 'fa-drumstick-bite' },
+            { id: 5, name: 'Стрипсы 3шт', price: 149, icon: 'fa-drumstick' },
+            { id: 6, name: 'Наггетсы 6шт', price: 159, icon: 'fa-cubes' },
+            { id: 7, name: 'Картофель фри', price: 119, icon: 'fa-french-fries' },
+            { id: 8, name: 'Кола', price: 99, icon: 'fa-wine-bottle' },
+            { id: 9, name: 'Морс', price: 109, icon: 'fa-mug-hot' },
+            { id: 10, name: 'Пирожок', price: 89, icon: 'fa-cake-candles' }
         ];
 
         let cart = [];
@@ -209,7 +286,11 @@
             products.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.innerHTML = `<div>${p.name}</div><div class="product-price">${p.price} ₽</div>`;
+                card.innerHTML = `
+                    <i class="fas ${p.icon}"></i>
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-price">${p.price} ₽</div>
+                `;
                 card.onclick = () => addToCart(p);
                 grid.appendChild(card);
             });
@@ -217,29 +298,35 @@
 
         function addToCart(product) {
             const existing = cart.find(i => i.id === product.id);
-            if (existing) existing.quantity++;
-            else cart.push({ ...product, quantity: 1 });
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
             updateCart();
-            showPanel('cart');
+            showToast('✅ Товар добавлен');
         }
 
         function removeFromCart(id) {
             const index = cart.findIndex(i => i.id === id);
-            if (cart[index].quantity > 1) cart[index].quantity--;
-            else cart.splice(index, 1);
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+            } else {
+                cart.splice(index, 1);
+            }
             updateCart();
         }
 
         function updateCart() {
             const container = document.getElementById('cartItems');
             const totalSpan = document.getElementById('cartTotal');
-            
+
             if (cart.length === 0) {
                 container.innerHTML = '<p style="text-align:center; padding:20px;">Корзина пуста</p>';
                 totalSpan.innerText = '0 ₽';
                 return;
             }
-            
+
             let html = '';
             let total = 0;
             cart.forEach(item => {
@@ -259,11 +346,14 @@
         }
 
         function placeOrder() {
-            if (cart.length === 0) return alert('Корзина пуста');
-            
+            if (cart.length === 0) {
+                showToast('❌ Корзина пуста');
+                return;
+            }
+
             const orderNum = Math.floor(1000 + Math.random() * 9000);
             const total = cart.reduce((acc, i) => acc + i.price * i.quantity, 0);
-            
+
             db.ref('orders/' + orderNum).set({
                 items: cart.map(i => ({ name: i.name, price: i.price, quantity: i.quantity })),
                 total: total,
@@ -273,14 +363,20 @@
                 currentOrderNum = orderNum;
                 document.getElementById('qrSection').classList.add('active');
                 
+                // Ссылка для отслеживания (ЗАМЕНИТЕ ваш-логин)
                 const trackUrl = `https://ваш-логин.github.io/bk-tracker/track.html?order=${orderNum}`;
-                QRCode.toCanvas(trackUrl, { width: 200 }, (err, canvas) => {
-                    if (!err) document.getElementById('qrCode').appendChild(canvas);
-                });
                 
+                QRCode.toCanvas(trackUrl, { width: 200 }, (err, canvas) => {
+                    if (!err) {
+                        document.getElementById('qrCode').innerHTML = '';
+                        document.getElementById('qrCode').appendChild(canvas);
+                    }
+                });
+
                 listenToOrder(orderNum);
                 cart = [];
                 updateCart();
+                showPanel('cart');
             });
         }
 
@@ -290,15 +386,23 @@
                 if (order && order.status === 'ready') {
                     document.getElementById('orderStatus').innerHTML = '✅ ЗАКАЗ ГОТОВ!';
                     document.getElementById('orderStatus').className = 'status status-ready';
+                    showToast('✅ Ваш заказ готов!');
                     if (navigator.vibrate) navigator.vibrate(200);
                 }
             });
         }
 
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = text;
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2000);
+        }
+
         window.showPanel = (panel) => {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             if (panel === 'menu') {
                 document.getElementById('menuPanel').style.display = 'block';
                 document.getElementById('cartPanel').style.display = 'none';
