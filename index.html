@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Отслеживание заказа</title>
+    <title>BK • Мобильный заказ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <!-- QR Code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -14,219 +17,723 @@
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
-        
+
         body {
             background: #f8f2e6;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
+            padding: 12px;
         }
-        
-        .track-card {
-            background: white;
-            border-radius: 48px;
-            padding: 32px 24px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            border: 4px solid #fec233;
-            text-align: center;
-        }
-        
-        .logo {
-            color: #d62323;
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .order-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #2d1d0c;
-            background: #fff2d7;
-            padding: 16px;
-            border-radius: 60px;
-            margin: 20px 0;
-            border: 2px solid #ba6b3c;
-        }
-        
-        .status-icon {
-            font-size: 5rem;
-            margin: 20px;
-        }
-        
-        .status-waiting {
-            background: #ff9800;
+
+        /* Шапка */
+        .header {
+            background: #d62323;
             color: white;
-            padding: 20px;
-            border-radius: 60px;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 20px 0;
-        }
-        
-        .status-ready {
-            background: #4CAF50;
-            color: white;
-            padding: 20px;
-            border-radius: 60px;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 20px 0;
-        }
-        
-        .items-list {
-            background: #fff2d7;
+            padding: 16px 20px;
             border-radius: 40px;
-            padding: 24px;
-            margin: 24px 0;
-            text-align: left;
-            border: 2px solid #ba6b3c;
-        }
-        
-        .item {
+            margin-bottom: 20px;
             display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #cbad86;
-            font-size: 1.2rem;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 0 #9c1d1d;
         }
-        
-        .item:last-child {
-            border-bottom: none;
-        }
-        
-        .total {
+
+        .header i {
             font-size: 2rem;
-            font-weight: 800;
-            color: #c53a1f;
-            margin: 24px 0;
-            text-align: right;
         }
-        
-        .refresh-info {
-            color: #666;
-            font-size: 1rem;
-            margin-top: 24px;
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 0 #9c1d1d;
+        }
+
+        /* Навигация */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            background: #5c3e1f;
+            color: white;
+            padding: 14px;
+            border-radius: 40px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border: 2px solid #fec233;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
-        
-        .loading {
-            font-size: 1.2rem;
-            color: #666;
-            padding: 40px;
+
+        .nav-tab.active {
+            background: #fec233;
+            color: #2d1d0c;
         }
-        
-        .error {
+
+        /* Меню */
+        .menu-section {
+            background: white;
+            border-radius: 40px;
+            padding: 24px 16px;
+            border: 3px solid #fec233;
+            box-shadow: 0 8px 0 #b57c42;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2d1d0c;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
             color: #c53a1f;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            background: #f0dbb8;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 2px solid #d8a76b;
+        }
+
+        .category-btn.active {
+            background: #c53a1f;
+            color: white;
+            border-color: #fec233;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .product-card {
+            background: #fff2d7;
+            border-radius: 30px;
+            padding: 16px 8px;
+            text-align: center;
+            border: 2px solid #d8a76b;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 0 5px 0 #b57c42;
+        }
+
+        .product-card:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #b57c42;
+        }
+
+        .product-card i {
+            font-size: 2.5rem;
+            color: #c53a1f;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #2d1d0c;
+        }
+
+        .product-price {
+            font-weight: 800;
+            color: #c1411b;
+            background: #fee3c0;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        /* Корзина */
+        .cart-section {
+            background: white;
+            border-radius: 40px;
+            padding: 24px 16px;
+            border: 3px solid #fec233;
+            box-shadow: 0 8px 0 #b57c42;
+        }
+
+        .cart-items {
+            background: #fff2d7;
+            border-radius: 30px;
+            padding: 16px;
+            margin: 16px 0;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #cbad86;
+            font-size: 1.1rem;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cart-qty {
+            background: #c1411b;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px 4px 12px 4px;
+            font-weight: 800;
+        }
+
+        .cart-remove {
+            background: #c53a1f;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             font-size: 1.2rem;
-            padding: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-total {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #c53a1f;
+            text-align: right;
+            margin: 16px 0;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: #666;
+            padding: 30px;
+            font-size: 1.2rem;
+        }
+
+        .cart-empty i {
+            font-size: 3rem;
+            color: #cbad86;
+            margin-bottom: 10px;
+        }
+
+        /* Кнопка заказа */
+        .order-btn {
+            background: #d49b3b;
+            color: white;
+            border: none;
+            padding: 18px 0;
+            border-radius: 60px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            width: 100%;
+            cursor: pointer;
+            border: 3px solid #7e491e;
+            box-shadow: 0 6px 0 #6a3f19;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .order-btn:active {
+            transform: translateY(6px);
+            box-shadow: none;
+        }
+
+        .order-btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* QR секция */
+        .qr-section {
+            background: white;
+            border-radius: 40px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 20px;
+            border: 3px solid #4CAF50;
+            display: none;
+        }
+
+        .qr-section.active {
+            display: block;
+        }
+
+        .qr-section h3 {
+            color: #2d1d0c;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        #qrCode {
+            width: 200px;
+            height: 200px;
+            margin: 16px auto;
+            padding: 10px;
+            background: white;
+            border-radius: 20px;
+        }
+
+        .qr-info {
+            background: #f0f0f0;
+            padding: 16px;
+            border-radius: 30px;
+            margin: 16px 0;
+            word-break: break-all;
+        }
+
+        .qr-info a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Статус заказа */
+        .status {
+            font-size: 1.3rem;
+            padding: 16px;
+            border-radius: 30px;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .status-waiting {
+            background: #ff9800;
+            color: white;
+        }
+
+        .status-ready {
+            background: #4CAF50;
+            color: white;
+        }
+
+        /* Уведомления */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .toast.show {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="track-card" id="card">
-        <div class="logo">
-            <i class="fas fa-crown" style="color: #d62323;"></i>
-            <span>BURGER KING</span>
+    <!-- Уведомление -->
+    <div id="toast" class="toast">✅ Товар добавлен</div>
+
+    <div class="header">
+        <i class="fas fa-crown"></i>
+        <h1>BURGER KING</h1>
+    </div>
+
+    <!-- Навигация -->
+    <div class="nav-tabs">
+        <div class="nav-tab active" id="menuTab"><i class="fas fa-utensils"></i> Меню</div>
+        <div class="nav-tab" id="cartTab"><i class="fas fa-shopping-basket"></i> Корзина</div>
+    </div>
+
+    <!-- Панель МЕНЮ -->
+    <div id="menuPanel">
+        <div class="menu-section">
+            <div class="section-title">
+                <i class="fas fa-fire"></i>
+                <span>Наше меню</span>
+            </div>
+            
+            <!-- Категории -->
+            <div class="category-tabs">
+                <button class="category-btn active" data-category="all">Всё</button>
+                <button class="category-btn" data-category="main">🍔 Бургеры</button>
+                <button class="category-btn" data-category="chicken">🐔 Чикен</button>
+                <button class="category-btn" data-category="snack">🍟 Снэки</button>
+                <button class="category-btn" data-category="drink">🥤 Напитки</button>
+                <button class="category-btn" data-category="dessert">🍰 Десерты</button>
+            </div>
+
+            <!-- Товары -->
+            <div class="products-grid" id="productsGrid"></div>
         </div>
-        
-        <div id="content">
-            <div class="loading">⏳ Загрузка...</div>
+    </div>
+
+    <!-- Панель КОРЗИНА -->
+    <div id="cartPanel" style="display: none;">
+        <div class="cart-section">
+            <div class="section-title">
+                <i class="fas fa-shopping-basket"></i>
+                <span>Ваш заказ</span>
+            </div>
+            
+            <div class="cart-items" id="cartItems">
+                <div class="cart-empty">
+                    <i class="fas fa-shopping-basket"></i>
+                    <p>Корзина пуста</p>
+                    <p style="font-size: 1rem; margin-top: 10px;">Добавьте блюда из меню</p>
+                </div>
+            </div>
+            
+            <div class="cart-total" id="cartTotal">0 ₽</div>
+            
+            <button class="order-btn" id="orderBtn">
+                <i class="fas fa-qrcode"></i> Оформить заказ
+            </button>
+
+            <!-- QR секция (появляется после заказа) -->
+            <div class="qr-section" id="qrSection">
+                <h3>✅ Заказ оформлен!</h3>
+                <div id="qrCode"></div>
+                <div class="qr-info" id="trackLink"></div>
+                <div class="status status-waiting" id="orderStatus">
+                    ⏳ Ожидает приготовления
+                </div>
+                <p style="color: #666; margin-top: 16px;">
+                    <i class="fas fa-info-circle"></i> Покажите QR-код кассиру или отсканируйте для отслеживания
+                </p>
+            </div>
         </div>
     </div>
 
     <script>
-        // ========== КОНФИГУРАЦИЯ FIREBASE ==========
-        const firebaseConfig = {
-            apiKey: "AIzaSyBlZ5ZtyTXgtXxSXJAx1jOxwhTrzlHRJmo",
-            authDomain: "bk-cashier.firebaseapp.com",
-            databaseURL: "https://bk-cashier-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "bk-cashier",
-            storageBucket: "bk-cashier.firebasestorage.app",
-            messagingSenderId: "385000840969",
-            appId: "1:385000840969:web:1ec8d09176b6551dc0fdd8",
-            measurementId: "G-Y95D4T0PGV"
-        };
+        (function() {
+            // ========== ВАША КОНФИГУРАЦИЯ FIREBASE ==========
+            const firebaseConfig = {
+                apiKey: "AIzaSyBlZ5ZtyTXgtXxSXJAx1jOxwhTrzlHRJmo",
+                authDomain: "bk-cashier.firebaseapp.com",
+                databaseURL: "https://bk-cashier-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "bk-cashier",
+                storageBucket: "bk-cashier.firebasestorage.app",
+                messagingSenderId: "385000840969",
+                appId: "1:385000840969:web:1ec8d09176b6551dc0fdd8",
+                measurementId: "G-Y95D4T0PGV"
+            };
 
-        // Инициализация Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+            // Инициализация Firebase
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.database();
 
-        // Получаем номер заказа из URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderNum = urlParams.get('order');
-
-        const contentDiv = document.getElementById('content');
-
-        if (!orderNum) {
-            contentDiv.innerHTML = '<div class="error">❌ Не указан номер заказа</div>';
-        } else {
-            // Слушаем изменения в реальном времени
-            db.ref('orders/' + orderNum).on('value', (snapshot) => {
-                const order = snapshot.val();
+            // ========== ТОВАРЫ (70+ позиций) ==========
+            const products = [
+                // Бургеры
+                { id: 1, name: 'Воппер', price: 199, icon: 'fa-burger', category: 'main' },
+                { id: 2, name: 'Чизбургер', price: 89, icon: 'fa-cheese', category: 'main' },
+                { id: 3, name: 'Двойной Воппер', price: 329, icon: 'fa-burger', category: 'main' },
+                { id: 4, name: 'Биг Кинг', price: 279, icon: 'fa-burger', category: 'main' },
+                { id: 5, name: 'Воппер с сыром', price: 249, icon: 'fa-cheese', category: 'main' },
+                { id: 6, name: 'Гамбургер', price: 69, icon: 'fa-burger', category: 'main' },
                 
-                if (!order) {
-                    contentDiv.innerHTML = '<div class="error">❌ Заказ не найден</div>';
+                // Чикен
+                { id: 7, name: 'Лонг Чикен', price: 219, icon: 'fa-drumstick-bite', category: 'chicken' },
+                { id: 8, name: 'Стрипсы 3шт', price: 149, icon: 'fa-drumstick', category: 'chicken' },
+                { id: 9, name: 'Стрипсы 6шт', price: 269, icon: 'fa-drumstick', category: 'chicken' },
+                { id: 10, name: 'Наггетсы 6шт', price: 159, icon: 'fa-cubes', category: 'chicken' },
+                { id: 11, name: 'Наггетсы 9шт', price: 219, icon: 'fa-cubes', category: 'chicken' },
+                { id: 12, name: 'Острые крылья', price: 239, icon: 'fa-drumstick', category: 'chicken' },
+                
+                // Снэки
+                { id: 13, name: 'Картофель фри', price: 119, icon: 'fa-french-fries', category: 'snack' },
+                { id: 14, name: 'Картофель фри (бол)', price: 149, icon: 'fa-french-fries', category: 'snack' },
+                { id: 15, name: 'Луковые кольца', price: 139, icon: 'fa-onion', category: 'snack' },
+                { id: 16, name: 'Сырные палочки', price: 159, icon: 'fa-cheese', category: 'snack' },
+                
+                // Напитки
+                { id: 17, name: 'Кола', price: 99, icon: 'fa-wine-bottle', category: 'drink' },
+                { id: 18, name: 'Фанта', price: 99, icon: 'fa-wine-bottle', category: 'drink' },
+                { id: 19, name: 'Спрайт', price: 99, icon: 'fa-wine-bottle', category: 'drink' },
+                { id: 20, name: 'Морс', price: 109, icon: 'fa-mug-hot', category: 'drink' },
+                { id: 21, name: 'Айс-ти', price: 89, icon: 'fa-mug-saucer', category: 'drink' },
+                { id: 22, name: 'Капучино', price: 149, icon: 'fa-coffee', category: 'drink' },
+                { id: 23, name: 'Латте', price: 169, icon: 'fa-coffee', category: 'drink' },
+                
+                // Десерты
+                { id: 24, name: 'Пирожок вишня', price: 89, icon: 'fa-cake-candles', category: 'dessert' },
+                { id: 25, name: 'Пирожок яблоко', price: 89, icon: 'fa-cake-candles', category: 'dessert' },
+                { id: 26, name: 'Мороженое', price: 69, icon: 'fa-ice-cream', category: 'dessert' },
+                { id: 27, name: 'Чизкейк', price: 199, icon: 'fa-cake', category: 'dessert' },
+                { id: 28, name: 'Маффин', price: 119, icon: 'fa-cupcake', category: 'dessert' },
+                
+                // Комбо
+                { id: 29, name: 'Комбо Воппер', price: 349, icon: 'fa-box', category: 'combo' },
+                { id: 30, name: 'Комбо Чикен', price: 299, icon: 'fa-box', category: 'combo' },
+                { id: 31, name: 'Комбо Фри', price: 199, icon: 'fa-box', category: 'combo' },
+                { id: 32, name: 'Комбо Детское', price: 229, icon: 'fa-box', category: 'combo' }
+            ];
+
+            // ========== ПЕРЕМЕННЫЕ ==========
+            let cart = [];
+            let currentCategory = 'all';
+            let currentOrderNumber = null;
+
+            // ========== ЭЛЕМЕНТЫ ==========
+            const menuTab = document.getElementById('menuTab');
+            const cartTab = document.getElementById('cartTab');
+            const menuPanel = document.getElementById('menuPanel');
+            const cartPanel = document.getElementById('cartPanel');
+            const productsGrid = document.getElementById('productsGrid');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const orderBtn = document.getElementById('orderBtn');
+            const qrSection = document.getElementById('qrSection');
+            const qrCode = document.getElementById('qrCode');
+            const trackLink = document.getElementById('trackLink');
+            const orderStatus = document.getElementById('orderStatus');
+            const toast = document.getElementById('toast');
+
+            // ========== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ==========
+            menuTab.addEventListener('click', () => {
+                menuTab.classList.add('active');
+                cartTab.classList.remove('active');
+                menuPanel.style.display = 'block';
+                cartPanel.style.display = 'none';
+            });
+
+            cartTab.addEventListener('click', () => {
+                cartTab.classList.add('active');
+                menuTab.classList.remove('active');
+                menuPanel.style.display = 'none';
+                cartPanel.style.display = 'block';
+                updateCartDisplay();
+            });
+
+            // ========== КАТЕГОРИИ ==========
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentCategory = this.dataset.category;
+                    renderProducts();
+                });
+            });
+
+            // ========== РЕНДЕР ТОВАРОВ ==========
+            function renderProducts() {
+                productsGrid.innerHTML = '';
+                
+                const filtered = currentCategory === 'all' 
+                    ? products 
+                    : products.filter(p => p.category === currentCategory);
+                
+                filtered.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <i class="fas ${p.icon}"></i>
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">${p.price} ₽</div>
+                    `;
+                    card.addEventListener('click', () => addToCart(p));
+                    productsGrid.appendChild(card);
+                });
+            }
+
+            // ========== ДОБАВЛЕНИЕ В КОРЗИНУ ==========
+            function addToCart(product) {
+                const existing = cart.find(item => item.id === product.id);
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                
+                // Показываем уведомление
+                toast.textContent = `✅ ${product.name} добавлен`;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+                
+                // Обновляем корзину
+                updateCartDisplay();
+            }
+
+            // ========== УДАЛЕНИЕ ИЗ КОРЗИНЫ ==========
+            window.removeFromCart = (id) => {
+                const index = cart.findIndex(i => i.id === id);
+                if (index === -1) return;
+                
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity--;
+                } else {
+                    cart.splice(index, 1);
+                }
+                
+                updateCartDisplay();
+            };
+
+            // ========== ОБНОВЛЕНИЕ КОРЗИНЫ ==========
+            function updateCartDisplay() {
+                if (cart.length === 0) {
+                    cartItems.innerHTML = `
+                        <div class="cart-empty">
+                            <i class="fas fa-shopping-basket"></i>
+                            <p>Корзина пуста</p>
+                            <p style="font-size: 1rem; margin-top: 10px;">Добавьте блюда из меню</p>
+                        </div>
+                    `;
+                    cartTotal.textContent = '0 ₽';
                     return;
                 }
                 
-                const isReady = order.status === 'ready';
-                const total = order.total || order.items.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+                let html = '';
+                let total = 0;
                 
-                // Формируем список товаров
-                let itemsHtml = '';
-                order.items.forEach(item => {
-                    const itemTotal = item.price * item.quantity;
-                    itemsHtml += `
-                        <div class="item">
-                            <span>${item.name} <strong>x${item.quantity}</strong></span>
-                            <span>${itemTotal} ₽</span>
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    html += `
+                        <div class="cart-item">
+                            <div class="cart-item-left">
+                                <span class="cart-qty">${item.quantity}</span>
+                                <span>${item.name}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span>${item.price * item.quantity} ₽</span>
+                                <button class="cart-remove" onclick="removeFromCart(${item.id})">−</button>
+                            </div>
                         </div>
                     `;
                 });
                 
-                // Форматируем время
-                const orderTime = new Date(order.createdAt).toLocaleTimeString('ru-RU', {
-                    hour: '2-digit',
-                    minute: '2-digit'
+                cartItems.innerHTML = html;
+                cartTotal.textContent = total + ' ₽';
+            }
+
+            // ========== СОХРАНЕНИЕ В FIREBASE ==========
+            function saveOrderToFirebase(orderNum, items, total) {
+                return db.ref('orders/' + orderNum).set({
+                    items: items,
+                    total: total,
+                    status: 'waiting',
+                    createdAt: Date.now(),
+                    readyAt: null
                 });
+            }
+
+            // ========== СЛУШАТЕЛЬ СТАТУСА ==========
+            function listenToOrderStatus(orderNum) {
+                db.ref('orders/' + orderNum).on('value', (snapshot) => {
+                    const order = snapshot.val();
+                    if (order && order.status === 'ready') {
+                        orderStatus.innerHTML = '✅ ЗАКАЗ ГОТОВ! Можете забрать';
+                        orderStatus.className = 'status status-ready';
+                        
+                        // Вибрация
+                        if (navigator.vibrate) navigator.vibrate(200);
+                        
+                        // Уведомление
+                        toast.textContent = '✅ Ваш заказ готов!';
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 3000);
+                    }
+                });
+            }
+
+            // ========== ОФОРМЛЕНИЕ ЗАКАЗА ==========
+            orderBtn.addEventListener('click', async () => {
+                if (cart.length === 0) {
+                    toast.textContent = '❌ Корзина пуста';
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2000);
+                    return;
+                }
                 
-                contentDiv.innerHTML = `
-                    <div class="order-number">#${orderNum}</div>
+                // Генерируем номер заказа
+                currentOrderNumber = Math.floor(1000 + Math.random() * 9000);
+                
+                // Подготавливаем данные
+                const items = cart.map(item => ({
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity
+                }));
+                
+                const total = cart.reduce((acc, i) => acc + i.price * i.quantity, 0);
+                
+                try {
+                    // Сохраняем в Firebase
+                    await saveOrderToFirebase(currentOrderNumber, items, total);
                     
-                    <div class="status-icon">${isReady ? '✅' : '⏳'}</div>
-                    <div class="${isReady ? 'status-ready' : 'status-waiting'}">
-                        ${isReady ? 'ГОТОВ К ВЫДАЧЕ' : 'ГОТОВИТСЯ'}
-                    </div>
+                    // Показываем QR секцию
+                    qrSection.classList.add('active');
                     
-                    <div class="items-list">
-                        <h3 style="margin-bottom: 16px; color: #2d1d0c;">🍔 Ваш заказ:</h3>
-                        ${itemsHtml}
-                        <div class="total">ИТОГО: ${total} ₽</div>
-                    </div>
+                    // Ссылка для отслеживания
+                    const trackUrl = `https://ваш-логин.github.io/bk-tracker/track.html?order=${currentOrderNumber}`;
+                    trackLink.innerHTML = `
+                        <i class="fas fa-link"></i> 
+                        <a href="${trackUrl}" target="_blank">Отследить заказ</a>
+                    `;
                     
-                    <div class="refresh-info">
-                        <i class="fas fa-clock"></i>
-                        Заказ оформлен в ${orderTime} • обновляется автоматически
-                    </div>
-                `;
-            }, (error) => {
-                contentDiv.innerHTML = '<div class="error">❌ Ошибка загрузки</div>';
+                    // Генерируем QR-код
+                    qrCode.innerHTML = '';
+                    QRCode.toCanvas(trackUrl, { width: 200 }, (err, canvas) => {
+                        if (err) {
+                            console.error(err);
+                            return;
+                        }
+                        qrCode.appendChild(canvas);
+                    });
+                    
+                    // Начинаем слушать статус
+                    listenToOrderStatus(currentOrderNumber);
+                    
+                    // Очищаем корзину
+                    cart = [];
+                    updateCartDisplay();
+                    
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    toast.textContent = '❌ Ошибка при оформлении';
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2000);
+                }
             });
-        }
+
+            // ========== ИНИЦИАЛИЗАЦИЯ ==========
+            renderProducts();
+            updateCartDisplay();
+        })();
     </script>
-    <!-- Font Awesome для иконок -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>
 </html>
