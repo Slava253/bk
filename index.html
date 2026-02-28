@@ -286,27 +286,6 @@
             gap: 10px;
         }
 
-        .section-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .menu-tab {
-            flex: 1;
-            background: #f0dbb8;
-            border: none;
-            padding: 10px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .menu-tab.active {
-            background: #c53a1f;
-            color: white;
-        }
-
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -333,8 +312,8 @@
         }
 
         .product-card.crown-deal {
-            border: 3px solid #fec233;
-            background: #fff0d0;
+            border: 3px solid #9c27b0;
+            background: #f3e5f5;
         }
 
         .product-name {
@@ -359,17 +338,6 @@
             display: flex;
             align-items: center;
             gap: 3px;
-        }
-
-        .badge {
-            position: absolute;
-            top: -8px;
-            left: -5px;
-            background: #4CAF50;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 0.8rem;
         }
 
         .cart-section {
@@ -725,6 +693,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // Обычные товары
         const regularProducts = [
             { id: 1, name: 'Воппер', price: 199 },
             { id: 2, name: 'Чизбургер', price: 89 },
@@ -738,14 +707,15 @@
             { id: 10, name: 'Пирожок', price: 89 }
         ];
 
+        // Товары за 1 рубль
         const crownProducts = [
-            { id: 101, name: 'Воппер', price: 1, crownCost: 10 },
-            { id: 102, name: 'Чизбургер', price: 1, crownCost: 4 },
-            { id: 103, name: 'Картофель фри', price: 1, crownCost: 6 },
-            { id: 104, name: 'Кола', price: 1, crownCost: 5 },
-            { id: 105, name: 'Пирожок', price: 1, crownCost: 4 },
-            { id: 106, name: 'Наггетсы 3шт', price: 1, crownCost: 8 },
-            { id: 107, name: 'Мороженое', price: 1, crownCost: 3 }
+            { id: 101, name: 'Воппер (1₽)', price: 1, crownCost: 10 },
+            { id: 102, name: 'Чизбургер (1₽)', price: 1, crownCost: 4 },
+            { id: 103, name: 'Картофель фри (1₽)', price: 1, crownCost: 6 },
+            { id: 104, name: 'Кола (1₽)', price: 1, crownCost: 5 },
+            { id: 105, name: 'Пирожок (1₽)', price: 1, crownCost: 4 },
+            { id: 106, name: 'Наггетсы 3шт (1₽)', price: 1, crownCost: 8 },
+            { id: 107, name: 'Мороженое (1₽)', price: 1, crownCost: 3 }
         ];
 
         let currentUser = null;
