@@ -21,7 +21,6 @@
             padding: 12px;
         }
 
-        /* Экран входа */
         .auth-screen {
             background: linear-gradient(145deg, #4a3a2a, #2d1d0c);
             min-height: 100vh;
@@ -115,7 +114,6 @@
             box-shadow: none;
         }
 
-        /* Основное приложение */
         .main-app {
             display: none;
             max-width: 600px;
@@ -193,7 +191,6 @@
             color: #2d1d0c;
         }
 
-        /* Профиль */
         .profile-section {
             background: white;
             border-radius: 30px;
@@ -251,7 +248,6 @@
             cursor: pointer;
         }
 
-        /* Тип заказа */
         .order-type {
             display: flex;
             gap: 10px;
@@ -273,7 +269,6 @@
             border-color: #c53a1f;
         }
 
-        /* Меню */
         .menu-section {
             background: white;
             border-radius: 30px;
@@ -377,7 +372,6 @@
             font-size: 0.8rem;
         }
 
-        /* Корзина */
         .cart-section {
             background: white;
             border-radius: 30px;
@@ -479,7 +473,6 @@
             cursor: not-allowed;
         }
 
-        /* Информация о заказе */
         .order-info {
             background: white;
             border-radius: 30px;
@@ -509,9 +502,9 @@
 
         .status-waiting { background: #ff9800; color: white; }
         .status-ready { background: #4CAF50; color: white; }
+        .status-courier { background: #2196F3; color: white; }
         .status-done { background: #808080; color: white; }
 
-        /* История */
         .history-section {
             background: white;
             border-radius: 30px;
@@ -533,7 +526,6 @@
             margin-bottom: 8px;
         }
 
-        /* Уведомления */
         .toast {
             position: fixed;
             top: 20px;
@@ -548,35 +540,11 @@
             display: none;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-
-        /* Анимации */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .crowns {
-            animation: pulse 2s infinite;
-        }
-
-        /* Бейджи */
-        .crown-badge {
-            background: linear-gradient(145deg, #fec233, #d49b3b);
-            color: #2d1d0c;
-            padding: 5px 10px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
     </style>
 </head>
 <body>
     <div id="toast" class="toast"></div>
 
-    <!-- Экран входа -->
     <div id="authScreen" class="auth-screen">
         <div class="auth-card">
             <h1>WHOPPER BAR</h1>
@@ -598,7 +566,6 @@
         </div>
     </div>
 
-    <!-- Основное приложение -->
     <div id="mainApp" class="main-app">
         <div class="header">
             <div class="logo">
@@ -623,7 +590,6 @@
             <div class="nav-item" onclick="showPanel('history')">📋 ИСТОРИЯ</div>
         </div>
 
-        <!-- ПРОФИЛЬ -->
         <div id="profilePanel" style="display: none;">
             <div class="profile-section">
                 <div class="section-title">
@@ -643,7 +609,7 @@
 
                 <div class="profile-field">
                     <div class="profile-label"><i class="fas fa-crown"></i> Мои короны</div>
-                    <div class="crown-badge" id="profileCrowns">0</div>
+                    <div class="crowns" id="profileCrowns">0</div>
                 </div>
 
                 <div class="section-title" style="margin-top: 20px;">
@@ -659,7 +625,6 @@
             </div>
         </div>
 
-        <!-- МЕНЮ (обычные товары) -->
         <div id="menuPanel">
             <div class="menu-section">
                 <div class="section-title">
@@ -670,24 +635,21 @@
             </div>
         </div>
 
-        <!-- ТОВАРЫ ЗА 1 РУБЛЬ -->
         <div id="crownPanel" style="display: none;">
             <div class="menu-section">
                 <div class="section-title">
                     <i class="fas fa-crown" style="color: #9c27b0;"></i>
                     <span>Блюда за 1 рубль</span>
                 </div>
-                <div class="crown-badge" style="margin-bottom: 15px;">
+                <div class="crowns" style="margin-bottom: 15px;">
                     <i class="fas fa-crown"></i> У вас: <span id="crownsForDeals">0</span>
                 </div>
                 <div class="products-grid" id="crownProducts"></div>
             </div>
         </div>
 
-        <!-- КОРЗИНА -->
         <div id="cartPanel" style="display: none;">
             <div class="cart-section">
-                <!-- Тип заказа -->
                 <div class="order-type">
                     <div class="type-btn active" onclick="setOrderType('restaurant')">
                         <i class="fas fa-store"></i> В ресторане
@@ -697,7 +659,6 @@
                     </div>
                 </div>
 
-                <!-- Адрес доставки (показываем только если выбрана доставка) -->
                 <div id="deliveryAddress" style="display: none;">
                     <select id="addressSelect" class="profile-input">
                         <option value="">Выберите адрес доставки</option>
@@ -739,7 +700,6 @@
             </div>
         </div>
 
-        <!-- ИСТОРИЯ -->
         <div id="historyPanel" style="display: none;">
             <div class="history-section">
                 <div class="section-title">
@@ -765,7 +725,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Товары
         const regularProducts = [
             { id: 1, name: 'Воппер', price: 199 },
             { id: 2, name: 'Чизбургер', price: 89 },
@@ -779,7 +738,6 @@
             { id: 10, name: 'Пирожок', price: 89 }
         ];
 
-        // Товары за 1 рубль (тратятся короны)
         const crownProducts = [
             { id: 101, name: 'Воппер', price: 1, crownCost: 10 },
             { id: 102, name: 'Чизбургер', price: 1, crownCost: 4 },
@@ -797,7 +755,6 @@
         let orderType = 'restaurant';
         let selectedAddress = null;
 
-        // ========== ПРОВЕРКА СОХРАНЁННОГО ПОЛЬЗОВАТЕЛЯ ==========
         (function checkSavedUser() {
             const saved = localStorage.getItem('whopperUser');
             if (saved) {
@@ -812,7 +769,6 @@
             }
         })();
 
-        // ========== ВХОД ПО ТЕЛЕФОНУ ==========
         window.loginWithPhone = (savedPhone, isAuto = false) => {
             let phone;
             if (isAuto) {
@@ -896,21 +852,18 @@
             document.getElementById('phoneInput').value = '';
         };
 
-        // ========== ОБНОВЛЕНИЕ ОТОБРАЖЕНИЯ КОРОН ==========
         function updateCrownsDisplay() {
             document.getElementById('userCrowns').innerHTML = `<i class="fas fa-crown"></i> ${userCrowns}`;
             document.getElementById('profileCrowns').innerHTML = `<i class="fas fa-crown"></i> ${userCrowns}`;
             document.getElementById('crownsForDeals').innerText = userCrowns;
         }
 
-        // ========== ЗАГРУЗКА ПРОФИЛЯ ==========
         function loadProfile() {
             if (!currentUser || currentUser.isGuest) return;
             
             document.getElementById('profileName').value = currentUser.name || '';
             document.getElementById('profilePhone').value = currentUser.phone || '';
             
-            // Сохраняем имя при изменении
             document.getElementById('profileName').onchange = function() {
                 currentUser.name = this.value;
                 db.ref('users/' + currentUser.id + '/name').set(this.value);
@@ -920,7 +873,6 @@
                 }));
             };
 
-            // Загружаем адреса
             const addressesList = document.getElementById('addressesList');
             const addressSelect = document.getElementById('addressSelect');
             
@@ -970,7 +922,6 @@
             showToast('🗑️ Адрес удалён');
         };
 
-        // ========== ТИП ЗАКАЗА ==========
         window.setOrderType = (type) => {
             orderType = type;
             document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
@@ -990,7 +941,6 @@
             updateCart();
         };
 
-        // ========== РЕНДЕР ТОВАРОВ ==========
         function renderRegularProducts() {
             const grid = document.getElementById('regularProducts');
             grid.innerHTML = '';
@@ -1033,7 +983,6 @@
             });
         }
 
-        // ========== РАБОТА С КОРЗИНОЙ ==========
         function addToCart(product, useCrowns = false, crownCost = 0) {
             const existing = cart.find(i => i.id === product.id && i.useCrowns === useCrowns);
             
@@ -1124,7 +1073,6 @@
             totalSpan.innerText = total + ' ₽';
         }
 
-        // ========== ОФОРМЛЕНИЕ ЗАКАЗА ==========
         function placeOrder() {
             if (cart.length === 0) {
                 showToast('❌ Корзина пуста');
@@ -1156,7 +1104,14 @@
             const orderData = {
                 userId: currentUser.id,
                 userName: currentUser.name || 'Гость',
-                items: cart,
+                items: cart.map(i => ({
+                    name: i.name,
+                    price: i.finalPrice,
+                    originalPrice: i.price,
+                    quantity: i.quantity,
+                    crownCost: i.crownCost || 0,
+                    useCrowns: i.useCrowns || false
+                })),
                 subtotal: subtotal,
                 delivery: delivery,
                 total: total,
@@ -1197,8 +1152,12 @@
                         statusDiv.className = 'order-status status-ready';
                         showToast('✅ Ваш заказ готов!');
                         if (navigator.vibrate) navigator.vibrate(200);
+                    } else if (order.status === 'courier') {
+                        statusDiv.innerHTML = '🚚 ЗАКАЗ ПЕРЕДАН КУРЬЕРУ';
+                        statusDiv.className = 'order-status status-courier';
+                        showToast('🚚 Заказ передан курьеру');
                     } else if (order.status === 'done') {
-                        statusDiv.innerHTML = '🛒 ЗАКАЗ ВЫДАН';
+                        statusDiv.innerHTML = order.orderType === 'delivery' ? '✅ ЗАКАЗ ДОСТАВЛЕН' : '🛒 ЗАКАЗ ВЫДАН';
                         statusDiv.className = 'order-status status-done';
                         
                         if (!currentUser.isGuest && order.crownsEarned) {
@@ -1250,9 +1209,21 @@
             let html = '';
             userOrders.forEach(order => {
                 let statusText = '';
-                if (order.status === 'waiting') statusText = '⏳ Готовится';
-                else if (order.status === 'ready') statusText = '✅ Готов';
-                else statusText = '🛒 Выдан';
+                let statusEmoji = '';
+                
+                if (order.status === 'waiting') {
+                    statusText = 'Готовится';
+                    statusEmoji = '⏳';
+                } else if (order.status === 'ready') {
+                    statusText = 'Готов';
+                    statusEmoji = '✅';
+                } else if (order.status === 'courier') {
+                    statusText = 'У курьера';
+                    statusEmoji = '🚚';
+                } else {
+                    statusText = order.orderType === 'delivery' ? 'Доставлен' : 'Выдан';
+                    statusEmoji = '✅';
+                }
 
                 const typeIcon = order.orderType === 'delivery' ? '🚚' : '🏪';
                 const typeText = order.orderType === 'delivery' ? 'Доставка' : 'В ресторане';
@@ -1265,7 +1236,7 @@
                         </div>
                         <div>${order.items.map(i => `${i.name} x${i.quantity}`).join(' • ')}</div>
                         <div style="margin-top:5px;">
-                            ${typeIcon} ${typeText} • Сумма: ${order.total} ₽ • ${statusText}
+                            ${typeIcon} ${typeText} • Сумма: ${order.total} ₽ • ${statusEmoji} ${statusText}
                         </div>
                     </div>
                 `;
@@ -1308,7 +1279,6 @@
             }
         };
 
-        // Глобальные функции
         window.removeOneFromCart = removeOneFromCart;
         window.removeAllFromCart = removeAllFromCart;
     </script>
