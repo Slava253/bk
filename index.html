@@ -473,6 +473,74 @@
         .status-courier { background: #2196F3; color: white; }
         .status-done { background: #808080; color: white; }
 
+        /* Модальное окно для деталей заказа */
+        .order-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .order-modal-content {
+            background: white;
+            border-radius: 50px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 5px solid #fec233;
+        }
+
+        .order-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .order-modal-header h2 {
+            color: #c53a1f;
+            font-size: 2rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .order-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #cbad86;
+        }
+
+        .order-detail-total {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #c53a1f;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .order-detail-info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 30px;
+            margin: 15px 0;
+        }
+
         .history-section {
             background: white;
             border-radius: 30px;
@@ -486,6 +554,12 @@
             padding: 15px;
             margin-bottom: 10px;
             border: 2px solid #d8a76b;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .history-item:active {
+            transform: scale(0.98);
         }
 
         .history-header {
@@ -518,6 +592,17 @@
 </head>
 <body>
     <div id="toast" class="toast"></div>
+
+    <!-- Модальное окно для деталей заказа -->
+    <div id="orderModal" class="order-modal">
+        <div class="order-modal-content">
+            <div class="order-modal-header">
+                <h2 id="modalOrderNumber">Заказ #1234</h2>
+                <button class="close-modal" onclick="closeOrderModal()">✕</button>
+            </div>
+            <div id="modalOrderDetails"></div>
+        </div>
+    </div>
 
     <div id="authScreen" class="auth-screen">
         <div class="auth-card">
@@ -1191,35 +1276,44 @@
             userOrders.forEach(order => {
                 let statusText = '';
                 let statusEmoji = '';
+                let statusColor = '';
                 
                 if (order.status === 'waiting') {
                     statusText = 'Готовится';
                     statusEmoji = '⏳';
+                    statusColor = '#ff9800';
                 } else if (order.status === 'ready') {
                     statusText = 'Готов';
                     statusEmoji = '✅';
+                    statusColor = '#4CAF50';
                 } else if (order.status === 'courier') {
                     statusText = 'У курьера';
                     statusEmoji = '🚚';
+                    statusColor = '#2196F3';
                 } else {
                     statusText = order.orderType === 'delivery' ? 'Доставлен' : 'Выдан';
                     statusEmoji = '✅';
+                    statusColor = '#808080';
                 }
 
                 const typeIcon = order.orderType === 'delivery' ? '🚚' : '🏪';
                 const typeText = order.orderType === 'delivery' ? 'Доставка' : 'В ресторане';
-                const orderSource = order.isCashierOrder ? '🏪 (заказ в кассе)' : '📱 (через приложение)';
+                const orderSource = order.isCashierOrder ? '🏪 (касса)' : '📱 (приложение)';
 
                 html += `
-                    <div class="history-item">
+                    <div class="history-item" onclick="showOrderDetails('${order.number}')">
                         <div class="history-header">
                             <span class="history-number">Заказ #${order.number}</span>
                             <span><i class="fas fa-crown"></i> +${order.crownsEarned || 0}</span>
                         </div>
                         <div class="history-type">${orderSource}</div>
-                        <div>${order.items.map(i => `${i.name} x${i.quantity}`).join(' • ')}</div>
-                        <div style="margin-top:5px;">
-                            ${typeIcon} ${typeText} • Сумма: ${order.total} ₽ • ${statusEmoji} ${statusText}
+                        <div>${order.items.slice(0, 2).map(i => `${i.name} x${i.quantity}`).join(' • ')}${order.items.length > 2 ? ' ...' : ''}</div>
+                        <div style="margin-top:5px; display: flex; justify-content: space-between;">
+                            <span>${typeIcon} ${typeText}</span>
+                            <span style="color:${statusColor}">${statusEmoji} ${statusText}</span>
+                        </div>
+                        <div style="margin-top:5px; font-size:0.9rem; color:#666;">
+                            ${new Date(order.createdAt).toLocaleString()}
                         </div>
                     </div>
                 `;
@@ -1227,6 +1321,94 @@
             
             historyDiv.innerHTML = html;
         }
+
+        // Функция для показа деталей заказа
+        window.showOrderDetails = (orderNum) => {
+            const order = userOrders.find(o => o.number === orderNum);
+            if (!order) return;
+
+            let statusText = '';
+            let statusClass = '';
+            
+            if (order.status === 'waiting') {
+                statusText = '⏳ Готовится';
+                statusClass = 'status-waiting';
+            } else if (order.status === 'ready') {
+                statusText = '✅ Готов';
+                statusClass = 'status-ready';
+            } else if (order.status === 'courier') {
+                statusText = '🚚 У курьера';
+                statusClass = 'status-courier';
+            } else {
+                statusText = order.orderType === 'delivery' ? '✅ Доставлен' : '🛒 Выдан';
+                statusClass = 'status-done';
+            }
+
+            const typeText = order.orderType === 'delivery' ? 'Доставка' : 'В ресторане';
+            const orderSource = order.isCashierOrder ? '🏪 (заказ в кассе)' : '📱 (заказ через приложение)';
+
+            let itemsHtml = '';
+            order.items.forEach(item => {
+                itemsHtml += `
+                    <div class="order-detail-item">
+                        <span>${item.name} x${item.quantity}</span>
+                        <span>${item.price * item.quantity} ₽</span>
+                    </div>
+                `;
+            });
+
+            let addressHtml = '';
+            if (order.address) {
+                addressHtml = `
+                    <div style="margin-top: 10px;">
+                        <strong>Адрес доставки:</strong> ${order.address}
+                    </div>
+                `;
+            }
+
+            let crownsHtml = '';
+            if (order.crownsSpent) {
+                crownsHtml = `
+                    <div style="margin-top: 10px; color:#9c27b0;">
+                        <i class="fas fa-crown"></i> Потрачено корон: ${order.crownsSpent}
+                    </div>
+                `;
+            }
+
+            document.getElementById('modalOrderNumber').innerText = `Заказ #${orderNum}`;
+            document.getElementById('modalOrderDetails').innerHTML = `
+                <div class="order-detail-info">
+                    <div><strong>Клиент:</strong> ${order.userName || 'Гость'}</div>
+                    <div><strong>Тип заказа:</strong> ${typeText}</div>
+                    <div><strong>Источник:</strong> ${orderSource}</div>
+                    <div><strong>Дата:</strong> ${new Date(order.createdAt).toLocaleString()}</div>
+                    ${addressHtml}
+                </div>
+                
+                <h3 style="margin: 15px 0;">Состав заказа:</h3>
+                ${itemsHtml}
+                
+                ${crownsHtml}
+                
+                <div class="order-detail-total">
+                    <span>Итого: ${order.total} ₽</span>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <span class="status-badge ${statusClass}" style="display: inline-block;">${statusText}</span>
+                </div>
+                
+                <div style="margin-top: 15px; color:#666; font-size:0.9rem;">
+                    <i class="fas fa-crown"></i> Получено корон за заказ: +${order.crownsEarned || 0}
+                </div>
+            `;
+
+            document.getElementById('orderModal').style.display = 'flex';
+        };
+
+        window.closeOrderModal = () => {
+            document.getElementById('orderModal').style.display = 'none';
+        };
 
         function showToast(text) {
             const toast = document.getElementById('toast');
