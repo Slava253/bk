@@ -826,3 +826,905 @@
     </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>WHOPPER BAR • МОБИЛЬНЫЙ КЛИЕНТ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f0e8;
+            min-height: 100vh;
+        }
+
+        /* ЭКРАН АВТОРИЗАЦИИ */
+        .auth-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #c53a1f, #8b2c12);
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 48px;
+            padding: 40px 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .auth-card .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .auth-card h1 {
+            color: #c53a1f;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .auth-card p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .phone-input-row {
+            display: flex;
+            align-items: center;
+            border: 2px solid #d49b3b;
+            border-radius: 60px;
+            margin: 15px 0;
+            overflow: hidden;
+            background: white;
+        }
+
+        .phone-prefix {
+            background: #d49b3b;
+            color: white;
+            padding: 14px 18px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .phone-input-row input {
+            flex: 1;
+            border: none;
+            padding: 14px 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .auth-btn {
+            background: #c53a1f;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.1rem;
+            border-radius: 60px;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .auth-btn:active { opacity: 0.8; transform: scale(0.98); }
+
+        /* ОСНОВНОЙ ЭКРАН */
+        .app-screen {
+            display: none;
+            min-height: 100vh;
+            background: #f5f0e8;
+            padding-bottom: 80px;
+        }
+
+        /* ШАПКА */
+        .header {
+            background: #c53a1f;
+            padding: 15px 20px;
+            padding-top: 50px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .header h2 {
+            font-size: 1.3rem;
+        }
+
+        .crown-badge {
+            background: #f5a623;
+            padding: 8px 15px;
+            border-radius: 40px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ТАБЫ */
+        .tabs {
+            display: flex;
+            background: white;
+            margin: 15px 20px;
+            border-radius: 60px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab.active {
+            background: #c53a1f;
+            color: white;
+        }
+
+        /* КАТЕГОРИИ */
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 0 20px 15px;
+            white-space: nowrap;
+        }
+
+        .cat-btn {
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .cat-btn.active {
+            background: #c53a1f;
+            color: white;
+        }
+
+        /* ТОВАРЫ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .product-card:active {
+            transform: scale(0.97);
+            background: #f0f0f0;
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-weight: 800;
+            color: #c53a1f;
+            font-size: 1.1rem;
+        }
+
+        /* КОРЗИНА */
+        .cart-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #c53a1f;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f5a623;
+            color: #333;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* МОДАЛЬНОЕ ОКНО КОРЗИНЫ */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 30px 30px 0 0;
+            max-height: 80vh;
+            z-index: 200;
+            flex-direction: column;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+        }
+
+        .cart-modal.show {
+            display: flex;
+        }
+
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            max-height: 50vh;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-info {
+            flex: 2;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-qty-btn {
+            background: #c53a1f;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pay-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 16px;
+            margin: 15px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+        }
+
+        /* ИСТОРИЯ */
+        .history-list {
+            padding: 0 20px;
+        }
+
+        .history-card {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .history-number {
+            color: #c53a1f;
+            font-size: 1.1rem;
+        }
+
+        .history-status {
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .status-waiting { background: #ff9800; color: white; }
+        .status-ready { background: #4CAF50; color: white; }
+        .status-done { background: #999; color: white; }
+
+        .history-items {
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 50px;
+            color: #999;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 40px;
+            z-index: 300;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #c53a1f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- ЭКРАН ВХОДА -->
+    <div id="authScreen" class="auth-screen">
+        <div class="auth-card">
+            <div class="logo">🍔</div>
+            <h1>WHOPPER BAR</h1>
+            <p>Войдите по номеру телефона</p>
+            <div class="phone-input-row">
+                <span class="phone-prefix">+7</span>
+                <input type="tel" id="loginPhone" placeholder="999 999 99 99" maxlength="10" inputmode="numeric">
+            </div>
+            <button class="auth-btn" onclick="login()">Войти</button>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ ЭКРАН -->
+    <div id="appScreen" class="app-screen">
+        <div class="header">
+            <h2><i class="fas fa-burger"></i> WHOPPER BAR</h2>
+            <div class="crown-badge">
+                <i class="fas fa-crown"></i> <span id="userCrowns">0</span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="menu">🍔 МЕНЮ</div>
+            <div class="tab" data-tab="history">📋 ИСТОРИЯ</div>
+        </div>
+
+        <!-- ВКЛАДКА МЕНЮ -->
+        <div id="menuTab">
+            <div class="categories" id="categories"></div>
+            <div id="productsGrid" class="products-grid"></div>
+        </div>
+
+        <!-- ВКЛАДКА ИСТОРИЯ -->
+        <div id="historyTab" style="display: none;">
+            <div id="historyList" class="history-list"></div>
+        </div>
+    </div>
+
+    <!-- ПЛАВАЮЩАЯ КОРЗИНА -->
+    <div class="cart-fab" id="cartFab" onclick="openCart()">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+    </div>
+
+    <!-- МОДАЛКА КОРЗИНЫ -->
+    <div class="overlay" id="overlay" onclick="closeCart()"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <span>🛒 КОРЗИНА</span>
+            <i class="fas fa-times" onclick="closeCart()" style="cursor:pointer"></i>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total">
+            <span>ИТОГО:</span>
+            <span id="cartTotal">0 ₽</span>
+        </div>
+        <button class="pay-btn" onclick="checkout()">💳 ОФОРМИТЬ ЗАКАЗ</button>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlZ5ZtyTXgtXxSJAx1jOxwhTrzlHRJmo",
+            authDomain: "bk-cashier.firebaseapp.com",
+            databaseURL: "https://bk-cashier-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "bk-cashier",
+            storageBucket: "bk-cashier.firebasestorage.app",
+            messagingSenderId: "385000840969",
+            appId: "1:385000840969:web:1ec8d09176b6551dc0fdd8"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // ТОВАРЫ
+        const products = [
+            { id: 1, name: 'Воппер', price: 199, category: 'burger' },
+            { id: 2, name: 'Чизбургер', price: 89, category: 'burger' },
+            { id: 3, name: 'Двойной Воппер', price: 329, category: 'burger' },
+            { id: 4, name: 'Воппер с сыром', price: 249, category: 'burger' },
+            { id: 5, name: 'Бекон Воппер', price: 299, category: 'burger' },
+            { id: 6, name: 'Гамбургер', price: 69, category: 'burger' },
+            { id: 7, name: 'Биг Кинг', price: 279, category: 'burger' },
+            { id: 8, name: 'Острый Воппер', price: 269, category: 'burger' },
+            { id: 9, name: 'Лонг Чикен', price: 219, category: 'chicken' },
+            { id: 10, name: 'Лонг Чикен BBQ', price: 239, category: 'chicken' },
+            { id: 11, name: 'Стрипсы 3шт', price: 149, category: 'chicken' },
+            { id: 12, name: 'Стрипсы 6шт', price: 269, category: 'chicken' },
+            { id: 13, name: 'Наггетсы 6шт', price: 159, category: 'chicken' },
+            { id: 14, name: 'Наггетсы 9шт', price: 219, category: 'chicken' },
+            { id: 15, name: 'Крылья 6шт', price: 239, category: 'chicken' },
+            { id: 16, name: 'Картофель фри мал', price: 89, category: 'snack' },
+            { id: 17, name: 'Картофель фри ср', price: 119, category: 'snack' },
+            { id: 18, name: 'Картофель фри бол', price: 149, category: 'snack' },
+            { id: 19, name: 'Луковые кольца', price: 139, category: 'snack' },
+            { id: 20, name: 'Сырные палочки', price: 159, category: 'snack' },
+            { id: 21, name: 'Хот-дог', price: 119, category: 'snack' },
+            { id: 22, name: 'Кола 0.3л', price: 79, category: 'drink' },
+            { id: 23, name: 'Кола 0.5л', price: 119, category: 'drink' },
+            { id: 24, name: 'Фанта 0.3л', price: 79, category: 'drink' },
+            { id: 25, name: 'Спрайт 0.3л', price: 79, category: 'drink' },
+            { id: 26, name: 'Морс', price: 109, category: 'drink' },
+            { id: 27, name: 'Милкшейк', price: 169, category: 'drink' },
+            { id: 28, name: 'Кофе латте', price: 149, category: 'drink' },
+            { id: 29, name: 'Пирожок вишня', price: 89, category: 'dessert' },
+            { id: 30, name: 'Пирожок яблоко', price: 89, category: 'dessert' },
+            { id: 31, name: 'Мороженое', price: 69, category: 'dessert' },
+            { id: 32, name: 'Чизкейк', price: 199, category: 'dessert' },
+            { id: 33, name: 'Брауни', price: 149, category: 'dessert' },
+            { id: 34, name: 'Комбо Воппер', price: 349, category: 'combo' },
+            { id: 35, name: 'Комбо Чикен', price: 329, category: 'combo' },
+            { id: 36, name: 'Комбо Стрипсы', price: 299, category: 'combo' },
+            { id: 37, name: 'Комбо Семейное', price: 799, category: 'combo' }
+        ];
+
+        const categories = [
+            { id: 'all', name: 'ВСЁ', icon: '' },
+            { id: 'burger', name: '🍔 БУРГЕРЫ', icon: '' },
+            { id: 'chicken', name: '🐔 ЧИКЕН', icon: '' },
+            { id: 'snack', name: '🍟 СНЭКИ', icon: '' },
+            { id: 'drink', name: '🥤 НАПИТКИ', icon: '' },
+            { id: 'dessert', name: '🍰 ДЕСЕРТЫ', icon: '' },
+            { id: 'combo', name: '📦 КОМБО', icon: '' }
+        ];
+
+        let currentUser = {
+            id: null,
+            phone: null,
+            name: null,
+            crowns: 0
+        };
+
+        let cart = [];
+        let currentCategory = 'all';
+        let orders = [];
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // ВХОД
+        window.login = () => {
+            let phone = document.getElementById('loginPhone').value.trim();
+            
+            // Очистка номера от лишних символов
+            phone = phone.replace(/\D/g, '');
+            
+            if (!phone || phone.length < 10) {
+                showToast('❌ Введите номер полностью (10 цифр)');
+                return;
+            }
+            
+            const fullPhone = '+7' + phone;
+            
+            showToast('⏳ Вход...');
+            
+            db.ref('users').orderByChild('phone').equalTo(fullPhone).once('value', (snapshot) => {
+                console.log('Поиск пользователя:', fullPhone);
+                console.log('Найдено:', snapshot.exists());
+                
+                if (snapshot.exists()) {
+                    snapshot.forEach((child) => {
+                        currentUser.id = child.key;
+                        currentUser.phone = child.val().phone;
+                        currentUser.name = child.val().name || 'Клиент';
+                        currentUser.crowns = child.val().crowns || 0;
+                    });
+                    showToast('✅ Добро пожаловать, ' + currentUser.name);
+                } else {
+                    // Создаём нового пользователя
+                    currentUser.id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+                    currentUser.phone = fullPhone;
+                    currentUser.name = 'Клиент';
+                    currentUser.crowns = 0;
+                    
+                    const newUser = {
+                        id: currentUser.id,
+                        phone: currentUser.phone,
+                        name: currentUser.name,
+                        crowns: 0,
+                        addresses: [],
+                        createdAt: Date.now()
+                    };
+                    
+                    db.ref('users/' + currentUser.id).set(newUser).then(() => {
+                        showToast('✅ Новый аккаунт создан!');
+                    }).catch(err => {
+                        console.error('Ошибка создания:', err);
+                        showToast('❌ Ошибка создания аккаунта');
+                    });
+                }
+                
+                // Переключаем экран
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('appScreen').style.display = 'block';
+                document.getElementById('userCrowns').innerText = currentUser.crowns;
+                
+                // Загружаем данные
+                loadHistory();
+                renderCategories();
+                renderProducts();
+                updateCartUI();
+                
+            }).catch(err => {
+                console.error('Ошибка входа:', err);
+                showToast('❌ Ошибка подключения к серверу');
+            });
+        };
+
+        // ЗАГРУЗКА ИСТОРИИ
+        function loadHistory() {
+            db.ref('orders').orderByChild('userId').equalTo(currentUser.id).on('value', (snapshot) => {
+                orders = [];
+                snapshot.forEach((child) => {
+                    orders.push({ id: child.key, ...child.val() });
+                });
+                orders.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                renderHistory();
+            });
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            if (!container) return;
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<div class="empty-message">📭 У вас пока нет заказов</div>';
+                return;
+            }
+            
+            container.innerHTML = orders.map(order => {
+                let statusText = '';
+                let statusClass = '';
+                if (order.status === 'waiting') { statusText = '⏳ Готовится'; statusClass = 'status-waiting'; }
+                else if (order.status === 'ready') { statusText = '✅ Готов'; statusClass = 'status-ready'; }
+                else if (order.status === 'done') { statusText = '✔️ Выдан'; statusClass = 'status-done'; }
+                else { statusText = '📝 Оформлен'; statusClass = 'status-waiting'; }
+                
+                const itemsList = order.items.map(i => `${i.name} x${i.quantity}`).join(', ');
+                const date = new Date(order.createdAt).toLocaleString('ru-RU');
+                
+                return `
+                    <div class="history-card">
+                        <div class="history-header">
+                            <span class="history-number">#${order.id}</span>
+                            <span class="history-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="history-items">${itemsList}</div>
+                        <div style="font-size:0.7rem; color:#999; margin-top:8px;">${date}</div>
+                        <div style="font-weight:bold; margin-top:8px;">${order.total} ₽</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // КАТЕГОРИИ
+        function renderCategories() {
+            const container = document.getElementById('categories');
+            if (!container) return;
+            
+            container.innerHTML = categories.map(cat => `
+                <button class="cat-btn ${cat.id === currentCategory ? 'active' : ''}" data-cat="${cat.id}">
+                    ${cat.name}
+                </button>
+            `).join('');
+            
+            // Добавляем обработчики
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.dataset.cat;
+                    renderProducts();
+                });
+            });
+        }
+
+        // ТОВАРЫ
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            
+            const filtered = currentCategory === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentCategory);
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-message">Нет товаров в этой категории</div>';
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(p => `
+                <div class="product-card" onclick="addToCart(${p.id})">
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-price">${p.price} ₽</div>
+                </div>
+            `).join('');
+        }
+
+        // КОРЗИНА
+        window.addToCart = (productId) => {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existing = cart.find(i => i.id === productId);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCartUI();
+            showToast(`✅ ${product.name} добавлен`);
+        };
+
+        function updateCartUI() {
+            const count = cart.reduce((s, i) => s + i.quantity, 0);
+            const countSpan = document.getElementById('cartCount');
+            if (countSpan) countSpan.innerText = count;
+            
+            const itemsDiv = document.getElementById('cartItems');
+            if (!itemsDiv) return;
+            
+            if (cart.length === 0) {
+                itemsDiv.innerHTML = '<div style="text-align:center; padding:30px; color:#999;">Корзина пуста</div>';
+                const totalSpan = document.getElementById('cartTotal');
+                if (totalSpan) totalSpan.innerText = '0 ₽';
+                return;
+            }
+            
+            let total = 0;
+            itemsDiv.innerHTML = cart.map(item => {
+                total += item.price * item.quantity;
+                return `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div>${item.price} ₽ × ${item.quantity}</div>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button class="cart-qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+                            <span>${item.quantity}</span>
+                            <button class="cart-qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                            <button class="cart-qty-btn" onclick="removeItem(${item.id})" style="background:#999;">✕</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            const totalSpan = document.getElementById('cartTotal');
+            if (totalSpan) totalSpan.innerText = total + ' ₽';
+        }
+
+        window.changeQty = (id, delta) => {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                updateCartUI();
+            }
+        };
+
+        window.removeItem = (id) => {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        };
+
+        window.openCart = () => {
+            const modal = document.getElementById('cartModal');
+            const overlay = document.getElementById('overlay');
+            if (modal) modal.classList.add('show');
+            if (overlay) overlay.style.display = 'block';
+            updateCartUI();
+        };
+
+        window.closeCart = () => {
+            const modal = document.getElementById('cartModal');
+            const overlay = document.getElementById('overlay');
+            if (modal) modal.classList.remove('show');
+            if (overlay) overlay.style.display = 'none';
+        };
+
+        // ОФОРМЛЕНИЕ ЗАКАЗА
+        window.checkout = () => {
+            if (cart.length === 0) {
+                showToast('❌ Корзина пуста');
+                return;
+            }
+            
+            const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+            const crownEarned = Math.floor(total / 100);
+            const orderNum = Math.floor(1000 + Math.random() * 9000);
+            
+            const orderData = {
+                items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
+                subtotal: total,
+                delivery: 0,
+                total: total,
+                crownsEarned: crownEarned,
+                orderType: 'restaurant',
+                status: 'waiting',
+                createdAt: Date.now(),
+                userId: currentUser.id,
+                userName: currentUser.name,
+                clientPhone: currentUser.phone
+            };
+            
+            showToast('⏳ Оформление заказа...');
+            
+            db.ref('orders/' + orderNum).set(orderData).then(() => {
+                // Обновляем короны
+                const newCrowns = currentUser.crowns + crownEarned;
+                db.ref('users/' + currentUser.id + '/crowns').set(newCrowns);
+                currentUser.crowns = newCrowns;
+                
+                const crownsSpan = document.getElementById('userCrowns');
+                if (crownsSpan) crownsSpan.innerText = newCrowns;
+                
+                showToast(`✅ Заказ #${orderNum} оформлен!`);
+                cart = [];
+                updateCartUI();
+                closeCart();
+                loadHistory();
+            }).catch(err => {
+                console.error('Ошибка заказа:', err);
+                showToast('❌ Ошибка оформления заказа');
+            });
+        };
+
+        // ПЕРЕКЛЮЧЕНИЕ ТАБОВ
+        function switchTab(tabName) {
+            const menuTab = document.getElementById('menuTab');
+            const historyTab = document.getElementById('historyTab');
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            if (tabName === 'menu') {
+                if (menuTab) menuTab.style.display = 'block';
+                if (historyTab) historyTab.style.display = 'none';
+                tabs[0]?.classList.add('active');
+            } else {
+                if (menuTab) menuTab.style.display = 'none';
+                if (historyTab) historyTab.style.display = 'block';
+                tabs[1]?.classList.add('active');
+                loadHistory();
+            }
+        }
+
+        // Обработчики табов
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                switchTab(tabName);
+            });
+        });
+
+        // Инициализация при загрузке
+        renderCategories();
+        renderProducts();
+    </script>
+</body>
+</html>
