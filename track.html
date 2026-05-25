@@ -1,58 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Отслеживание заказа</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>КЛИЕНТ • WHOPPER BAR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #f8f2e6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 16px;
-        }
-        .card {
-            background: white;
-            border-radius: 48px;
-            padding: 32px;
-            max-width: 500px;
-            width: 100%;
-            border: 4px solid #fec233;
-            text-align: center;
-        }
-        .big-number {
-            font-size: 4rem;
-            font-weight: 900;
-            background: #fff2d7;
-            padding: 20px;
-            border-radius: 40px;
-            margin: 20px 0;
-        }
-        .status {
-            font-size: 2rem;
-            padding: 20px;
-            border-radius: 60px;
-            margin: 20px 0;
-        }
-        .waiting { background: #ff9800; color: white; }
-        .ready { background: #4CAF50; color: white; }
-        .done { background: #808080; color: white; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, 'Segoe UI', sans-serif; }
+        body { background: #f5f0e8; min-height: 100vh; padding-bottom: 80px; }
+        .header { background: #c53a1f; padding: 15px 20px; padding-top: 50px; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .crown-badge { background: #f5a623; padding: 8px 15px; border-radius: 40px; font-weight: bold; }
+        .tabs { display: flex; background: white; margin: 15px 20px; border-radius: 60px; padding: 5px; }
+        .tab { flex: 1; text-align: center; padding: 12px; border-radius: 50px; font-weight: bold; cursor: pointer; }
+        .tab.active { background: #c53a1f; color: white; }
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px 15px; white-space: nowrap; }
+        .cat-btn { background: white; border: none; padding: 10px 20px; border-radius: 40px; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer; }
+        .cat-btn.active { background: #c53a1f; color: white; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding: 0 20px; }
+        .product-card { background: white; border-radius: 20px; padding: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer; }
+        .product-card:active { transform: scale(0.97); }
+        .product-name { font-weight: 700; }
+        .product-price { font-weight: 800; color: #c53a1f; margin-top: 5px; }
+        .cart-fab { position: fixed; bottom: 20px; right: 20px; background: #c53a1f; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; }
+        .cart-badge { position: absolute; top: -5px; right: -5px; background: #f5a623; border-radius: 50%; width: 22px; height: 22px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+        .cart-modal { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; border-radius: 30px 30px 0 0; max-height: 80vh; z-index: 200; flex-direction: column; }
+        .cart-modal.show { display: flex; }
+        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: bold; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 15px; max-height: 50vh; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .cart-item-controls { display: flex; gap: 10px; align-items: center; }
+        .cart-qty-btn { background: #c53a1f; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; }
+        .cart-total { padding: 20px; border-top: 1px solid #eee; font-size: 1.3rem; font-weight: bold; display: flex; justify-content: space-between; }
+        .pay-btn { background: #4CAF50; color: white; border: none; padding: 16px; margin: 15px 20px; border-radius: 40px; font-weight: bold; cursor: pointer; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 150; }
+        .order-card { background: white; border-radius: 20px; padding: 15px; margin: 10px 20px; }
+        .order-status { display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: bold; }
+        .status-1 { background: #ff9800; color: white; }
+        .status-2 { background: #2196F3; color: white; }
+        .status-3 { background: #4CAF50; color: white; }
+        .status-4 { background: #999; color: white; }
+        .qr-container { text-align: center; padding: 20px; background: white; margin: 10px 20px; border-radius: 20px; }
+        .pickup-code { font-size: 2rem; letter-spacing: 5px; font-weight: bold; background: #1a1a2e; color: #f5a623; padding: 15px; border-radius: 20px; text-align: center; margin: 10px 20px; font-family: monospace; }
+        .toast { position: fixed; bottom: 100px; left: 20px; right: 20px; background: #333; color: white; text-align: center; padding: 12px; border-radius: 40px; z-index: 300; opacity: 0; transition: 0.2s; }
+        .toast.show { opacity: 1; }
+        .delivery-select { margin: 10px 20px; background: white; border-radius: 20px; padding: 15px; }
+        .delivery-select select { width: 100%; padding: 12px; border-radius: 40px; border: 2px solid #c53a1f; margin-top: 10px; }
+        .address-input { width: 100%; padding: 12px; border-radius: 40px; border: 2px solid #c53a1f; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>🍔 BURGER KING</h1>
-        <div id="content">Загрузка...</div>
+    <div id="authScreen" class="auth-screen" style="display:flex; align-items:center; justify-content:center; min-height:100vh; background:linear-gradient(135deg,#c53a1f,#8b2c12); padding:20px;">
+        <div style="background:white; border-radius:48px; padding:40px 30px; text-align:center; max-width:350px;">
+            <div style="font-size:3rem;">🍔</div>
+            <h1>WHOPPER BAR</h1>
+            <p>Введите номер телефона</p>
+            <div style="display:flex; border:2px solid #d49b3b; border-radius:60px; margin:20px 0; overflow:hidden;">
+                <span style="background:#d49b3b; color:white; padding:14px 18px;">+7</span>
+                <input type="tel" id="loginPhone" placeholder="999 999 99 99" maxlength="10" style="flex:1; border:none; padding:14px; outline:none;">
+            </div>
+            <button onclick="login()" style="background:#c53a1f; color:white; border:none; padding:16px; border-radius:60px; width:100%; font-weight:bold; cursor:pointer;">Войти</button>
+        </div>
     </div>
+
+    <div id="appScreen" style="display:none;">
+        <div class="header">
+            <h2><i class="fas fa-burger"></i> WHOPPER BAR</h2>
+            <div class="crown-badge"><i class="fas fa-crown"></i> <span id="userCrowns">0</span></div>
+        </div>
+        <div class="tabs">
+            <div class="tab active" data-tab="menu">🍔 МЕНЮ</div>
+            <div class="tab" data-tab="orders">📦 МОИ ЗАКАЗЫ</div>
+        </div>
+        
+        <div id="menuTab">
+            <div class="categories" id="categories"></div>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+        
+        <div id="ordersTab" style="display:none;">
+            <div id="ordersList"></div>
+        </div>
+    </div>
+
+    <div class="cart-fab" onclick="openCart()"><i class="fas fa-shopping-basket"></i><span class="cart-badge" id="cartCount">0</span></div>
+    <div class="overlay" id="overlay" onclick="closeCart()"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header"><span>🛒 КОРЗИНА</span><i class="fas fa-times" onclick="closeCart()" style="cursor:pointer"></i></div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="delivery-select">
+            <label><i class="fas fa-store"></i> Способ получения:</label>
+            <select id="deliveryType">
+                <option value="pickup">🏪 Самовывоз (ПВЗ)</option>
+                <option value="delivery">🚚 Доставка курьером</option>
+            </select>
+            <div id="addressField" style="display:none;">
+                <input type="text" id="deliveryAddress" class="address-input" placeholder="Введите адрес доставки">
+            </div>
+        </div>
+        <div class="cart-total"><span>ИТОГО:</span><span id="cartTotal">0 ₽</span></div>
+        <button class="pay-btn" onclick="createOrder()">📦 ОФОРМИТЬ ЗАКАЗ</button>
+    </div>
+    <div id="toast" class="toast"></div>
 
     <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyBlZ5ZtyTXgtXxSXJAx1jOxwhTrzlHRJmo",
+            apiKey: "AIzaSyBlZ5ZtyTXgtXxSJAx1jOxwhTrzlHRJmo",
             authDomain: "bk-cashier.firebaseapp.com",
             databaseURL: "https://bk-cashier-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "bk-cashier",
@@ -60,39 +115,160 @@
             messagingSenderId: "385000840969",
             appId: "1:385000840969:web:1ec8d09176b6551dc0fdd8"
         };
-
         firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderNum = urlParams.get('order');
+        const products = [
+            { id: 1, name: 'Воппер', price: 199, category: 'burger' },
+            { id: 2, name: 'Чизбургер', price: 89, category: 'burger' },
+            { id: 3, name: 'Двойной Воппер', price: 329, category: 'burger' },
+            { id: 4, name: 'Лонг Чикен', price: 219, category: 'chicken' },
+            { id: 5, name: 'Наггетсы 6шт', price: 159, category: 'chicken' },
+            { id: 6, name: 'Картофель фри', price: 119, category: 'snack' },
+            { id: 7, name: 'Кола 0.5л', price: 119, category: 'drink' },
+            { id: 8, name: 'Мороженое', price: 69, category: 'dessert' }
+        ];
+        const categories = [{id:'all',name:'ВСЁ'},{id:'burger',name:'🍔 БУРГЕРЫ'},{id:'chicken',name:'🐔 ЧИКЕН'},{id:'snack',name:'🍟 СНЭКИ'},{id:'drink',name:'🥤 НАПИТКИ'},{id:'dessert',name:'🍰 ДЕСЕРТЫ'}];
 
-        if (!orderNum) {
-            document.getElementById('content').innerHTML = '❌ Не указан номер заказа';
-        } else {
-            firebase.database().ref('orders/' + orderNum).on('value', (snapshot) => {
-                const order = snapshot.val();
-                if (!order) {
-                    document.getElementById('content').innerHTML = '❌ Заказ не найден';
-                    return;
+        let currentUser = { id: null, phone: null, crowns: 0 };
+        let cart = [], currentCategory = 'all', orders = [];
+
+        function showToast(msg) { const t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
+
+        window.login = () => {
+            let phone = document.getElementById('loginPhone').value.trim().replace(/\D/g,'');
+            if(phone.length<10){ showToast('Введите номер полностью'); return; }
+            const fullPhone = '+7'+phone;
+            db.ref('users').orderByChild('phone').equalTo(fullPhone).once('value', (snapshot) => {
+                if(snapshot.exists()){ snapshot.forEach(c=>{ currentUser.id=c.key; currentUser.phone=c.val().phone; currentUser.crowns=c.val().crowns||0; }); }
+                else {
+                    currentUser.id = 'user_'+Date.now()+'_'+Math.random().toString(36).substr(2,6);
+                    currentUser.phone = fullPhone; currentUser.crowns = 0;
+                    db.ref('users/'+currentUser.id).set({id:currentUser.id, phone:currentUser.phone, name:'Клиент', crowns:0});
                 }
+                document.getElementById('authScreen').style.display='none';
+                document.getElementById('appScreen').style.display='block';
+                document.getElementById('userCrowns').innerText = currentUser.crowns;
+                loadOrders();
+                renderCategories();
+                renderProducts();
+                updateCartUI();
+            });
+        };
 
-                let statusClass = 'waiting';
-                let statusText = '⏳ ГОТОВИТСЯ';
-                
-                if (order.status === 'ready') {
-                    statusClass = 'ready';
-                    statusText = '✅ ГОТОВ К ВЫДАЧЕ';
-                } else if (order.status === 'done') {
-                    statusClass = 'done';
-                    statusText = '🛒 ЗАКАЗ ВЫДАН';
-                }
-
-                document.getElementById('content').innerHTML = `
-                    <div class="big-number">#${orderNum}</div>
-                    <div class="status ${statusClass}">${statusText}</div>
-                `;
+        function loadOrders() {
+            db.ref('orders').orderByChild('userId').equalTo(currentUser.id).on('value', (s)=>{
+                orders=[]; s.forEach(c=>orders.push({id:c.key, ...c.val()}));
+                orders.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+                renderOrders();
             });
         }
+
+        function getStatusText(status) {
+            const map = {
+                'waiting_pickup': '⏳ Ожидает отправки',
+                'to_pickup': '🚚 Едет в пункт выдачи',
+                'ready': '✅ Готов к получению',
+                'delivered': '📦 Выдан',
+                'with_courier': '🚚 У курьера',
+                'courier_arrived': '🚪 Курьер приехал'
+            };
+            return map[status] || '⏳ Обрабатывается';
+        }
+
+        function getStatusClass(status) {
+            const map = { 'waiting_pickup':'status-1', 'to_pickup':'status-2', 'ready':'status-3', 'delivered':'status-4', 'with_courier':'status-2', 'courier_arrived':'status-3' };
+            return map[status] || 'status-1';
+        }
+
+        function renderOrders() {
+            const container = document.getElementById('ordersList');
+            if(orders.length===0){ container.innerHTML='<div class="empty-message" style="text-align:center;padding:50px;">📭 У вас пока нет заказов</div>'; return; }
+            container.innerHTML = orders.map(o=>{
+                const statusText = getStatusText(o.status);
+                const statusClass = getStatusClass(o.status);
+                const typeIcon = o.deliveryType==='delivery'?'🚚 Доставка':'🏪 Самовывоз';
+                const pickupCodeHtml = o.pickupCode ? `<div class="pickup-code">Код: ${o.pickupCode}</div>` : '';
+                const qrHtml = o.status !== 'delivered' && o.pickupCode ? `<div class="qr-container" id="qr-${o.id}"></div><script>new QRCode(document.getElementById("qr-${o.id}"), { text: "${o.pickupCode}", width: 150, height: 150 });<\/script>` : '';
+                return `<div class="order-card"><div class="order-header" style="display:flex; justify-content:space-between;"><span style="font-weight:bold;">#${o.id}</span><span>${typeIcon}</span></div><div>${o.items.map(i=>`${i.name} x${i.quantity}`).join(', ')}</div><div style="margin:10px 0;"><span class="order-status ${statusClass}">${statusText}</span></div><div style="font-weight:bold;">${o.total} ₽</div>${pickupCodeHtml}${qrHtml}</div>`;
+            }).join('');
+            orders.forEach(o=>{ if(o.pickupCode && o.status !== 'delivered'){ try{ new QRCode(document.getElementById(`qr-${o.id}`), { text: o.pickupCode, width: 150, height: 150 }); }catch(e){} } });
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categories');
+            container.innerHTML = categories.map(c=>`<button class="cat-btn ${c.id===currentCategory?'active':''}" data-cat="${c.id}">${c.name}</button>`).join('');
+            document.querySelectorAll('.cat-btn').forEach(btn=>btn.addEventListener('click',function(){
+                document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+                this.classList.add('active'); currentCategory=this.dataset.cat; renderProducts();
+            }));
+        }
+
+        function renderProducts() {
+            const filtered = currentCategory==='all' ? products : products.filter(p=>p.category===currentCategory);
+            document.getElementById('productsGrid').innerHTML = filtered.map(p=>`<div class="product-card" onclick="addToCart(${p.id})"><div class="product-name">${p.name}</div><div class="product-price">${p.price} ₽</div></div>`).join('');
+        }
+
+        window.addToCart = (id) => {
+            const product = products.find(p=>p.id===id);
+            const existing = cart.find(i=>i.id===id);
+            if(existing) existing.quantity++;
+            else cart.push({...product, quantity:1});
+            updateCartUI();
+            showToast(`✅ ${product.name} добавлен`);
+        };
+
+        function updateCartUI() {
+            const count = cart.reduce((s,i)=>s+i.quantity,0);
+            document.getElementById('cartCount').innerText = count;
+            if(cart.length===0){ document.getElementById('cartItems').innerHTML='<div style="text-align:center;padding:30px;">Корзина пуста</div>'; document.getElementById('cartTotal').innerText='0 ₽'; return; }
+            let total=0;
+            document.getElementById('cartItems').innerHTML = cart.map(item=>{
+                total+=item.price*item.quantity;
+                return `<div class="cart-item"><div><div style="font-weight:600;">${item.name}</div><div>${item.price} ₽ × ${item.quantity}</div></div><div class="cart-item-controls"><button class="cart-qty-btn" onclick="changeQty(${item.id},-1)">−</button><span>${item.quantity}</span><button class="cart-qty-btn" onclick="changeQty(${item.id},1)">+</button><button class="cart-qty-btn" onclick="removeItem(${item.id})" style="background:#999;">✕</button></div></div>`;
+            }).join('');
+            document.getElementById('cartTotal').innerText = total+' ₽';
+            
+            const deliveryType = document.getElementById('deliveryType').value;
+            document.getElementById('addressField').style.display = deliveryType === 'delivery' ? 'block' : 'none';
+        }
+
+        window.changeQty = (id, delta) => { const item = cart.find(i=>i.id===id); if(item){ item.quantity+=delta; if(item.quantity<=0) cart=cart.filter(i=>i.id!==id); updateCartUI(); } };
+        window.removeItem = (id) => { cart=cart.filter(i=>i.id!==id); updateCartUI(); };
+        window.openCart = () => { document.getElementById('cartModal').classList.add('show'); document.getElementById('overlay').style.display='block'; updateCartUI(); };
+        window.closeCart = () => { document.getElementById('cartModal').classList.remove('show'); document.getElementById('overlay').style.display='none'; };
+
+        document.getElementById('deliveryType').onchange = () => updateCartUI();
+
+        window.createOrder = () => {
+            if(cart.length===0){ showToast('Корзина пуста'); return; }
+            const total = cart.reduce((s,i)=>s+i.price*i.quantity,0);
+            const deliveryType = document.getElementById('deliveryType').value;
+            const address = deliveryType === 'delivery' ? document.getElementById('deliveryAddress').value : null;
+            if(deliveryType === 'delivery' && !address){ showToast('Введите адрес доставки'); return; }
+            const orderNum = Math.floor(1000+Math.random()*9000);
+            const pickupCode = Math.floor(100000+Math.random()*900000).toString();
+            const status = deliveryType === 'pickup' ? 'waiting_pickup' : 'waiting_pickup';
+            db.ref('orders/'+orderNum).set({
+                items: cart.map(i=>({id:i.id, name:i.name, price:i.price, quantity:i.quantity})),
+                total: total, deliveryType: deliveryType, address: address,
+                status: status, pickupCode: pickupCode,
+                createdAt: Date.now(), userId: currentUser.id, clientPhone: currentUser.phone
+            }).then(()=>{
+                showToast(`✅ Заказ #${orderNum} оформлен! Код: ${pickupCode}`);
+                cart = []; updateCartUI(); closeCart(); loadOrders();
+            });
+        };
+
+        document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',function(){
+            document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+            this.classList.add('active');
+            const tabName = this.dataset.tab;
+            document.getElementById('menuTab').style.display = tabName==='menu'?'block':'none';
+            document.getElementById('ordersTab').style.display = tabName==='orders'?'block':'none';
+            if(tabName==='orders') loadOrders();
+        }));
+        renderCategories(); renderProducts();
     </script>
 </body>
 </html>
