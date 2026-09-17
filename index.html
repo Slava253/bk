@@ -2,39 +2,70 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover, maximum-scale=1.0">
 <meta name="theme-color" content="#0f0f1e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Мой Банк">
+<meta name="format-detection" content="telephone=no">
 <title>Мой Банк</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23667eea'/%3E%3Ctext x='50' y='68' font-size='54' text-anchor='middle'%3E%F0%9F%92%B3%3C/text%3E%3C/svg%3E">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
 
-  body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    padding: 20px;
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: fixed;
+    width: 100%;
+    background: #0f0f1e;
   }
 
+  body {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    background: #0f0f1e;
+    padding: 0;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  input, textarea { -webkit-user-select: text; user-select: text; }
+
+  /* На десктопе — рамка телефона, на мобильном — на весь экран */
   .app {
     width: 100%;
-    max-width: 400px;
-    height: 780px;
+    max-width: 100%;
+    height: 100vh;
+    height: 100dvh;
     position: relative;
     background: linear-gradient(135deg, #0f0f1e 0%, #16213e 100%);
-    border-radius: 32px;
     overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  @media (min-width: 500px) {
+    body { padding: 20px; align-items: center; }
+    .app {
+      max-width: 400px;
+      height: 780px;
+      max-height: 95vh;
+      border-radius: 32px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
   }
 
   .screen {
     position: absolute;
     inset: 0;
-    padding: 24px 20px 100px;
+    padding: calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
     display: none;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     animation: fadeIn .35s ease;
   }
   .screen.active { display: block; }
@@ -81,6 +112,9 @@
   .btn:active { transform: scale(0.98); }
   .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
   .btn.green { background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 8px 24px rgba(34,197,94,0.3); }
+  .btn.red { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 8px 24px rgba(239,68,68,0.3); }
+  .btn.gray { background: rgba(255,255,255,0.08); box-shadow: none; }
+  .btn.gray:hover { background: rgba(255,255,255,0.14); box-shadow: none; }
 
   .back-link {
     display: block;
@@ -118,7 +152,10 @@
     background: linear-gradient(135deg, #667eea, #764ba2);
     display: flex; align-items: center; justify-content: center;
     color: #fff; font-weight: 600; font-size: 16px;
+    cursor: pointer;
+    transition: .25s;
   }
+  .avatar:active { transform: scale(0.94); }
 
   .balance-card {
     border-radius: 22px;
@@ -184,8 +221,6 @@
     margin-bottom: 8px;
     transition: .2s;
   }
-  .tx-item:hover { background: rgba(255,255,255,0.07); }
-
   .tx-icon {
     width: 40px; height: 40px;
     border-radius: 12px;
@@ -195,11 +230,9 @@
   }
   .tx-icon.in { background: rgba(34,197,94,0.15); color: #22c55e; }
   .tx-icon.out { background: rgba(239,68,68,0.15); color: #ef4444; }
-
   .tx-info { flex: 1; min-width: 0; }
   .tx-title { color: #fff; font-size: 14px; font-weight: 500; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .tx-date { color: #6b7280; font-size: 11px; }
-
   .tx-amount { font-size: 15px; font-weight: 600; white-space: nowrap; }
   .tx-amount.in { color: #22c55e; }
   .tx-amount.out { color: #fff; }
@@ -292,12 +325,13 @@
   .bottom-nav {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    padding: 16px 20px 22px;
+    padding: 16px 20px calc(22px + env(safe-area-inset-bottom));
     display: flex;
     justify-content: center;
     gap: 14px;
     background: linear-gradient(to top, #0f0f1e 60%, transparent);
     pointer-events: none;
+    z-index: 100;
   }
   .nav-btn {
     width: 130px;
@@ -306,6 +340,7 @@
     border: 1px solid rgba(255,255,255,0.12);
     background: rgba(255,255,255,0.06);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     cursor: pointer;
     transition: .3s cubic-bezier(.4,0,.2,1);
     display: flex;
@@ -341,14 +376,12 @@
     transition: .3s;
   }
   .nav-btn.active svg { stroke: #fff; }
-  .nav-btn:hover svg { stroke: #cbd5e1; }
-  .nav-btn.active:hover svg { stroke: #fff; }
 
   .center-screen {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center;
-    min-height: 600px;
+    min-height: 70vh;
   }
 
   .spinner {
@@ -426,7 +459,7 @@
   }
   .receipt-row:not(:last-child) { border-bottom: 1px solid rgba(255,255,255,0.06); }
   .receipt-label { color: #6b7280; }
-  .receipt-value { color: #fff; font-weight: 500; }
+  .receipt-value { color: #fff; font-weight: 500; text-align: right; }
 
   .loader {
     width: 40px; height: 40px;
@@ -437,33 +470,223 @@
     animation: spin 1s linear infinite;
   }
 
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: rgba(34,197,94,0.95);
-    color: #fff;
-    padding: 14px 24px;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: 500;
-    z-index: 9999;
-    transition: .35s cubic-bezier(.4,0,.2,1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    opacity: 0;
-    max-width: 90%;
-    text-align: center;
+  /* ---------- PIN-КОД ---------- */
+  .pin-dots {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 30px 0 40px;
   }
-  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-  .toast.error { background: rgba(239,68,68,0.95); }
+  .pin-dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid #4b5563;
+    background: transparent;
+    transition: .2s;
+  }
+  .pin-dot.filled {
+    background: #667eea;
+    border-color: #667eea;
+    transform: scale(1.15);
+    box-shadow: 0 0 12px rgba(102,126,234,0.6);
+  }
+  .pin-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .pin-key {
+    height: 62px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pin-key:hover { background: rgba(255,255,255,0.12); }
+  .pin-key:active {
+    background: rgba(102,126,234,0.4);
+    transform: scale(0.94);
+  }
+  .pin-key.empty { background: transparent; border: none; pointer-events: none; }
+  .pin-key.action { font-size: 20px; }
+
+  .pin-title { color: #fff; font-size: 20px; text-align: center; margin-bottom: 8px; }
+  .pin-sub { color: #8b93a7; font-size: 13px; text-align: center; margin-bottom: 20px; }
+
+  .pin-error {
+    color: #ef4444;
+    font-size: 13px;
+    text-align: center;
+    min-height: 20px;
+    margin-bottom: 10px;
+  }
+
+  /* ---------- МОДАЛКА ПОДТВЕРЖДЕНИЯ ---------- */
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: .25s;
+  }
+  .modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: .3s cubic-bezier(.4,0,.2,1);
+  }
+  .modal-overlay.show .modal { transform: scale(1); }
+  .modal-icon {
+    width: 60px; height: 60px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: rgba(239,68,68,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+  .modal-title { color: #fff; font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .modal-text { color: #8b93a7; font-size: 13px; margin-bottom: 22px; line-height: 1.5; }
+  .modal-buttons { display: flex; gap: 10px; }
+  .modal-buttons .btn { margin-bottom: 0; padding: 14px; font-size: 14px; }
+
+  /* ---------- ВЫБОР ТИПА АККАУНТА ---------- */
+  .account-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .account-choice {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 20px;
+    cursor: pointer;
+    transition: .25s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .account-choice:hover {
+    background: rgba(102,126,234,0.15);
+    border-color: #667eea;
+    transform: translateY(-2px);
+  }
+  .account-choice.selected {
+    border-color: #667eea;
+    background: rgba(102,126,234,0.2);
+  }
+  .account-choice-icon {
+    width: 54px; height: 54px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .account-choice-icon.adult { background: linear-gradient(135deg, #667eea, #764ba2); }
+  .account-choice-icon.child { background: linear-gradient(135deg, #f59e0b, #f5576c); }
+  .account-choice-title { color: #fff; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .account-choice-desc { color: #8b93a7; font-size: 12px; line-height: 1.4; }
+
+  /* ---------- РОДИТЕЛЬСКИЙ ЭКРАН ---------- */
+  .child-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: .25s;
+  }
+  .child-item:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(102,126,234,0.5);
+  }
+  .child-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .child-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b, #f5576c);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 600; font-size: 15px;
+  }
+  .child-name { color: #fff; font-size: 15px; font-weight: 600; }
+  .child-phone { color: #6b7280; font-size: 11px; margin-top: 2px; }
+  .child-balance {
+    color: #22c55e;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: auto;
+  }
+
+  .child-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 12px;
+    color: #8b93a7;
+  }
+  .child-info-row span:last-child { color: #fff; font-weight: 500; }
+
+  .badge-child {
+    display: inline-block;
+    background: linear-gradient(135deg, #f59e0b, #f5576c);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-parent {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
 </style>
 </head>
 <body>
 
 <div class="app" id="app">
 
-  <!-- ЭКРАН ЗАГРУЗКИ -->
+  <!-- ЗАГРУЗКА -->
   <div class="screen active" id="screenLoading">
     <div class="center-screen">
       <div class="loader"></div>
@@ -471,7 +694,7 @@
     </div>
   </div>
 
-  <!-- ЭКРАН 1: ВВОД ТЕЛЕФОНА -->
+  <!-- ВВОД ТЕЛЕФОНА -->
   <div class="screen" id="screenPhone">
     <div class="auth-box">
       <div class="logo">💳</div>
@@ -480,32 +703,129 @@
       <input type="tel" id="phoneInput" placeholder="+7 900 000-00-00" style="text-align:center; font-size:18px;">
       <button class="btn" id="phoneBtn" disabled>Продолжить</button>
       <p style="color:#6b7280; font-size:11px; margin-top:20px;">
-        Если вы новый пользователь — создадим кошелёк.<br>
-        Если уже зарегистрированы — сразу войдём.
+        Новый пользователь? Создадим кошелёк.<br>
+        Уже зарегистрированы? Сразу войдём.
       </p>
     </div>
   </div>
 
-  <!-- ЭКРАН 2: РЕГИСТРАЦИЯ -->
-  <div class="screen" id="screenRegister">
+  <!-- ВЫБОР ТИПА АККАУНТА -->
+  <div class="screen" id="screenAccountType">
     <div class="auth-box">
-      <div class="logo">👤</div>
-      <h1>Знакомство</h1>
-      <p class="sub">Как вас зовут?</p>
-      <input type="text" id="firstName" placeholder="Имя" autocomplete="off">
-      <input type="text" id="lastName" placeholder="Фамилия" autocomplete="off">
-      <button class="btn" id="registerBtn" disabled>Создать кошелёк</button>
+      <div class="logo">👥</div>
+      <h1>Тип аккаунта</h1>
+      <p class="sub">Выберите, какой аккаунт создать</p>
+
+      <div class="account-choices">
+        <div class="account-choice" onclick="selectAccountType('adult')" id="choiceAdult">
+          <div class="account-choice-icon adult">👤</div>
+          <div>
+            <div class="account-choice-title">Взрослый</div>
+            <div class="account-choice-desc">Полный доступ ко всем функциям банка</div>
+          </div>
+        </div>
+
+        <div class="account-choice" onclick="selectAccountType('child')" id="choiceChild">
+          <div class="account-choice-icon child">👶</div>
+          <div>
+            <div class="account-choice-title">Детский</div>
+            <div class="account-choice-desc">Родитель сможет видеть ваши траты</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="back-link" onclick="goTo('screenPhone')">← Назад</p>
     </div>
   </div>
 
-  <!-- ЭКРАН 3: ГЛАВНЫЙ ЭКРАН -->
+  <!-- РЕГИСТРАЦИЯ -->
+  <div class="screen" id="screenRegister">
+    <div class="auth-box">
+      <div class="logo">👤</div>
+      <h1 id="regTitle">Знакомство</h1>
+      <p class="sub">Как вас зовут?</p>
+      <input type="text" id="firstName" placeholder="Имя" autocomplete="off">
+      <input type="text" id="lastName" placeholder="Фамилия" autocomplete="off">
+
+      <div id="parentPhoneWrap" style="display:none;">
+        <input type="tel" id="parentPhone" placeholder="Телефон родителя +7 900 000-00-00" style="text-align:center;">
+        <div id="parentLookupInfo" style="display:none; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3); border-radius:14px; padding:12px; margin-bottom:14px; text-align:left;">
+          <div style="color:#8b93a7; font-size:11px;">Родитель</div>
+          <div style="color:#fff; font-size:15px; font-weight:600;" id="parentName">—</div>
+        </div>
+        <div id="parentLookupError" style="display:none; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:14px; padding:12px; margin-bottom:14px; text-align:left;">
+          <div style="color:#ef4444; font-size:13px;" id="parentErrorText">Родитель не найден</div>
+        </div>
+      </div>
+
+      <button class="btn" id="registerBtn" disabled>Создать кошелёк</button>
+      <p class="back-link" onclick="goTo('screenAccountType')">← Назад</p>
+    </div>
+  </div>
+
+  <!-- СОЗДАНИЕ PIN -->
+  <div class="screen" id="screenCreatePin">
+    <div class="pin-title" id="createPinTitle">Придумайте PIN-код</div>
+    <div class="pin-sub">4 цифры для входа в приложение</div>
+    <div class="pin-error" id="createPinError"></div>
+    <div class="pin-dots">
+      <div class="pin-dot" data-i="0"></div>
+      <div class="pin-dot" data-i="1"></div>
+      <div class="pin-dot" data-i="2"></div>
+      <div class="pin-dot" data-i="3"></div>
+    </div>
+    <div class="pin-pad">
+      <div class="pin-key" onclick="pinInput('1')">1</div>
+      <div class="pin-key" onclick="pinInput('2')">2</div>
+      <div class="pin-key" onclick="pinInput('3')">3</div>
+      <div class="pin-key" onclick="pinInput('4')">4</div>
+      <div class="pin-key" onclick="pinInput('5')">5</div>
+      <div class="pin-key" onclick="pinInput('6')">6</div>
+      <div class="pin-key" onclick="pinInput('7')">7</div>
+      <div class="pin-key" onclick="pinInput('8')">8</div>
+      <div class="pin-key" onclick="pinInput('9')">9</div>
+      <div class="pin-key empty"></div>
+      <div class="pin-key" onclick="pinInput('0')">0</div>
+      <div class="pin-key action" onclick="pinBackspace()">⌫</div>
+    </div>
+  </div>
+
+  <!-- ВВОД PIN -->
+  <div class="screen" id="screenEnterPin">
+    <div class="pin-title" id="enterPinTitle">Введите PIN-код</div>
+    <div class="pin-sub" id="enterPinSub">Для входа в приложение</div>
+    <div class="pin-error" id="enterPinError"></div>
+    <div class="pin-dots">
+      <div class="pin-dot" data-i="0"></div>
+      <div class="pin-dot" data-i="1"></div>
+      <div class="pin-dot" data-i="2"></div>
+      <div class="pin-dot" data-i="3"></div>
+    </div>
+    <div class="pin-pad">
+      <div class="pin-key" onclick="pinInput('1')">1</div>
+      <div class="pin-key" onclick="pinInput('2')">2</div>
+      <div class="pin-key" onclick="pinInput('3')">3</div>
+      <div class="pin-key" onclick="pinInput('4')">4</div>
+      <div class="pin-key" onclick="pinInput('5')">5</div>
+      <div class="pin-key" onclick="pinInput('6')">6</div>
+      <div class="pin-key" onclick="pinInput('7')">7</div>
+      <div class="pin-key" onclick="pinInput('8')">8</div>
+      <div class="pin-key" onclick="pinInput('9')">9</div>
+      <div class="pin-key empty"></div>
+      <div class="pin-key" onclick="pinInput('0')">0</div>
+      <div class="pin-key action" onclick="pinBackspace()">⌫</div>
+    </div>
+    <p class="back-link" onclick="pinLogout()" style="margin-top:24px;">Войти с другого номера</p>
+  </div>
+
+  <!-- ГЛАВНЫЙ ЭКРАН -->
   <div class="screen" id="screenHome">
     <div class="top-bar">
       <div>
         <div class="greeting">Добро пожаловать,</div>
         <div class="username" id="userGreeting">—</div>
       </div>
-      <div class="avatar" id="userAvatar">—</div>
+      <div class="avatar" id="userAvatar" onclick="goTo('screenAccount')">—</div>
     </div>
 
     <div class="balance-card">
@@ -536,15 +856,100 @@
     <div id="homeHistory"></div>
   </div>
 
-  <!-- ЭКРАН 4: ИСТОРИЯ -->
+  <!-- ИСТОРИЯ -->
   <div class="screen" id="screenHistory">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-      <h1>История</h1>
-    </div>
+    <h1>История</h1>
     <div id="fullHistory"></div>
   </div>
 
-  <!-- ЭКРАН 5: ПОПОЛНЕНИЕ -->
+  <!-- АККАУНТ -->
+  <div class="screen" id="screenAccount">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenHome')">←</div>
+      <div>
+        <div style="color:#fff; font-size:17px; font-weight:600;">Аккаунт</div>
+        <div style="color:#6b7280; font-size:12px;">Профиль и безопасность</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:20px; text-align:center; margin-bottom:20px;">
+      <div class="avatar" style="width:64px; height:64px; font-size:22px; margin:0 auto 12px;" id="accountAvatar">—</div>
+      <div style="color:#fff; font-size:18px; font-weight:600;" id="accountName">—</div>
+      <div style="color:#8b93a7; font-size:13px; margin-top:4px;" id="accountPhone">—</div>
+      <div style="margin-top:10px;" id="accountBadges"></div>
+    </div>
+
+    <!-- Дети (для родителя) -->
+    <div id="childrenSection" style="display:none;">
+      <div class="section-title">
+        <span style="color:#fff; font-size:16px;">👶 Детские аккаунты</span>
+      </div>
+      <div id="childrenList"></div>
+    </div>
+
+    <div class="section-title">
+      <span style="color:#fff; font-size:16px;">🔒 Безопасность</span>
+    </div>
+
+    <button class="btn gray" onclick="openChangePin()">Изменить PIN-код</button>
+    <button class="btn red" onclick="showLogoutConfirm()">Выйти из аккаунта</button>
+  </div>
+
+  <!-- ИЗМЕНЕНИЕ PIN -->
+  <div class="screen" id="screenChangePin">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenAccount')">←</div>
+      <div>
+        <div style="color:#fff; font-size:17px; font-weight:600;">Изменение PIN</div>
+        <div style="color:#6b7280; font-size:12px;" id="changePinStep">Введите текущий PIN</div>
+      </div>
+    </div>
+    <div class="pin-error" id="changePinError"></div>
+    <div class="pin-dots">
+      <div class="pin-dot" data-i="0"></div>
+      <div class="pin-dot" data-i="1"></div>
+      <div class="pin-dot" data-i="2"></div>
+      <div class="pin-dot" data-i="3"></div>
+    </div>
+    <div class="pin-pad">
+      <div class="pin-key" onclick="pinInput('1')">1</div>
+      <div class="pin-key" onclick="pinInput('2')">2</div>
+      <div class="pin-key" onclick="pinInput('3')">3</div>
+      <div class="pin-key" onclick="pinInput('4')">4</div>
+      <div class="pin-key" onclick="pinInput('5')">5</div>
+      <div class="pin-key" onclick="pinInput('6')">6</div>
+      <div class="pin-key" onclick="pinInput('7')">7</div>
+      <div class="pin-key" onclick="pinInput('8')">8</div>
+      <div class="pin-key" onclick="pinInput('9')">9</div>
+      <div class="pin-key empty"></div>
+      <div class="pin-key" onclick="pinInput('0')">0</div>
+      <div class="pin-key action" onclick="pinBackspace()">⌫</div>
+    </div>
+  </div>
+
+  <!-- ПРОСМОТР РЕБЁНКА -->
+  <div class="screen" id="screenChildView">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenAccount')">←</div>
+      <div>
+        <div style="color:#fff; font-size:17px; font-weight:600;" id="childViewName">—</div>
+        <div style="color:#6b7280; font-size:12px;" id="childViewPhone">—</div>
+      </div>
+    </div>
+
+    <div class="balance-card" style="background:linear-gradient(135deg,#f59e0b,#f5576c);">
+      <div class="balance-label">Баланс ребёнка</div>
+      <div class="balance-amount" id="childViewBalance">0 <span>₽</span></div>
+      <div class="balance-num" id="childViewCard">•••• ----</div>
+    </div>
+
+    <div class="section-title">
+      <span style="color:#fff; font-size:16px;">История трат</span>
+    </div>
+    <div id="childViewHistory"></div>
+  </div>
+
+  <!-- ПОПОЛНЕНИЕ -->
   <div class="screen" id="screenTopup">
     <div class="op-header">
       <div class="op-back" onclick="goTo('screenHome')">←</div>
@@ -553,26 +958,22 @@
         <div style="color:#6b7280; font-size:12px;">Выберите карту и сумму</div>
       </div>
     </div>
-
     <div id="topupCards"></div>
     <div style="height:8px"></div>
-
     <div class="amount-input-wrap">
       <input type="text" id="topupAmount" placeholder="0" inputmode="numeric">
       <div class="currency">₽</div>
     </div>
-
     <div class="quick-amounts">
       <button onclick="setAmount('topupAmount', 500)">500</button>
       <button onclick="setAmount('topupAmount', 1000)">1 000</button>
       <button onclick="setAmount('topupAmount', 3000)">3 000</button>
       <button onclick="setAmount('topupAmount', 5000)">5 000</button>
     </div>
-
     <button class="btn green" id="topupBtn" disabled>Пополнить</button>
   </div>
 
-  <!-- ЭКРАН 6: ПЕРЕВОД -->
+  <!-- ПЕРЕВОД -->
   <div class="screen" id="screenTransfer">
     <div class="op-header">
       <div class="op-back" onclick="goTo('screenHome')">←</div>
@@ -581,13 +982,10 @@
         <div style="color:#6b7280; font-size:12px;">По номеру телефона</div>
       </div>
     </div>
-
     <div style="color:#8b93a7; font-size:12px; margin-bottom:8px;">Списать с карты:</div>
     <div id="transferFromCards"></div>
-
     <div style="color:#8b93a7; font-size:12px; margin:14px 0 8px;">Номер получателя:</div>
     <input type="tel" id="transferPhone" placeholder="+7 900 000-00-00">
-
     <div id="transferRecipientInfo" style="display:none; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3); border-radius:14px; padding:12px; margin-bottom:14px;">
       <div style="color:#8b93a7; font-size:11px;">Получатель</div>
       <div style="color:#fff; font-size:15px; font-weight:600;" id="recipientName">—</div>
@@ -595,23 +993,20 @@
     <div id="transferRecipientError" style="display:none; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:14px; padding:12px; margin-bottom:14px;">
       <div style="color:#ef4444; font-size:13px;" id="recipientErrorText">Получатель не найден</div>
     </div>
-
     <div class="amount-input-wrap">
       <input type="text" id="transferAmount" placeholder="0" inputmode="numeric">
       <div class="currency">₽</div>
     </div>
-
     <div class="quick-amounts">
       <button onclick="setAmount('transferAmount', 100)">100</button>
       <button onclick="setAmount('transferAmount', 500)">500</button>
       <button onclick="setAmount('transferAmount', 1000)">1 000</button>
       <button onclick="setAmount('transferAmount', 5000)">5 000</button>
     </div>
-
     <button class="btn" id="transferBtn" disabled>Перевести</button>
   </div>
 
-  <!-- ЭКРАН 7: ОПЛАТА -->
+  <!-- ОПЛАТА -->
   <div class="screen" id="screenPay">
     <div class="op-header">
       <div class="op-back" onclick="goTo('screenHome')">←</div>
@@ -620,28 +1015,23 @@
         <div style="color:#6b7280; font-size:12px;">Оплата покупки</div>
       </div>
     </div>
-
     <div style="color:#8b93a7; font-size:12px; margin-bottom:8px;">Списать с:</div>
     <div id="payCards"></div>
-
     <input type="text" id="payMerchant" placeholder="Магазин (например: Пятёрочка)" style="margin-top:14px;">
-
     <div class="amount-input-wrap">
       <input type="text" id="payAmount" placeholder="0" inputmode="numeric">
       <div class="currency">₽</div>
     </div>
-
     <div class="quick-amounts">
       <button onclick="setAmount('payAmount', 300)">300</button>
       <button onclick="setAmount('payAmount', 800)">800</button>
       <button onclick="setAmount('payAmount', 1500)">1 500</button>
       <button onclick="setAmount('payAmount', 3000)">3 000</button>
     </div>
-
     <button class="btn" id="payBtn" disabled>Оплатить</button>
   </div>
 
-  <!-- ЭКРАН 8: ОБРАБОТКА -->
+  <!-- ОБРАБОТКА -->
   <div class="screen" id="screenProcessing">
     <div class="center-screen">
       <div class="spinner">
@@ -654,7 +1044,7 @@
     </div>
   </div>
 
-  <!-- ЭКРАН 9: УСПЕХ -->
+  <!-- УСПЕХ -->
   <div class="screen" id="screenSuccess">
     <div class="center-screen">
       <div class="check-circle">
@@ -664,14 +1054,12 @@
       </div>
       <div class="success-title" id="successTitle">Операция выполнена</div>
       <div class="success-amount" id="successAmount">0 ₽</div>
-
       <div class="receipt" id="successReceipt"></div>
-
       <button class="btn green" onclick="goTo('screenHome')">Готово</button>
     </div>
   </div>
 
-  <!-- НИЖНИЕ КНОПКИ -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ -->
   <div class="bottom-nav" id="bottomNav" style="display:none">
     <div class="nav-btn active" data-screen="screenHome" onclick="navTo('screenHome')">
       <svg viewBox="0 0 24 24"><path d="M3 10 L12 3 L21 10 L21 20 L3 20 Z"/><path d="M9 20 L9 14 L15 14 L15 20"/></svg>
@@ -681,11 +1069,23 @@
     </div>
   </div>
 
+  <!-- МОДАЛКА ПОДТВЕРЖДЕНИЯ ВЫХОДА -->
+  <div class="modal-overlay" id="logoutModal">
+    <div class="modal">
+      <div class="modal-icon">🚪</div>
+      <div class="modal-title">Выйти из аккаунта?</div>
+      <div class="modal-text">Вы уверены, что хотите выйти?<br>Для повторного входа понадобится PIN-код.</div>
+      <div class="modal-buttons">
+        <button class="btn gray" onclick="hideLogoutConfirm()">Отмена</button>
+        <button class="btn red" onclick="confirmLogout()">Выйти</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px); background:rgba(34,197,94,0.95); color:#fff; padding:14px 24px; border-radius:30px; font-size:14px; font-weight:500; z-index:99999; transition:.35s cubic-bezier(.4,0,.2,1); box-shadow:0 10px 30px rgba(0,0,0,0.3); opacity:0; max-width:90%; text-align:center;"></div>
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
@@ -706,22 +1106,31 @@ const db = firebase.database();
 
 /* ==================== СОСТОЯНИЕ ==================== */
 const state = {
-  user: { phone: '', firstName: '', lastName: '' },
+  user: { phone: '', firstName: '', lastName: '', type: 'adult' },
   cards: [],
   history: [],
   selectedTopupCard: null,
   transferFrom: null,
-  transferToPhone: '',
   transferRecipient: null,
-  payCard: null
+  payCard: null,
+  parentPhone: '',
+  parentData: null,
+  currentPin: '',
+  newPin: '',
+  pinMode: 'create',        // create | confirm | enter | changeOld | changeNew | changeConfirm
+  pinBuffer: '',
+  pinFirst: '',
+  loggedIn: false
 };
 
-let currentUserRef = null;   // db.ref('users/PHONE')
+let currentUserRef = null;
 let historyRef = null;
-let cardsRef = null;
+let childrenRef = null;
 
 /* ==================== УТИЛИТЫ ==================== */
-const screens = ['screenLoading','screenPhone','screenRegister','screenHome','screenHistory',
+const screens = ['screenLoading','screenPhone','screenAccountType','screenRegister',
+                 'screenCreatePin','screenEnterPin','screenHome','screenHistory','screenAccount',
+                 'screenChangePin','screenChildView',
                  'screenTopup','screenTransfer','screenPay','screenProcessing','screenSuccess'];
 
 function goTo(id) {
@@ -740,9 +1149,13 @@ function goTo(id) {
 
   if (id === 'screenHome') renderHome();
   if (id === 'screenHistory') renderHistory();
+  if (id === 'screenAccount') renderAccount();
   if (id === 'screenTopup') renderTopupCards();
   if (id === 'screenTransfer') renderTransferCards();
   if (id === 'screenPay') renderPayCards();
+  if (id === 'screenCreatePin') { state.pinMode = 'create'; resetPin(); }
+  if (id === 'screenEnterPin') { state.pinMode = 'enter'; resetPin(); updateEnterPinSub(); }
+  if (id === 'screenChangePin') { state.pinMode = 'changeOld'; resetPin(); updateChangePinStep(); }
 }
 
 function navTo(id) { goTo(id); }
@@ -752,12 +1165,16 @@ function maskCard(last) { return '•••• ' + last; }
 function showToast(msg, isError = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast show' + (isError ? ' error' : '');
+  t.style.background = isError ? 'rgba(239,68,68,0.95)' : 'rgba(34,197,94,0.95)';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  t.style.opacity = '1';
   clearTimeout(t._timer);
-  t._timer = setTimeout(() => { t.className = 'toast'; }, 3000);
+  t._timer = setTimeout(() => {
+    t.style.transform = 'translateX(-50%) translateY(100px)';
+    t.style.opacity = '0';
+  }, 2500);
 }
 
-/* Нормализация телефона: только цифры, всегда с 7 в начале */
 function normalizePhone(input) {
   let v = (input || '').replace(/\D/g, '');
   if (v.startsWith('8')) v = '7' + v.slice(1);
@@ -765,7 +1182,6 @@ function normalizePhone(input) {
   return v.slice(0, 11);
 }
 
-/* Красивое отображение */
 function formatPhone(v) {
   v = normalizePhone(v);
   let f = '+7';
@@ -784,7 +1200,6 @@ function now() {
 
 function getCard(id) { return state.cards.find(c => c.id === id); }
 
-/* Генерация стартовых карт для нового пользователя */
 function generateCards(phone) {
   const last4 = phone.slice(-4);
   const random = () => Math.floor(1000 + Math.random() * 9000);
@@ -813,26 +1228,38 @@ phoneBtn.addEventListener('click', async () => {
     const snap = await db.ref('users/' + phone).once('value');
     const data = snap.val();
 
-    if (data && data.firstName) {
-      // ✅ Уже зарегистрирован — сразу входим, имя/фамилию НЕ спрашиваем
+    if (data && data.firstName && data.pin) {
+      // Существующий → PIN
       state.user = {
         phone: phone,
         firstName: data.firstName,
-        lastName: data.lastName || ''
+        lastName: data.lastName || '',
+        type: data.type || 'adult'
+      };
+      state.savedPin = data.pin;
+      localStorage.setItem('bank_phone', phone);
+      phoneBtn.textContent = 'Продолжить';
+      phoneBtn.disabled = false;
+      goTo('screenEnterPin');
+    } else if (data && data.firstName && !data.pin) {
+      // Есть имя, но нет PIN (старые аккаунты) → создать PIN
+      state.user = {
+        phone: phone,
+        firstName: data.firstName,
+        lastName: data.lastName || '',
+        type: data.type || 'adult'
       };
       localStorage.setItem('bank_phone', phone);
       phoneBtn.textContent = 'Продолжить';
       phoneBtn.disabled = false;
-      attachUserListeners();
-      goTo('screenHome');
-      showToast(`👋 С возвращением, ${state.user.firstName}!`);
+      goTo('screenCreatePin');
     } else {
-      // 🆕 Новый — отправляем на регистрацию
+      // Новый → выбор типа аккаунта
       state.user.phone = phone;
       localStorage.setItem('bank_phone', phone);
       phoneBtn.textContent = 'Продолжить';
       phoneBtn.disabled = false;
-      goTo('screenRegister');
+      goTo('screenAccountType');
     }
   } catch (err) {
     console.error(err);
@@ -842,16 +1269,88 @@ phoneBtn.addEventListener('click', async () => {
   }
 });
 
-/* ==================== ЭКРАН 2: РЕГИСТРАЦИЯ ==================== */
+/* ==================== ВЫБОР ТИПА АККАУНТА ==================== */
+function selectAccountType(type) {
+  state.user.type = type;
+  document.getElementById('choiceAdult').classList.toggle('selected', type === 'adult');
+  document.getElementById('choiceChild').classList.toggle('selected', type === 'child');
+
+  document.getElementById('regTitle').textContent = type === 'child' ? 'Детский аккаунт' : 'Знакомство';
+  document.getElementById('parentPhoneWrap').style.display = type === 'child' ? 'block' : 'none';
+
+  setTimeout(() => goTo('screenRegister'), 200);
+}
+
+/* ==================== РЕГИСТРАЦИЯ ==================== */
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
+const parentPhone = document.getElementById('parentPhone');
 const registerBtn = document.getElementById('registerBtn');
 
 function checkRegForm() {
-  registerBtn.disabled = !(firstName.value.trim().length >= 1 && lastName.value.trim().length >= 1);
+  const ok = firstName.value.trim().length >= 1 && lastName.value.trim().length >= 1;
+  if (state.user.type === 'child') {
+    registerBtn.disabled = !(ok && state.parentData);
+  } else {
+    registerBtn.disabled = !ok;
+  }
 }
 firstName.addEventListener('input', checkRegForm);
 lastName.addEventListener('input', checkRegForm);
+
+let parentLookupTimer = null;
+parentPhone.addEventListener('input', e => {
+  e.target.value = formatPhone(e.target.value);
+  const norm = normalizePhone(e.target.value);
+  const info = document.getElementById('parentLookupInfo');
+  const err  = document.getElementById('parentLookupError');
+  info.style.display = 'none';
+  err.style.display  = 'none';
+  state.parentData = null;
+
+  clearTimeout(parentLookupTimer);
+  if (norm.length === 11) {
+    parentLookupTimer = setTimeout(() => lookupParent(norm), 400);
+  }
+  checkRegForm();
+});
+
+async function lookupParent(phone) {
+  const info = document.getElementById('parentLookupInfo');
+  const err  = document.getElementById('parentLookupError');
+
+  if (phone === normalizePhone(state.user.phone)) {
+    err.style.display = 'block';
+    document.getElementById('parentErrorText').textContent = '❌ Нельзя указать свой же номер';
+    state.parentData = null;
+    checkRegForm();
+    return;
+  }
+
+  try {
+    const snap = await db.ref('users/' + phone).once('value');
+    const data = snap.val();
+    if (data && data.firstName && data.type === 'adult') {
+      state.parentData = {
+        phone: phone,
+        firstName: data.firstName,
+        lastName: data.lastName || ''
+      };
+      document.getElementById('parentName').textContent =
+        (data.firstName + ' ' + (data.lastName || '')).trim();
+      info.style.display = 'block';
+      err.style.display = 'none';
+    } else {
+      state.parentData = null;
+      err.style.display = 'block';
+      document.getElementById('parentErrorText').textContent =
+        '❌ Родитель не найден. Он должен сначала создать взрослый аккаунт.';
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  checkRegForm();
+}
 
 registerBtn.addEventListener('click', async () => {
   const phone = state.user.phone;
@@ -863,23 +1362,40 @@ registerBtn.addEventListener('click', async () => {
 
   try {
     const initialCards = generateCards(phone);
-    await db.ref('users/' + phone).set({
+    const userData = {
       phone: phone,
       firstName: fn,
       lastName: ln,
+      type: state.user.type,
       cards: initialCards,
       createdAt: firebase.database.ServerValue.TIMESTAMP
-    });
+    };
+
+    if (state.user.type === 'child' && state.parentData) {
+      userData.parentPhone = state.parentData.phone;
+      userData.parentName = (state.parentData.firstName + ' ' + (state.parentData.lastName || '')).trim();
+    }
+
+    await db.ref('users/' + phone).set(userData);
 
     state.user.firstName = fn;
     state.user.lastName = ln;
 
+    // Если ребёнок — добавляем себя в список детей родителя
+    if (state.user.type === 'child' && state.parentData) {
+      await db.ref('parents/' + state.parentData.phone + '/children/' + phone).set({
+        phone: phone,
+        firstName: fn,
+        lastName: ln,
+        addedAt: firebase.database.ServerValue.TIMESTAMP
+      });
+    }
+
     registerBtn.textContent = 'Создать кошелёк';
     registerBtn.disabled = false;
 
-    attachUserListeners();
-    goTo('screenHome');
-    showToast(`🎉 Добро пожаловать, ${fn}!`);
+    // Переход на создание PIN
+    goTo('screenCreatePin');
   } catch (err) {
     console.error(err);
     showToast('❌ Ошибка создания', true);
@@ -888,70 +1404,258 @@ registerBtn.addEventListener('click', async () => {
   }
 });
 
-/* ==================== ПОДПИСКИ НА ДАННЫЕ ==================== */
+/* ==================== PIN-КОД ==================== */
+function updatePinDots() {
+  const activeScreen = document.querySelector('.screen.active');
+  if (!activeScreen) return;
+  const dots = activeScreen.querySelectorAll('.pin-dot');
+  dots.forEach((d, i) => {
+    d.classList.toggle('filled', i < state.pinBuffer.length);
+  });
+}
+
+function resetPin() {
+  state.pinBuffer = '';
+  state.pinFirst = '';
+  state.newPin = '';
+  updatePinDots();
+  // очистить ошибки
+  ['createPinError','enterPinError','changePinError'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '';
+  });
+}
+
+function pinInput(digit) {
+  if (state.pinBuffer.length >= 4) return;
+  state.pinBuffer += digit;
+  updatePinDots();
+
+  if (state.pinBuffer.length === 4) {
+    setTimeout(handlePinComplete, 200);
+  }
+}
+
+function pinBackspace() {
+  state.pinBuffer = state.pinBuffer.slice(0, -1);
+  updatePinDots();
+}
+
+function handlePinComplete() {
+  const pin = state.pinBuffer;
+
+  if (state.pinMode === 'create') {
+    // Первый ввод нового PIN
+    state.pinFirst = pin;
+    state.pinMode = 'confirm';
+    state.pinBuffer = '';
+    updatePinDots();
+    document.getElementById('createPinTitle').textContent = 'Повторите PIN-код';
+    return;
+  }
+
+  if (state.pinMode === 'confirm') {
+    // Подтверждение нового PIN
+    if (pin === state.pinFirst) {
+      saveNewPin(pin);
+    } else {
+      document.getElementById('createPinError').textContent = '❌ PIN-коды не совпадают';
+      state.pinMode = 'create';
+      state.pinFirst = '';
+      state.pinBuffer = '';
+      updatePinDots();
+      document.getElementById('createPinTitle').textContent = 'Придумайте PIN-код';
+      setTimeout(() => {
+        document.getElementById('createPinError').textContent = '';
+      }, 2000);
+    }
+    return;
+  }
+
+  if (state.pinMode === 'enter') {
+    if (pin === state.savedPin) {
+      // ✅ Успех
+      state.loggedIn = true;
+      document.getElementById('enterPinError').textContent = '';
+      attachUserListeners();
+      goTo('screenHome');
+      showToast('👋 Добро пожаловать!');
+    } else {
+      document.getElementById('enterPinError').textContent = '❌ Неверный PIN-код';
+      if (navigator.vibrate) navigator.vibrate(200);
+      state.pinBuffer = '';
+      updatePinDots();
+      setTimeout(() => {
+        document.getElementById('enterPinError').textContent = '';
+      }, 2000);
+    }
+    return;
+  }
+
+  if (state.pinMode === 'changeOld') {
+    if (pin === state.savedPin) {
+      state.pinMode = 'changeNew';
+      state.pinBuffer = '';
+      updatePinDots();
+      updateChangePinStep();
+    } else {
+      document.getElementById('changePinError').textContent = '❌ Неверный PIN-код';
+      state.pinBuffer = '';
+      updatePinDots();
+      setTimeout(() => {
+        document.getElementById('changePinError').textContent = '';
+      }, 2000);
+    }
+    return;
+  }
+
+  if (state.pinMode === 'changeNew') {
+    state.pinFirst = pin;
+    state.pinMode = 'changeConfirm';
+    state.pinBuffer = '';
+    updatePinDots();
+    updateChangePinStep();
+    return;
+  }
+
+  if (state.pinMode === 'changeConfirm') {
+    if (pin === state.pinFirst) {
+      saveNewPin(pin);
+    } else {
+      document.getElementById('changePinError').textContent = '❌ PIN-коды не совпадают';
+      state.pinMode = 'changeNew';
+      state.pinFirst = '';
+      state.pinBuffer = '';
+      updatePinDots();
+      updateChangePinStep();
+      setTimeout(() => {
+        document.getElementById('changePinError').textContent = '';
+      }, 2000);
+    }
+    return;
+  }
+}
+
+async function saveNewPin(pin) {
+  try {
+    await db.ref('users/' + state.user.phone + '/pin').set(pin);
+    state.savedPin = pin;
+
+    // После создания PIN — сразу входим
+    state.loggedIn = true;
+    attachUserListeners();
+    goTo('screenHome');
+    showToast('✅ PIN-код сохранён');
+  } catch (err) {
+    console.error(err);
+    showToast('❌ Ошибка сохранения PIN', true);
+  }
+}
+
+function updateEnterPinSub() {
+  const u = state.user;
+  const name = (u.firstName + ' ' + (u.lastName || '')).trim();
+  document.getElementById('enterPinTitle').textContent = 'Введите PIN-код';
+  document.getElementById('enterPinSub').textContent = name ? `Аккаунт: ${name}` : 'Для входа в приложение';
+}
+
+function updateChangePinStep() {
+  const map = {
+    changeOld: 'Введите текущий PIN',
+    changeNew: 'Придумайте новый PIN',
+    changeConfirm: 'Повторите новый PIN'
+  };
+  document.getElementById('changePinStep').textContent = map[state.pinMode] || '';
+}
+
+function openChangePin() {
+  state.pinMode = 'changeOld';
+  state.pinFirst = '';
+  state.pinBuffer = '';
+  goTo('screenChangePin');
+}
+
+function pinLogout() {
+  localStorage.removeItem('bank_phone');
+  state.loggedIn = false;
+  state.savedPin = null;
+  detachUserListeners();
+  phoneInput.value = '';
+  phoneBtn.disabled = true;
+  goTo('screenPhone');
+}
+
+/* ==================== ПОДПИСКИ ==================== */
 function attachUserListeners() {
   detachUserListeners();
 
   const phone = state.user.phone;
   currentUserRef = db.ref('users/' + phone);
 
-  // Слушаем карты + имя
   currentUserRef.on('value', snap => {
     const data = snap.val();
     if (!data) return;
 
     state.user.firstName = data.firstName || '';
     state.user.lastName = data.lastName || '';
+    state.user.type = data.type || 'adult';
+    state.user.parentPhone = data.parentPhone || '';
+    state.user.parentName = data.parentName || '';
+    state.savedPin = data.pin || state.savedPin;
     state.cards = data.cards || [];
 
     if (!state.selectedTopupCard) state.selectedTopupCard = state.cards[0]?.id || null;
     if (!state.transferFrom) state.transferFrom = state.cards[0]?.id || null;
     if (!state.payCard) state.payCard = state.cards[0]?.id || null;
 
-    // Если открыт главный экран — перерисуем
-    if (document.getElementById('screenHome').classList.contains('active')) renderHome();
-    if (document.getElementById('screenHistory').classList.contains('active')) renderHistory();
-    if (document.getElementById('screenTopup').classList.contains('active')) renderTopupCards();
-    if (document.getElementById('screenTransfer').classList.contains('active')) renderTransferCards();
-    if (document.getElementById('screenPay').classList.contains('active')) renderPayCards();
+    const active = document.querySelector('.screen.active');
+    if (!active) return;
+    if (active.id === 'screenHome') renderHome();
+    if (active.id === 'screenHistory') renderHistory();
+    if (active.id === 'screenAccount') renderAccount();
+    if (active.id === 'screenTopup') renderTopupCards();
+    if (active.id === 'screenTransfer') renderTransferCards();
+    if (active.id === 'screenPay') renderPayCards();
   });
 
-  // Слушаем историю
   historyRef = db.ref('history/' + phone);
   historyRef.on('value', snap => {
     const data = snap.val() || {};
-    state.history = Object.values(data).sort((a, b) => b.createdAt - a.createdAt);
-    if (document.getElementById('screenHome').classList.contains('active')) renderHome();
-    if (document.getElementById('screenHistory').classList.contains('active')) renderHistory();
+    state.history = Object.values(data).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    const active = document.querySelector('.screen.active');
+    if (!active) return;
+    if (active.id === 'screenHome') renderHome();
+    if (active.id === 'screenHistory') renderHistory();
+  });
+
+  // Слушаем детей (если родитель)
+  childrenRef = db.ref('parents/' + phone + '/children');
+  childrenRef.on('value', snap => {
+    const data = snap.val() || {};
+    state.children = Object.values(data);
+    if (document.getElementById('screenAccount').classList.contains('active')) renderAccount();
   });
 }
 
 function detachUserListeners() {
   if (currentUserRef) { currentUserRef.off(); currentUserRef = null; }
   if (historyRef) { historyRef.off(); historyRef = null; }
-  if (cardsRef) { cardsRef.off(); cardsRef = null; }
+  if (childrenRef) { childrenRef.off(); childrenRef = null; }
 }
 
-/* Сохранение карт пользователя в Firebase */
 async function saveCards() {
-  const phone = state.user.phone;
-  await db.ref('users/' + phone + '/cards').set(state.cards);
+  await db.ref('users/' + state.user.phone + '/cards').set(state.cards);
 }
 
-/* Добавление записи в историю */
 async function addHistory(tx) {
-  const phone = state.user.phone;
-  const ref = db.ref('history/' + phone).push();
-  await ref.set({
-    ...tx,
-    createdAt: firebase.database.ServerValue.TIMESTAMP
-  });
+  const ref = db.ref('history/' + state.user.phone).push();
+  await ref.set({ ...tx, createdAt: firebase.database.ServerValue.TIMESTAMP });
 }
 
 /* ==================== ГЛАВНЫЙ ЭКРАН ==================== */
 function renderHome() {
   const u = state.user;
-  const full = (u.firstName + ' ' + u.lastName).trim() || 'Пользователь';
+  const full = (u.firstName + ' ' + (u.lastName || '')).trim() || 'Пользователь';
   document.getElementById('userGreeting').textContent = full;
 
   const initials = ((u.firstName?.[0] || '') + (u.lastName?.[0] || '')).toUpperCase() || '👤';
@@ -1001,6 +1705,77 @@ function renderHistory() {
   el.innerHTML = state.history.map(renderTxItem).join('');
 }
 
+/* ==================== АККАУНТ ==================== */
+function renderAccount() {
+  const u = state.user;
+  const full = (u.firstName + ' ' + (u.lastName || '')).trim() || 'Пользователь';
+  const initials = ((u.firstName?.[0] || '') + (u.lastName?.[0] || '')).toUpperCase() || '👤';
+
+  document.getElementById('accountAvatar').textContent = initials;
+  document.getElementById('accountName').textContent = full;
+  document.getElementById('accountPhone').textContent = formatPhone(u.phone);
+
+  let badges = '';
+  if (u.type === 'child') {
+    badges += '<span class="badge-child">👶 Детский</span>';
+    if (u.parentName) {
+      badges += `<div style="color:#8b93a7; font-size:11px; margin-top:8px;">Родитель: ${u.parentName}</div>`;
+    }
+  } else {
+    badges += '<span class="badge-parent">👤 Взрослый</span>';
+  }
+  document.getElementById('accountBadges').innerHTML = badges;
+
+  // Дети
+  const childrenSection = document.getElementById('childrenSection');
+  const childrenList = document.getElementById('childrenList');
+
+  if (u.type === 'adult' && state.children && state.children.length) {
+    childrenSection.style.display = 'block';
+    childrenList.innerHTML = state.children.map(ch => `
+      <div class="child-item" onclick="openChildView('${ch.phone}')">
+        <div class="child-header">
+          <div class="child-avatar">${(ch.firstName?.[0] || '') + (ch.lastName?.[0] || '')}</div>
+          <div style="flex:1;">
+            <div class="child-name">${ch.firstName} ${ch.lastName || ''}</div>
+            <div class="child-phone">${formatPhone(ch.phone)}</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } else {
+    childrenSection.style.display = 'none';
+  }
+}
+
+/* ==================== ПРОСМОТР РЕБЁНКА ==================== */
+async function openChildView(childPhone) {
+  const snap = await db.ref('users/' + childPhone).once('value');
+  const data = snap.val();
+  if (!data) return;
+
+  document.getElementById('childViewName').textContent =
+    (data.firstName + ' ' + (data.lastName || '')).trim();
+  document.getElementById('childViewPhone').textContent = formatPhone(childPhone);
+
+  const total = (data.cards || []).reduce((s, c) => s + (c.balance || 0), 0);
+  document.getElementById('childViewBalance').innerHTML = fmt(total) + ' <span>₽</span>';
+  document.getElementById('childViewCard').textContent = data.cards?.[0]
+    ? maskCard(data.cards[0].last) : '•••• ----';
+
+  // История ребёнка
+  const hSnap = await db.ref('history/' + childPhone).once('value');
+  const hData = hSnap.val() || {};
+  const items = Object.values(hData).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+  const el = document.getElementById('childViewHistory');
+  el.innerHTML = items.length
+    ? items.map(renderTxItem).join('')
+    : `<div class="empty"><div class="empty-icon">📋</div>Операций нет</div>`;
+
+  goTo('screenChildView');
+}
+
 /* ==================== ПОПОЛНЕНИЕ ==================== */
 function renderTopupCards() {
   const el = document.getElementById('topupCards');
@@ -1025,12 +1800,10 @@ function selectTopupCard(id) {
 
 const topupAmount = document.getElementById('topupAmount');
 const topupBtn = document.getElementById('topupBtn');
-
 topupAmount.addEventListener('input', e => {
   e.target.value = e.target.value.replace(/\D/g, '').slice(0, 9);
   checkTopupForm();
 });
-
 function checkTopupForm() {
   topupBtn.disabled = (parseInt(topupAmount.value) || 0) <= 0;
 }
@@ -1043,11 +1816,9 @@ topupBtn.addEventListener('click', async () => {
   card.balance += amt;
   await saveCards();
   await addHistory({
-    type: 'in',
-    category: 'topup',
+    type: 'in', category: 'topup',
     title: 'Пополнение ' + card.brand + ' ' + maskCard(card.last),
-    amount: amt,
-    date: now()
+    amount: amt, date: now()
   });
 
   topupAmount.value = '';
@@ -1089,7 +1860,6 @@ const recipientInfo = document.getElementById('transferRecipientInfo');
 const recipientError = document.getElementById('transferRecipientError');
 
 let phoneLookupTimer = null;
-
 transferPhone.addEventListener('input', e => {
   e.target.value = formatPhone(e.target.value);
   const normalized = normalizePhone(e.target.value);
@@ -1131,9 +1901,7 @@ async function lookupRecipient(phone) {
       recipientError.style.display = 'block';
       document.getElementById('recipientErrorText').textContent = '❌ Получатель не найден';
     }
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) { console.error(err); }
   checkTransferForm();
 }
 
@@ -1155,26 +1923,20 @@ transferBtn.addEventListener('click', async () => {
   const toName = (state.transferRecipient.firstName + ' ' + (state.transferRecipient.lastName || '')).trim();
 
   if (!from || amt <= 0 || amt > from.balance) return;
-
   transferBtn.disabled = true;
 
   try {
-    // 1. Списываем с отправителя (текущий пользователь)
     from.balance -= amt;
     await saveCards();
     await addHistory({
-      type: 'out',
-      category: 'transfer',
+      type: 'out', category: 'transfer',
       title: 'Перевод для ' + toName + ' (' + formatPhone(toPhone) + ')',
-      amount: amt,
-      date: now()
+      amount: amt, date: now()
     });
 
-    // 2. Зачисляем получателю — используем transaction чтобы избежать race
     const toRef = db.ref('users/' + toPhone + '/cards');
     await toRef.transaction(cards => {
       if (!cards || !cards.length) {
-        // Если у получателя нет карт — создаём одну
         cards = [{
           id: 1, brand: 'VISA',
           last: toPhone.slice(-4),
@@ -1186,15 +1948,11 @@ transferBtn.addEventListener('click', async () => {
       return cards;
     });
 
-    // 3. Добавляем получателю запись в историю
-    const toHistoryRef = db.ref('history/' + toPhone).push();
-    await toHistoryRef.set({
-      type: 'in',
-      category: 'transfer',
+    await db.ref('history/' + toPhone).push().set({
+      type: 'in', category: 'transfer',
       title: 'Перевод от ' + (state.user.firstName + ' ' + (state.user.lastName || '')).trim() +
              ' (' + formatPhone(state.user.phone) + ')',
-      amount: amt,
-      date: now(),
+      amount: amt, date: now(),
       createdAt: firebase.database.ServerValue.TIMESTAMP
     });
 
@@ -1265,11 +2023,8 @@ payBtn.addEventListener('click', async () => {
   card.balance -= amt;
   await saveCards();
   await addHistory({
-    type: 'out',
-    category: 'pay',
-    title: m,
-    amount: amt,
-    date: now()
+    type: 'out', category: 'pay',
+    title: m, amount: amt, date: now()
   });
 
   payAmount.value = '';
@@ -1303,18 +2058,36 @@ function showProcessingThenSuccess(title, amount, receiptRows) {
   });
 }
 
-/* ==================== БЫСТРЫЕ СУММЫ ==================== */
 function setAmount(inputId, value) {
   const el = document.getElementById(inputId);
   el.value = value;
   el.dispatchEvent(new Event('input'));
 }
 
-/* ==================== ОПЕРАЦИИ ==================== */
 function openOp(type) {
   if (type === 'topup')    goTo('screenTopup');
   if (type === 'transfer') goTo('screenTransfer');
   if (type === 'pay')      goTo('screenPay');
+}
+
+/* ==================== ВЫХОД ИЗ АККАУНТА ==================== */
+function showLogoutConfirm() {
+  document.getElementById('logoutModal').classList.add('show');
+}
+function hideLogoutConfirm() {
+  document.getElementById('logoutModal').classList.remove('show');
+}
+function confirmLogout() {
+  hideLogoutConfirm();
+  localStorage.removeItem('bank_phone');
+  state.loggedIn = false;
+  state.savedPin = null;
+  state.pinBuffer = '';
+  detachUserListeners();
+  phoneInput.value = '';
+  phoneBtn.disabled = true;
+  goTo('screenPhone');
+  showToast('👋 Вы вышли из аккаунта');
 }
 
 /* ==================== АВТОВХОД ==================== */
@@ -1325,15 +2098,18 @@ async function tryAutoLogin() {
   try {
     const snap = await db.ref('users/' + saved).once('value');
     const data = snap.val();
-    if (data && data.firstName) {
+    if (data && data.firstName && data.pin) {
       state.user = {
         phone: saved,
         firstName: data.firstName,
-        lastName: data.lastName || ''
+        lastName: data.lastName || '',
+        type: data.type || 'adult'
       };
-      attachUserListeners();
-      goTo('screenHome');
+      state.savedPin = data.pin;
+      // Не входим сразу — просим PIN
+      goTo('screenEnterPin');
     } else {
+      localStorage.removeItem('bank_phone');
       goTo('screenPhone');
     }
   } catch (err) {
@@ -1341,6 +2117,17 @@ async function tryAutoLogin() {
     goTo('screenPhone');
   }
 }
+
+/* ==================== ДОП. ЗАЩИТА ==================== */
+// Блокируем выделение и контекстное меню для "приложения"
+document.addEventListener('contextmenu', e => {
+  if (e.target.tagName !== 'INPUT') e.preventDefault();
+});
+
+// Скрываем адресную строку при скролле
+window.addEventListener('load', () => {
+  setTimeout(() => window.scrollTo(0, 1), 100);
+});
 
 /* ==================== СТАРТ ==================== */
 tryAutoLogin();
