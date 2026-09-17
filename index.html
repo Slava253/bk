@@ -23,52 +23,28 @@
     --bg-grad:linear-gradient(135deg,#0f0f1e 0%,#16213e 100%);
     --balance-grad:linear-gradient(135deg,#1e3c72,#2a5298);
   }
-  body.light{
-    --bg:#f5f7fb; --bg2:#fff; --card:rgba(0,0,0,0.04); --border:rgba(0,0,0,0.1);
-    --text:#1a1a2e; --text-dim:#6b7280; --text-muted:#9ca3af;
-    --bg-grad:linear-gradient(135deg,#f5f7fb 0%,#e8ecf5 100%);
-  }
-  body.theme-purple{ --balance-grad:linear-gradient(135deg,#667eea,#764ba2); }
-  body.theme-green{ --balance-grad:linear-gradient(135deg,#0f9b0f,#1a5c1a); }
-  body.theme-red{ --balance-grad:linear-gradient(135deg,#c31432,#240b36); }
-  body.theme-orange{ --balance-grad:linear-gradient(135deg,#f59e0b,#f5576c); }
-  body.theme-teal{ --balance-grad:linear-gradient(135deg,#0ea5e9,#14b8a6); }
-  body.theme-pink{ --balance-grad:linear-gradient(135deg,#ec4899,#8b5cf6); }
+  body.light{--bg:#f5f7fb;--bg2:#fff;--card:rgba(0,0,0,0.04);--border:rgba(0,0,0,0.1);--text:#1a1a2e;--text-dim:#6b7280;--text-muted:#9ca3af;--bg-grad:linear-gradient(135deg,#f5f7fb 0%,#e8ecf5 100%)}
+  body.theme-purple{--balance-grad:linear-gradient(135deg,#667eea,#764ba2)}
+  body.theme-green{--balance-grad:linear-gradient(135deg,#0f9b0f,#1a5c1a)}
+  body.theme-red{--balance-grad:linear-gradient(135deg,#c31432,#240b36)}
+  body.theme-orange{--balance-grad:linear-gradient(135deg,#f59e0b,#f5576c)}
+  body.theme-teal{--balance-grad:linear-gradient(135deg,#0ea5e9,#14b8a6)}
+  body.theme-pink{--balance-grad:linear-gradient(135deg,#ec4899,#8b5cf6)}
   body{background:var(--bg-grad);color:var(--text)}
   .app{width:100%;max-width:100%;height:100vh;height:100dvh;position:relative;background:var(--bg-grad);overflow:hidden}
-  @media (min-width:500px){
-    body{padding:20px;align-items:center}
-    .app{max-width:400px;height:780px;max-height:95vh;border-radius:32px;box-shadow:0 30px 80px rgba(0,0,0,0.6);border:1px solid var(--border)}
-  }
-  .screen{
-    position:absolute;inset:0;
-    padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
-    display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:fadeIn .35s ease
-  }
-  .screen.active{display:block}
-  .screen::-webkit-scrollbar{width:0}
+  @media (min-width:500px){body{padding:20px;align-items:center}.app{max-width:400px;height:780px;max-height:95vh;border-radius:32px;box-shadow:0 30px 80px rgba(0,0,0,0.6);border:1px solid var(--border)}}
+  .screen{position:absolute;inset:0;padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:fadeIn .35s ease}
+  .screen.active{display:block}.screen::-webkit-scrollbar{width:0}
   @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
   h1{color:var(--text);font-size:22px;margin-bottom:8px}
   .sub{color:var(--text-dim);font-size:14px;margin-bottom:24px}
-  input,select,textarea{
-    width:100%;background:var(--card);border:1px solid var(--border);border-radius:14px;
-    padding:16px;color:var(--text);font-size:16px;outline:none;transition:.25s;margin-bottom:14px;
-    font-family:inherit
-  }
+  input,select,textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;color:var(--text);font-size:16px;outline:none;transition:.25s;margin-bottom:14px;font-family:inherit}
   input:focus,select:focus,textarea:focus{border-color:var(--primary);background:rgba(102,126,234,0.12)}
-  input::placeholder,textarea::placeholder{color:var(--text-muted)}
-  select{cursor:pointer}
-  select option{background:#1a1a2e;color:#fff}
+  input::placeholder,textarea::placeholder{color:var(--text-muted)}select{cursor:pointer}select option{background:#1a1a2e;color:#fff}
   body.light select option{background:#fff;color:#1a1a2e}
-  .btn{
-    width:100%;padding:17px;border:none;border-radius:14px;
-    background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;
-    font-size:16px;font-weight:600;cursor:pointer;transition:.25s;
-    box-shadow:0 8px 24px rgba(102,126,234,0.3);margin-bottom:12px
-  }
+  .btn{width:100%;padding:17px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:.25s;box-shadow:0 8px 24px rgba(102,126,234,0.3);margin-bottom:12px}
   .btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(102,126,234,0.45)}
-  .btn:active{transform:scale(0.98)}
-  .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+  .btn:active{transform:scale(0.98)}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
   .btn.green{background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 8px 24px rgba(34,197,94,0.3)}
   .btn.red{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 8px 24px rgba(239,68,68,0.3)}
   .btn.gray{background:var(--card);box-shadow:none;color:var(--text)}
@@ -86,10 +62,12 @@
   .balance-card{border-radius:22px;padding:24px;background:var(--balance-grad);color:#fff;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,0.3);cursor:pointer;transition:.3s}
   .balance-card:active{transform:scale(0.99)}
   .balance-card::after{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.08)}
-  .balance-label{font-size:12px;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
-  .balance-amount{font-size:34px;font-weight:700;letter-spacing:-1px;margin-bottom:16px}
+  .balance-label{font-size:12px;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;display:flex;justify-content:space-between;align-items:center}
+  .balance-amount{font-size:34px;font-weight:700;letter-spacing:-1px;margin-bottom:16px;transition:.3s}
   .balance-amount span{font-size:22px;opacity:.7}
   .balance-num{font-size:14px;letter-spacing:2px;opacity:.85;font-family:'Courier New',monospace}
+  .eye-btn{cursor:pointer;font-size:16px;opacity:.9;padding:4px;transition:.2s}
+  .eye-btn:active{transform:scale(0.9)}
   .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
   .action-btn{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:.25s;color:var(--text)}
   .action-btn:hover{background:rgba(102,126,234,0.2);border-color:var(--primary);transform:translateY(-3px)}
@@ -98,8 +76,12 @@
   .section-title{color:var(--text);font-size:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
   .section-title span{color:var(--text-muted);font-size:12px;cursor:pointer}
   .section-title .ttl{color:var(--text);font-size:16px}
-  .tx-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border-radius:14px;margin-bottom:8px;transition:.2s;cursor:pointer;position:relative;overflow:hidden}
+  .tx-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border-radius:14px;margin-bottom:8px;transition:.2s;cursor:pointer;position:relative;overflow:hidden;touch-action:pan-y}
   .tx-item:hover{background:rgba(128,128,128,0.12)}
+  .tx-swipe-bg{position:absolute;top:0;bottom:0;display:flex;align-items:center;padding:0 20px;font-size:20px;transition:.2s;pointer-events:none}
+  .tx-swipe-bg.left{left:0;background:rgba(34,197,94,0.15);color:var(--green)}
+  .tx-swipe-bg.right{right:0;background:rgba(239,68,68,0.15);color:var(--red)}
+  .tx-item-content{display:flex;align-items:center;gap:12px;width:100%;position:relative;z-index:1;background:var(--card);transition:.2s}
   .tx-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
   .tx-icon.in{background:rgba(34,197,94,0.15);color:var(--green)}
   .tx-icon.out{background:rgba(239,68,68,0.15);color:var(--red)}
@@ -108,8 +90,7 @@
   .tx-date{color:var(--text-muted);font-size:11px}
   .tx-cat{display:inline-block;background:rgba(102,126,234,0.2);color:#a5b4fc;font-size:9px;padding:1px 6px;border-radius:6px;margin-left:6px}
   .tx-amount{font-size:15px;font-weight:600;white-space:nowrap}
-  .tx-amount.in{color:var(--green)}
-  .tx-amount.out{color:var(--text)}
+  .tx-amount.in{color:var(--green)}.tx-amount.out{color:var(--text)}
   .empty{text-align:center;color:var(--text-muted);font-size:13px;padding:30px 20px}
   .empty-icon{font-size:40px;opacity:.3;margin-bottom:10px}
   .op-header{display:flex;align-items:center;gap:12px;margin-bottom:24px}
@@ -172,7 +153,7 @@
   .pin-error{color:var(--red);font-size:13px;text-align:center;min-height:20px;margin-bottom:10px}
   .modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;z-index:9998;opacity:0;pointer-events:none;transition:.25s}
   .modal-overlay.show{opacity:1;pointer-events:auto}
-  .modal{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:28px 24px;width:100%;max-width:340px;text-align:center;transform:scale(0.9);transition:.3s cubic-bezier(.4,0,.2,1)}
+  .modal{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:28px 24px;width:100%;max-width:340px;text-align:center;transform:scale(0.9);transition:.3s cubic-bezier(.4,0,.2,1);max-height:80vh;overflow-y:auto}
   .modal-overlay.show .modal{transform:scale(1)}
   .modal-icon{width:60px;height:60px;margin:0 auto 16px;border-radius:50%;background:rgba(239,68,68,0.15);display:flex;align-items:center;justify-content:center;font-size:28px}
   .modal-icon.green{background:rgba(34,197,94,0.15)}
@@ -198,7 +179,6 @@
   .child-balance{color:var(--green);font-size:14px;font-weight:600;margin-left:auto}
   .badge-child{display:inline-block;background:linear-gradient(135deg,#f59e0b,#f5576c);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
   .badge-parent{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
-  .badge-frozen{display:inline-block;background:linear-gradient(135deg,#3b82f6,#1e40af);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:6px}
   .settings-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--card);border-radius:14px;margin-bottom:8px;cursor:pointer;transition:.2s}
   .settings-row:hover{background:rgba(128,128,128,0.12)}
   .settings-row .sr-label{color:var(--text);font-size:14px}
@@ -225,7 +205,6 @@
   .legend-val{color:var(--text-dim);font-weight:500}
   .bars{display:flex;align-items:flex-end;gap:6px;height:120px;padding:8px 0}
   .bar{flex:1;background:linear-gradient(to top,var(--primary),var(--primary2));border-radius:6px 6px 2px 2px;min-height:4px;transition:.3s;position:relative}
-  .bar:hover{opacity:.8}
   .bars-labels{display:flex;gap:6px;padding-top:6px}
   .bars-labels span{flex:1;text-align:center;color:var(--text-muted);font-size:9px}
   .budget-item{background:var(--card);border-radius:14px;padding:14px;margin-bottom:10px}
@@ -246,7 +225,7 @@
   .goal-amounts{color:var(--text-dim);font-size:12px;margin-bottom:8px}
   .goal-bar{height:10px;background:rgba(128,128,128,0.15);border-radius:5px;overflow:hidden}
   .goal-fill{height:100%;background:linear-gradient(90deg,var(--green),#16a34a);border-radius:5px;transition:.5s;width:0}
-  .qr-code{width:200px;height:200px;margin:0 auto 20px;background:#fff;border-radius:20px;padding:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#666;font-family:monospace;line-height:1.2;word-break:break-all;text-align:center}
+  .qr-code{width:200px;height:200px;margin:0 auto 20px;background:#fff;border-radius:20px;padding:16px;display:flex;align-items:center;justify-content:center}
   .qr-svg{width:100%;height:100%}
   .confetti{position:absolute;width:10px;height:10px;background:#f59e0b;animation:confetti-fall 3s linear forwards;pointer-events:none;z-index:9997}
   @keyframes confetti-fall{0%{transform:translateY(-100px) rotate(0);opacity:1}100%{transform:translateY(900px) rotate(720deg);opacity:0}}
@@ -264,16 +243,45 @@
   .cat-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
   .cat-chip{padding:8px 14px;border-radius:20px;background:var(--card);border:1px solid var(--border);font-size:12px;color:var(--text);cursor:pointer;transition:.2s}
   .cat-chip.selected{background:rgba(102,126,234,0.3);border-color:var(--primary);color:#fff}
+  .skeleton{background:linear-gradient(90deg,var(--card) 25%,rgba(128,128,128,0.15) 50%,var(--card) 75%);background-size:200% 100%;animation:skeleton 1.5s infinite;border-radius:14px}
+  @keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  .skel-item{height:64px;margin-bottom:8px}
+  .period-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
+  .period-tabs::-webkit-scrollbar{display:none}
+  .period-tab{padding:8px 14px;border-radius:16px;background:var(--card);border:1px solid var(--border);font-size:12px;color:var(--text-dim);cursor:pointer;white-space:nowrap;transition:.2s}
+  .period-tab.active{background:rgba(102,126,234,0.3);border-color:var(--primary);color:#fff}
+  .date-range{display:flex;gap:8px;margin-bottom:14px}
+  .date-range input{flex:1;margin-bottom:0;font-size:13px;padding:12px}
+  .avatar-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;max-height:180px;overflow-y:auto;padding:8px;background:var(--card);border-radius:14px}
+  .avatar-emoji{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:.2s}
+  .avatar-emoji.selected{border-color:var(--primary);background:rgba(102,126,234,0.2)}
+  .big-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto}
+  .fab{position:absolute;bottom:calc(90px + env(safe-area-inset-bottom));right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border:none;font-size:24px;box-shadow:0 12px 32px rgba(102,126,234,0.5);cursor:pointer;z-index:99;transition:.25s;display:flex;align-items:center;justify-content:center}
+  .fab:active{transform:scale(0.94)}
   @media (max-width:380px){
     .actions{grid-template-columns:repeat(4,1fr)}
     .action-label{font-size:9px}
     .btn{padding:15px;font-size:15px}
   }
+  .pulse-notification{position:absolute;top:calc(15px + env(safe-area-inset-top));left:20px;right:20px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;padding:14px 18px;border-radius:18px;z-index:9990;box-shadow:0 12px 32px rgba(102,126,234,0.5);transform:translateY(-200%);transition:.4s cubic-bezier(.4,0,.2,1);display:flex;gap:12px;align-items:center}
+  .pulse-notification.show{transform:translateY(0)}
+  .pulse-notification-icon{font-size:22px;flex-shrink:0}
+  .pulse-notification-text{flex:1;font-size:13px;line-height:1.4}
+  .pulse-notification-title{font-weight:600;margin-bottom:2px}
 </style>
 </head>
 <body>
 
 <div class="app" id="app">
+
+  <!-- Уведомление в приложении -->
+  <div class="pulse-notification" id="pulseNotification">
+    <div class="pulse-notification-icon" id="pnIcon">🔔</div>
+    <div class="pulse-notification-text">
+      <div class="pulse-notification-title" id="pnTitle">Уведомление</div>
+      <div id="pnText">Текст</div>
+    </div>
+  </div>
 
   <!-- ЗАГРУЗКА -->
   <div class="screen active" id="screenLoading">
@@ -382,8 +390,11 @@
       <div class="avatar" id="userAvatar" onclick="goTo('screenAccount')">—</div>
     </div>
 
-    <div class="balance-card" id="balanceCard" onclick="openCardDetails(state.cards[0]?.id)">
-      <div class="balance-label">Общий баланс</div>
+    <div class="balance-card" onclick="openCardDetails(state.cards[0]?.id)">
+      <div class="balance-label">
+        <span>Общий баланс</span>
+        <span class="eye-btn" onclick="event.stopPropagation();togglePrivate()" id="eyeBtn">👁</span>
+      </div>
       <div class="balance-amount" id="totalBalance">0 <span>₽</span></div>
       <div class="balance-num" id="mainCardNum">•••• •••• •••• ----</div>
     </div>
@@ -392,7 +403,7 @@
       <div class="action-btn" onclick="openOp('topup')"><div class="action-icon">➕</div><div class="action-label">Пополнить</div></div>
       <div class="action-btn" onclick="openOp('transfer')"><div class="action-icon">🔄</div><div class="action-label">Перевод</div></div>
       <div class="action-btn" onclick="openOp('pay')"><div class="action-icon">🛒</div><div class="action-label">Оплатить</div></div>
-      <div class="action-btn" onclick="goTo('screenAnalytics')"><div class="action-icon">📊</div><div class="action-label">Аналитика</div></div>
+      <div class="action-btn" onclick="showMyQR()"><div class="action-icon">📷</div><div class="action-label">Мой QR</div></div>
     </div>
 
     <div class="section-title">
@@ -411,6 +422,20 @@
         <div style="color:var(--text-muted);font-size:12px" id="historySub">Все операции</div>
       </div>
     </div>
+
+    <div class="period-tabs" id="historyPeriods">
+      <div class="period-tab active" data-period="all">Всё время</div>
+      <div class="period-tab" data-period="today">Сегодня</div>
+      <div class="period-tab" data-period="week">Неделя</div>
+      <div class="period-tab" data-period="month">Месяц</div>
+      <div class="period-tab" data-period="custom">Свой период</div>
+    </div>
+
+    <div class="date-range" id="customDateRange" style="display:none">
+      <input type="date" id="dateFrom">
+      <input type="date" id="dateTo">
+    </div>
+
     <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
       <input type="text" id="historySearch" placeholder="🔍 Поиск" style="margin-bottom:0;flex:1;min-width:120px" oninput="renderHistory()">
       <select id="historyFilter" style="margin-bottom:0;width:auto" onchange="renderHistory()">
@@ -437,8 +462,8 @@
     </div>
 
     <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;text-align:center;margin-bottom:20px">
-      <div class="avatar" style="width:64px;height:64px;font-size:22px;margin:0 auto 12px" id="accountAvatar">—</div>
-      <div style="color:var(--text);font-size:18px;font-weight:600" id="accountName">—</div>
+      <div class="big-avatar" id="accountAvatarBig" onclick="openAvatarPicker()">—</div>
+      <div style="color:var(--text);font-size:18px;font-weight:600;margin-top:12px" id="accountName">—</div>
       <div style="color:var(--text-dim);font-size:13px;margin-top:4px" id="accountPhone">—</div>
       <div style="margin-top:10px" id="accountBadges"></div>
     </div>
@@ -451,11 +476,14 @@
     <div class="section-title"><span class="ttl">💳 Мои карты</span><span onclick="goTo('screenCards')">Управление →</span></div>
     <div id="accountCardsList"></div>
 
-    <div class="section-title"><span class="ttl">📞 Мои контакты</span><span onclick="goTo('screenContacts')">Все →</span></div>
+    <div class="section-title"><span class="ttl">📞 Контакты</span><span onclick="goTo('screenContacts')">Все →</span></div>
     <div id="accountContactsList" style="margin-bottom:16px"></div>
 
     <div class="section-title"><span class="ttl">🎯 Цели</span><span onclick="goTo('screenGoals')">Все →</span></div>
     <div id="accountGoalsList" style="margin-bottom:16px"></div>
+
+    <div class="section-title"><span class="ttl">🔁 Автопереводы</span><span onclick="goTo('screenAutotransfers')">Все →</span></div>
+    <div id="accountAutotransfersList" style="margin-bottom:16px"></div>
 
     <div class="section-title"><span class="ttl">🏆 Достижения</span></div>
     <div id="accountAchievements" style="margin-bottom:16px"></div>
@@ -471,6 +499,11 @@
       <div class="sr-value" id="budgetsCount">0</div>
       <div class="sr-arrow">›</div>
     </div>
+    <div class="settings-row" onclick="goTo('screenLimits')">
+      <div class="sr-label">📊 Лимиты</div>
+      <div class="sr-value" id="limitsSummary">—</div>
+      <div class="sr-arrow">›</div>
+    </div>
     <div class="settings-row" onclick="openChangePin()">
       <div class="sr-label">🔑 Изменить PIN-код</div>
       <div class="sr-arrow">›</div>
@@ -480,15 +513,37 @@
       <label class="switch"><input type="checkbox" id="autoLockToggle" checked><span class="slider"></span></label>
     </div>
     <div class="settings-row">
-      <div class="sr-label">👆 Вход по биометрии</div>
+      <div class="sr-label">👆 Биометрия</div>
       <label class="switch"><input type="checkbox" id="bioToggle"><span class="slider"></span></label>
     </div>
-    <div class="settings-row" onclick="goTo('screenLimits')">
-      <div class="sr-label">📊 Лимиты на операции</div>
-      <div class="sr-arrow">›</div>
+    <div class="settings-row">
+      <div class="sr-label">🔔 Уведомления</div>
+      <label class="switch"><input type="checkbox" id="notifToggle" checked><span class="slider"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="sr-label">🕶 Приватный режим</div>
+      <label class="switch"><input type="checkbox" id="privateToggle"><span class="slider"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="sr-label">🔊 Звуки</div>
+      <label class="switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label>
     </div>
 
     <button class="btn red" onclick="showLogoutConfirm()" style="margin-top:20px">Выйти из аккаунта</button>
+    <button class="btn gray small" onclick="showLoginHistory()" style="margin-bottom:20px">📜 История входов</button>
+  </div>
+
+  <!-- АВТОПЕРЕВОДЫ -->
+  <div class="screen" id="screenAutotransfers">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenAccount')">←</div>
+      <div>
+        <div style="color:var(--text);font-size:17px;font-weight:600">Автопереводы</div>
+        <div style="color:var(--text-muted);font-size:12px">Регулярные переводы между картами</div>
+      </div>
+    </div>
+    <button class="btn" onclick="openAddAutotransfer()">➕ Новый автоперевод</button>
+    <div id="autotransfersList" style="margin-top:16px"></div>
   </div>
 
   <!-- УПРАВЛЕНИЕ КАРТАМИ -->
@@ -522,13 +577,14 @@
       <div class="balance-amount" id="cdBalance">0 <span>₽</span></div>
       <div class="balance-num" id="cdNumber">•••• •••• •••• ----</div>
       <div style="display:flex;gap:16px;margin-top:16px;font-size:12px;opacity:.9">
-        <div><div style="opacity:.7;font-size:9px">ВЛАДЕЛЕЦ</div><div id="cdOwner" style="margin-top:2px">IVAN PETROV</div></div>
+        <div><div style="opacity:.7;font-size:9px">ВЛАДЕЛЕЦ</div><div id="cdOwner" style="margin-top:2px">IVAN</div></div>
         <div><div style="opacity:.7;font-size:9px">СРОК</div><div id="cdExpiry" style="margin-top:2px">12/27</div></div>
         <div><div style="opacity:.7;font-size:9px">CVV</div><div id="cdCvv" style="margin-top:2px">•••</div></div>
       </div>
     </div>
 
-    <button class="btn gray small" onclick="showCardRequisites()" style="margin-bottom:8px">👁 Показать реквизиты (15 сек)</button>
+    <button class="btn gray small" onclick="showCardRequisites()" style="margin-bottom:8px">👁 Показать реквизиты</button>
+    <button class="btn gray small" onclick="copyCardRequisites()" style="margin-bottom:8px">📋 Скопировать реквизиты</button>
 
     <div class="section-title"><span class="ttl">Название</span></div>
     <input type="text" id="cdRenameInput" placeholder="Например: Зарплатная">
@@ -598,7 +654,7 @@
     <div id="goalsList" style="margin-top:16px"></div>
   </div>
 
-  <!-- НАСТРОЙКА ТЕМЫ -->
+  <!-- ТЕМА -->
   <div class="screen" id="screenTheme">
     <div class="op-header">
       <div class="op-back" onclick="goTo('screenAccount')">←</div>
@@ -609,6 +665,7 @@
     </div>
     <div class="section-title"><span class="ttl">Режим</span></div>
     <div class="cat-picker" id="modePicker">
+      <div class="cat-chip" data-mode="auto">🔄 Авто</div>
       <div class="cat-chip selected" data-mode="dark">🌙 Тёмная</div>
       <div class="cat-chip" data-mode="light">☀️ Светлая</div>
     </div>
@@ -631,8 +688,15 @@
       <div class="op-back" onclick="goTo('screenHome')">←</div>
       <div>
         <div style="color:var(--text);font-size:17px;font-weight:600">Аналитика</div>
-        <div style="color:var(--text-muted);font-size:12px">Расходы за 30 дней</div>
+        <div style="color:var(--text-muted);font-size:12px">Расходы и прогнозы</div>
       </div>
+    </div>
+
+    <div class="period-tabs" id="analyticsPeriods">
+      <div class="period-tab" data-period="week">Неделя</div>
+      <div class="period-tab active" data-period="month">Месяц</div>
+      <div class="period-tab" data-period="quarter">3 месяца</div>
+      <div class="period-tab" data-period="year">Год</div>
     </div>
 
     <div class="chart-wrap">
@@ -659,8 +723,18 @@
     </div>
 
     <div class="chart-wrap">
-      <div style="color:var(--text);font-size:14px;font-weight:600;margin-bottom:8px">📈 Сравнение с прошлым месяцем</div>
+      <div style="color:var(--text);font-size:14px;font-weight:600;margin-bottom:8px">📈 Сравнение</div>
       <div id="monthCompare" style="color:var(--text-dim);font-size:13px;line-height:1.6"></div>
+    </div>
+
+    <div class="chart-wrap">
+      <div style="color:var(--text);font-size:14px;font-weight:600;margin-bottom:8px">🔮 Прогноз на месяц</div>
+      <div id="forecast" style="color:var(--text-dim);font-size:13px;line-height:1.6"></div>
+    </div>
+
+    <div class="chart-wrap">
+      <div style="color:var(--text);font-size:14px;font-weight:600;margin-bottom:8px">💡 Советы</div>
+      <div id="advices" style="color:var(--text-dim);font-size:13px;line-height:1.6"></div>
     </div>
   </div>
 
@@ -690,7 +764,7 @@
     <input type="text" id="dailyLimitInput" placeholder="50000" inputmode="numeric">
     <div class="section-title"><span class="ttl">Максимум за операцию</span></div>
     <input type="text" id="perOpLimitInput" placeholder="15000" inputmode="numeric">
-    <button class="btn green" onclick="saveLimits()">💾 Сохранить лимиты</button>
+    <button class="btn green" onclick="saveLimits()">💾 Сохранить</button>
     <div id="todayUsage" style="margin-top:16px"></div>
   </div>
 
@@ -727,10 +801,10 @@
       </div>
     </div>
     <div class="cat-picker" style="margin-bottom:14px">
-      <div class="cat-chip selected" onclick="switchTransferMethod('phone',this)">📞 По телефону</div>
-      <div class="cat-chip" onclick="switchTransferMethod('card',this)">💳 По карте</div>
-      <div class="cat-chip" onclick="switchTransferMethod('own',this)">🔁 Между своими</div>
-      <div class="cat-chip" onclick="switchTransferMethod('qr',this)">📷 QR-код</div>
+      <div class="cat-chip selected" onclick="switchTransferMethod('phone',this)">📞 Телефон</div>
+      <div class="cat-chip" onclick="switchTransferMethod('card',this)">💳 Карта</div>
+      <div class="cat-chip" onclick="switchTransferMethod('own',this)">🔁 Свои</div>
+      <div class="cat-chip" onclick="switchTransferMethod('qr',this)">📷 QR</div>
     </div>
 
     <div id="transferMethod_phone">
@@ -765,29 +839,10 @@
     <div id="transferMethod_qr" style="display:none;text-align:center">
       <div style="color:var(--text-dim);font-size:12px;margin-bottom:8px">Списать с карты:</div>
       <div id="transferFromCards3"></div>
-      <div class="qr-code" style="margin-top:16px">
-        <svg viewBox="0 0 100 100" class="qr-svg">
-          <rect width="100" height="100" fill="#fff"/>
-          <rect x="5" y="5" width="30" height="30" fill="#000" rx="3"/>
-          <rect x="10" y="10" width="20" height="20" fill="#fff"/>
-          <rect x="14" y="14" width="12" height="12" fill="#000"/>
-          <rect x="65" y="5" width="30" height="30" fill="#000" rx="3"/>
-          <rect x="70" y="10" width="20" height="20" fill="#fff"/>
-          <rect x="74" y="14" width="12" height="12" fill="#000"/>
-          <rect x="5" y="65" width="30" height="30" fill="#000" rx="3"/>
-          <rect x="10" y="70" width="20" height="20" fill="#fff"/>
-          <rect x="14" y="74" width="12" height="12" fill="#000"/>
-          <rect x="45" y="45" width="10" height="10" fill="#000"/>
-          <rect x="60" y="50" width="8" height="8" fill="#000"/>
-          <rect x="75" y="60" width="10" height="10" fill="#000"/>
-          <rect x="45" y="70" width="12" height="12" fill="#000"/>
-          <rect x="60" y="75" width="8" height="8" fill="#000"/>
-          <rect x="45" y="20" width="6" height="15" fill="#000"/>
-          <rect x="80" y="45" width="15" height="6" fill="#000"/>
-          <rect x="20" y="50" width="15" height="6" fill="#000"/>
-        </svg>
+      <div class="qr-code" id="scanQrBox" style="margin-top:16px">
+        <svg viewBox="0 0 100 100" class="qr-svg" id="scanQrSvg"></svg>
       </div>
-      <div style="color:var(--text-dim);font-size:12px">Наведите камеру на QR-код получателя</div>
+      <div style="color:var(--text-dim);font-size:12px">Наведите камеру на QR-код</div>
     </div>
 
     <div class="amount-input-wrap" style="margin-top:14px">
@@ -801,7 +856,7 @@
       <button onclick="setAmount('transferAmount',5000)">5 000</button>
     </div>
 
-    <input type="text" id="transferComment" placeholder="💬 Комментарий (опционально)" maxlength="60">
+    <input type="text" id="transferComment" placeholder="💬 Комментарий" maxlength="60">
 
     <button class="btn" id="transferBtn" disabled>Перевести</button>
     <button class="btn gray small" onclick="openSplit()">➗ Разделить счёт</button>
@@ -821,13 +876,13 @@
     <div class="cat-picker" style="margin-bottom:14px">
       <div class="cat-chip selected" onclick="switchPayMethod('shop',this)">🛒 Магазин</div>
       <div class="cat-chip" onclick="switchPayMethod('req',this)">🏢 По реквизитам</div>
-      <div class="cat-chip" onclick="switchPayMethod('auto',this)">🔁 Автоплатёж</div>
+      <div class="cat-chip" onclick="switchPayMethod('auto',this)">🔁 Авто</div>
     </div>
 
     <div id="payMethod_shop">
       <div style="color:var(--text-dim);font-size:12px;margin-bottom:8px">Списать с:</div>
       <div id="payCards"></div>
-      <input type="text" id="payMerchant" placeholder="Магазин (например: Пятёрочка)" style="margin-top:14px">
+      <input type="text" id="payMerchant" placeholder="Магазин" style="margin-top:14px">
       <div class="cat-picker" id="payCategories">
         <div class="cat-chip selected" data-cat="food">🍔 Еда</div>
         <div class="cat-chip" data-cat="transport">🚕 Транспорт</div>
@@ -851,10 +906,10 @@
     <div id="payMethod_req" style="display:none">
       <div style="color:var(--text-dim);font-size:12px;margin-bottom:8px">Списать с:</div>
       <div id="payCards2"></div>
-      <input type="text" id="reqOrg" placeholder="Название организации">
+      <input type="text" id="reqOrg" placeholder="Организация">
       <input type="text" id="reqINN" placeholder="ИНН" inputmode="numeric" maxlength="12">
       <input type="text" id="reqBIK" placeholder="БИК" inputmode="numeric" maxlength="9">
-      <input type="text" id="reqAccount" placeholder="Расчётный счёт" inputmode="numeric" maxlength="20">
+      <input type="text" id="reqAccount" placeholder="Счёт" inputmode="numeric" maxlength="20">
       <div class="amount-input-wrap">
         <input type="text" id="reqAmount" placeholder="0" inputmode="numeric">
         <div class="currency">₽</div>
@@ -864,7 +919,7 @@
     <div id="payMethod_auto" style="display:none">
       <div style="color:var(--text-dim);font-size:12px;margin-bottom:8px">Списать с:</div>
       <div id="payCards3"></div>
-      <input type="text" id="autoName" placeholder="Название (Netflix, Spotify...)">
+      <input type="text" id="autoName" placeholder="Название">
       <input type="text" id="autoAmount" placeholder="Сумма ₽" inputmode="numeric">
       <select id="autoPeriod">
         <option value="month">Каждый месяц</option>
@@ -903,6 +958,24 @@
     </div>
   </div>
 
+  <!-- МОЙ QR -->
+  <div class="screen" id="screenMyQr">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenHome')">←</div>
+      <div>
+        <div style="color:var(--text);font-size:17px;font-weight:600">Мой QR-код</div>
+        <div style="color:var(--text-muted);font-size:12px">Для получения денег</div>
+      </div>
+    </div>
+    <div class="qr-code" style="width:260px;height:260px">
+      <div id="myQrCanvas" style="width:100%;height:100%"></div>
+    </div>
+    <div style="text-align:center;color:var(--text-dim);font-size:13px;margin-bottom:20px">
+      Пусть друг отсканирует, чтобы отправить вам перевод
+    </div>
+    <button class="btn" onclick="shareQr()">📤 Поделиться</button>
+  </div>
+
   <!-- ПРОСМОТР РЕБЁНКА -->
   <div class="screen" id="screenChildView">
     <div class="op-header">
@@ -925,15 +998,15 @@
       <div class="sr-arrow">›</div>
     </div>
     <div class="settings-row">
-      <div class="sr-label">Одобрение крупных покупок</div>
+      <div class="sr-label">Одобрение покупок</div>
       <label class="switch"><input type="checkbox" id="childApproveToggle"><span class="slider"></span></label>
     </div>
-    <button class="btn gray small" onclick="setChildAllowance()">💵 Настроить карманные деньги</button>
-    <div class="section-title" style="margin-top:20px"><span class="ttl">История трат</span></div>
+    <button class="btn gray small" onclick="setChildAllowance()">💵 Карманные деньги</button>
+    <div class="section-title" style="margin-top:20px"><span class="ttl">История</span></div>
     <div id="childViewHistory"></div>
   </div>
 
-  <!-- ИЗМЕНЕНИЕ PIN -->
+  <!-- СМЕНА PIN -->
   <div class="screen" id="screenChangePin">
     <div class="op-header">
       <div class="op-back" onclick="goTo('screenAccount')">←</div>
@@ -950,6 +1023,18 @@
       <div class="pin-dot" data-i="3"></div>
     </div>
     <div class="pin-pad" id="changePinPad"></div>
+  </div>
+
+  <!-- ИСТОРИЯ ВХОДОВ -->
+  <div class="screen" id="screenLoginHistory">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenAccount')">←</div>
+      <div>
+        <div style="color:var(--text);font-size:17px;font-weight:600">История входов</div>
+        <div style="color:var(--text-muted);font-size:12px">Последние активности</div>
+      </div>
+    </div>
+    <div id="loginHistoryList"></div>
   </div>
 
   <!-- НИЖНЯЯ НАВИГАЦИЯ -->
@@ -973,7 +1058,7 @@
     <div class="modal">
       <div class="modal-icon">🚪</div>
       <div class="modal-title">Выйти из аккаунта?</div>
-      <div class="modal-text">Вы уверены? Для повторного входа понадобится PIN-код.</div>
+      <div class="modal-text">Для повторного входа понадобится PIN-код.</div>
       <div class="modal-buttons">
         <button class="btn gray" onclick="hideModal('logoutModal')">Отмена</button>
         <button class="btn red" onclick="confirmLogout()">Выйти</button>
@@ -995,12 +1080,25 @@
     </div>
   </div>
 
+  <!-- МОДАЛКА АВАТАРА -->
+  <div class="modal-overlay" id="avatarModal">
+    <div class="modal">
+      <div class="modal-title">Выберите аватар</div>
+      <div class="avatar-picker" id="avatarPicker"></div>
+      <div class="modal-buttons">
+        <button class="btn gray" onclick="hideModal('avatarModal')">Отмена</button>
+        <button class="btn" onclick="saveAvatar()">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <script>
 /* ==================== FIREBASE ==================== */
@@ -1018,168 +1116,194 @@ const db = firebase.database();
 
 /* ==================== КОНСТАНТЫ ==================== */
 const CATEGORIES = {
-  food:      { name: 'Еда',          emoji: '🍔', color: '#ef4444' },
-  transport: { name: 'Транспорт',    emoji: '🚕', color: '#f59e0b' },
-  fun:       { name: 'Развлечения',  emoji: '🎮', color: '#8b5cf6' },
-  shopping:  { name: 'Покупки',      emoji: '🛍', color: '#ec4899' },
-  health:    { name: 'Здоровье',     emoji: '💊', color: '#22c55e' },
-  other:     { name: 'Другое',       emoji: '📦', color: '#6b7280' },
-  topup:     { name: 'Пополнение',   emoji: '➕', color: '#22c55e' },
-  transfer:  { name: 'Перевод',      emoji: '🔄', color: '#3b82f6' }
+  food:{name:'Еда',emoji:'🍔',color:'#ef4444'}, transport:{name:'Транспорт',emoji:'🚕',color:'#f59e0b'},
+  fun:{name:'Развлечения',emoji:'🎮',color:'#8b5cf6'}, shopping:{name:'Покупки',emoji:'🛍',color:'#ec4899'},
+  health:{name:'Здоровье',emoji:'💊',color:'#22c55e'}, other:{name:'Другое',emoji:'📦',color:'#6b7280'},
+  topup:{name:'Пополнение',emoji:'➕',color:'#22c55e'}, transfer:{name:'Перевод',emoji:'🔄',color:'#3b82f6'},
+  savings:{name:'Накопления',emoji:'💰',color:'#f59e0b'}, reserve:{name:'Резерв',emoji:'🛡',color:'#0ea5e9'},
+  shopping_card:{name:'Для покупок',emoji:'🛒',color:'#ec4899'}
 };
 
 const ACHIEVEMENTS = [
-  { id: 'first_pay',   emoji: '🎉', title: 'Первая покупка',    desc: 'Совершите первую оплату' },
-  { id: 'first_trans', emoji: '💸', title: 'Первый перевод',    desc: 'Отправьте первый перевод' },
-  { id: 'hundred_ops', emoji: '💯', title: '100 операций',      desc: 'Совершите 100 операций' },
-  { id: 'saver',       emoji: '🏆', title: 'Накопитель',        desc: 'Накопите 50 000 ₽' },
-  { id: 'topup_master',emoji: '💰', title: 'Мастер пополнений', desc: 'Пополните 10 раз' },
-  { id: 'goal_reach',  emoji: '🎯', title: 'Цель достигнута',   desc: 'Закройте одну цель' }
+  {id:'first_pay',emoji:'🎉',title:'Первая покупка',desc:'Совершите первую оплату'},
+  {id:'first_trans',emoji:'💸',title:'Первый перевод',desc:'Отправьте первый перевод'},
+  {id:'hundred_ops',emoji:'💯',title:'100 операций',desc:'Совершите 100 операций'},
+  {id:'saver',emoji:'🏆',title:'Накопитель',desc:'Накопите 50 000 ₽'},
+  {id:'topup_master',emoji:'💰',title:'Мастер пополнений',desc:'Пополните 10 раз'},
+  {id:'goal_reach',emoji:'🎯',title:'Цель достигнута',desc:'Закройте одну цель'},
+  {id:'daily_streak',emoji:'🔥',title:'Постоянство',desc:'Заходите 7 дней подряд'},
+  {id:'rounder',emoji:'🪙',title:'Копилка округлений',desc:'Накопите 500 ₽ округлениями'},
+  {id:'social',emoji:'👥',title:'Социальный',desc:'Добавьте 3 контакта'},
+  {id:'budget_hero',emoji:'📊',title:'Хозяин бюджета',desc:'Не превышайте бюджет месяц'}
 ];
+
+const AVATAR_EMOJIS = ['👤','👨','👩','🧑','👦','👧','👴','👵','🧔','👱‍♀️','👨‍💼','👩‍💼','🦸','🧙','🐱','🐶','🐼','🦊','🐨','🐯','🦁','🐸','🐧','🦄','😎','🤓','🥳','😇','🤖','👽'];
 
 const MAX_PIN_ATTEMPTS = 3;
 const LOCK_DURATION_MS = 60 * 1000;
+const AUTO_LOCK_MS = 2 * 60 * 1000;
 
 /* ==================== СОСТОЯНИЕ ==================== */
 const state = {
-  user: { phone:'', firstName:'', lastName:'', type:'adult' },
-  cards: [],
-  history: [],
-  contacts: [],
-  goals: [],
-  budgets: [],
-  achievements: {},
-  settings: { theme:'blue', mode:'dark', autoLock:true, bio:false, dailyLimit:50000, perOpLimit:15000 },
-  selectedTopupCard: null,
-  transferFrom: null,
-  transferFrom2: null,
-  transferFrom3: null,
-  transferOwnFrom: null,
-  transferOwnTo: null,
-  transferRecipient: null,
-  transferMethod: 'phone',
-  transferComment: '',
-  payCard: null,
-  payCard2: null,
-  payCard3: null,
-  payMethod: 'shop',
-  payCategory: 'food',
-  savedPin: null,
-  pinMode: 'create',
-  pinBuffer: '',
-  pinFirst: '',
-  pinAttempts: 0,
-  lockedUntil: 0,
-  loggedIn: false,
-  currentCardId: null,
-  currentChildPhone: null,
-  lastOperation: null,
-  children: []
+  user:{phone:'',firstName:'',lastName:'',type:'adult',avatar:'👤'},
+  cards:[], history:[], contacts:[], goals:[], budgets:[], achievements:{},
+  autotransfers:[], loginHistory:[],
+  settings:{theme:'blue',mode:'dark',autoLock:true,bio:false,dailyLimit:50000,perOpLimit:15000,notifications:true,private:false,sound:true,roundup:false},
+  selectedTopupCard:null, transferFrom:null, transferFrom2:null, transferFrom3:null,
+  transferOwnFrom:null, transferOwnTo:null, transferRecipient:null,
+  transferMethod:'phone', transferComment:'',
+  payCard:null, payCard2:null, payCard3:null, payMethod:'shop', payCategory:'food',
+  savedPin:null, pinMode:'create', pinBuffer:'', pinFirst:'', pinAttempts:0, lockedUntil:0,
+  loggedIn:false, currentCardId:null, currentChildPhone:null, lastOperation:null, children:[],
+  historyPeriod:'all', analyticsPeriod:'month', selectedAvatar:'👤'
 };
 
-let currentUserRef = null;
-let historyRef = null;
-let childrenRef = null;
-let autoLockTimer = null;
-let requisitesTimer = null;
+let currentUserRef=null, historyRef=null, childrenRef=null, autotransfersRef=null;
+let autoLockTimer=null, requisitesTimer=null, roundupTarget=0;
 
 /* ==================== УТИЛИТЫ ==================== */
 const screens = ['screenLoading','screenPhone','screenAccountType','screenRegister',
   'screenCreatePin','screenEnterPin','screenHome','screenHistory','screenAccount',
   'screenCards','screenCardDetails','screenCreateCard','screenContacts','screenGoals',
-  'screenTheme','screenAnalytics','screenBudgets','screenLimits',
-  'screenChangePin','screenChildView',
+  'screenTheme','screenAnalytics','screenBudgets','screenLimits','screenAutotransfers',
+  'screenChangePin','screenChildView','screenLoginHistory','screenMyQr',
   'screenTopup','screenTransfer','screenPay','screenProcessing','screenSuccess'];
 
 function goTo(id) {
   screens.forEach(s => document.getElementById(s)?.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-
   const nav = document.getElementById('bottomNav');
   const navScreens = ['screenHome','screenHistory','screenAnalytics','screenAccount'];
   if (navScreens.includes(id)) {
-    nav.style.display = 'flex';
-    document.querySelectorAll('.nav-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.screen === id);
-    });
-  } else {
-    nav.style.display = 'none';
-  }
-
-  if (id === 'screenHome') renderHome();
-  if (id === 'screenHistory') renderHistory();
-  if (id === 'screenAccount') renderAccount();
-  if (id === 'screenCards') renderAllCards();
-  if (id === 'screenContacts') renderContacts();
-  if (id === 'screenGoals') renderGoals();
-  if (id === 'screenAnalytics') renderAnalytics();
-  if (id === 'screenBudgets') renderBudgets();
-  if (id === 'screenLimits') renderLimits();
-  if (id === 'screenTheme') renderTheme();
-  if (id === 'screenTopup') renderTopupCards();
-  if (id === 'screenTransfer') { renderTransferCards(); renderTransferContacts(); }
-  if (id === 'screenPay') { renderPayCards(); }
-  if (id === 'screenCreatePin') { state.pinMode = 'create'; resetPin(); }
-  if (id === 'screenEnterPin') { state.pinMode = 'enter'; resetPin(); updateEnterPinSub(); }
-  if (id === 'screenChangePin') { state.pinMode = 'changeOld'; resetPin(); updateChangePinStep(); }
+    nav.style.display='flex';
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.screen===id));
+  } else nav.style.display='none';
+  if (id==='screenHome') renderHome();
+  if (id==='screenHistory') renderHistory();
+  if (id==='screenAccount') renderAccount();
+  if (id==='screenCards') renderAllCards();
+  if (id==='screenContacts') renderContacts();
+  if (id==='screenGoals') renderGoals();
+  if (id==='screenAutotransfers') renderAutotransfers();
+  if (id==='screenAnalytics') renderAnalytics();
+  if (id==='screenBudgets') renderBudgets();
+  if (id==='screenLimits') renderLimits();
+  if (id==='screenTheme') renderTheme();
+  if (id==='screenTopup') renderTopupCards();
+  if (id==='screenTransfer') { renderTransferCards(); renderTransferContacts(); }
+  if (id==='screenPay') renderPayCards();
+  if (id==='screenCreatePin') { state.pinMode='create'; resetPin(); }
+  if (id==='screenEnterPin') { state.pinMode='enter'; resetPin(); updateEnterPinSub(); }
+  if (id==='screenChangePin') { state.pinMode='changeOld'; resetPin(); updateChangePinStep(); }
+  if (id==='screenMyQr') renderMyQr();
+  if (id==='screenLoginHistory') renderLoginHistory();
+  // Save current screen
+  try { localStorage.setItem('bank_current_screen', id); } catch(e){}
 }
-
-function navTo(id) { goTo(id); }
-function fmt(n) { return (n||0).toLocaleString('ru-RU'); }
-function maskCard(last) { return '•••• ' + last; }
-function now() {
-  const d = new Date();
-  return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}) + ' ' +
-         d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+function navTo(id){ goTo(id); }
+function fmt(n){ return (n||0).toLocaleString('ru-RU'); }
+function maskCard(last){ return '•••• '+last; }
+function now(){
+  const d=new Date();
+  return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
 }
-function todayKey() {
-  const d = new Date();
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+function nowFull(){
+  const d=new Date();
+  return d.toLocaleDateString('ru-RU')+' '+d.toLocaleTimeString('ru-RU');
 }
-function getCard(id) { return state.cards.find(c => c.id === id); }
-
-function normalizePhone(input) {
-  let v = (input || '').replace(/\D/g,'');
-  if (v.startsWith('8')) v = '7' + v.slice(1);
-  if (!v.startsWith('7')) v = '7' + v;
+function todayKey(){
+  const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function getCard(id){ return state.cards.find(c=>c.id===id); }
+function normalizePhone(input){
+  let v=(input||'').replace(/\D/g,'');
+  if (v.startsWith('8')) v='7'+v.slice(1);
+  if (!v.startsWith('7')) v='7'+v;
   return v.slice(0,11);
 }
-function formatPhone(v) {
-  v = normalizePhone(v);
-  let f = '+7';
-  if (v.length > 1) f += ' ' + v.slice(1,4);
-  if (v.length > 4) f += ' ' + v.slice(4,7);
-  if (v.length > 7) f += '-' + v.slice(7,9);
-  if (v.length > 9) f += '-' + v.slice(9,11);
+function formatPhone(v){
+  v=normalizePhone(v);
+  let f='+7';
+  if(v.length>1) f+=' '+v.slice(1,4);
+  if(v.length>4) f+=' '+v.slice(4,7);
+  if(v.length>7) f+='-'+v.slice(7,9);
+  if(v.length>9) f+='-'+v.slice(9,11);
   return f;
 }
-function formatCardNumber(v) {
-  v = (v||'').replace(/\D/g,'').slice(0,16);
+function formatCardNumber(v){
+  v=(v||'').replace(/\D/g,'').slice(0,16);
   return v.replace(/(.{4})/g,'$1 ').trim();
 }
-function hashPin(pin) {
-  let h = 5381;
-  for (let i=0;i<pin.length;i++) h = ((h<<5) + h + pin.charCodeAt(i)) >>> 0;
-  return 'h' + h.toString(16);
+function hashPin(pin){
+  let h=5381;
+  for(let i=0;i<pin.length;i++) h=((h<<5)+h+pin.charCodeAt(i))>>>0;
+  return 'h'+h.toString(16);
 }
-function showToast(msg, isError=false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = isError ? 'rgba(239,68,68,0.95)' : 'rgba(34,197,94,0.95)';
+function showToast(msg,isError=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.background=isError?'rgba(239,68,68,0.95)':'rgba(34,197,94,0.95)';
   t.classList.add('show');
   clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 2500);
+  t._timer=setTimeout(()=>t.classList.remove('show'),2500);
 }
-function hideModal(id) { document.getElementById(id).classList.remove('show'); }
-function showModal(id) { document.getElementById(id).classList.add('show'); }
-function generateCards(phone) {
-  const last4 = phone.slice(-4);
-  const rnd = () => Math.floor(1000 + Math.random() * 9000);
+function showPulseNotification(title, text, icon='🔔') {
+  if (!state.settings.notifications) return;
+  const pn = document.getElementById('pulseNotification');
+  document.getElementById('pnTitle').textContent = title;
+  document.getElementById('pnText').textContent = text;
+  document.getElementById('pnIcon').textContent = icon;
+  pn.classList.add('show');
+  playSound('notify');
+  clearTimeout(pn._timer);
+  pn._timer = setTimeout(() => pn.classList.remove('show'), 4000);
+}
+function hideModal(id){ document.getElementById(id).classList.remove('show'); }
+function showModal(id){ document.getElementById(id).classList.add('show'); }
+function generateCards(phone){
+  const last4=phone.slice(-4);
+  const rnd=()=>Math.floor(1000+Math.random()*9000);
   return [
-    { id:1, brand:'VISA', last:last4, balance:5000, color:'linear-gradient(135deg,#1e3c72,#2a5298)', name:'', frozen:false, limit:0, expiry:'12/27', cvv:String(rnd()).slice(0,3) },
-    { id:2, brand:'MasterCard', last:String(rnd()), balance:2500, color:'linear-gradient(135deg,#c31432,#240b36)', name:'', frozen:false, limit:0, expiry:'09/26', cvv:String(rnd()).slice(0,3) },
-    { id:3, brand:'МИР', last:String(rnd()), balance:1000, color:'linear-gradient(135deg,#0f9b0f,#1a5c1a)', name:'', frozen:false, limit:0, expiry:'03/28', cvv:String(rnd()).slice(0,3) }
+    {id:1,brand:'VISA',last:last4,balance:5000,color:'linear-gradient(135deg,#1e3c72,#2a5298)',name:'',frozen:false,limit:0,expiry:'12/27',cvv:String(rnd()).slice(0,3)},
+    {id:2,brand:'MasterCard',last:String(rnd()),balance:2500,color:'linear-gradient(135deg,#c31432,#240b36)',name:'',frozen:false,limit:0,expiry:'09/26',cvv:String(rnd()).slice(0,3)},
+    {id:3,brand:'МИР',last:String(rnd()),balance:1000,color:'linear-gradient(135deg,#0f9b0f,#1a5c1a)',name:'',frozen:false,limit:0,expiry:'03/28',cvv:String(rnd()).slice(0,3)}
   ];
+}
+
+/* ==================== ЗВУКИ ==================== */
+let audioCtx = null;
+function playSound(type) {
+  if (!state.settings.sound) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (type === 'notify') {
+      osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(1100, audioCtx.currentTime + 0.1);
+      gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+      osc.start(audioCtx.currentTime);
+      osc.stop(audioCtx.currentTime + 0.3);
+    } else if (type === 'success') {
+      osc.frequency.setValueAtTime(660, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(1100, audioCtx.currentTime + 0.2);
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+      osc.start(audioCtx.currentTime);
+      osc.stop(audioCtx.currentTime + 0.4);
+    } else if (type === 'click') {
+      osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+      osc.start(audioCtx.currentTime);
+      osc.stop(audioCtx.currentTime + 0.05);
+    }
+  } catch(e) {}
 }
 
 /* ==================== PIN PAD ==================== */
@@ -1218,25 +1342,25 @@ phoneBtn.addEventListener('click', async () => {
     const snap = await db.ref('users/'+phone).once('value');
     const data = snap.val();
     if (data && data.firstName && data.pinHash) {
-      state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult' };
+      state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤' };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
       localStorage.setItem('bank_phone', phone);
       applySettings();
-      phoneBtn.textContent = 'Продолжить'; phoneBtn.disabled = false;
+      phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenEnterPin');
     } else if (data && data.firstName && !data.pinHash) {
-      state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult' };
+      state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤' };
       localStorage.setItem('bank_phone', phone);
-      phoneBtn.textContent = 'Продолжить'; phoneBtn.disabled = false;
+      phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenCreatePin');
     } else {
       state.user.phone = phone;
       localStorage.setItem('bank_phone', phone);
-      phoneBtn.textContent = 'Продолжить'; phoneBtn.disabled = false;
+      phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenAccountType');
     }
-  } catch (e) { console.error(e); showToast('❌ Ошибка соединения', true); phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false; }
+  } catch(e){ console.error(e); showToast('❌ Ошибка соединения', true); phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false; }
 });
 
 /* ==================== ТИП АККАУНТА ==================== */
@@ -1267,12 +1391,12 @@ parentPhone.addEventListener('input', e => {
   const norm = normalizePhone(e.target.value);
   document.getElementById('parentLookupInfo').style.display='none';
   document.getElementById('parentLookupError').style.display='none';
-  state.parentData = null;
+  state.parentData=null;
   clearTimeout(parentLookupTimer);
   if (norm.length===11) parentLookupTimer = setTimeout(()=>lookupParent(norm), 400);
   checkRegForm();
 });
-async function lookupParent(phone) {
+async function lookupParent(phone){
   if (phone===normalizePhone(state.user.phone)) {
     document.getElementById('parentLookupError').style.display='block';
     document.getElementById('parentErrorText').textContent='❌ Нельзя указать свой же номер';
@@ -1303,9 +1427,10 @@ registerBtn.addEventListener('click', async () => {
   try {
     const initialCards = generateCards(phone);
     const userData = {
-      phone, firstName:fn, lastName:ln, type:state.user.type,
+      phone, firstName:fn, lastName:ln, type:state.user.type, avatar:'👤',
       cards:initialCards, contacts:[], goals:[], budgets:[],
-      achievements:{}, settings:{ theme:'blue', mode:'dark', autoLock:true, bio:false, dailyLimit:50000, perOpLimit:15000 },
+      achievements:{}, autotransfers:[], loginHistory:[],
+      settings:{theme:'blue',mode:'dark',autoLock:true,bio:false,dailyLimit:50000,perOpLimit:15000,notifications:true,private:false,sound:true,roundup:false},
       createdAt: firebase.database.ServerValue.TIMESTAMP
     };
     if (state.user.type==='child' && state.parentData) {
@@ -1315,42 +1440,40 @@ registerBtn.addEventListener('click', async () => {
     await db.ref('users/'+phone).set(userData);
     if (state.user.type==='child' && state.parentData) {
       await db.ref('parents/'+state.parentData.phone+'/children/'+phone).set({
-        phone, firstName:fn, lastName:ln,
-        addedAt: firebase.database.ServerValue.TIMESTAMP
+        phone, firstName:fn, lastName:ln, addedAt: firebase.database.ServerValue.TIMESTAMP
       });
     }
     state.user.firstName = fn; state.user.lastName = ln;
     registerBtn.textContent='Создать кошелёк'; registerBtn.disabled=false;
     goTo('screenCreatePin');
-  } catch(e) { console.error(e); showToast('❌ Ошибка создания', true); registerBtn.textContent='Создать кошелёк'; registerBtn.disabled=false; }
+  } catch(e){ console.error(e); showToast('❌ Ошибка создания', true); registerBtn.textContent='Создать кошелёк'; registerBtn.disabled=false; }
 });
 
 /* ==================== PIN ==================== */
 function updatePinDots() {
   const active = document.querySelector('.screen.active');
   if (!active) return;
-  active.querySelectorAll('.pin-dot').forEach((d,i) => d.classList.toggle('filled', i<state.pinBuffer.length));
+  active.querySelectorAll('.pin-dot').forEach((d,i)=>d.classList.toggle('filled', i<state.pinBuffer.length));
 }
 function resetPin() {
-  state.pinBuffer = ''; state.pinFirst = '';
+  state.pinBuffer=''; state.pinFirst='';
   updatePinDots();
-  ['createPinError','enterPinError','changePinError'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.textContent='';
+  ['createPinError','enterPinError','changePinError'].forEach(id=>{
+    const el=document.getElementById(id); if (el) el.textContent='';
   });
 }
-function pinInput(d) {
-  if (state.pinBuffer.length >= 4) return;
+function pinInput(d){
+  if (state.pinBuffer.length>=4) return;
   if (navigator.vibrate) navigator.vibrate(10);
+  playSound('click');
   state.pinBuffer += d; updatePinDots();
   if (state.pinBuffer.length===4) setTimeout(handlePinComplete, 200);
 }
-function pinBackspace() {
-  state.pinBuffer = state.pinBuffer.slice(0,-1); updatePinDots();
-}
-function handlePinComplete() {
+function pinBackspace(){ state.pinBuffer = state.pinBuffer.slice(0,-1); updatePinDots(); }
+function handlePinComplete(){
   const pin = state.pinBuffer;
   if (state.pinMode==='create') {
-    state.pinFirst = pin; state.pinMode='confirm'; state.pinBuffer='';
+    state.pinFirst=pin; state.pinMode='confirm'; state.pinBuffer='';
     updatePinDots();
     document.getElementById('createPinTitle').textContent='Повторите PIN-код';
     return;
@@ -1377,6 +1500,7 @@ function handlePinComplete() {
       state.loggedIn = true;
       document.getElementById('enterPinError').textContent='';
       attachUserListeners();
+      logLogin();
       goTo('screenHome');
       showToast('👋 Добро пожаловать!');
       startAutoLock();
@@ -1406,7 +1530,7 @@ function handlePinComplete() {
     return;
   }
   if (state.pinMode==='changeNew') {
-    state.pinFirst = pin; state.pinMode='changeConfirm'; state.pinBuffer='';
+    state.pinFirst=pin; state.pinMode='changeConfirm'; state.pinBuffer='';
     updatePinDots(); updateChangePinStep(); return;
   }
   if (state.pinMode==='changeConfirm') {
@@ -1420,46 +1544,44 @@ function handlePinComplete() {
     return;
   }
 }
-function showLockCountdown() {
-  const tick = () => {
+function showLockCountdown(){
+  const tick=()=>{
     const left = Math.ceil((state.lockedUntil-Date.now())/1000);
-    if (left > 0) {
+    if (left>0) {
       document.getElementById('enterPinError').textContent = `⏳ Заблокировано на ${left} сек`;
-      setTimeout(tick, 1000);
+      setTimeout(tick,1000);
     } else {
-      document.getElementById('enterPinError').textContent = '';
+      document.getElementById('enterPinError').textContent='';
     }
   };
   tick();
-  showToast('🔒 3 неверных попытки. Вход заблокирован на 1 минуту', true);
+  showToast('🔒 3 неверных попытки. Вход заблокирован', true);
 }
-async function saveNewPin(pin) {
+async function saveNewPin(pin){
   try {
     const hash = hashPin(pin);
     await db.ref('users/'+state.user.phone+'/pinHash').set(hash);
     state.savedPin = hash;
     state.loggedIn = true;
     attachUserListeners();
+    logLogin();
     goTo('screenHome');
     showToast('✅ PIN-код сохранён');
     startAutoLock();
   } catch(e){ console.error(e); showToast('❌ Ошибка PIN', true); }
 }
-function updateEnterPinSub() {
-  const u = state.user;
-  const name = (u.firstName+' '+(u.lastName||'')).trim();
+function updateEnterPinSub(){
+  const u=state.user;
+  const name=(u.firstName+' '+(u.lastName||'')).trim();
   document.getElementById('enterPinTitle').textContent='Введите PIN-код';
   document.getElementById('enterPinSub').textContent = name ? `Аккаунт: ${name}` : 'Для входа в приложение';
 }
-function updateChangePinStep() {
-  const map = { changeOld:'Введите текущий PIN', changeNew:'Придумайте новый PIN', changeConfirm:'Повторите новый PIN' };
-  document.getElementById('changePinStep').textContent = map[state.pinMode] || '';
+function updateChangePinStep(){
+  const map={changeOld:'Введите текущий PIN',changeNew:'Придумайте новый PIN',changeConfirm:'Повторите новый PIN'};
+  document.getElementById('changePinStep').textContent = map[state.pinMode]||'';
 }
-function openChangePin() {
-  state.pinMode='changeOld'; state.pinFirst=''; state.pinBuffer='';
-  goTo('screenChangePin');
-}
-function pinLogout() {
+function openChangePin(){ state.pinMode='changeOld'; state.pinFirst=''; state.pinBuffer=''; goTo('screenChangePin'); }
+function pinLogout(){
   localStorage.removeItem('bank_phone');
   state.loggedIn=false; state.savedPin=null;
   detachUserListeners();
@@ -1468,36 +1590,36 @@ function pinLogout() {
 }
 
 /* ==================== БИОМЕТРИЯ ==================== */
-async function tryBiometric() {
+async function tryBiometric(){
   if (!window.PublicKeyCredential) { showToast('❌ Биометрия не поддерживается', true); return; }
   try {
     const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
     if (!available) { showToast('❌ Биометрия недоступна', true); return; }
-    showToast('👆 Подтвердите биометрию на устройстве');
-    setTimeout(() => {
+    showToast('👆 Подтвердите биометрию');
+    setTimeout(()=>{
       state.loggedIn=true;
       attachUserListeners();
       goTo('screenHome');
       showToast('✅ Вход выполнен');
       startAutoLock();
     }, 500);
-  } catch(e) { console.error(e); showToast('❌ Ошибка биометрии', true); }
+  } catch(e){ console.error(e); showToast('❌ Ошибка биометрии', true); }
 }
 
 /* ==================== АВТОБЛОКИРОВКА ==================== */
-function startAutoLock() {
+function startAutoLock(){
   clearTimeout(autoLockTimer);
   if (!state.settings.autoLock) return;
-  autoLockTimer = setTimeout(() => {
+  autoLockTimer = setTimeout(()=>{
     if (state.loggedIn) {
       state.loggedIn=false;
       detachUserListeners();
       goTo('screenEnterPin');
       showToast('🔒 Приложение заблокировано');
     }
-  }, 2*60*1000);
+  }, AUTO_LOCK_MS);
 }
-document.addEventListener('visibilitychange', () => {
+document.addEventListener('visibilitychange', ()=>{
   if (document.hidden) clearTimeout(autoLockTimer);
   else if (state.loggedIn && state.settings.autoLock) startAutoLock();
 });
@@ -1515,12 +1637,15 @@ function attachUserListeners() {
     state.user.type = data.type||'adult';
     state.user.parentPhone = data.parentPhone||'';
     state.user.parentName = data.parentName||'';
+    state.user.avatar = data.avatar||'👤';
     state.savedPin = data.pinHash || state.savedPin;
     state.cards = data.cards || [];
     state.contacts = data.contacts || [];
     state.goals = data.goals || [];
     state.budgets = data.budgets || [];
     state.achievements = data.achievements || {};
+    state.autotransfers = data.autotransfers || [];
+    state.loginHistory = data.loginHistory || [];
     state.settings = { ...state.settings, ...(data.settings||{}) };
     state.lastOperation = data.lastOperation || null;
     applySettings();
@@ -1534,10 +1659,9 @@ function attachUserListeners() {
     if (!state.payCard3) state.payCard3 = state.cards[0]?.id || null;
     if (!state.transferOwnFrom) state.transferOwnFrom = state.cards[0]?.id || null;
     if (!state.transferOwnTo) {
-      const other = state.cards.find(c => c.id !== state.transferOwnFrom);
+      const other = state.cards.find(c=>c.id!==state.transferOwnFrom);
       state.transferOwnTo = other?.id || null;
     }
-
     const active = document.querySelector('.screen.active');
     if (!active) return;
     const id = active.id;
@@ -1547,17 +1671,27 @@ function attachUserListeners() {
     if (id==='screenCards') renderAllCards();
     if (id==='screenContacts') renderContacts();
     if (id==='screenGoals') renderGoals();
+    if (id==='screenAutotransfers') renderAutotransfers();
     if (id==='screenAnalytics') renderAnalytics();
     if (id==='screenBudgets') renderBudgets();
     if (id==='screenLimits') renderLimits();
     if (id==='screenTopup') renderTopupCards();
     if (id==='screenTransfer') { renderTransferCards(); renderTransferContacts(); if (state.transferMethod==='own') renderTransferOwnCards(); }
     if (id==='screenPay') renderPayCards();
+    if (id==='screenMyQr') renderMyQr();
   });
   historyRef = db.ref('history/'+phone);
   historyRef.on('value', snap => {
+    const prevLen = state.history.length;
     const data = snap.val() || {};
     state.history = Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    // Проверка новых входящих переводов
+    if (prevLen > 0 && state.history.length > prevLen) {
+      const newTx = state.history[0];
+      if (newTx.type === 'in') {
+        showPulseNotification('💰 Поступление', `${newTx.title} — ${fmt(newTx.amount)} ₽`, '💰');
+      }
+    }
     const active = document.querySelector('.screen.active');
     if (!active) return;
     if (active.id==='screenHome') renderHome();
@@ -1571,42 +1705,88 @@ function attachUserListeners() {
     if (document.getElementById('screenAccount').classList.contains('active')) renderAccount();
   });
 }
-function detachUserListeners() {
-  [currentUserRef, historyRef, childrenRef].forEach(r => { if (r) r.off(); });
+function detachUserListeners(){
+  [currentUserRef, historyRef, childrenRef].forEach(r=>{ if (r) r.off(); });
   currentUserRef = historyRef = childrenRef = null;
 }
-async function saveCards() { await db.ref('users/'+state.user.phone+'/cards').set(state.cards); }
-async function saveUser() {
+async function saveCards(){ await db.ref('users/'+state.user.phone+'/cards').set(state.cards); }
+async function saveUser(){
   await db.ref('users/'+state.user.phone).update({
     contacts: state.contacts, goals: state.goals, budgets: state.budgets,
     achievements: state.achievements, settings: state.settings,
-    lastOperation: state.lastOperation
+    autotransfers: state.autotransfers, loginHistory: state.loginHistory,
+    lastOperation: state.lastOperation, avatar: state.user.avatar
   });
 }
-async function addHistory(tx) {
+async function addHistory(tx){
   const ref = db.ref('history/'+state.user.phone).push();
   await ref.set({ ...tx, createdAt: firebase.database.ServerValue.TIMESTAMP });
 }
-function applySettings() {
-  document.body.classList.toggle('light', state.settings.mode==='light');
+function applySettings(){
+  let mode = state.settings.mode;
+  if (mode === 'auto') {
+    mode = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+  document.body.classList.toggle('light', mode === 'light');
   document.body.className = document.body.className.replace(/theme-\w+/g,'').trim();
   if (state.settings.theme !== 'blue') document.body.classList.add('theme-'+state.settings.theme);
   const label = document.getElementById('themeLabel');
   if (label) {
-    const names = { blue:'Синяя', purple:'Фиолетовая', green:'Зелёная', red:'Красная', orange:'Оранжевая', teal:'Бирюзовая', pink:'Розовая' };
-    label.textContent = (state.settings.mode==='light'?'☀️ ':'🌙 ') + names[state.settings.theme];
+    const names = {blue:'Синяя',purple:'Фиолетовая',green:'Зелёная',red:'Красная',orange:'Оранжевая',teal:'Бирюзовая',pink:'Розовая'};
+    const modeLabel = state.settings.mode === 'auto' ? '🔄 ' : (mode === 'light' ? '☀️ ' : '🌙 ');
+    label.textContent = modeLabel + names[state.settings.theme];
   }
 }
 
+/* ==================== ЛОГ ВХОДОВ ==================== */
+async function logLogin() {
+  const entry = { date: nowFull(), device: navigator.userAgent.substring(0, 60) };
+  state.loginHistory.unshift(entry);
+  if (state.loginHistory.length > 20) state.loginHistory = state.loginHistory.slice(0, 20);
+  await saveUser();
+}
+function showLoginHistory() { goTo('screenLoginHistory'); }
+function renderLoginHistory() {
+  const el = document.getElementById('loginHistoryList');
+  if (!state.loginHistory.length) { el.innerHTML = '<div class="empty">Пусто</div>'; return; }
+  el.innerHTML = state.loginHistory.map(h => `
+    <div style="background:var(--card);border-radius:14px;padding:14px;margin-bottom:8px">
+      <div style="color:var(--text);font-size:14px;font-weight:500">${h.date}</div>
+      <div style="color:var(--text-muted);font-size:11px;margin-top:4px;word-break:break-all">${h.device||'Устройство'}</div>
+    </div>
+  `).join('');
+}
+
+/* ==================== ПРИВАТНОСТЬ ==================== */
+function togglePrivate() {
+  state.settings.private = !state.settings.private;
+  const eye = document.getElementById('eyeBtn');
+  eye.textContent = state.settings.private ? '🙈' : '👁';
+  saveUser();
+  renderHome();
+}
+function maskAmount(val, showRub = true) {
+  if (state.settings.private) return '••••' + (showRub ? ' ₽' : '');
+  return fmt(val) + (showRub ? ' ₽' : '');
+}
+
 /* ==================== ГЛАВНЫЙ ==================== */
-function renderHome() {
+function renderHome(){
   const u = state.user;
   const full = (u.firstName+' '+(u.lastName||'')).trim() || 'Пользователь';
   document.getElementById('userGreeting').textContent = full;
-  document.getElementById('userAvatar').textContent = ((u.firstName?.[0]||'')+(u.lastName?.[0]||'')).toUpperCase()||'👤';
+  document.getElementById('userAvatar').textContent = u.avatar || '👤';
+  const eye = document.getElementById('eyeBtn');
+  if (eye) eye.textContent = state.settings.private ? '🙈' : '👁';
 
   const total = state.cards.reduce((s,c)=>s+(c.balance||0),0);
-  document.getElementById('totalBalance').innerHTML = fmt(total)+' <span>₽</span>';
+  const el = document.getElementById('totalBalance');
+  if (state.settings.private) {
+    el.innerHTML = '•••• <span>₽</span>';
+  } else {
+    // Анимация появления цифр
+    animateBalance(el, total);
+  }
   document.getElementById('mainCardNum').textContent = state.cards[0] ? maskCard(state.cards[0].last) : '•••• ----';
 
   const recent = state.history.slice(0,5);
@@ -1614,32 +1794,55 @@ function renderHome() {
     ? recent.map(renderTxItem).join('')
     : `<div class="empty"><div class="empty-icon">📋</div>Операций пока нет</div>`;
 }
-function renderTxItem(tx) {
+function animateBalance(el, target) {
+  const duration = 600;
+  const start = parseInt(el.dataset.value) || 0;
+  el.dataset.value = target;
+  const t0 = performance.now();
+  const tick = (t) => {
+    const p = Math.min(1, (t - t0) / duration);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const cur = Math.round(start + (target - start) * eased);
+    el.innerHTML = fmt(cur) + ' <span>₽</span>';
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+function renderTxItem(tx, withSwipe = true){
   const isIn = tx.type==='in';
   const sign = isIn ? '+' : '−';
   const cls = isIn ? 'in' : 'out';
   const cat = CATEGORIES[tx.category] || CATEGORIES.other;
   const catLabel = tx.category && CATEGORIES[tx.category] ? `<span class="tx-cat">${cat.emoji} ${cat.name}</span>` : '';
   const comment = tx.comment ? `<div style="color:#a5b4fc;font-size:11px;margin-top:2px;font-style:italic">"${tx.comment}"</div>` : '';
+  const amt = state.settings.private ? '•••• ₽' : (sign + fmt(tx.amount) + ' ₽');
   return `
-    <div class="tx-item" onclick="repeatTx('${tx.id||''}')">
-      <div class="tx-icon ${cls}">${cat.emoji}</div>
-      <div class="tx-info">
-        <div class="tx-title">${tx.title}${catLabel}</div>
-        <div class="tx-date">${tx.date}</div>
-        ${comment}
+    <div class="tx-item" data-txid="${tx.id||''}" onclick="onTxClick('${tx.id||''}')">
+      ${withSwipe ? '<div class="tx-swipe-bg left">🔁</div><div class="tx-swipe-bg right">🗑</div>' : ''}
+      <div class="tx-item-content">
+        <div class="tx-icon ${cls}">${cat.emoji}</div>
+        <div class="tx-info">
+          <div class="tx-title">${tx.title}${catLabel}</div>
+          <div class="tx-date">${tx.date}</div>
+          ${comment}
+        </div>
+        <div class="tx-amount ${cls}">${amt}</div>
       </div>
-      <div class="tx-amount ${cls}">${sign}${fmt(tx.amount)} ₽</div>
     </div>
   `;
 }
-function repeatTx(id) {
+function onTxClick(id) {
+  if (window._txSwiped) { window._txSwiped = false; return; }
+  repeatTx(id);
+}
+function repeatTx(id){
   const tx = state.history.find(t => t.id === id) || state.history[0];
   if (!tx) return;
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '🔁';
   document.getElementById('gmTitle').textContent = 'Повторить операцию?';
   document.getElementById('gmText').textContent = `${tx.title} — ${fmt(tx.amount)} ₽`;
+  document.getElementById('gmExtra').innerHTML = '';
   document.getElementById('gmConfirm').onclick = () => {
     hideModal('genericModal');
     if (tx.category==='pay') { openOp('pay'); document.getElementById('payMerchant').value = tx.title; setAmount('payAmount', tx.amount); }
@@ -1649,13 +1852,116 @@ function repeatTx(id) {
 }
 function repeatLastOperation() { repeatTx(state.history[0]?.id); }
 
+/* ==================== СВАЙПЫ ==================== */
+function initSwipe() {
+  document.addEventListener('touchstart', (e) => {
+    const item = e.target.closest('.tx-item');
+    if (!item) return;
+    item._startX = e.touches[0].clientX;
+    item._startY = e.touches[0].clientY;
+    item._moved = false;
+    item._dir = null;
+    const content = item.querySelector('.tx-item-content');
+    content.style.transition = 'none';
+  }, { passive: true });
+  document.addEventListener('touchmove', (e) => {
+    const item = e.target.closest('.tx-item');
+    if (!item || !item._startX) return;
+    const dx = e.touches[0].clientX - item._startX;
+    const dy = e.touches[0].clientY - item._startY;
+    if (item._dir === null && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+      item._dir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+    }
+    if (item._dir !== 'h') return;
+    item._moved = true;
+    const content = item.querySelector('.tx-item-content');
+    const clamped = Math.max(-100, Math.min(100, dx));
+    content.style.transform = `translateX(${clamped}px)`;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    const item = e.target.closest('.tx-item');
+    if (!item || !item._moved) { if (item) item._startX = null; return; }
+    const content = item.querySelector('.tx-item-content');
+    content.style.transition = 'transform 0.2s';
+    const transform = content.style.transform;
+    const dx = parseFloat((transform.match(/-?\d+/) || [0])[0]);
+    const id = item.dataset.txid;
+    if (dx > 60) {
+      // Swipe right - повторить
+      content.style.transform = 'translateX(0)';
+      window._txSwiped = true;
+      repeatTx(id);
+    } else if (dx < -60) {
+      // Swipe left - удалить
+      content.style.transform = 'translateX(0)';
+      window._txSwiped = true;
+      confirmDeleteTx(id);
+    } else {
+      content.style.transform = 'translateX(0)';
+    }
+    item._startX = null;
+  }, { passive: true });
+}
+function confirmDeleteTx(id) {
+  const tx = state.history.find(t => t.id === id);
+  if (!tx) return;
+  showModal('genericModal');
+  document.getElementById('gmIcon').textContent = '🗑';
+  document.getElementById('gmTitle').textContent = 'Удалить запись?';
+  document.getElementById('gmText').textContent = `${tx.title} — ${fmt(tx.amount)} ₽`;
+  document.getElementById('gmConfirm').onclick = async () => {
+    hideModal('genericModal');
+    await db.ref('history/'+state.user.phone+'/'+id).remove();
+    showToast('🗑 Удалено');
+  };
+}
+
 /* ==================== ИСТОРИЯ ==================== */
 function showHistory() { goTo('screenHistory'); }
-function renderHistory() {
+document.getElementById('historyPeriods')?.addEventListener('click', e => {
+  const tab = e.target.closest('.period-tab');
+  if (!tab) return;
+  document.querySelectorAll('#historyPeriods .period-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  state.historyPeriod = tab.dataset.period;
+  document.getElementById('customDateRange').style.display = state.historyPeriod === 'custom' ? 'flex' : 'none';
+  renderHistory();
+});
+function filterByPeriod(items, period) {
+  const now = Date.now();
+  if (period === 'today') {
+    return items.filter(t => {
+      const d = new Date(t.createdAt||0);
+      return d.toDateString() === new Date().toDateString();
+    });
+  }
+  if (period === 'week') {
+    return items.filter(t => (t.createdAt||0) >= now - 7*24*60*60*1000);
+  }
+  if (period === 'month') {
+    return items.filter(t => (t.createdAt||0) >= now - 30*24*60*60*1000);
+  }
+  if (period === 'quarter') {
+    return items.filter(t => (t.createdAt||0) >= now - 90*24*60*60*1000);
+  }
+  if (period === 'year') {
+    return items.filter(t => (t.createdAt||0) >= now - 365*24*60*60*1000);
+  }
+  if (period === 'custom') {
+    const from = document.getElementById('dateFrom').value;
+    const to = document.getElementById('dateTo').value;
+    const fromTs = from ? new Date(from).getTime() : 0;
+    const toTs = to ? new Date(to).getTime() + 24*60*60*1000 : Infinity;
+    return items.filter(t => (t.createdAt||0) >= fromTs && (t.createdAt||0) <= toTs);
+  }
+  return items;
+}
+function renderHistory(){
   const el = document.getElementById('fullHistory');
   const search = (document.getElementById('historySearch').value||'').toLowerCase();
   const filter = document.getElementById('historyFilter').value;
   let items = state.history;
+  items = filterByPeriod(items, state.historyPeriod);
   if (filter!=='all') {
     if (filter==='in' || filter==='out') items = items.filter(t => t.type===filter);
     else items = items.filter(t => t.category===filter);
@@ -1665,9 +1971,12 @@ function renderHistory() {
     (t.comment||'').toLowerCase().includes(search)
   );
   if (!items.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">📋</div>Ничего не найдено</div>`; return; }
-  el.innerHTML = items.map(renderTxItem).join('');
+  el.innerHTML = items.map(t => renderTxItem(t)).join('');
 }
-function exportHistoryCSV() {
+document.getElementById('dateFrom')?.addEventListener('change', renderHistory);
+document.getElementById('dateTo')?.addEventListener('change', renderHistory);
+
+function exportHistoryCSV(){
   if (!state.history.length) { showToast('❌ Нет операций', true); return; }
   const rows = [['Дата','Тип','Категория','Название','Сумма','Комментарий']];
   state.history.forEach(t => rows.push([t.date, t.type==='in'?'Поступление':'Списание', CATEGORIES[t.category]?.name||t.category||'', t.title||'', t.amount, t.comment||'']));
@@ -1681,13 +1990,14 @@ function exportHistoryCSV() {
 }
 
 /* ==================== АККАУНТ ==================== */
-function renderAccount() {
+function renderAccount(){
   const u = state.user;
   const full = (u.firstName+' '+(u.lastName||'')).trim() || 'Пользователь';
-  const initials = ((u.firstName?.[0]||'')+(u.lastName?.[0]||'')).toUpperCase()||'👤';
-  document.getElementById('accountAvatar').textContent = initials;
+  const initial = (u.firstName?.[0]||'')+(u.lastName?.[0]||'');
+  document.getElementById('accountAvatarBig').textContent = u.avatar || initial.toUpperCase() || '👤';
   document.getElementById('accountName').textContent = full;
   document.getElementById('accountPhone').textContent = formatPhone(u.phone);
+  document.getElementById('userAvatar').textContent = u.avatar || initial.toUpperCase() || '👤';
 
   let badges = '';
   if (u.type==='child') {
@@ -1719,7 +2029,7 @@ function renderAccount() {
       <div style="flex:1">
         <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
         ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-        <div class="ci-bal">${fmt(c.balance)} ₽</div>
+        <div class="ci-bal">${maskAmount(c.balance)}</div>
       </div>
       ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
     </div>
@@ -1740,11 +2050,27 @@ function renderAccount() {
     <div class="goal-item" onclick="goTo('screenGoals')">
       <div class="goal-head">
         <div class="goal-name">${g.emoji||'🎯'} ${g.name}</div>
-        <div style="color:var(--text-dim);font-size:12px">${fmt(g.current||0)} / ${fmt(g.target)} ₽</div>
+        <div style="color:var(--text-dim);font-size:12px">${maskAmount(g.current||0)} / ${maskAmount(g.target)}</div>
       </div>
       <div class="goal-bar"><div class="goal-fill" style="width:${Math.min(100,((g.current||0)/g.target)*100)}%"></div></div>
     </div>
   `).join('');
+
+  const aEl = document.getElementById('accountAutotransfersList');
+  if (!state.autotransfers.length) aEl.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Нет автопереводов</div>`;
+  else aEl.innerHTML = state.autotransfers.slice(0,2).map(a => {
+    const from = getCard(a.fromId);
+    const to = getCard(a.toId);
+    return `
+      <div class="card-select-item" onclick="goTo('screenAutotransfers')">
+        <div class="ci-icon" style="background:${from?.color||'#666'}"></div>
+        <div style="flex:1">
+          <div class="ci-num">${from?.brand||'?'} → ${to?.brand||'?'}</div>
+          <div class="ci-bal">${fmt(a.amount)} ₽ • ${a.day}-го числа</div>
+        </div>
+      </div>
+    `;
+  }).join('');
 
   document.getElementById('accountAchievements').innerHTML = ACHIEVEMENTS.map(a => `
     <div class="achievement ${state.achievements[a.id]?'unlocked':''}">
@@ -1757,25 +2083,52 @@ function renderAccount() {
   `).join('');
 
   document.getElementById('budgetsCount').textContent = state.budgets.length;
+  document.getElementById('limitsSummary').textContent = fmt(state.settings.dailyLimit)+' ₽/д';
   document.getElementById('autoLockToggle').checked = state.settings.autoLock;
   document.getElementById('bioToggle').checked = state.settings.bio;
+  document.getElementById('notifToggle').checked = state.settings.notifications;
+  document.getElementById('privateToggle').checked = state.settings.private;
+  document.getElementById('soundToggle').checked = state.settings.sound;
+}
+
+/* ==================== АВАТАР ==================== */
+function openAvatarPicker() {
+  state.selectedAvatar = state.user.avatar || '👤';
+  const picker = document.getElementById('avatarPicker');
+  picker.innerHTML = AVATAR_EMOJIS.map(e => `
+    <div class="avatar-emoji ${e===state.selectedAvatar?'selected':''}" onclick="pickAvatar('${e}',this)">${e}</div>
+  `).join('');
+  showModal('avatarModal');
+}
+function pickAvatar(e, el) {
+  state.selectedAvatar = e;
+  document.querySelectorAll('#avatarPicker .avatar-emoji').forEach(x => x.classList.remove('selected'));
+  el.classList.add('selected');
+}
+async function saveAvatar() {
+  state.user.avatar = state.selectedAvatar;
+  await saveUser();
+  hideModal('avatarModal');
+  renderAccount();
+  renderHome();
+  showToast('✅ Аватар обновлён');
 }
 
 /* ==================== КАРТЫ ==================== */
-function renderAllCards() {
+function renderAllCards(){
   document.getElementById('allCardsList').innerHTML = state.cards.map(c => `
     <div class="card-select-item ${c.frozen?'frozen':''}" onclick="openCardDetails(${c.id})">
       <div class="ci-icon" style="background:${c.color}"></div>
       <div style="flex:1">
         <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
         ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-        <div class="ci-bal">${fmt(c.balance)} ₽</div>
+        <div class="ci-bal">${maskAmount(c.balance)}</div>
       </div>
       ${c.frozen?'<div class="frozen-badge">🔒 Заморожена</div>':''}
     </div>
   `).join('');
 }
-function openCardDetails(id) {
+function openCardDetails(id){
   if (!id) return;
   const c = getCard(id);
   if (!c) return;
@@ -1785,7 +2138,7 @@ function openCardDetails(id) {
   document.getElementById('cdCardVisual').style.background = c.color;
   document.getElementById('cdBrand').textContent = c.brand;
   document.getElementById('cdName').textContent = c.name||'';
-  document.getElementById('cdBalance').innerHTML = fmt(c.balance)+' <span>₽</span>';
+  document.getElementById('cdBalance').innerHTML = maskAmount(c.balance, false) + ' <span>₽</span>';
   document.getElementById('cdNumber').textContent = '•••• •••• •••• '+c.last;
   document.getElementById('cdOwner').textContent = ((state.user.firstName?.[0]||'')+(state.user.lastName?.[0]||'')).toUpperCase()+' '+(state.user.firstName||'').toUpperCase();
   document.getElementById('cdExpiry').textContent = c.expiry||'12/27';
@@ -1795,19 +2148,29 @@ function openCardDetails(id) {
   document.getElementById('cdFreezeBtn').textContent = c.frozen?'🔓 Разморозить карту':'🔒 Заморозить карту';
   goTo('screenCardDetails');
 }
-function showCardRequisites() {
+function showCardRequisites(){
   const c = getCard(state.currentCardId);
   if (!c) return;
   document.getElementById('cdNumber').textContent = '4276 '+String(Math.floor(1000+Math.random()*9000))+' '+String(Math.floor(1000+Math.random()*9000))+' '+c.last;
   document.getElementById('cdCvv').textContent = c.cvv||'123';
   clearTimeout(requisitesTimer);
-  requisitesTimer = setTimeout(() => {
+  requisitesTimer = setTimeout(()=>{
     document.getElementById('cdNumber').textContent = '•••• •••• •••• '+c.last;
     document.getElementById('cdCvv').textContent = '•••';
   }, 15000);
   showToast('👁 Реквизиты видны 15 секунд');
 }
-async function saveCardDetails() {
+async function copyCardRequisites() {
+  const c = getCard(state.currentCardId);
+  if (!c) return;
+  const num = '4276 '+String(Math.floor(1000+Math.random()*9000))+' '+String(Math.floor(1000+Math.random()*9000))+' '+c.last;
+  const text = `${num}\n${c.expiry||'12/27'}\nCVV: ${c.cvv||'123'}`;
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('📋 Реквизиты скопированы');
+  } catch(e) { showToast('❌ Не удалось скопировать', true); }
+}
+async function saveCardDetails(){
   const c = getCard(state.currentCardId);
   if (!c) return;
   c.name = document.getElementById('cdRenameInput').value.trim();
@@ -1816,7 +2179,7 @@ async function saveCardDetails() {
   showToast('💾 Сохранено');
   renderAllCards();
 }
-async function toggleFreeze() {
+async function toggleFreeze(){
   const c = getCard(state.currentCardId);
   if (!c) return;
   c.frozen = !c.frozen;
@@ -1824,7 +2187,7 @@ async function toggleFreeze() {
   showToast(c.frozen?'🔒 Карта заморожена':'🔓 Карта разморожена');
   openCardDetails(c.id);
 }
-function confirmDeleteCard() {
+function confirmDeleteCard(){
   const c = getCard(state.currentCardId);
   if (!c) return;
   if (state.cards.length<=1) { showToast('❌ Нельзя удалить последнюю карту', true); return; }
@@ -1852,26 +2215,26 @@ function confirmDeleteCard() {
     goTo('screenCards');
   };
 }
-function openCreateCard() {
-  document.querySelectorAll('#cardBrandPicker .cat-chip').forEach((el,i) => el.classList.toggle('selected', i===0));
-  document.querySelectorAll('#cardColorPicker .theme-dot').forEach((el,i) => el.classList.toggle('selected', i===0));
-  document.getElementById('newCardName').value = '';
-  document.getElementById('newCardBalance').value = '0';
+function openCreateCard(){
+  document.querySelectorAll('#cardBrandPicker .cat-chip').forEach((el,i)=>el.classList.toggle('selected', i===0));
+  document.querySelectorAll('#cardColorPicker .theme-dot').forEach((el,i)=>el.classList.toggle('selected', i===0));
+  document.getElementById('newCardName').value='';
+  document.getElementById('newCardBalance').value='0';
   goTo('screenCreateCard');
 }
 document.getElementById('cardBrandPicker')?.addEventListener('click', e => {
   if (e.target.classList.contains('cat-chip')) {
-    document.querySelectorAll('#cardBrandPicker .cat-chip').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('#cardBrandPicker .cat-chip').forEach(c=>c.classList.remove('selected'));
     e.target.classList.add('selected');
   }
 });
 document.getElementById('cardColorPicker')?.addEventListener('click', e => {
   if (e.target.classList.contains('theme-dot')) {
-    document.querySelectorAll('#cardColorPicker .theme-dot').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('#cardColorPicker .theme-dot').forEach(c=>c.classList.remove('selected'));
     e.target.classList.add('selected');
   }
 });
-async function createNewCard() {
+async function createNewCard(){
   const brand = document.querySelector('#cardBrandPicker .cat-chip.selected')?.dataset.brand || 'VISA';
   const color = document.querySelector('#cardColorPicker .theme-dot.selected')?.dataset.color || 'linear-gradient(135deg,#1e3c72,#2a5298)';
   const name = document.getElementById('newCardName').value.trim();
@@ -1889,9 +2252,9 @@ async function createNewCard() {
 }
 
 /* ==================== КОНТАКТЫ ==================== */
-function renderContacts() {
+function renderContacts(){
   const el = document.getElementById('contactsList');
-  if (!state.contacts.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">📇</div>Нет сохранённых контактов</div>`; return; }
+  if (!state.contacts.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">📇</div>Нет контактов</div>`; return; }
   el.innerHTML = state.contacts.map(c => `
     <div class="card-select-item" onclick="quickTransferTo('${c.phone}')">
       <div class="ci-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div>
@@ -1903,17 +2266,17 @@ function renderContacts() {
     </div>
   `).join('');
 }
-async function removeContact(phone) {
+async function removeContact(phone){
   state.contacts = state.contacts.filter(c => c.phone !== phone);
   await saveUser();
   renderContacts();
   showToast('🗑 Удалено');
 }
-function openAddContact() {
+function openAddContact(){
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '📇';
   document.getElementById('gmTitle').textContent = 'Новый контакт';
-  document.getElementById('gmText').textContent = 'Введите телефон получателя';
+  document.getElementById('gmText').textContent = 'Введите телефон';
   document.getElementById('gmExtra').innerHTML = `<input type="tel" id="newContactPhone" placeholder="+7 900 000-00-00" style="text-align:center">`;
   const inp = document.getElementById('newContactPhone');
   inp.addEventListener('input', e => e.target.value = formatPhone(e.target.value));
@@ -1931,20 +2294,21 @@ function openAddContact() {
       hideModal('genericModal');
       renderContacts();
       showToast('✅ Контакт добавлен');
+      if (state.contacts.length >= 3) await unlockAchievement('social');
     } catch(e){ console.error(e); }
   };
 }
-function quickTransferTo(phone) {
+function quickTransferTo(phone){
   goTo('screenTransfer');
   switchTransferMethod('phone', document.querySelector('#screenTransfer .cat-chip'));
-  setTimeout(() => {
+  setTimeout(()=>{
     document.getElementById('transferPhone').value = formatPhone(phone);
     document.getElementById('transferPhone').dispatchEvent(new Event('input'));
   }, 200);
 }
 
 /* ==================== ЦЕЛИ ==================== */
-function renderGoals() {
+function renderGoals(){
   const el = document.getElementById('goalsList');
   if (!state.goals.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">🎯</div>Нет целей</div>`; return; }
   el.innerHTML = state.goals.map((g,i) => `
@@ -1953,7 +2317,7 @@ function renderGoals() {
         <div class="goal-name">${g.emoji||'🎯'} ${g.name}</div>
         <div class="goal-emoji">${Math.round(((g.current||0)/g.target)*100)}%</div>
       </div>
-      <div class="goal-amounts">${fmt(g.current||0)} / ${fmt(g.target)} ₽</div>
+      <div class="goal-amounts">${maskAmount(g.current||0)} / ${maskAmount(g.target)}</div>
       <div class="goal-bar"><div class="goal-fill" style="width:${Math.min(100,((g.current||0)/g.target)*100)}%"></div></div>
       <div style="display:flex;gap:8px;margin-top:12px">
         <button class="btn green small" onclick="addToGoal(${i})">➕ Добавить</button>
@@ -1962,7 +2326,7 @@ function renderGoals() {
     </div>
   `).join('');
 }
-function openAddGoal() {
+function openAddGoal(){
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '🎯';
   document.getElementById('gmTitle').textContent = 'Новая цель';
@@ -1991,11 +2355,11 @@ function openAddGoal() {
     showToast('🎯 Цель создана');
   };
 }
-function pickGoalEmoji(el) {
-  el.parentElement.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('selected'));
+function pickGoalEmoji(el){
+  el.parentElement.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('selected'));
   el.classList.add('selected');
 }
-async function addToGoal(i) {
+async function addToGoal(i){
   const g = state.goals[i];
   if (!g) return;
   showModal('genericModal');
@@ -2011,26 +2375,22 @@ async function addToGoal(i) {
     card.balance -= amt;
     g.current = (g.current||0) + amt;
     await saveCards(); await saveUser();
-    await addHistory({ type:'out', category:'other', title:'Пополнение цели "'+g.name+'"', amount:amt, date:now() });
+    await addHistory({ type:'out', category:'savings', title:'Пополнение цели "'+g.name+'"', amount:amt, date:now() });
     if (g.current >= g.target && !state.achievements.goal_reach) {
       state.achievements.goal_reach = Date.now();
       await saveUser();
       showConfetti();
+      await unlockAchievement('goal_reach');
     }
     hideModal('genericModal');
     renderGoals();
     showToast('✅ Цель пополнена');
   };
 }
-async function deleteGoal(i) {
-  state.goals.splice(i,1);
-  await saveUser();
-  renderGoals();
-  showToast('🗑 Удалено');
-}
+async function deleteGoal(i){ state.goals.splice(i,1); await saveUser(); renderGoals(); showToast('🗑 Удалено'); }
 
 /* ==================== БЮДЖЕТЫ ==================== */
-function renderBudgets() {
+function renderBudgets(){
   const el = document.getElementById('budgetsList');
   if (!state.budgets.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">💰</div>Нет бюджетов</div>`; return; }
   const month = new Date().getMonth();
@@ -2052,13 +2412,13 @@ function renderBudgets() {
         </div>
         <div class="budget-bar"><div class="budget-fill ${cls}" style="width:${pct}%"></div></div>
         <div style="display:flex;justify-content:flex-end;margin-top:8px">
-          <button class="btn red small" style="width:auto;padding:6px 12px" onclick="deleteBudget(${i})">🗑 Удалить</button>
+          <button class="btn red small" style="width:auto;padding:6px 12px" onclick="deleteBudget(${i})">🗑</button>
         </div>
       </div>
     `;
   }).join('');
 }
-function openAddBudget() {
+function openAddBudget(){
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '💰';
   document.getElementById('gmTitle').textContent = 'Новый бюджет';
@@ -2073,7 +2433,7 @@ function openAddBudget() {
     const category = document.getElementById('newBudgetCat').value;
     const limit = parseInt(document.getElementById('newBudgetLimit').value)||0;
     if (!limit) { showToast('❌ Введите лимит', true); return; }
-    if (state.budgets.some(b => b.category===category)) { showToast('❌ Бюджет уже есть', true); return; }
+    if (state.budgets.some(b => b.category===category)) { showToast('❌ Уже есть', true); return; }
     state.budgets.push({ category, limit });
     await saveUser();
     hideModal('genericModal');
@@ -2081,10 +2441,10 @@ function openAddBudget() {
     showToast('💰 Бюджет создан');
   };
 }
-async function deleteBudget(i) { state.budgets.splice(i,1); await saveUser(); renderBudgets(); showToast('🗑 Удалено'); }
+async function deleteBudget(i){ state.budgets.splice(i,1); await saveUser(); renderBudgets(); showToast('🗑 Удалено'); }
 
 /* ==================== ЛИМИТЫ ==================== */
-function renderLimits() {
+function renderLimits(){
   document.getElementById('dailyLimitInput').value = state.settings.dailyLimit||50000;
   document.getElementById('perOpLimitInput').value = state.settings.perOpLimit||15000;
   const today = todayKey();
@@ -2102,14 +2462,14 @@ function renderLimits() {
     </div>
   `;
 }
-async function saveLimits() {
+async function saveLimits(){
   state.settings.dailyLimit = parseInt(document.getElementById('dailyLimitInput').value)||50000;
   state.settings.perOpLimit = parseInt(document.getElementById('perOpLimitInput').value)||15000;
   await saveUser();
   showToast('💾 Лимиты сохранены');
   renderLimits();
 }
-function checkLimits(amount) {
+function checkLimits(amount){
   if (amount > state.settings.perOpLimit) { showToast(`❌ Максимум за операцию: ${fmt(state.settings.perOpLimit)} ₽`, true); return false; }
   const today = todayKey();
   const spent = state.history.filter(t => {
@@ -2122,24 +2482,101 @@ function checkLimits(amount) {
   return true;
 }
 
-/* ==================== ТЕМА ==================== */
-function renderTheme() {
-  document.querySelectorAll('#modePicker .cat-chip').forEach(c => c.classList.toggle('selected', c.dataset.mode===state.settings.mode));
-  document.querySelectorAll('#themePicker .theme-dot').forEach(c => c.classList.toggle('selected', c.dataset.theme===state.settings.theme));
+/* ==================== АВТОПЕРЕВОДЫ ==================== */
+function renderAutotransfers(){
+  const el = document.getElementById('autotransfersList');
+  if (!state.autotransfers.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">🔁</div>Нет автопереводов</div>`; return; }
+  el.innerHTML = state.autotransfers.map((a,i) => {
+    const from = getCard(a.fromId);
+    const to = getCard(a.toId);
+    if (!from || !to) return '';
+    return `
+      <div class="card-select-item">
+        <div class="ci-icon" style="background:${from.color}"></div>
+        <div style="flex:1">
+          <div class="ci-num">${from.brand} ${maskCard(from.last)} → ${to.brand} ${maskCard(to.last)}</div>
+          <div class="ci-bal">${fmt(a.amount)} ₽ • каждый месяц ${a.day}-го числа</div>
+        </div>
+        <button class="btn red small" style="width:auto;padding:6px 10px" onclick="deleteAutotransfer(${i})">🗑</button>
+      </div>
+    `;
+  }).join('');
 }
-document.getElementById('modePicker')?.addEventListener('click', e => {
+function openAddAutotransfer() {
+  if (state.cards.length < 2) { showToast('❌ Нужно минимум 2 карты', true); return; }
+  showModal('genericModal');
+  document.getElementById('gmIcon').textContent = '🔁';
+  document.getElementById('gmTitle').textContent = 'Новый автоперевод';
+  document.getElementById('gmText').textContent = 'Ежемесячный перевод между картами';
+  document.getElementById('gmExtra').innerHTML = `
+    <select id="atFrom" style="margin-bottom:10px">
+      ${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}
+    </select>
+    <select id="atTo" style="margin-bottom:10px">
+      ${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}
+    </select>
+    <input type="text" id="atAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
+    <input type="text" id="atDay" placeholder="День месяца (1-28)" inputmode="numeric" value="1" style="text-align:center">
+  `;
+  document.getElementById('gmConfirm').onclick = async () => {
+    const fromId = parseInt(document.getElementById('atFrom').value);
+    const toId = parseInt(document.getElementById('atTo').value);
+    const amount = parseInt(document.getElementById('atAmount').value)||0;
+    const day = Math.max(1, Math.min(28, parseInt(document.getElementById('atDay').value)||1));
+    if (fromId === toId) { showToast('❌ Выберите разные карты', true); return; }
+    if (amount <= 0) { showToast('❌ Введите сумму', true); return; }
+    state.autotransfers.push({ fromId, toId, amount, day });
+    await saveUser();
+    hideModal('genericModal');
+    renderAutotransfers();
+    renderAccount();
+    showToast('🔁 Автоперевод создан');
+  };
+}
+async function deleteAutotransfer(i){ state.autotransfers.splice(i,1); await saveUser(); renderAutotransfers(); showToast('🗑 Удалено'); }
+async function checkAutotransfers() {
+  const today = new Date();
+  const day = today.getDate();
+  const monthKey = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0');
+  let changed = false;
+  for (const at of state.autotransfers) {
+    if (at.day !== day) continue;
+    if (at.lastRun === monthKey) continue;
+    const from = getCard(at.fromId);
+    const to = getCard(at.toId);
+    if (!from || !to || from.frozen || from.balance < at.amount) continue;
+    from.balance -= at.amount;
+    to.balance += at.amount;
+    at.lastRun = monthKey;
+    await addHistory({ type:'out', category:'transfer', title:`Автоперевод → ${to.brand} ${maskCard(to.last)}`, amount:at.amount, date:now() });
+    await addHistory({ type:'in', category:'transfer', title:`Автоперевод ← ${from.brand} ${maskCard(from.last)}`, amount:at.amount, date:now() });
+    changed = true;
+  }
+  if (changed) {
+    await saveCards();
+    await saveUser();
+    showPulseNotification('🔁 Автоперевод', 'Ежемесячный перевод выполнен', '🔁');
+  }
+}
+
+/* ==================== ТЕМА ==================== */
+function renderTheme(){
+  document.querySelectorAll('#modePicker .cat-chip').forEach(c=>c.classList.toggle('selected', c.dataset.mode===state.settings.mode));
+  document.querySelectorAll('#themePicker .theme-dot').forEach(c=>c.classList.toggle('selected', c.dataset.theme===state.settings.theme));
+}
+document.getElementById('modePicker')?.addEventListener('click', e=>{
   if (e.target.classList.contains('cat-chip')) {
-    document.querySelectorAll('#modePicker .cat-chip').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('#modePicker .cat-chip').forEach(c=>c.classList.remove('selected'));
     e.target.classList.add('selected');
   }
 });
-document.getElementById('themePicker')?.addEventListener('click', e => {
+document.getElementById('themePicker')?.addEventListener('click', e=>{
   if (e.target.classList.contains('theme-dot')) {
-    document.querySelectorAll('#themePicker .theme-dot').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('#themePicker .theme-dot').forEach(c=>c.classList.remove('selected'));
     e.target.classList.add('selected');
   }
 });
-async function saveTheme() {
+async function saveTheme(){
   state.settings.mode = document.querySelector('#modePicker .cat-chip.selected')?.dataset.mode || 'dark';
   state.settings.theme = document.querySelector('#themePicker .theme-dot.selected')?.dataset.theme || 'blue';
   await saveUser();
@@ -2148,8 +2585,18 @@ async function saveTheme() {
 }
 
 /* ==================== АНАЛИТИКА ==================== */
-function renderAnalytics() {
-  const now30 = Date.now() - 30*24*60*60*1000;
+document.getElementById('analyticsPeriods')?.addEventListener('click', e=>{
+  const tab = e.target.closest('.period-tab');
+  if (!tab) return;
+  document.querySelectorAll('#analyticsPeriods .period-tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  state.analyticsPeriod = tab.dataset.period;
+  renderAnalytics();
+});
+function renderAnalytics(){
+  const period = state.analyticsPeriod;
+  const days = period==='week' ? 7 : period==='month' ? 30 : period==='quarter' ? 90 : 365;
+  const now30 = Date.now() - days*24*60*60*1000;
   const ops = state.history.filter(t => t.type==='out' && (t.createdAt||0) >= now30);
   const byCat = {};
   ops.forEach(t => { byCat[t.category||'other'] = (byCat[t.category||'other']||0) + t.amount; });
@@ -2177,34 +2624,47 @@ function renderAnalytics() {
   `).join('') || '<div style="color:var(--text-dim);font-size:12px;text-align:center">Нет расходов</div>';
 
   const daily = {};
-  const days = [];
-  for (let i=29;i>=0;i--) {
-    const d = new Date(Date.now()-i*24*60*60*1000);
-    const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0');
-    daily[key] = 0; days.push(key);
+  const daysArr = [];
+  const barsCount = period === 'year' ? 12 : 30;
+  if (period === 'year') {
+    for (let i=11;i>=0;i--) {
+      const d = new Date();
+      d.setMonth(d.getMonth()-i);
+      const key = String(d.getMonth()+1).padStart(2,'0');
+      daily[key] = 0; daysArr.push(key);
+    }
+    ops.forEach(t => {
+      const d = new Date(t.createdAt||0);
+      const key = String(d.getMonth()+1).padStart(2,'0');
+      if (daily[key]!==undefined) daily[key] += t.amount;
+    });
+  } else {
+    for (let i=daysArr.length||29;i>=0;i--) {
+      const d = new Date(Date.now()-i*24*60*60*1000);
+      const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0');
+      daily[key] = 0; daysArr.push(key);
+    }
+    ops.forEach(t => {
+      const d = new Date(t.createdAt||0);
+      const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0');
+      if (daily[key]!==undefined) daily[key] += t.amount;
+    });
   }
-  ops.forEach(t => {
-    const d = new Date(t.createdAt||0);
-    const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0');
-    if (daily[key]!==undefined) daily[key] += t.amount;
-  });
   const maxDaily = Math.max(...Object.values(daily), 1);
-  const barsChart = document.getElementById('barsChart');
-  const barsLabels = document.getElementById('barsLabels');
-  barsChart.innerHTML = days.map(k => `<div class="bar" style="height:${(daily[k]/maxDaily)*100}%" title="${k}: ${fmt(daily[k])} ₽"></div>`).join('');
-  barsLabels.innerHTML = days.map((k,i) => i%5===0 ? `<span>${k}</span>` : `<span></span>`).join('');
+  document.getElementById('barsChart').innerHTML = daysArr.map(k => `<div class="bar" style="height:${(daily[k]/maxDaily)*100}%" title="${k}: ${fmt(daily[k])} ₽"></div>`).join('');
+  document.getElementById('barsLabels').innerHTML = daysArr.map((k,i) => i%5===0 ? `<span>${k}</span>` : `<span></span>`).join('');
 
   const merchants = {};
   ops.forEach(t => { if (t.category==='pay') merchants[t.title] = (merchants[t.title]||0)+t.amount; });
   const top = Object.entries(merchants).sort((a,b)=>b[1]-a[1]).slice(0,5);
   document.getElementById('topMerchants').innerHTML = top.length
     ? top.map(([name,val]) => `
-        <div class="child-info-row" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px">
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px">
           <span style="color:var(--text)">${name}</span>
           <span style="color:var(--text-dim)">${fmt(val)} ₽</span>
         </div>
       `).join('')
-    : `<div style="color:var(--text-dim);font-size:12px">Пока нет покупок</div>`;
+    : `<div style="color:var(--text-dim);font-size:12px">Нет покупок</div>`;
 
   const now2 = new Date();
   const curMonth = now2.getMonth(), curYear = now2.getFullYear();
@@ -2226,10 +2686,42 @@ function renderAnalytics() {
     Прошлый: <b style="color:var(--text)">${fmt(prevSpent)} ₽</b><br>
     ${prevSpent?(diff>0?`<span style="color:var(--red)">▲ +${diff.toFixed(1)}%</span> больше`:`<span style="color:var(--green)">▼ ${diff.toFixed(1)}%</span> меньше`):'—'}
   `;
+
+  // Прогноз
+  const daysInMonth = new Date(curYear, curMonth+1, 0).getDate();
+  const daysPassed = new Date().getDate();
+  const avgPerDay = daysPassed > 0 ? curSpent / daysPassed : 0;
+  const forecast = avgPerDay * daysInMonth;
+  document.getElementById('forecast').innerHTML = `
+    Средний расход в день: <b style="color:var(--text)">${fmt(Math.round(avgPerDay))} ₽</b><br>
+    Прогноз на конец месяца: <b style="color:${forecast > state.settings.dailyLimit*30 ? 'var(--red)' : 'var(--green)'}">${fmt(Math.round(forecast))} ₽</b>
+  `;
+
+  // Советы
+  const advices = [];
+  if (segments.length) {
+    const topCat = segments[0];
+    advices.push(`💡 Больше всего вы тратите на <b style="color:var(--text)">${(CATEGORIES[topCat[0]]||CATEGORIES.other).name}</b> — ${fmt(topCat[1])} ₽`);
+  }
+  if (prevSpent && curSpent > prevSpent * 1.2) {
+    advices.push('⚠️ В этом месяце вы тратите на 20%+ больше, чем в прошлом');
+  }
+  if (prevSpent && curSpent < prevSpent * 0.8) {
+    advices.push('🎉 Отлично! Вы тратите значительно меньше, чем в прошлом месяце');
+  }
+  if (avgPerDay * 30 > state.settings.dailyLimit * 30) {
+    advices.push('⚠️ Прогноз превышает ваш лимит — сократите расходы');
+  }
+  const savings = state.goals.reduce((s,g)=>s+(g.current||0),0);
+  if (savings > 0) {
+    advices.push(`💰 Вы накопили ${fmt(savings)} ₽ в целях — так держать!`);
+  }
+  if (!advices.length) advices.push('Пока нет данных для советов');
+  document.getElementById('advices').innerHTML = advices.map(a => `<div style="margin-bottom:8px">${a}</div>`).join('');
 }
 
 /* ==================== ДОСТИЖЕНИЯ / КОНФЕТТИ ==================== */
-function showConfetti() {
+function showConfetti(){
   for (let i=0;i<40;i++) {
     const el = document.createElement('div');
     el.className = 'confetti';
@@ -2242,14 +2734,14 @@ function showConfetti() {
     setTimeout(()=>el.remove(), 3500);
   }
 }
-async function unlockAchievement(id) {
+async function unlockAchievement(id){
   if (state.achievements[id]) return;
   state.achievements[id] = Date.now();
   await saveUser();
   const a = ACHIEVEMENTS.find(x=>x.id===id);
-  if (a) { showToast(`${a.emoji} Достижение: ${a.title}`); showConfetti(); }
+  if (a) { showToast(`${a.emoji} Достижение: ${a.title}`); showConfetti(); playSound('success'); }
 }
-async function checkAchievements() {
+async function checkAchievements(){
   const ops = state.history.length;
   if (state.history.some(t => t.category==='pay')) await unlockAchievement('first_pay');
   if (state.history.some(t => t.category==='transfer')) await unlockAchievement('first_trans');
@@ -2257,10 +2749,11 @@ async function checkAchievements() {
   if (state.history.filter(t=>t.category==='topup').length>=10) await unlockAchievement('topup_master');
   const total = state.cards.reduce((s,c)=>s+c.balance,0);
   if (total >= 50000) await unlockAchievement('saver');
+  if (state.contacts.length >= 3) await unlockAchievement('social');
 }
 
 /* ==================== ПОПОЛНЕНИЕ ==================== */
-function renderTopupCards() {
+function renderTopupCards(){
   const el = document.getElementById('topupCards');
   el.innerHTML = state.cards.map(c => `
     <div class="card-select-item ${state.selectedTopupCard===c.id?'selected':''} ${c.frozen?'frozen':''}"
@@ -2274,11 +2767,11 @@ function renderTopupCards() {
     </div>
   `).join('');
 }
-function selectTopupCard(id) { state.selectedTopupCard=id; renderTopupCards(); checkTopupForm(); }
+function selectTopupCard(id){ state.selectedTopupCard=id; renderTopupCards(); checkTopupForm(); }
 const topupAmount = document.getElementById('topupAmount');
 const topupBtn = document.getElementById('topupBtn');
-topupAmount.addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g,'').slice(0,9); checkTopupForm(); });
-function checkTopupForm() { topupBtn.disabled = (parseInt(topupAmount.value)||0)<=0; }
+topupAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); checkTopupForm(); });
+function checkTopupForm(){ topupBtn.disabled = (parseInt(topupAmount.value)||0)<=0; }
 topupBtn.addEventListener('click', async () => {
   const amt = parseInt(topupAmount.value)||0;
   const card = getCard(state.selectedTopupCard);
@@ -2299,19 +2792,18 @@ topupBtn.addEventListener('click', async () => {
 });
 
 /* ==================== ПЕРЕВОД ==================== */
-function switchTransferMethod(m, el) {
+function switchTransferMethod(m, el){
   state.transferMethod = m;
-  document.querySelectorAll('#screenTransfer > .cat-picker .cat-chip').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('#screenTransfer > .cat-picker .cat-chip').forEach(c=>c.classList.remove('selected'));
   el.classList.add('selected');
-  ['phone','card','own','qr'].forEach(x => {
+  ['phone','card','own','qr'].forEach(x=>{
     const div = document.getElementById('transferMethod_'+x);
     if (div) div.style.display = x===m?'block':'none';
   });
   if (m === 'own') renderTransferOwnCards();
   checkTransferForm();
 }
-
-function renderTransferCards() {
+function renderTransferCards(){
   const html = state.cards.map(c => `
     <div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}">
       <div class="ci-icon" style="background:${c.color}"></div>
@@ -2325,69 +2817,61 @@ function renderTransferCards() {
   document.getElementById('transferFromCards').innerHTML = html;
   document.getElementById('transferFromCards2').innerHTML = html;
   document.getElementById('transferFromCards3').innerHTML = html;
-  ['transferFromCards','transferFromCards2','transferFromCards3'].forEach(id => {
-    document.getElementById(id).querySelectorAll('.card-select-item').forEach(el => {
+  ['transferFromCards','transferFromCards2','transferFromCards3'].forEach(id=>{
+    document.getElementById(id).querySelectorAll('.card-select-item').forEach(el=>{
       el.onclick = () => {
         const cid = parseInt(el.dataset.cid);
         if (getCard(cid)?.frozen) { showToast('❌ Карта заморожена', true); return; }
-        if (id==='transferFromCards') { state.transferFrom=cid; }
-        if (id==='transferFromCards2') { state.transferFrom2=cid; }
-        if (id==='transferFromCards3') { state.transferFrom3=cid; }
+        if (id==='transferFromCards') state.transferFrom=cid;
+        if (id==='transferFromCards2') state.transferFrom2=cid;
+        if (id==='transferFromCards3') state.transferFrom3=cid;
         renderTransferCards();
         checkTransferForm();
       };
     });
   });
-  ['transferFromCards','transferFromCards2','transferFromCards3'].forEach((id,idx) => {
+  ['transferFromCards','transferFromCards2','transferFromCards3'].forEach((id,idx)=>{
     const sel = [state.transferFrom, state.transferFrom2, state.transferFrom3][idx];
-    document.getElementById(id).querySelectorAll('.card-select-item').forEach(el => {
+    document.getElementById(id).querySelectorAll('.card-select-item').forEach(el=>{
       el.classList.toggle('selected', parseInt(el.dataset.cid)===sel);
     });
   });
 }
-
-function renderTransferOwnCards() {
+function renderTransferOwnCards(){
   if (state.transferOwnFrom == null) state.transferOwnFrom = state.cards[0]?.id ?? null;
   if (state.transferOwnTo == null) {
     const other = state.cards.find(c => c.id !== state.transferOwnFrom);
     state.transferOwnTo = other?.id ?? null;
   }
-
   const fromEl = document.getElementById('transferOwnFrom');
   if (!fromEl) return;
-  fromEl.innerHTML = state.cards
-    .filter(c => c.id !== state.transferOwnTo)
-    .map(c => `
-      <div class="card-select-item ${state.transferOwnFrom===c.id?'selected':''} ${c.frozen?'frozen':''}"
-           onclick="${c.frozen?'':`selectTransferOwnFrom(${c.id})`}">
-        <div class="ci-icon" style="background:${c.color}"></div>
-        <div style="flex:1">
-          <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-          ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-          <div class="ci-bal">${fmt(c.balance)} ₽</div>
-        </div>
-        ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
+  fromEl.innerHTML = state.cards.filter(c => c.id !== state.transferOwnTo).map(c => `
+    <div class="card-select-item ${state.transferOwnFrom===c.id?'selected':''} ${c.frozen?'frozen':''}"
+         onclick="${c.frozen?'':`selectTransferOwnFrom(${c.id})`}">
+      <div class="ci-icon" style="background:${c.color}"></div>
+      <div style="flex:1">
+        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
+        ${c.name?`<div class="ci-name">${c.name}</div>`:''}
+        <div class="ci-bal">${fmt(c.balance)} ₽</div>
       </div>
-    `).join('');
-
+      ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
+    </div>
+  `).join('');
   const toEl = document.getElementById('transferOwnTo');
-  toEl.innerHTML = state.cards
-    .filter(c => c.id !== state.transferOwnFrom)
-    .map(c => `
-      <div class="card-select-item ${state.transferOwnTo===c.id?'selected':''} ${c.frozen?'frozen':''}"
-           onclick="${c.frozen?'':`selectTransferOwnTo(${c.id})`}">
-        <div class="ci-icon" style="background:${c.color}"></div>
-        <div style="flex:1">
-          <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-          ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-          <div class="ci-bal">${fmt(c.balance)} ₽</div>
-        </div>
-        ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
+  toEl.innerHTML = state.cards.filter(c => c.id !== state.transferOwnFrom).map(c => `
+    <div class="card-select-item ${state.transferOwnTo===c.id?'selected':''} ${c.frozen?'frozen':''}"
+         onclick="${c.frozen?'':`selectTransferOwnTo(${c.id})`}">
+      <div class="ci-icon" style="background:${c.color}"></div>
+      <div style="flex:1">
+        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
+        ${c.name?`<div class="ci-name">${c.name}</div>`:''}
+        <div class="ci-bal">${fmt(c.balance)} ₽</div>
       </div>
-    `).join('');
+      ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
+    </div>
+  `).join('');
 }
-
-function selectTransferOwnFrom(id) {
+function selectTransferOwnFrom(id){
   if (state.transferOwnTo === id) {
     const other = state.cards.find(c => c.id !== id && !c.frozen);
     if (other) state.transferOwnTo = other.id;
@@ -2396,13 +2880,12 @@ function selectTransferOwnFrom(id) {
   renderTransferOwnCards();
   checkTransferForm();
 }
-function selectTransferOwnTo(id) {
+function selectTransferOwnTo(id){
   state.transferOwnTo = id;
   renderTransferOwnCards();
   checkTransferForm();
 }
-
-function renderTransferContacts() {
+function renderTransferContacts(){
   const el = document.getElementById('transferContacts');
   if (!state.contacts.length) { el.innerHTML=''; return; }
   el.innerHTML = state.contacts.map(c => `
@@ -2421,7 +2904,7 @@ const recipientInfo = document.getElementById('transferRecipientInfo');
 const recipientError = document.getElementById('transferRecipientError');
 
 let phoneLookupTimer = null;
-transferPhone.addEventListener('input', e => {
+transferPhone.addEventListener('input', e=>{
   e.target.value = formatPhone(e.target.value);
   const norm = normalizePhone(e.target.value);
   recipientInfo.style.display='none'; recipientError.style.display='none';
@@ -2430,11 +2913,11 @@ transferPhone.addEventListener('input', e => {
   if (norm.length===11) phoneLookupTimer = setTimeout(()=>lookupRecipient(norm), 400);
   checkTransferForm();
 });
-transferCardNumber?.addEventListener('input', e => {
+transferCardNumber?.addEventListener('input', e=>{
   e.target.value = formatCardNumber(e.target.value);
   checkTransferForm();
 });
-async function lookupRecipient(phone) {
+async function lookupRecipient(phone){
   if (phone===normalizePhone(state.user.phone)) {
     recipientError.style.display='block';
     document.getElementById('recipientErrorText').textContent='❌ Это ваш собственный номер';
@@ -2455,9 +2938,9 @@ async function lookupRecipient(phone) {
   } catch(e){ console.error(e); }
   checkTransferForm();
 }
-transferAmount.addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g,'').slice(0,9); checkTransferForm(); });
-transferComment.addEventListener('input', e => state.transferComment = e.target.value);
-function checkTransferForm() {
+transferAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); checkTransferForm(); });
+transferComment.addEventListener('input', e=>state.transferComment = e.target.value);
+function checkTransferForm(){
   const amt = parseInt(transferAmount.value)||0;
   let from = null;
   if (state.transferMethod==='phone') from = getCard(state.transferFrom);
@@ -2471,66 +2954,34 @@ function checkTransferForm() {
   if (state.transferMethod==='qr') recipientOk = true;
   transferBtn.disabled = !(amt>0 && from && !from.frozen && amt<=from.balance && recipientOk);
 }
-
 transferBtn.addEventListener('click', async () => {
   const amt = parseInt(transferAmount.value)||0;
-
-  // === ПЕРЕВОД МЕЖДУ СВОИМИ КАРТАМИ ===
   if (state.transferMethod === 'own') {
     const from = getCard(state.transferOwnFrom);
     const to = getCard(state.transferOwnTo);
     if (!from || !to || from.id === to.id) return;
     if (from.frozen || to.frozen) { showToast('❌ Одна из карт заморожена', true); return; }
     if (amt <= 0 || amt > from.balance) { showToast('❌ Недостаточно средств', true); return; }
-
     transferBtn.disabled = true;
     try {
       from.balance -= amt;
       to.balance += amt;
       await saveCards();
-
       const comment = transferComment.value.trim();
-      const baseTitle = 'Между своими';
-
-      await addHistory({
-        type: 'out',
-        category: 'transfer',
-        title: `${baseTitle}: → ${to.brand} ${maskCard(to.last)}`,
-        amount: amt,
-        date: now(),
-        comment
-      });
-
-      await addHistory({
-        type: 'in',
-        category: 'transfer',
-        title: `${baseTitle}: ← ${from.brand} ${maskCard(from.last)}`,
-        amount: amt,
-        date: now(),
-        comment
-      });
-
-      transferAmount.value = '';
-      transferComment.value = '';
-      state.transferComment = '';
-      transferBtn.disabled = true;
-
+      await addHistory({ type:'out', category:'transfer', title:`Между своими: → ${to.brand} ${maskCard(to.last)}`, amount:amt, date:now(), comment });
+      await addHistory({ type:'in', category:'transfer', title:`Между своими: ← ${from.brand} ${maskCard(from.last)}`, amount:amt, date:now(), comment });
+      transferAmount.value=''; transferComment.value=''; state.transferComment='';
+      transferBtn.disabled=true;
       await checkAchievements();
       await showProcessingThenSuccess('Перевод выполнен', amt, [
-        { label: 'Откуда', value: `${from.brand} ${maskCard(from.last)}` },
-        { label: 'Куда',   value: `${to.brand} ${maskCard(to.last)}` },
-        { label: 'Сумма',  value: fmt(amt) + ' ₽' },
-        { label: 'Дата',   value: now() }
+        { label:'Откуда', value:`${from.brand} ${maskCard(from.last)}` },
+        { label:'Куда',   value:`${to.brand} ${maskCard(to.last)}` },
+        { label:'Сумма',  value:fmt(amt)+' ₽' },
+        { label:'Дата',   value:now() }
       ]);
-    } catch(e) {
-      console.error(e);
-      showToast('❌ Ошибка перевода', true);
-      transferBtn.disabled = false;
-    }
+    } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); transferBtn.disabled=false; }
     return;
   }
-
-  // === ОСТАЛЬНЫЕ ТИПЫ ПЕРЕВОДА ===
   let from, toPhone, toName;
   if (state.transferMethod==='phone') {
     from = getCard(state.transferFrom);
@@ -2547,7 +2998,6 @@ transferBtn.addEventListener('click', async () => {
   }
   if (!from || from.frozen || amt<=0 || amt>from.balance) return;
   if (!checkLimits(amt)) return;
-
   transferBtn.disabled = true;
   try {
     from.balance -= amt;
@@ -2558,7 +3008,6 @@ transferBtn.addEventListener('click', async () => {
       title: state.transferMethod==='phone' ? 'Перевод для '+toName+' ('+formatPhone(toPhone)+')' : 'Перевод на '+toName,
       amount:amt, date:now(), comment
     });
-
     if (toPhone) {
       await db.ref('users/'+toPhone+'/cards').transaction(cards => {
         if (!cards || !cards.length) cards = [{ id:1, brand:'VISA', last:toPhone.slice(-4), balance:0, color:'linear-gradient(135deg,#1e3c72,#2a5298)', frozen:false, limit:0 }];
@@ -2572,12 +3021,10 @@ transferBtn.addEventListener('click', async () => {
         createdAt: firebase.database.ServerValue.TIMESTAMP
       });
     }
-
     transferAmount.value=''; transferPhone.value=''; transferCardNumber.value='';
     transferComment.value=''; state.transferComment='';
     state.transferRecipient=null; recipientInfo.style.display='none';
     transferBtn.disabled=true;
-
     await checkAchievements();
     await showProcessingThenSuccess('Перевод выполнен', amt, [
       { label:'Получатель', value: toName },
@@ -2588,18 +3035,18 @@ transferBtn.addEventListener('click', async () => {
   } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); transferBtn.disabled=false; }
 });
 
-/* ==================== РАЗДЕЛЕНИЕ И ЗАПРОС ==================== */
-function openSplit() {
+/* ==================== РАЗДЕЛЕНИЕ / ЗАПРОС ==================== */
+function openSplit(){
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '➗';
   document.getElementById('gmTitle').textContent = 'Разделить счёт';
-  document.getElementById('gmText').textContent = 'Введите общую сумму и количество человек';
+  document.getElementById('gmText').textContent = 'Введите сумму и количество человек';
   document.getElementById('gmExtra').innerHTML = `
     <input type="text" id="splitTotal" placeholder="Общая сумма ₽" inputmode="numeric" style="text-align:center">
-    <input type="text" id="splitCount" placeholder="Сколько человек" inputmode="numeric" value="2" style="text-align:center">
+    <input type="text" id="splitCount" placeholder="Человек" inputmode="numeric" value="2" style="text-align:center">
     <div id="splitResult" style="color:var(--text-dim);font-size:13px;text-align:center;padding:12px"></div>
   `;
-  const calc = () => {
+  const calc = ()=>{
     const t = parseInt(document.getElementById('splitTotal').value)||0;
     const c = Math.max(2, parseInt(document.getElementById('splitCount').value)||2);
     const each = c ? Math.ceil(t/c) : 0;
@@ -2618,7 +3065,7 @@ function openSplit() {
     showToast(`💡 Отправьте ${c-1} перевод(а) по ${fmt(each)} ₽`);
   };
 }
-function openRequest() {
+function openRequest(){
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '📩';
   document.getElementById('gmTitle').textContent = 'Запросить деньги';
@@ -2627,7 +3074,7 @@ function openRequest() {
     <input type="tel" id="reqPhone" placeholder="+7 900 000-00-00" style="text-align:center">
     <input type="text" id="reqSum" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
   `;
-  document.getElementById('reqPhone').addEventListener('input', e => e.target.value = formatPhone(e.target.value));
+  document.getElementById('reqPhone').addEventListener('input', e=>e.target.value = formatPhone(e.target.value));
   document.getElementById('gmConfirm').onclick = async () => {
     const phone = normalizePhone(document.getElementById('reqPhone').value);
     const sum = parseInt(document.getElementById('reqSum').value)||0;
@@ -2645,17 +3092,17 @@ function openRequest() {
 }
 
 /* ==================== ОПЛАТА ==================== */
-function switchPayMethod(m, el) {
+function switchPayMethod(m, el){
   state.payMethod = m;
-  document.querySelectorAll('#screenPay > .cat-picker .cat-chip').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('#screenPay > .cat-picker .cat-chip').forEach(c=>c.classList.remove('selected'));
   el.classList.add('selected');
-  ['shop','req','auto'].forEach(x => {
+  ['shop','req','auto'].forEach(x=>{
     const div = document.getElementById('payMethod_'+x);
     if (div) div.style.display = x===m?'block':'none';
   });
   checkPayForm();
 }
-function renderPayCards() {
+function renderPayCards(){
   const html = state.cards.map(c => `
     <div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}">
       <div class="ci-icon" style="background:${c.color}"></div>
@@ -2666,11 +3113,11 @@ function renderPayCards() {
       ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
     </div>
   `).join('');
-  ['payCards','payCards2','payCards3'].forEach(id => {
+  ['payCards','payCards2','payCards3'].forEach(id=>{
     const el = document.getElementById(id);
     if (!el) return;
     el.innerHTML = html;
-    el.querySelectorAll('.card-select-item').forEach(sel => {
+    el.querySelectorAll('.card-select-item').forEach(sel=>{
       sel.onclick = () => {
         const cid = parseInt(sel.dataset.cid);
         if (getCard(cid)?.frozen) { showToast('❌ Карта заморожена', true); return; }
@@ -2682,16 +3129,16 @@ function renderPayCards() {
       };
     });
   });
-  ['payCards','payCards2','payCards3'].forEach((id,idx) => {
+  ['payCards','payCards2','payCards3'].forEach((id,idx)=>{
     const sel = [state.payCard, state.payCard2, state.payCard3][idx];
-    document.getElementById(id).querySelectorAll('.card-select-item').forEach(el => {
+    document.getElementById(id).querySelectorAll('.card-select-item').forEach(el=>{
       el.classList.toggle('selected', parseInt(el.dataset.cid)===sel);
     });
   });
 }
-document.getElementById('payCategories')?.addEventListener('click', e => {
+document.getElementById('payCategories')?.addEventListener('click', e=>{
   if (e.target.classList.contains('cat-chip')) {
-    document.querySelectorAll('#payCategories .cat-chip').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('#payCategories .cat-chip').forEach(c=>c.classList.remove('selected'));
     e.target.classList.add('selected');
     state.payCategory = e.target.dataset.cat;
   }
@@ -2699,12 +3146,12 @@ document.getElementById('payCategories')?.addEventListener('click', e => {
 const payAmount = document.getElementById('payAmount');
 const payMerchant = document.getElementById('payMerchant');
 const payBtn = document.getElementById('payBtn');
-payAmount.addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g,'').slice(0,9); checkPayForm(); });
+payAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); checkPayForm(); });
 payMerchant.addEventListener('input', checkPayForm);
-['reqOrg','reqINN','reqBIK','reqAccount','reqAmount','autoName','autoAmount'].forEach(id => {
+['reqOrg','reqINN','reqBIK','reqAccount','reqAmount','autoName','autoAmount'].forEach(id=>{
   document.getElementById(id)?.addEventListener('input', checkPayForm);
 });
-function checkPayForm() {
+function checkPayForm(){
   if (state.payMethod==='shop') {
     const amt = parseInt(payAmount.value)||0;
     const m = payMerchant.value.trim();
@@ -2732,6 +3179,19 @@ payBtn.addEventListener('click', async () => {
     card.balance -= amt;
     await saveCards();
     await addHistory({ type:'out', category:state.payCategory, title:m, amount:amt, date:now() });
+    // Round-up
+    if (state.settings.roundup && roundupTarget > 0) {
+      const rounded = Math.ceil(amt/10)*10;
+      const diff = rounded - amt;
+      if (diff > 0 && diff <= 10 && card.balance >= diff) {
+        card.balance -= diff;
+        const goal = state.goals[roundupTarget - 1];
+        if (goal) {
+          goal.current = (goal.current||0) + diff;
+          await saveUser();
+        }
+      }
+    }
     state.lastOperation = { type:'pay', amount:amt, merchant:m, category:state.payCategory, cardId:card.id };
     await saveUser();
     payAmount.value=''; payMerchant.value=''; payBtn.disabled=true;
@@ -2751,8 +3211,8 @@ payBtn.addEventListener('click', async () => {
     if (!checkLimits(amt)) return;
     card.balance -= amt;
     await saveCards();
-    await addHistory({ type:'out', category:'other', title:'Оплата по реквизитам: '+org, amount:amt, date:now() });
-    payBtn.disabled = true;
+    await addHistory({ type:'out', category:'other', title:'Оплата: '+org, amount:amt, date:now() });
+    payBtn.disabled=true;
     await checkAchievements();
     await showProcessingThenSuccess('Платёж отправлен', amt, [
       { label:'Организация', value:org },
@@ -2768,8 +3228,8 @@ payBtn.addEventListener('click', async () => {
     if (!card || card.frozen || amt<=0 || amt>card.balance) return;
     card.balance -= amt;
     await saveCards();
-    await addHistory({ type:'out', category:'other', title:'Автоплатёж: '+name+' ('+period+')', amount:amt, date:now() });
-    payBtn.disabled = true;
+    await addHistory({ type:'out', category:'other', title:'Автоплатёж: '+name, amount:amt, date:now() });
+    payBtn.disabled=true;
     await showProcessingThenSuccess('Автоплатёж создан', amt, [
       { label:'Название', value:name },
       { label:'Период', value:period==='month'?'Ежемесячно':period==='week'?'Еженедельно':'Ежедневно' },
@@ -2778,14 +3238,41 @@ payBtn.addEventListener('click', async () => {
   }
 });
 
+/* ==================== МОЙ QR ==================== */
+function showMyQR() { goTo('screenMyQr'); }
+function renderMyQr() {
+  const container = document.getElementById('myQrCanvas');
+  container.innerHTML = '';
+  const phone = normalizePhone(state.user.phone);
+  const data = `bank:${phone}`;
+  try {
+    const canvas = document.createElement('canvas');
+    QRCode.toCanvas(canvas, data, { width: 260, margin: 1 }, function(err) {
+      if (!err) { container.appendChild(canvas); }
+      else { container.innerHTML = `<div style="color:#000;font-size:12px">${data}</div>`; }
+    });
+  } catch(e) {
+    container.innerHTML = `<div style="color:#000;font-size:12px">${data}</div>`;
+  }
+}
+async function shareQr() {
+  const phone = formatPhone(state.user.phone);
+  const text = `Мой номер для переводов: ${phone}`;
+  if (navigator.share) {
+    try { await navigator.share({ title: 'Мой номер', text }); } catch(e){}
+  } else {
+    try { await navigator.clipboard.writeText(text); showToast('📋 Скопировано'); } catch(e){ showToast('❌ Ошибка', true); }
+  }
+}
+
 /* ==================== ОБРАБОТКА ==================== */
-function showProcessingThenSuccess(title, amount, receiptRows) {
+function showProcessingThenSuccess(title, amount, receiptRows){
   return new Promise(resolve => {
     goTo('screenProcessing');
-    setTimeout(() => {
+    setTimeout(()=>{
       document.getElementById('successTitle').textContent = title;
       document.getElementById('successAmount').textContent = fmt(amount)+' ₽';
-      document.getElementById('successReceipt').innerHTML = receiptRows.map(r => `
+      document.getElementById('successReceipt').innerHTML = receiptRows.map(r=>`
         <div class="receipt-row">
           <span class="receipt-label">${r.label}</span>
           <span class="receipt-value">${r.value}</span>
@@ -2793,23 +3280,25 @@ function showProcessingThenSuccess(title, amount, receiptRows) {
       `).join('');
       goTo('screenSuccess');
       showConfetti();
+      playSound('success');
+      if (navigator.vibrate) navigator.vibrate(50);
       resolve();
     }, 1800);
   });
 }
-function setAmount(id, value) {
+function setAmount(id, value){
   const el = document.getElementById(id);
   el.value = value;
   el.dispatchEvent(new Event('input'));
 }
-function openOp(type) {
+function openOp(type){
   if (type==='topup')    goTo('screenTopup');
   if (type==='transfer') goTo('screenTransfer');
   if (type==='pay')      goTo('screenPay');
 }
 
 /* ==================== ПРОСМОТР РЕБЁНКА ==================== */
-async function openChildView(childPhone) {
+async function openChildView(childPhone){
   const snap = await db.ref('users/'+childPhone).once('value');
   const data = snap.val();
   if (!data) return;
@@ -2828,7 +3317,7 @@ async function openChildView(childPhone) {
   state.currentChildPhone = childPhone;
   goTo('screenChildView');
 }
-function openTopupChild() {
+function openTopupChild(){
   const phone = state.currentChildPhone;
   if (!phone) return;
   showModal('genericModal');
@@ -2859,7 +3348,7 @@ function openTopupChild() {
     openChildView(phone);
   };
 }
-function openChildLimits() {
+function openChildLimits(){
   const phone = state.currentChildPhone;
   if (!phone) return;
   showModal('genericModal');
@@ -2875,7 +3364,7 @@ function openChildLimits() {
     showToast('💾 Сохранено');
   };
 }
-function setChildAllowance() {
+function setChildAllowance(){
   const phone = state.currentChildPhone;
   if (!phone) return;
   showModal('genericModal');
@@ -2884,9 +3373,7 @@ function setChildAllowance() {
   document.getElementById('gmText').textContent = 'Ежемесячное пополнение';
   document.getElementById('gmExtra').innerHTML = `
     <input type="text" id="allowanceAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
-    <select id="allowanceDay">
-      ${[1,5,10,15,20,25].map(d=>`<option value="${d}">${d}-е число</option>`).join('')}
-    </select>
+    <select id="allowanceDay">${[1,5,10,15,20,25].map(d=>`<option value="${d}">${d}-е число</option>`).join('')}</select>
   `;
   document.getElementById('gmConfirm').onclick = async () => {
     const amt = parseInt(document.getElementById('allowanceAmount').value)||0;
@@ -2898,9 +3385,9 @@ function setChildAllowance() {
 }
 
 /* ==================== ВЫХОД ==================== */
-function showLogoutConfirm() { showModal('logoutModal'); }
-function hideLogoutConfirm() { hideModal('logoutModal'); }
-function confirmLogout() {
+function showLogoutConfirm(){ showModal('logoutModal'); }
+function hideLogoutConfirm(){ hideModal('logoutModal'); }
+function confirmLogout(){
   hideLogoutConfirm();
   localStorage.removeItem('bank_phone');
   state.loggedIn=false; state.savedPin=null; state.pinBuffer='';
@@ -2911,14 +3398,14 @@ function confirmLogout() {
 }
 
 /* ==================== АВТОВХОД ==================== */
-async function tryAutoLogin() {
+async function tryAutoLogin(){
   const saved = localStorage.getItem('bank_phone');
   if (!saved) { goTo('screenPhone'); return; }
   try {
     const snap = await db.ref('users/'+saved).once('value');
     const data = snap.val();
     if (data && data.firstName && data.pinHash) {
-      state.user = { phone:saved, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult' };
+      state.user = { phone:saved, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤' };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
       applySettings();
@@ -2930,36 +3417,70 @@ async function tryAutoLogin() {
   } catch(e){ console.error(e); goTo('screenPhone'); }
 }
 
-/* ==================== ОБРАБОТКА ПЕРЕКЛЮЧАТЕЛЕЙ ==================== */
-document.getElementById('autoLockToggle')?.addEventListener('change', async e => {
+/* ==================== ПЕРЕКЛЮЧАТЕЛИ ==================== */
+document.getElementById('autoLockToggle')?.addEventListener('change', async e=>{
   state.settings.autoLock = e.target.checked;
   await saveUser();
   if (state.settings.autoLock) startAutoLock(); else clearTimeout(autoLockTimer);
-  showToast(e.target.checked?'🔒 Автоблокировка вкл':'🔓 Автоблокировка выкл');
+  showToast(e.target.checked?'🔒 Автоблокировка вкл':'🔓 Выкл');
 });
-document.getElementById('bioToggle')?.addEventListener('change', async e => {
+document.getElementById('bioToggle')?.addEventListener('change', async e=>{
   state.settings.bio = e.target.checked;
   await saveUser();
-  if (e.target.checked) showToast('👆 Биометрия включена (демо)');
+  if (e.target.checked) showToast('👆 Биометрия включена');
   buildPinPad('enterPinPad', e.target.checked);
 });
-document.getElementById('childApproveToggle')?.addEventListener('change', async e => {
+document.getElementById('notifToggle')?.addEventListener('change', async e=>{
+  state.settings.notifications = e.target.checked;
+  await saveUser();
+  showToast(e.target.checked?'🔔 Уведомления вкл':'🔕 Выкл');
+});
+document.getElementById('privateToggle')?.addEventListener('change', async e=>{
+  state.settings.private = e.target.checked;
+  await saveUser();
+  renderHome();
+  showToast(e.target.checked?'🕶 Приватный режим':'👁 Показываем балансы');
+});
+document.getElementById('soundToggle')?.addEventListener('change', async e=>{
+  state.settings.sound = e.target.checked;
+  await saveUser();
+  showToast(e.target.checked?'🔊 Звуки вкл':'🔇 Выкл');
+});
+document.getElementById('childApproveToggle')?.addEventListener('change', async e=>{
   const phone = state.currentChildPhone;
   if (!phone) return;
   await db.ref('users/'+phone+'/limits/approveLarge').set(e.target.checked);
-  showToast(e.target.checked?'✅ Одобрение вкл':'❌ Одобрение выкл');
+  showToast(e.target.checked?'✅ Одобрение вкл':'❌ Выкл');
 });
 
 /* ==================== ЗАЩИТА ==================== */
-document.addEventListener('contextmenu', e => {
+document.addEventListener('contextmenu', e=>{
   if (e.target.tagName!=='INPUT' && e.target.tagName!=='TEXTAREA') e.preventDefault();
 });
-window.addEventListener('load', () => setTimeout(() => window.scrollTo(0,1), 100));
+window.addEventListener('load', () => setTimeout(()=>window.scrollTo(0,1), 100));
+
+// Следим за системной темой
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+  if (state.settings.mode === 'auto') applySettings();
+});
 
 /* ==================== ИНИЦИАЛИЗАЦИЯ ==================== */
 buildPinPad('createPinPad');
 buildPinPad('enterPinPad', true);
 buildPinPad('changePinPad');
+initSwipe();
+
+// Round-up target - первая цель
+setInterval(() => {
+  if (state.goals.length && state.settings.roundup) roundupTarget = 1;
+}, 1000);
+
+// Проверка автопереводов и карманных денег при входе
+setTimeout(() => {
+  if (state.loggedIn) {
+    checkAutotransfers();
+  }
+}, 5000);
 
 tryAutoLogin();
 </script>
