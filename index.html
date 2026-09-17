@@ -11,7 +11,6 @@
 <meta name="format-detection" content="telephone=no">
 <title>Мой Банк</title>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23667eea'/%3E%3Ctext x='50' y='68' font-size='54' text-anchor='middle'%3E%F0%9F%92%B3%3C/text%3E%3C/svg%3E">
-<link rel="manifest" href='data:application/manifest+json,{"name":"Мой Банк","short_name":"Банк","start_url":".","display":"standalone","background_color":"%230f0f1e","theme_color":"%230f0f1e","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2722%27 fill=%27%23667eea%27/%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml"}]}'>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
   html,body{height:100%;overflow:hidden;overscroll-behavior:none;position:fixed;width:100%}
@@ -35,16 +34,12 @@
   body.theme-orange{ --balance-grad:linear-gradient(135deg,#f59e0b,#f5576c); }
   body.theme-teal{ --balance-grad:linear-gradient(135deg,#0ea5e9,#14b8a6); }
   body.theme-pink{ --balance-grad:linear-gradient(135deg,#ec4899,#8b5cf6); }
-
   body{background:var(--bg-grad);color:var(--text)}
-
   .app{width:100%;max-width:100%;height:100vh;height:100dvh;position:relative;background:var(--bg-grad);overflow:hidden}
-
   @media (min-width:500px){
     body{padding:20px;align-items:center}
     .app{max-width:400px;height:780px;max-height:95vh;border-radius:32px;box-shadow:0 30px 80px rgba(0,0,0,0.6);border:1px solid var(--border)}
   }
-
   .screen{
     position:absolute;inset:0;
     padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
@@ -53,10 +48,8 @@
   .screen.active{display:block}
   .screen::-webkit-scrollbar{width:0}
   @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
-
   h1{color:var(--text);font-size:22px;margin-bottom:8px}
   .sub{color:var(--text-dim);font-size:14px;margin-bottom:24px}
-
   input,select,textarea{
     width:100%;background:var(--card);border:1px solid var(--border);border-radius:14px;
     padding:16px;color:var(--text);font-size:16px;outline:none;transition:.25s;margin-bottom:14px;
@@ -67,7 +60,6 @@
   select{cursor:pointer}
   select option{background:#1a1a2e;color:#fff}
   body.light select option{background:#fff;color:#1a1a2e}
-
   .btn{
     width:100%;padding:17px;border:none;border-radius:14px;
     background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;
@@ -82,19 +74,15 @@
   .btn.gray{background:var(--card);box-shadow:none;color:var(--text)}
   .btn.gray:hover{background:rgba(128,128,128,0.15);box-shadow:none}
   .btn.small{padding:10px;font-size:13px;margin-bottom:0}
-
   .back-link{display:block;text-align:center;color:var(--text-muted);font-size:13px;margin-top:8px;cursor:pointer;transition:.2s}
   .back-link:hover{color:var(--text-dim)}
-
   .logo{width:64px;height:64px;margin:40px auto 20px;border-radius:20px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 12px 32px rgba(102,126,234,0.4)}
   .auth-box{text-align:center}
-
   .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
   .greeting{color:var(--text-dim);font-size:13px}
   .username{color:var(--text);font-size:18px;font-weight:600;margin-top:2px}
   .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:16px;cursor:pointer;transition:.25s}
   .avatar:active{transform:scale(0.94)}
-
   .balance-card{border-radius:22px;padding:24px;background:var(--balance-grad);color:#fff;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,0.3);cursor:pointer;transition:.3s}
   .balance-card:active{transform:scale(0.99)}
   .balance-card::after{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.08)}
@@ -102,18 +90,14 @@
   .balance-amount{font-size:34px;font-weight:700;letter-spacing:-1px;margin-bottom:16px}
   .balance-amount span{font-size:22px;opacity:.7}
   .balance-num{font-size:14px;letter-spacing:2px;opacity:.85;font-family:'Courier New',monospace}
-
   .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
-  .actions-6{grid-template-columns:repeat(3,1fr)}
   .action-btn{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:.25s;color:var(--text)}
   .action-btn:hover{background:rgba(102,126,234,0.2);border-color:var(--primary);transform:translateY(-3px)}
   .action-icon{font-size:20px}
   .action-label{font-size:10px;color:var(--text-dim);text-align:center}
-
   .section-title{color:var(--text);font-size:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
   .section-title span{color:var(--text-muted);font-size:12px;cursor:pointer}
   .section-title .ttl{color:var(--text);font-size:16px}
-
   .tx-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border-radius:14px;margin-bottom:8px;transition:.2s;cursor:pointer;position:relative;overflow:hidden}
   .tx-item:hover{background:rgba(128,128,128,0.12)}
   .tx-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
@@ -126,22 +110,17 @@
   .tx-amount{font-size:15px;font-weight:600;white-space:nowrap}
   .tx-amount.in{color:var(--green)}
   .tx-amount.out{color:var(--text)}
-
   .empty{text-align:center;color:var(--text-muted);font-size:13px;padding:30px 20px}
   .empty-icon{font-size:40px;opacity:.3;margin-bottom:10px}
-
   .op-header{display:flex;align-items:center;gap:12px;margin-bottom:24px}
   .op-back{width:36px;height:36px;border-radius:12px;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--text);cursor:pointer;font-size:18px;transition:.2s}
   .op-back:hover{background:rgba(128,128,128,0.2)}
-
   .amount-input-wrap{position:relative;margin-bottom:14px}
   .amount-input-wrap input{font-size:28px;font-weight:700;padding:20px;text-align:center;letter-spacing:-1px;margin-bottom:0}
   .amount-input-wrap .currency{position:absolute;right:20px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:22px;font-weight:600}
-
   .quick-amounts{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
   .quick-amounts button{flex:1;min-width:60px;padding:10px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--text-dim);font-size:13px;cursor:pointer;transition:.2s}
   .quick-amounts button:hover{background:rgba(102,126,234,0.2);border-color:var(--primary);color:var(--text)}
-
   .card-select-item{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;background:var(--card);border:2px solid transparent;margin-bottom:10px;cursor:pointer;transition:.25s;position:relative}
   .card-select-item.selected{border-color:var(--primary);background:rgba(102,126,234,0.15)}
   .card-select-item.frozen{opacity:.5}
@@ -150,7 +129,6 @@
   .card-select-item .ci-bal{color:var(--text-muted);font-size:11px;margin-top:2px}
   .card-select-item .ci-name{color:#a5b4fc;font-size:10px;margin-top:1px}
   .card-select-item .frozen-badge{position:absolute;top:8px;right:12px;font-size:10px;color:#93c5fd;background:rgba(147,197,253,0.15);padding:2px 8px;border-radius:10px}
-
   .bottom-nav{position:absolute;bottom:0;left:0;right:0;padding:16px 20px calc(22px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:14px;background:linear-gradient(to top,var(--bg) 60%,transparent);pointer-events:none;z-index:100}
   .nav-btn{width:130px;height:52px;border-radius:30px;border:1px solid var(--border);background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);cursor:pointer;transition:.3s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center;pointer-events:auto;position:relative;overflow:hidden}
   .nav-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--primary),var(--primary2));opacity:0;transition:.3s}
@@ -158,7 +136,6 @@
   .nav-btn.active{border-color:transparent;box-shadow:0 10px 30px rgba(102,126,234,0.5);transform:translateY(-3px)}
   .nav-btn svg{width:22px;height:22px;position:relative;z-index:1;stroke:var(--text-dim);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:.3s}
   .nav-btn.active svg{stroke:#fff}
-
   .center-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:70vh}
   .spinner{width:90px;height:90px;margin-bottom:24px;position:relative}
   .spinner-ring{position:absolute;inset:0;border-radius:50%;border:4px solid transparent;border-top-color:var(--primary);border-right-color:var(--primary2);animation:spin 1s linear infinite}
@@ -167,24 +144,19 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .processing-text{color:var(--text);font-size:17px;margin-bottom:6px}
   .processing-sub{color:var(--text-muted);font-size:13px}
-
   .check-circle{width:100px;height:100px;margin-bottom:24px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.68,-.55,.27,1.55),pulse 2s .5s infinite}
   @keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.6)}70%{box-shadow:0 0 0 20px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
   .check-svg{width:50px;height:50px;stroke:#fff;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .5s .3s forwards}
   @keyframes draw{to{stroke-dashoffset:0}}
-
   .success-title{color:var(--text);font-size:21px;margin-bottom:8px}
   .success-amount{color:var(--green);font-size:32px;font-weight:700;margin-bottom:24px}
-
   .receipt{width:100%;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:20px;text-align:left}
   .receipt-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px}
   .receipt-row:not(:last-child){border-bottom:1px solid var(--border)}
   .receipt-label{color:var(--text-muted)}
   .receipt-value{color:var(--text);font-weight:500;text-align:right}
-
   .loader{width:40px;height:40px;margin:30px auto;border:4px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite}
-
   .pin-dots{display:flex;justify-content:center;gap:16px;margin:30px 0 40px}
   .pin-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--text-muted);background:transparent;transition:.2s}
   .pin-dot.filled{background:var(--primary);border-color:var(--primary);transform:scale(1.15);box-shadow:0 0 12px rgba(102,126,234,0.6)}
@@ -195,12 +167,9 @@
   .pin-key.empty{background:transparent;border:none;pointer-events:none}
   .pin-key.action{font-size:20px}
   .pin-key.bio{font-size:24px;background:rgba(34,197,94,0.15);border-color:var(--green)}
-
   .pin-title{color:var(--text);font-size:20px;text-align:center;margin-bottom:8px}
   .pin-sub{color:var(--text-dim);font-size:13px;text-align:center;margin-bottom:20px}
   .pin-error{color:var(--red);font-size:13px;text-align:center;min-height:20px;margin-bottom:10px}
-  .pin-info{color:var(--green);font-size:13px;text-align:center;min-height:20px;margin-bottom:10px}
-
   .modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;z-index:9998;opacity:0;pointer-events:none;transition:.25s}
   .modal-overlay.show{opacity:1;pointer-events:auto}
   .modal{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:28px 24px;width:100%;max-width:340px;text-align:center;transform:scale(0.9);transition:.3s cubic-bezier(.4,0,.2,1)}
@@ -211,7 +180,6 @@
   .modal-text{color:var(--text-dim);font-size:13px;margin-bottom:22px;line-height:1.5}
   .modal-buttons{display:flex;gap:10px}
   .modal-buttons .btn{margin-bottom:0;padding:14px;font-size:14px}
-
   .account-choices{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
   .account-choice{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:20px;cursor:pointer;transition:.25s;text-align:left;display:flex;align-items:center;gap:16px}
   .account-choice:hover{background:rgba(102,126,234,0.15);border-color:var(--primary);transform:translateY(-2px)}
@@ -221,7 +189,6 @@
   .account-choice-icon.child{background:linear-gradient(135deg,#f59e0b,#f5576c)}
   .account-choice-title{color:var(--text);font-size:16px;font-weight:600;margin-bottom:4px}
   .account-choice-desc{color:var(--text-dim);font-size:12px;line-height:1.4}
-
   .child-item{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:12px;cursor:pointer;transition:.25s}
   .child-item:hover{background:rgba(128,128,128,0.1);border-color:rgba(102,126,234,0.5)}
   .child-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
@@ -229,46 +196,38 @@
   .child-name{color:var(--text);font-size:15px;font-weight:600}
   .child-phone{color:var(--text-muted);font-size:11px;margin-top:2px}
   .child-balance{color:var(--green);font-size:14px;font-weight:600;margin-left:auto}
-
   .badge-child{display:inline-block;background:linear-gradient(135deg,#f59e0b,#f5576c);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
   .badge-parent{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
   .badge-frozen{display:inline-block;background:linear-gradient(135deg,#3b82f6,#1e40af);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:6px}
-
   .settings-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--card);border-radius:14px;margin-bottom:8px;cursor:pointer;transition:.2s}
   .settings-row:hover{background:rgba(128,128,128,0.12)}
   .settings-row .sr-label{color:var(--text);font-size:14px}
   .settings-row .sr-value{color:var(--text-dim);font-size:13px}
   .settings-row .sr-arrow{color:var(--text-muted);font-size:14px;margin-left:8px}
-
   .switch{position:relative;display:inline-block;width:48px;height:28px;flex-shrink:0}
   .switch input{opacity:0;width:0;height:0}
   .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--border);transition:.3s;border-radius:28px}
   .slider:before{position:absolute;content:"";height:22px;width:22px;left:3px;bottom:3px;background:#fff;transition:.3s;border-radius:50%}
   .switch input:checked + .slider{background:var(--primary)}
   .switch input:checked + .slider:before{transform:translateX(20px)}
-
   .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(34,197,94,0.95);color:#fff;padding:14px 24px;border-radius:30px;font-size:14px;font-weight:500;z-index:99999;transition:.35s cubic-bezier(.4,0,.2,1);box-shadow:0 10px 30px rgba(0,0,0,0.3);opacity:0;max-width:90%;text-align:center}
   .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-
   .chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:20px}
   .donut{width:160px;height:160px;margin:0 auto 16px;position:relative}
   .donut svg{width:100%;height:100%;transform:rotate(-90deg)}
   .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
   .donut-center .dc-val{color:var(--text);font-size:22px;font-weight:700}
   .donut-center .dc-lbl{color:var(--text-muted);font-size:11px}
-
   .legend{display:flex;flex-direction:column;gap:8px}
   .legend-item{display:flex;align-items:center;gap:10px;font-size:13px}
   .legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
   .legend-name{color:var(--text);flex:1}
   .legend-val{color:var(--text-dim);font-weight:500}
-
   .bars{display:flex;align-items:flex-end;gap:6px;height:120px;padding:8px 0}
   .bar{flex:1;background:linear-gradient(to top,var(--primary),var(--primary2));border-radius:6px 6px 2px 2px;min-height:4px;transition:.3s;position:relative}
   .bar:hover{opacity:.8}
   .bars-labels{display:flex;gap:6px;padding-top:6px}
   .bars-labels span{flex:1;text-align:center;color:var(--text-muted);font-size:9px}
-
   .budget-item{background:var(--card);border-radius:14px;padding:14px;margin-bottom:10px}
   .budget-head{display:flex;justify-content:space-between;margin-bottom:8px}
   .budget-name{color:var(--text);font-size:13px;font-weight:600}
@@ -277,11 +236,9 @@
   .budget-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));border-radius:4px;transition:.5s;width:0}
   .budget-fill.warn{background:linear-gradient(90deg,#f59e0b,#ef4444)}
   .budget-fill.danger{background:linear-gradient(90deg,#ef4444,#b91c1c)}
-
   .contact-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--card);border:1px solid var(--border);border-radius:20px;margin:0 6px 8px 0;font-size:12px;color:var(--text);cursor:pointer;transition:.2s}
   .contact-chip:hover{background:rgba(102,126,234,0.2);border-color:var(--primary)}
   .contact-chip .cc-av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center}
-
   .goal-item{background:var(--card);border-radius:14px;padding:14px;margin-bottom:10px;position:relative;overflow:hidden}
   .goal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
   .goal-name{color:var(--text);font-size:14px;font-weight:600}
@@ -289,42 +246,24 @@
   .goal-amounts{color:var(--text-dim);font-size:12px;margin-bottom:8px}
   .goal-bar{height:10px;background:rgba(128,128,128,0.15);border-radius:5px;overflow:hidden}
   .goal-fill{height:100%;background:linear-gradient(90deg,var(--green),#16a34a);border-radius:5px;transition:.5s;width:0}
-
-  .split-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
-  .split-row input{margin-bottom:0}
-  .split-remove{width:36px;height:36px;border-radius:10px;background:rgba(239,68,68,0.15);color:var(--red);border:none;cursor:pointer;font-size:16px;flex-shrink:0}
-
   .qr-code{width:200px;height:200px;margin:0 auto 20px;background:#fff;border-radius:20px;padding:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#666;font-family:monospace;line-height:1.2;word-break:break-all;text-align:center}
   .qr-svg{width:100%;height:100%}
-
   .confetti{position:absolute;width:10px;height:10px;background:#f59e0b;animation:confetti-fall 3s linear forwards;pointer-events:none;z-index:9997}
   @keyframes confetti-fall{0%{transform:translateY(-100px) rotate(0);opacity:1}100%{transform:translateY(900px) rotate(720deg);opacity:0}}
-
   .achievement{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border-radius:14px;margin-bottom:8px;opacity:.5;transition:.3s}
   .achievement.unlocked{opacity:1;background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(239,68,68,0.15));border:1px solid rgba(245,158,11,0.3)}
   .achievement-icon{font-size:28px}
   .achievement-title{color:var(--text);font-size:14px;font-weight:600}
   .achievement-desc{color:var(--text-dim);font-size:11px;margin-top:2px}
-
-  .fab{position:absolute;bottom:calc(90px + env(safe-area-inset-bottom));right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border:none;font-size:24px;box-shadow:0 12px 32px rgba(102,126,234,0.5);cursor:pointer;z-index:99;transition:.25s;display:flex;align-items:center;justify-content:center}
-  .fab:active{transform:scale(0.94)}
-
   .theme-picker{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
   .theme-dot{width:44px;height:44px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:.2s;position:relative}
   .theme-dot.selected{border-color:var(--text)}
   .theme-dot:active{transform:scale(0.94)}
   .theme-dot::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;opacity:0;text-shadow:0 2px 4px rgba(0,0,0,0.4)}
   .theme-dot.selected::after{opacity:1}
-
   .cat-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
   .cat-chip{padding:8px 14px;border-radius:20px;background:var(--card);border:1px solid var(--border);font-size:12px;color:var(--text);cursor:pointer;transition:.2s}
   .cat-chip.selected{background:rgba(102,126,234,0.3);border-color:var(--primary);color:#fff}
-
-  .req-detail{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px}
-  .req-detail:last-child{border-bottom:none}
-  .req-detail .rd-label{color:var(--text-muted)}
-  .req-detail .rd-value{color:var(--text);font-weight:500;font-family:'Courier New',monospace}
-
   @media (max-width:380px){
     .actions{grid-template-columns:repeat(4,1fr)}
     .action-label{font-size:9px}
@@ -790,6 +729,7 @@
     <div class="cat-picker" style="margin-bottom:14px">
       <div class="cat-chip selected" onclick="switchTransferMethod('phone',this)">📞 По телефону</div>
       <div class="cat-chip" onclick="switchTransferMethod('card',this)">💳 По карте</div>
+      <div class="cat-chip" onclick="switchTransferMethod('own',this)">🔁 Между своими</div>
       <div class="cat-chip" onclick="switchTransferMethod('qr',this)">📷 QR-код</div>
     </div>
 
@@ -813,6 +753,13 @@
       <div id="transferFromCards2"></div>
       <div style="color:var(--text-dim);font-size:12px;margin:14px 0 8px">Номер карты получателя:</div>
       <input type="tel" id="transferCardNumber" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric">
+    </div>
+
+    <div id="transferMethod_own" style="display:none">
+      <div style="color:var(--text-dim);font-size:12px;margin-bottom:8px">Списать с карты:</div>
+      <div id="transferOwnFrom"></div>
+      <div style="color:var(--text-dim);font-size:12px;margin:14px 0 8px">Зачислить на карту:</div>
+      <div id="transferOwnTo"></div>
     </div>
 
     <div id="transferMethod_qr" style="display:none;text-align:center">
@@ -1107,6 +1054,8 @@ const state = {
   transferFrom: null,
   transferFrom2: null,
   transferFrom3: null,
+  transferOwnFrom: null,
+  transferOwnTo: null,
   transferRecipient: null,
   transferMethod: 'phone',
   transferComment: '',
@@ -1123,8 +1072,9 @@ const state = {
   lockedUntil: 0,
   loggedIn: false,
   currentCardId: null,
+  currentChildPhone: null,
   lastOperation: null,
-  bioCredential: null
+  children: []
 };
 
 let currentUserRef = null;
@@ -1235,6 +1185,7 @@ function generateCards(phone) {
 /* ==================== PIN PAD ==================== */
 function buildPinPad(containerId, withBio=false) {
   const el = document.getElementById(containerId);
+  if (!el) return;
   const bioKey = withBio ? `<div class="pin-key bio" onclick="tryBiometric()">👆</div>` : `<div class="pin-key empty"></div>`;
   el.innerHTML = `
     <div class="pin-key" onclick="pinInput('1')">1</div>
@@ -1522,12 +1473,14 @@ async function tryBiometric() {
   try {
     const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
     if (!available) { showToast('❌ Биометрия недоступна', true); return; }
-    if (state.bioCredential) {
-      showToast('👆 Подтвердите биометрию на устройстве');
-      setTimeout(() => { state.loggedIn=true; attachUserListeners(); goTo('screenHome'); showToast('✅ Вход выполнен'); startAutoLock(); }, 500);
-    } else {
-      showToast('❌ Биометрия не настроена. Введите PIN.', true);
-    }
+    showToast('👆 Подтвердите биометрию на устройстве');
+    setTimeout(() => {
+      state.loggedIn=true;
+      attachUserListeners();
+      goTo('screenHome');
+      showToast('✅ Вход выполнен');
+      startAutoLock();
+    }, 500);
   } catch(e) { console.error(e); showToast('❌ Ошибка биометрии', true); }
 }
 
@@ -1579,6 +1532,11 @@ function attachUserListeners() {
     if (!state.payCard) state.payCard = state.cards[0]?.id || null;
     if (!state.payCard2) state.payCard2 = state.cards[0]?.id || null;
     if (!state.payCard3) state.payCard3 = state.cards[0]?.id || null;
+    if (!state.transferOwnFrom) state.transferOwnFrom = state.cards[0]?.id || null;
+    if (!state.transferOwnTo) {
+      const other = state.cards.find(c => c.id !== state.transferOwnFrom);
+      state.transferOwnTo = other?.id || null;
+    }
 
     const active = document.querySelector('.screen.active');
     if (!active) return;
@@ -1593,7 +1551,7 @@ function attachUserListeners() {
     if (id==='screenBudgets') renderBudgets();
     if (id==='screenLimits') renderLimits();
     if (id==='screenTopup') renderTopupCards();
-    if (id==='screenTransfer') { renderTransferCards(); renderTransferContacts(); }
+    if (id==='screenTransfer') { renderTransferCards(); renderTransferContacts(); if (state.transferMethod==='own') renderTransferOwnCards(); }
     if (id==='screenPay') renderPayCards();
   });
   historyRef = db.ref('history/'+phone);
@@ -1755,7 +1713,6 @@ function renderAccount() {
     `).join('');
   } else cs.style.display='none';
 
-  // Мои карты (превью)
   document.getElementById('accountCardsList').innerHTML = state.cards.slice(0,3).map(c => `
     <div class="card-select-item" onclick="openCardDetails(${c.id})">
       <div class="ci-icon" style="background:${c.color}"></div>
@@ -1768,7 +1725,6 @@ function renderAccount() {
     </div>
   `).join('');
 
-  // Контакты превью
   const cEl = document.getElementById('accountContactsList');
   if (!state.contacts.length) cEl.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Нет контактов</div>`;
   else cEl.innerHTML = state.contacts.slice(0,5).map(c => `
@@ -1778,7 +1734,6 @@ function renderAccount() {
     </span>
   `).join('');
 
-  // Цели превью
   const gEl = document.getElementById('accountGoalsList');
   if (!state.goals.length) gEl.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Нет целей</div>`;
   else gEl.innerHTML = state.goals.slice(0,3).map(g => `
@@ -1791,7 +1746,6 @@ function renderAccount() {
     </div>
   `).join('');
 
-  // Достижения
   document.getElementById('accountAchievements').innerHTML = ACHIEVEMENTS.map(a => `
     <div class="achievement ${state.achievements[a.id]?'unlocked':''}">
       <div class="achievement-icon">${a.emoji}</div>
@@ -1881,6 +1835,18 @@ function confirmDeleteCard() {
   document.getElementById('gmConfirm').onclick = async () => {
     hideModal('genericModal');
     state.cards = state.cards.filter(x => x.id!==c.id);
+    if (state.transferOwnFrom === c.id) state.transferOwnFrom = state.cards[0]?.id || null;
+    if (state.transferOwnTo === c.id) {
+      const other = state.cards.find(x => x.id !== state.transferOwnFrom);
+      state.transferOwnTo = other?.id || null;
+    }
+    if (state.selectedTopupCard === c.id) state.selectedTopupCard = state.cards[0]?.id || null;
+    if (state.transferFrom === c.id) state.transferFrom = state.cards[0]?.id || null;
+    if (state.transferFrom2 === c.id) state.transferFrom2 = state.cards[0]?.id || null;
+    if (state.transferFrom3 === c.id) state.transferFrom3 = state.cards[0]?.id || null;
+    if (state.payCard === c.id) state.payCard = state.cards[0]?.id || null;
+    if (state.payCard2 === c.id) state.payCard2 = state.cards[0]?.id || null;
+    if (state.payCard3 === c.id) state.payCard3 = state.cards[0]?.id || null;
     await saveCards();
     showToast('🗑 Карта удалена');
     goTo('screenCards');
@@ -2189,7 +2155,6 @@ function renderAnalytics() {
   ops.forEach(t => { byCat[t.category||'other'] = (byCat[t.category||'other']||0) + t.amount; });
   const total = Object.values(byCat).reduce((s,v)=>s+v,0) || 1;
 
-  // Donut
   const segments = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
   let offset = 0;
   const r = 40, c = 2*Math.PI*r;
@@ -2211,7 +2176,6 @@ function renderAnalytics() {
     </div>
   `).join('') || '<div style="color:var(--text-dim);font-size:12px;text-align:center">Нет расходов</div>';
 
-  // Bars
   const daily = {};
   const days = [];
   for (let i=29;i>=0;i--) {
@@ -2230,17 +2194,18 @@ function renderAnalytics() {
   barsChart.innerHTML = days.map(k => `<div class="bar" style="height:${(daily[k]/maxDaily)*100}%" title="${k}: ${fmt(daily[k])} ₽"></div>`).join('');
   barsLabels.innerHTML = days.map((k,i) => i%5===0 ? `<span>${k}</span>` : `<span></span>`).join('');
 
-  // Top merchants
   const merchants = {};
   ops.forEach(t => { if (t.category==='pay') merchants[t.title] = (merchants[t.title]||0)+t.amount; });
   const top = Object.entries(merchants).sort((a,b)=>b[1]-a[1]).slice(0,5);
   document.getElementById('topMerchants').innerHTML = top.length
     ? top.map(([name,val]) => `
-        <div class="child-info-row"><span>${name}</span><span>${fmt(val)} ₽</span></div>
+        <div class="child-info-row" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px">
+          <span style="color:var(--text)">${name}</span>
+          <span style="color:var(--text-dim)">${fmt(val)} ₽</span>
+        </div>
       `).join('')
     : `<div style="color:var(--text-dim);font-size:12px">Пока нет покупок</div>`;
 
-  // Month compare
   const now2 = new Date();
   const curMonth = now2.getMonth(), curYear = now2.getFullYear();
   const prevMonth = curMonth===0?11:curMonth-1;
@@ -2336,14 +2301,16 @@ topupBtn.addEventListener('click', async () => {
 /* ==================== ПЕРЕВОД ==================== */
 function switchTransferMethod(m, el) {
   state.transferMethod = m;
-  document.querySelectorAll('#screenTransfer .cat-chip').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('#screenTransfer > .cat-picker .cat-chip').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
-  ['phone','card','qr'].forEach(x => {
+  ['phone','card','own','qr'].forEach(x => {
     const div = document.getElementById('transferMethod_'+x);
     if (div) div.style.display = x===m?'block':'none';
   });
+  if (m === 'own') renderTransferOwnCards();
   checkTransferForm();
 }
+
 function renderTransferCards() {
   const html = state.cards.map(c => `
     <div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}">
@@ -2358,7 +2325,6 @@ function renderTransferCards() {
   document.getElementById('transferFromCards').innerHTML = html;
   document.getElementById('transferFromCards2').innerHTML = html;
   document.getElementById('transferFromCards3').innerHTML = html;
-  // Привязка кликов
   ['transferFromCards','transferFromCards2','transferFromCards3'].forEach(id => {
     document.getElementById(id).querySelectorAll('.card-select-item').forEach(el => {
       el.onclick = () => {
@@ -2368,10 +2334,10 @@ function renderTransferCards() {
         if (id==='transferFromCards2') { state.transferFrom2=cid; }
         if (id==='transferFromCards3') { state.transferFrom3=cid; }
         renderTransferCards();
+        checkTransferForm();
       };
     });
   });
-  // Подсветка
   ['transferFromCards','transferFromCards2','transferFromCards3'].forEach((id,idx) => {
     const sel = [state.transferFrom, state.transferFrom2, state.transferFrom3][idx];
     document.getElementById(id).querySelectorAll('.card-select-item').forEach(el => {
@@ -2379,6 +2345,63 @@ function renderTransferCards() {
     });
   });
 }
+
+function renderTransferOwnCards() {
+  if (state.transferOwnFrom == null) state.transferOwnFrom = state.cards[0]?.id ?? null;
+  if (state.transferOwnTo == null) {
+    const other = state.cards.find(c => c.id !== state.transferOwnFrom);
+    state.transferOwnTo = other?.id ?? null;
+  }
+
+  const fromEl = document.getElementById('transferOwnFrom');
+  if (!fromEl) return;
+  fromEl.innerHTML = state.cards
+    .filter(c => c.id !== state.transferOwnTo)
+    .map(c => `
+      <div class="card-select-item ${state.transferOwnFrom===c.id?'selected':''} ${c.frozen?'frozen':''}"
+           onclick="${c.frozen?'':`selectTransferOwnFrom(${c.id})`}">
+        <div class="ci-icon" style="background:${c.color}"></div>
+        <div style="flex:1">
+          <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
+          ${c.name?`<div class="ci-name">${c.name}</div>`:''}
+          <div class="ci-bal">${fmt(c.balance)} ₽</div>
+        </div>
+        ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
+      </div>
+    `).join('');
+
+  const toEl = document.getElementById('transferOwnTo');
+  toEl.innerHTML = state.cards
+    .filter(c => c.id !== state.transferOwnFrom)
+    .map(c => `
+      <div class="card-select-item ${state.transferOwnTo===c.id?'selected':''} ${c.frozen?'frozen':''}"
+           onclick="${c.frozen?'':`selectTransferOwnTo(${c.id})`}">
+        <div class="ci-icon" style="background:${c.color}"></div>
+        <div style="flex:1">
+          <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
+          ${c.name?`<div class="ci-name">${c.name}</div>`:''}
+          <div class="ci-bal">${fmt(c.balance)} ₽</div>
+        </div>
+        ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
+      </div>
+    `).join('');
+}
+
+function selectTransferOwnFrom(id) {
+  if (state.transferOwnTo === id) {
+    const other = state.cards.find(c => c.id !== id && !c.frozen);
+    if (other) state.transferOwnTo = other.id;
+  }
+  state.transferOwnFrom = id;
+  renderTransferOwnCards();
+  checkTransferForm();
+}
+function selectTransferOwnTo(id) {
+  state.transferOwnTo = id;
+  renderTransferOwnCards();
+  checkTransferForm();
+}
+
 function renderTransferContacts() {
   const el = document.getElementById('transferContacts');
   if (!state.contacts.length) { el.innerHTML=''; return; }
@@ -2439,15 +2462,75 @@ function checkTransferForm() {
   let from = null;
   if (state.transferMethod==='phone') from = getCard(state.transferFrom);
   if (state.transferMethod==='card') from = getCard(state.transferFrom2);
+  if (state.transferMethod==='own') from = getCard(state.transferOwnFrom);
   if (state.transferMethod==='qr') from = getCard(state.transferFrom3);
   let recipientOk = false;
   if (state.transferMethod==='phone') recipientOk = !!state.transferRecipient;
   if (state.transferMethod==='card') recipientOk = (transferCardNumber.value.replace(/\D/g,'').length===16);
+  if (state.transferMethod==='own') recipientOk = !!(state.transferOwnTo && state.transferOwnFrom && state.transferOwnFrom !== state.transferOwnTo);
   if (state.transferMethod==='qr') recipientOk = true;
   transferBtn.disabled = !(amt>0 && from && !from.frozen && amt<=from.balance && recipientOk);
 }
+
 transferBtn.addEventListener('click', async () => {
   const amt = parseInt(transferAmount.value)||0;
+
+  // === ПЕРЕВОД МЕЖДУ СВОИМИ КАРТАМИ ===
+  if (state.transferMethod === 'own') {
+    const from = getCard(state.transferOwnFrom);
+    const to = getCard(state.transferOwnTo);
+    if (!from || !to || from.id === to.id) return;
+    if (from.frozen || to.frozen) { showToast('❌ Одна из карт заморожена', true); return; }
+    if (amt <= 0 || amt > from.balance) { showToast('❌ Недостаточно средств', true); return; }
+
+    transferBtn.disabled = true;
+    try {
+      from.balance -= amt;
+      to.balance += amt;
+      await saveCards();
+
+      const comment = transferComment.value.trim();
+      const baseTitle = 'Между своими';
+
+      await addHistory({
+        type: 'out',
+        category: 'transfer',
+        title: `${baseTitle}: → ${to.brand} ${maskCard(to.last)}`,
+        amount: amt,
+        date: now(),
+        comment
+      });
+
+      await addHistory({
+        type: 'in',
+        category: 'transfer',
+        title: `${baseTitle}: ← ${from.brand} ${maskCard(from.last)}`,
+        amount: amt,
+        date: now(),
+        comment
+      });
+
+      transferAmount.value = '';
+      transferComment.value = '';
+      state.transferComment = '';
+      transferBtn.disabled = true;
+
+      await checkAchievements();
+      await showProcessingThenSuccess('Перевод выполнен', amt, [
+        { label: 'Откуда', value: `${from.brand} ${maskCard(from.last)}` },
+        { label: 'Куда',   value: `${to.brand} ${maskCard(to.last)}` },
+        { label: 'Сумма',  value: fmt(amt) + ' ₽' },
+        { label: 'Дата',   value: now() }
+      ]);
+    } catch(e) {
+      console.error(e);
+      showToast('❌ Ошибка перевода', true);
+      transferBtn.disabled = false;
+    }
+    return;
+  }
+
+  // === ОСТАЛЬНЫЕ ТИПЫ ПЕРЕВОДА ===
   let from, toPhone, toName;
   if (state.transferMethod==='phone') {
     from = getCard(state.transferFrom);
@@ -2595,6 +2678,7 @@ function renderPayCards() {
         if (id==='payCards2') state.payCard2=cid;
         if (id==='payCards3') state.payCard3=cid;
         renderPayCards();
+        checkPayForm();
       };
     });
   });
@@ -2846,7 +2930,7 @@ async function tryAutoLogin() {
   } catch(e){ console.error(e); goTo('screenPhone'); }
 }
 
-/* ==================== ОБРАБОТКА КНОПОК В МОДАЛКЕ ==================== */
+/* ==================== ОБРАБОТКА ПЕРЕКЛЮЧАТЕЛЕЙ ==================== */
 document.getElementById('autoLockToggle')?.addEventListener('change', async e => {
   state.settings.autoLock = e.target.checked;
   await saveUser();
@@ -2866,7 +2950,7 @@ document.getElementById('childApproveToggle')?.addEventListener('change', async 
   showToast(e.target.checked?'✅ Одобрение вкл':'❌ Одобрение выкл');
 });
 
-/* ==================== ЗАЩИТА КОНТЕКСТНОГО МЕНЮ ==================== */
+/* ==================== ЗАЩИТА ==================== */
 document.addEventListener('contextmenu', e => {
   if (e.target.tagName!=='INPUT' && e.target.tagName!=='TEXTAREA') e.preventDefault();
 });
