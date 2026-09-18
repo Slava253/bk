@@ -7,10 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Мой Банк">
+<meta name="apple-mobile-web-app-title" content="Курсивбанк">
 <meta name="format-detection" content="telephone=no">
-<title>Мой Банк</title>
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23667eea'/%3E%3Ctext x='50' y='68' font-size='54' text-anchor='middle'%3E%F0%9F%92%B3%3C/text%3E%3C/svg%3E">
+<title>Курсивбанк</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23667eea'/%3E%3Ctext x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Georgia,serif' font-style='italic' font-weight='bold'%3EK%3C/text%3E%3C/svg%3E">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
   html,body{height:100%;overflow:hidden;overscroll-behavior:none;position:fixed;width:100%}
@@ -52,8 +52,10 @@
   .btn.small{padding:10px;font-size:13px;margin-bottom:0}
   .back-link{display:block;text-align:center;color:var(--text-muted);font-size:13px;margin-top:8px;cursor:pointer;transition:.2s}
   .back-link:hover{color:var(--text-dim)}
-  .logo{width:64px;height:64px;margin:40px auto 20px;border-radius:20px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 12px 32px rgba(102,126,234,0.4)}
+  .logo{width:80px;height:80px;margin:40px auto 20px;border-radius:22px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 12px 32px rgba(102,126,234,0.4);font-family:Georgia,serif;font-style:italic;font-weight:bold;color:#fff;letter-spacing:-2px}
   .auth-box{text-align:center}
+  .auth-box h1{font-size:26px;letter-spacing:-0.5px}
+  .brand-italic{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:bold}
   .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
   .greeting{color:var(--text-dim);font-size:13px}
   .username{color:var(--text);font-size:18px;font-weight:600;margin-top:2px}
@@ -151,6 +153,7 @@
   .pin-title{color:var(--text);font-size:20px;text-align:center;margin-bottom:8px}
   .pin-sub{color:var(--text-dim);font-size:13px;text-align:center;margin-bottom:20px}
   .pin-error{color:var(--red);font-size:13px;text-align:center;min-height:20px;margin-bottom:10px}
+  .pin-hint{text-align:center;color:var(--text-muted);font-size:11px;margin-top:16px;opacity:.7;display:none}
   .modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;z-index:9998;opacity:0;pointer-events:none;transition:.25s}
   .modal-overlay.show{opacity:1;pointer-events:auto}
   .modal{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:28px 24px;width:100%;max-width:340px;text-align:center;transform:scale(0.9);transition:.3s cubic-bezier(.4,0,.2,1);max-height:80vh;overflow-y:auto}
@@ -243,9 +246,6 @@
   .cat-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
   .cat-chip{padding:8px 14px;border-radius:20px;background:var(--card);border:1px solid var(--border);font-size:12px;color:var(--text);cursor:pointer;transition:.2s}
   .cat-chip.selected{background:rgba(102,126,234,0.3);border-color:var(--primary);color:#fff}
-  .skeleton{background:linear-gradient(90deg,var(--card) 25%,rgba(128,128,128,0.15) 50%,var(--card) 75%);background-size:200% 100%;animation:skeleton 1.5s infinite;border-radius:14px}
-  @keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
-  .skel-item{height:64px;margin-bottom:8px}
   .period-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
   .period-tabs::-webkit-scrollbar{display:none}
   .period-tab{padding:8px 14px;border-radius:16px;background:var(--card);border:1px solid var(--border);font-size:12px;color:var(--text-dim);cursor:pointer;white-space:nowrap;transition:.2s}
@@ -255,7 +255,8 @@
   .avatar-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;max-height:180px;overflow-y:auto;padding:8px;background:var(--card);border-radius:14px}
   .avatar-emoji{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:.2s}
   .avatar-emoji.selected{border-color:var(--primary);background:rgba(102,126,234,0.2)}
-  .big-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto}
+  .big-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto;cursor:pointer;transition:.25s}
+  .big-avatar:active{transform:scale(0.94)}
   .fab{position:absolute;bottom:calc(90px + env(safe-area-inset-bottom));right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border:none;font-size:24px;box-shadow:0 12px 32px rgba(102,126,234,0.5);cursor:pointer;z-index:99;transition:.25s;display:flex;align-items:center;justify-content:center}
   .fab:active{transform:scale(0.94)}
   @media (max-width:380px){
@@ -268,13 +269,36 @@
   .pulse-notification-icon{font-size:22px;flex-shrink:0}
   .pulse-notification-text{flex:1;font-size:13px;line-height:1.4}
   .pulse-notification-title{font-weight:600;margin-bottom:2px}
+  .device-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(102,126,234,0.15);color:#a5b4fc;font-size:11px;padding:4px 10px;border-radius:12px;margin-top:6px}
+  @media (hover: hover) and (pointer: fine) {
+    .pin-key {
+      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+    }
+    .pin-key:hover {
+      background: rgba(102,126,234,0.15);
+      box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+    }
+    .pin-key:active {
+      transform: scale(0.92);
+    }
+    .pin-dot.filled {
+      transform: scale(1.2);
+    }
+  }
+  @media (hover: none) {
+    .btn:hover { transform: none; box-shadow: 0 8px 24px rgba(102,126,234,0.3); }
+    .action-btn:hover { transform: none; background: var(--card); border-color: var(--border); }
+    .card-select-item:hover { background: var(--card); }
+    .tx-item:hover { background: var(--card); }
+    .nav-btn:hover svg { stroke: var(--text-dim); }
+    .nav-btn.active:hover svg { stroke: #fff; }
+  }
 </style>
 </head>
 <body>
 
 <div class="app" id="app">
 
-  <!-- Уведомление в приложении -->
   <div class="pulse-notification" id="pulseNotification">
     <div class="pulse-notification-icon" id="pnIcon">🔔</div>
     <div class="pulse-notification-text">
@@ -294,8 +318,8 @@
   <!-- ТЕЛЕФОН -->
   <div class="screen" id="screenPhone">
     <div class="auth-box">
-      <div class="logo">💳</div>
-      <h1>Мой Банк</h1>
+      <div class="logo">К</div>
+      <h1><span class="brand-italic">Курсивбанк</span></h1>
       <p class="sub">Введите номер телефона</p>
       <input type="tel" id="phoneInput" placeholder="+7 900 000-00-00" style="text-align:center;font-size:18px">
       <button class="btn" id="phoneBtn" disabled>Продолжить</button>
@@ -363,6 +387,7 @@
       <div class="pin-dot" data-i="3"></div>
     </div>
     <div class="pin-pad" id="createPinPad"></div>
+    <p class="pin-hint" id="pinHint_createPin">💡 На ПК можно вводить цифрами с клавиатуры</p>
   </div>
 
   <!-- ВВОД PIN -->
@@ -377,6 +402,7 @@
       <div class="pin-dot" data-i="3"></div>
     </div>
     <div class="pin-pad" id="enterPinPad"></div>
+    <p class="pin-hint" id="pinHint_enterPin">💡 На ПК можно вводить цифрами с клавиатуры</p>
     <p class="back-link" onclick="pinLogout()" style="margin-top:24px">Войти с другого номера</p>
   </div>
 
@@ -466,6 +492,7 @@
       <div style="color:var(--text);font-size:18px;font-weight:600;margin-top:12px" id="accountName">—</div>
       <div style="color:var(--text-dim);font-size:13px;margin-top:4px" id="accountPhone">—</div>
       <div style="margin-top:10px" id="accountBadges"></div>
+      <div id="accountDevice"></div>
     </div>
 
     <div id="childrenSection" style="display:none">
@@ -1023,6 +1050,7 @@
       <div class="pin-dot" data-i="3"></div>
     </div>
     <div class="pin-pad" id="changePinPad"></div>
+    <p class="pin-hint" id="pinHint_changePin">💡 На ПК можно вводить цифрами с клавиатуры</p>
   </div>
 
   <!-- ИСТОРИЯ ВХОДОВ -->
@@ -1114,14 +1142,15 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+const BANK_NAME = 'Курсивбанк';
+
 /* ==================== КОНСТАНТЫ ==================== */
 const CATEGORIES = {
   food:{name:'Еда',emoji:'🍔',color:'#ef4444'}, transport:{name:'Транспорт',emoji:'🚕',color:'#f59e0b'},
   fun:{name:'Развлечения',emoji:'🎮',color:'#8b5cf6'}, shopping:{name:'Покупки',emoji:'🛍',color:'#ec4899'},
   health:{name:'Здоровье',emoji:'💊',color:'#22c55e'}, other:{name:'Другое',emoji:'📦',color:'#6b7280'},
   topup:{name:'Пополнение',emoji:'➕',color:'#22c55e'}, transfer:{name:'Перевод',emoji:'🔄',color:'#3b82f6'},
-  savings:{name:'Накопления',emoji:'💰',color:'#f59e0b'}, reserve:{name:'Резерв',emoji:'🛡',color:'#0ea5e9'},
-  shopping_card:{name:'Для покупок',emoji:'🛒',color:'#ec4899'}
+  savings:{name:'Накопления',emoji:'💰',color:'#f59e0b'}, reserve:{name:'Резерв',emoji:'🛡',color:'#0ea5e9'}
 };
 
 const ACHIEVEMENTS = [
@@ -1138,7 +1167,6 @@ const ACHIEVEMENTS = [
 ];
 
 const AVATAR_EMOJIS = ['👤','👨','👩','🧑','👦','👧','👴','👵','🧔','👱‍♀️','👨‍💼','👩‍💼','🦸','🧙','🐱','🐶','🐼','🦊','🐨','🐯','🦁','🐸','🐧','🦄','😎','🤓','🥳','😇','🤖','👽'];
-
 const MAX_PIN_ATTEMPTS = 3;
 const LOCK_DURATION_MS = 60 * 1000;
 const AUTO_LOCK_MS = 2 * 60 * 1000;
@@ -1158,8 +1186,9 @@ const state = {
   historyPeriod:'all', analyticsPeriod:'month', selectedAvatar:'👤'
 };
 
-let currentUserRef=null, historyRef=null, childrenRef=null, autotransfersRef=null;
+let currentUserRef=null, historyRef=null, childrenRef=null;
 let autoLockTimer=null, requisitesTimer=null, roundupTarget=0;
+let userDataLoaded = false;
 
 /* ==================== УТИЛИТЫ ==================== */
 const screens = ['screenLoading','screenPhone','screenAccountType','screenRegister',
@@ -1197,8 +1226,11 @@ function goTo(id) {
   if (id==='screenChangePin') { state.pinMode='changeOld'; resetPin(); updateChangePinStep(); }
   if (id==='screenMyQr') renderMyQr();
   if (id==='screenLoginHistory') renderLoginHistory();
-  // Save current screen
-  try { localStorage.setItem('bank_current_screen', id); } catch(e){}
+  updatePinHints();
+  if (id === 'screenPhone' && detectDevice().type === 'desktop') {
+    const inp = document.getElementById('phoneInput');
+    if (inp) setTimeout(() => inp.focus(), 100);
+  }
 }
 function navTo(id){ goTo(id); }
 function fmt(n){ return (n||0).toLocaleString('ru-RU'); }
@@ -1271,6 +1303,57 @@ function generateCards(phone){
   ];
 }
 
+/* ==================== ОПРЕДЕЛЕНИЕ УСТРОЙСТВА ==================== */
+function detectDevice() {
+  const ua = navigator.userAgent || '';
+  const maxTouchPoints = navigator.maxTouchPoints || 0;
+  const isTouch = maxTouchPoints > 0;
+  const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(ua);
+  const isTabletUA = /iPad|Tablet|PlayBook|Silk|Android(?!.*Mobile)/i.test(ua);
+  const isIPad = /Macintosh/i.test(ua) && isTouch;
+  
+  let type = 'desktop';
+  let os = 'Unknown';
+  let browser = 'Unknown';
+  
+  if (isIPad || isTabletUA) type = 'tablet';
+  else if (isMobileUA) type = 'mobile';
+  else if (isTouch && window.innerWidth < 1024) type = 'tablet';
+  else type = 'desktop';
+  
+  if (/Windows/i.test(ua)) os = 'Windows';
+  else if (/Mac OS X/i.test(ua) || /Macintosh/i.test(ua)) os = 'macOS';
+  else if (/Android/i.test(ua)) os = 'Android';
+  else if (/iPhone|iPad|iPod/i.test(ua)) os = 'iOS';
+  else if (/Linux/i.test(ua)) os = 'Linux';
+  
+  if (/Edg\//i.test(ua)) browser = 'Edge';
+  else if (/YaBrowser/i.test(ua)) browser = 'Yandex';
+  else if (/OPR\//i.test(ua) || /Opera/i.test(ua)) browser = 'Opera';
+  else if (/Chrome\//i.test(ua)) browser = 'Chrome';
+  else if (/Firefox\//i.test(ua)) browser = 'Firefox';
+  else if (/Safari\//i.test(ua)) browser = 'Safari';
+  
+  const emoji = { desktop:'🖥', mobile:'📱', tablet:'📲' }[type];
+  const name = { desktop:'Компьютер', mobile:'Телефон', tablet:'Планшет' }[type];
+  
+  return { type, name, emoji, os, browser, isTouch };
+}
+
+function updatePinHints() {
+  const isPC = detectDevice().type === 'desktop';
+  ['pinHint_createPin','pinHint_enterPin','pinHint_changePin'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = isPC ? 'block' : 'none';
+  });
+}
+
+function applyDeviceClass() {
+  const device = detectDevice();
+  document.body.classList.remove('device-desktop', 'device-mobile', 'device-tablet');
+  document.body.classList.add('device-' + device.type);
+}
+
 /* ==================== ЗВУКИ ==================== */
 let audioCtx = null;
 function playSound(type) {
@@ -1286,22 +1369,19 @@ function playSound(type) {
       osc.frequency.setValueAtTime(1100, audioCtx.currentTime + 0.1);
       gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-      osc.start(audioCtx.currentTime);
-      osc.stop(audioCtx.currentTime + 0.3);
+      osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.3);
     } else if (type === 'success') {
       osc.frequency.setValueAtTime(660, audioCtx.currentTime);
       osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
       osc.frequency.setValueAtTime(1100, audioCtx.currentTime + 0.2);
       gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-      osc.start(audioCtx.currentTime);
-      osc.stop(audioCtx.currentTime + 0.4);
+      osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.4);
     } else if (type === 'click') {
       osc.frequency.setValueAtTime(400, audioCtx.currentTime);
       gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-      osc.start(audioCtx.currentTime);
-      osc.stop(audioCtx.currentTime + 0.05);
+      osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.05);
     }
   } catch(e) {}
 }
@@ -1589,6 +1669,55 @@ function pinLogout(){
   goTo('screenPhone');
 }
 
+/* ==================== ВВОД PIN С КЛАВИАТУРЫ ПК ==================== */
+document.addEventListener('keydown', (e) => {
+  const activeScreen = document.querySelector('.screen.active');
+  if (!activeScreen) return;
+  
+  // Обработка Enter на форме телефона и регистрации
+  if (e.key === 'Enter') {
+    if (activeScreen.id === 'screenPhone' && !phoneBtn.disabled) {
+      e.preventDefault(); phoneBtn.click(); return;
+    }
+    if (activeScreen.id === 'screenRegister' && !registerBtn.disabled) {
+      e.preventDefault(); registerBtn.click(); return;
+    }
+  }
+  
+  const pinScreens = ['screenCreatePin', 'screenEnterPin', 'screenChangePin'];
+  if (!pinScreens.includes(activeScreen.id)) return;
+  
+  // Цифры 0-9
+  if ((e.key >= '0' && e.key <= '9') ||
+      (e.code && e.code.startsWith('Numpad') && e.key >= '0' && e.key <= '9')) {
+    e.preventDefault();
+    pinInput(e.key);
+    return;
+  }
+  
+  // Backspace — удалить
+  if (e.key === 'Backspace') {
+    e.preventDefault();
+    pinBackspace();
+    return;
+  }
+  
+  // Delete / Escape — очистить всё
+  if (e.key === 'Delete' || e.key === 'Escape') {
+    e.preventDefault();
+    state.pinBuffer = '';
+    updatePinDots();
+    return;
+  }
+  
+  // Enter — подтвердить если 4 цифры
+  if (e.key === 'Enter' && state.pinBuffer.length === 4) {
+    e.preventDefault();
+    handlePinComplete();
+    return;
+  }
+});
+
 /* ==================== БИОМЕТРИЯ ==================== */
 async function tryBiometric(){
   if (!window.PublicKeyCredential) { showToast('❌ Биометрия не поддерживается', true); return; }
@@ -1599,6 +1728,7 @@ async function tryBiometric(){
     setTimeout(()=>{
       state.loggedIn=true;
       attachUserListeners();
+      logLogin();
       goTo('screenHome');
       showToast('✅ Вход выполнен');
       startAutoLock();
@@ -1627,6 +1757,7 @@ document.addEventListener('visibilitychange', ()=>{
 /* ==================== ПОДПИСКИ ==================== */
 function attachUserListeners() {
   detachUserListeners();
+  userDataLoaded = false;
   const phone = state.user.phone;
   currentUserRef = db.ref('users/'+phone);
   currentUserRef.on('value', snap => {
@@ -1648,6 +1779,7 @@ function attachUserListeners() {
     state.loginHistory = data.loginHistory || [];
     state.settings = { ...state.settings, ...(data.settings||{}) };
     state.lastOperation = data.lastOperation || null;
+    userDataLoaded = true;
     applySettings();
 
     if (!state.selectedTopupCard) state.selectedTopupCard = state.cards[0]?.id || null;
@@ -1685,7 +1817,6 @@ function attachUserListeners() {
     const prevLen = state.history.length;
     const data = snap.val() || {};
     state.history = Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-    // Проверка новых входящих переводов
     if (prevLen > 0 && state.history.length > prevLen) {
       const newTx = state.history[0];
       if (newTx.type === 'in') {
@@ -1711,13 +1842,27 @@ function detachUserListeners(){
 }
 async function saveCards(){ await db.ref('users/'+state.user.phone+'/cards').set(state.cards); }
 async function saveUser(){
-  await db.ref('users/'+state.user.phone).update({
-    contacts: state.contacts, goals: state.goals, budgets: state.budgets,
-    achievements: state.achievements, settings: state.settings,
-    autotransfers: state.autotransfers, loginHistory: state.loginHistory,
-    lastOperation: state.lastOperation, avatar: state.user.avatar
-  });
+  if (!userDataLoaded) return;
+  const ref = db.ref('users/'+state.user.phone);
+  const updates = { settings: state.settings, avatar: state.user.avatar };
+  if (state.lastOperation) updates.lastOperation = state.lastOperation;
+  const snap = await ref.once('value');
+  const dbData = snap.val() || {};
+  if ((state.contacts||[]).length > 0 || (dbData.contacts||[]).length === 0) updates.contacts = state.contacts || [];
+  if ((state.goals||[]).length > 0 || (dbData.goals||[]).length === 0) updates.goals = state.goals || [];
+  if ((state.budgets||[]).length > 0 || (dbData.budgets||[]).length === 0) updates.budgets = state.budgets || [];
+  if ((state.autotransfers||[]).length > 0 || (dbData.autotransfers||[]).length === 0) updates.autotransfers = state.autotransfers || [];
+  if ((state.loginHistory||[]).length > 0 || (dbData.loginHistory||[]).length === 0) updates.loginHistory = state.loginHistory || [];
+  if (Object.keys(state.achievements||{}).length > 0 || Object.keys(dbData.achievements||{}).length === 0) updates.achievements = state.achievements || {};
+  await ref.update(updates);
 }
+async function saveContacts(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/contacts').set(state.contacts || []); }
+async function saveGoals(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/goals').set(state.goals || []); }
+async function saveBudgets(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/budgets').set(state.budgets || []); }
+async function saveAutotransfers(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/autotransfers').set(state.autotransfers || []); }
+async function saveLoginHistory(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/loginHistory').set(state.loginHistory || []); }
+async function saveAchievements(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/achievements').set(state.achievements || {}); }
+
 async function addHistory(tx){
   const ref = db.ref('history/'+state.user.phone).push();
   await ref.set({ ...tx, createdAt: firebase.database.ServerValue.TIMESTAMP });
@@ -1740,21 +1885,35 @@ function applySettings(){
 
 /* ==================== ЛОГ ВХОДОВ ==================== */
 async function logLogin() {
-  const entry = { date: nowFull(), device: navigator.userAgent.substring(0, 60) };
+  const device = detectDevice();
+  const entry = {
+    date: nowFull(),
+    device: `${device.emoji} ${device.name} • ${device.os} • ${device.browser}`,
+    type: device.type
+  };
   state.loginHistory.unshift(entry);
   if (state.loginHistory.length > 20) state.loginHistory = state.loginHistory.slice(0, 20);
-  await saveUser();
+  await saveLoginHistory();
 }
 function showLoginHistory() { goTo('screenLoginHistory'); }
 function renderLoginHistory() {
   const el = document.getElementById('loginHistoryList');
-  if (!state.loginHistory.length) { el.innerHTML = '<div class="empty">Пусто</div>'; return; }
-  el.innerHTML = state.loginHistory.map(h => `
-    <div style="background:var(--card);border-radius:14px;padding:14px;margin-bottom:8px">
-      <div style="color:var(--text);font-size:14px;font-weight:500">${h.date}</div>
-      <div style="color:var(--text-muted);font-size:11px;margin-top:4px;word-break:break-all">${h.device||'Устройство'}</div>
-    </div>
-  `).join('');
+  if (!state.loginHistory.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">📜</div>Пока нет входов</div>`;
+    return;
+  }
+  el.innerHTML = state.loginHistory.map((h, i) => {
+    const isCurrent = i === 0;
+    return `
+      <div style="background:var(--card);border-radius:14px;padding:14px;margin-bottom:8px;${isCurrent ? 'border:1px solid var(--primary);' : ''}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <div style="color:var(--text);font-size:14px;font-weight:500">${h.device || 'Устройство'}</div>
+          ${isCurrent ? '<span style="font-size:10px;color:var(--primary);background:rgba(102,126,234,0.15);padding:2px 8px;border-radius:10px">Сейчас</span>' : ''}
+        </div>
+        <div style="color:var(--text-muted);font-size:11px">${h.date}</div>
+      </div>
+    `;
+  }).join('');
 }
 
 /* ==================== ПРИВАТНОСТЬ ==================== */
@@ -1784,7 +1943,6 @@ function renderHome(){
   if (state.settings.private) {
     el.innerHTML = '•••• <span>₽</span>';
   } else {
-    // Анимация появления цифр
     animateBalance(el, total);
   }
   document.getElementById('mainCardNum').textContent = state.cards[0] ? maskCard(state.cards[0].last) : '•••• ----';
@@ -1887,12 +2045,10 @@ function initSwipe() {
     const dx = parseFloat((transform.match(/-?\d+/) || [0])[0]);
     const id = item.dataset.txid;
     if (dx > 60) {
-      // Swipe right - повторить
       content.style.transform = 'translateX(0)';
       window._txSwiped = true;
       repeatTx(id);
     } else if (dx < -60) {
-      // Swipe left - удалить
       content.style.transform = 'translateX(0)';
       window._txSwiped = true;
       confirmDeleteTx(id);
@@ -1935,18 +2091,10 @@ function filterByPeriod(items, period) {
       return d.toDateString() === new Date().toDateString();
     });
   }
-  if (period === 'week') {
-    return items.filter(t => (t.createdAt||0) >= now - 7*24*60*60*1000);
-  }
-  if (period === 'month') {
-    return items.filter(t => (t.createdAt||0) >= now - 30*24*60*60*1000);
-  }
-  if (period === 'quarter') {
-    return items.filter(t => (t.createdAt||0) >= now - 90*24*60*60*1000);
-  }
-  if (period === 'year') {
-    return items.filter(t => (t.createdAt||0) >= now - 365*24*60*60*1000);
-  }
+  if (period === 'week') return items.filter(t => (t.createdAt||0) >= now - 7*24*60*60*1000);
+  if (period === 'month') return items.filter(t => (t.createdAt||0) >= now - 30*24*60*60*1000);
+  if (period === 'quarter') return items.filter(t => (t.createdAt||0) >= now - 90*24*60*60*1000);
+  if (period === 'year') return items.filter(t => (t.createdAt||0) >= now - 365*24*60*60*1000);
   if (period === 'custom') {
     const from = document.getElementById('dateFrom').value;
     const to = document.getElementById('dateTo').value;
@@ -2005,6 +2153,17 @@ function renderAccount(){
     if (u.parentName) badges += `<div style="color:var(--text-dim);font-size:11px;margin-top:8px">Родитель: ${u.parentName}</div>`;
   } else badges += '<span class="badge-parent">👤 Взрослый</span>';
   document.getElementById('accountBadges').innerHTML = badges;
+
+  const device = detectDevice();
+  const deviceRow = document.getElementById('accountDevice');
+  if (deviceRow) {
+    deviceRow.innerHTML = `
+      <div style="color:var(--text-dim);font-size:11px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+        ${device.emoji} Текущее устройство: <b style="color:var(--text)">${device.name}</b><br>
+        <span style="opacity:0.7">${device.os} • ${device.browser}</span>
+      </div>
+    `;
+  }
 
   const cs = document.getElementById('childrenSection');
   const cl = document.getElementById('childrenList');
@@ -2164,7 +2323,7 @@ async function copyCardRequisites() {
   const c = getCard(state.currentCardId);
   if (!c) return;
   const num = '4276 '+String(Math.floor(1000+Math.random()*9000))+' '+String(Math.floor(1000+Math.random()*9000))+' '+c.last;
-  const text = `${num}\n${c.expiry||'12/27'}\nCVV: ${c.cvv||'123'}`;
+  const text = `${BANK_NAME}\n${num}\n${c.expiry||'12/27'}\nCVV: ${c.cvv||'123'}`;
   try {
     await navigator.clipboard.writeText(text);
     showToast('📋 Реквизиты скопированы');
@@ -2268,7 +2427,7 @@ function renderContacts(){
 }
 async function removeContact(phone){
   state.contacts = state.contacts.filter(c => c.phone !== phone);
-  await saveUser();
+  await saveContacts();
   renderContacts();
   showToast('🗑 Удалено');
 }
@@ -2290,7 +2449,7 @@ function openAddContact(){
       const data = snap.val();
       if (!data || !data.firstName) { showToast('❌ Пользователь не найден', true); return; }
       state.contacts.push({ phone, firstName:data.firstName, lastName:data.lastName||'' });
-      await saveUser();
+      await saveContacts();
       hideModal('genericModal');
       renderContacts();
       showToast('✅ Контакт добавлен');
@@ -2349,7 +2508,7 @@ function openAddGoal(){
     const emoji = document.querySelector('#gmExtra .cat-chip.selected')?.dataset.emoji || '🎯';
     if (!name || !target) { showToast('❌ Заполните поля', true); return; }
     state.goals.push({ name, target, current:0, emoji });
-    await saveUser();
+    await saveGoals();
     hideModal('genericModal');
     renderGoals();
     showToast('🎯 Цель создана');
@@ -2374,11 +2533,11 @@ async function addToGoal(i){
     if (!card || card.balance < amt) { showToast('❌ Недостаточно средств', true); return; }
     card.balance -= amt;
     g.current = (g.current||0) + amt;
-    await saveCards(); await saveUser();
+    await saveCards(); await saveGoals();
     await addHistory({ type:'out', category:'savings', title:'Пополнение цели "'+g.name+'"', amount:amt, date:now() });
     if (g.current >= g.target && !state.achievements.goal_reach) {
       state.achievements.goal_reach = Date.now();
-      await saveUser();
+      await saveAchievements();
       showConfetti();
       await unlockAchievement('goal_reach');
     }
@@ -2387,7 +2546,7 @@ async function addToGoal(i){
     showToast('✅ Цель пополнена');
   };
 }
-async function deleteGoal(i){ state.goals.splice(i,1); await saveUser(); renderGoals(); showToast('🗑 Удалено'); }
+async function deleteGoal(i){ state.goals.splice(i,1); await saveGoals(); renderGoals(); showToast('🗑 Удалено'); }
 
 /* ==================== БЮДЖЕТЫ ==================== */
 function renderBudgets(){
@@ -2435,13 +2594,13 @@ function openAddBudget(){
     if (!limit) { showToast('❌ Введите лимит', true); return; }
     if (state.budgets.some(b => b.category===category)) { showToast('❌ Уже есть', true); return; }
     state.budgets.push({ category, limit });
-    await saveUser();
+    await saveBudgets();
     hideModal('genericModal');
     renderBudgets();
     showToast('💰 Бюджет создан');
   };
 }
-async function deleteBudget(i){ state.budgets.splice(i,1); await saveUser(); renderBudgets(); showToast('🗑 Удалено'); }
+async function deleteBudget(i){ state.budgets.splice(i,1); await saveBudgets(); renderBudgets(); showToast('🗑 Удалено'); }
 
 /* ==================== ЛИМИТЫ ==================== */
 function renderLimits(){
@@ -2526,14 +2685,14 @@ function openAddAutotransfer() {
     if (fromId === toId) { showToast('❌ Выберите разные карты', true); return; }
     if (amount <= 0) { showToast('❌ Введите сумму', true); return; }
     state.autotransfers.push({ fromId, toId, amount, day });
-    await saveUser();
+    await saveAutotransfers();
     hideModal('genericModal');
     renderAutotransfers();
     renderAccount();
     showToast('🔁 Автоперевод создан');
   };
 }
-async function deleteAutotransfer(i){ state.autotransfers.splice(i,1); await saveUser(); renderAutotransfers(); showToast('🗑 Удалено'); }
+async function deleteAutotransfer(i){ state.autotransfers.splice(i,1); await saveAutotransfers(); renderAutotransfers(); showToast('🗑 Удалено'); }
 async function checkAutotransfers() {
   const today = new Date();
   const day = today.getDate();
@@ -2554,7 +2713,7 @@ async function checkAutotransfers() {
   }
   if (changed) {
     await saveCards();
-    await saveUser();
+    await saveAutotransfers();
     showPulseNotification('🔁 Автоперевод', 'Ежемесячный перевод выполнен', '🔁');
   }
 }
@@ -2625,7 +2784,6 @@ function renderAnalytics(){
 
   const daily = {};
   const daysArr = [];
-  const barsCount = period === 'year' ? 12 : 30;
   if (period === 'year') {
     for (let i=11;i>=0;i--) {
       const d = new Date();
@@ -2639,7 +2797,7 @@ function renderAnalytics(){
       if (daily[key]!==undefined) daily[key] += t.amount;
     });
   } else {
-    for (let i=daysArr.length||29;i>=0;i--) {
+    for (let i=29;i>=0;i--) {
       const d = new Date(Date.now()-i*24*60*60*1000);
       const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0');
       daily[key] = 0; daysArr.push(key);
@@ -2687,7 +2845,6 @@ function renderAnalytics(){
     ${prevSpent?(diff>0?`<span style="color:var(--red)">▲ +${diff.toFixed(1)}%</span> больше`:`<span style="color:var(--green)">▼ ${diff.toFixed(1)}%</span> меньше`):'—'}
   `;
 
-  // Прогноз
   const daysInMonth = new Date(curYear, curMonth+1, 0).getDate();
   const daysPassed = new Date().getDate();
   const avgPerDay = daysPassed > 0 ? curSpent / daysPassed : 0;
@@ -2697,25 +2854,16 @@ function renderAnalytics(){
     Прогноз на конец месяца: <b style="color:${forecast > state.settings.dailyLimit*30 ? 'var(--red)' : 'var(--green)'}">${fmt(Math.round(forecast))} ₽</b>
   `;
 
-  // Советы
   const advices = [];
   if (segments.length) {
     const topCat = segments[0];
     advices.push(`💡 Больше всего вы тратите на <b style="color:var(--text)">${(CATEGORIES[topCat[0]]||CATEGORIES.other).name}</b> — ${fmt(topCat[1])} ₽`);
   }
-  if (prevSpent && curSpent > prevSpent * 1.2) {
-    advices.push('⚠️ В этом месяце вы тратите на 20%+ больше, чем в прошлом');
-  }
-  if (prevSpent && curSpent < prevSpent * 0.8) {
-    advices.push('🎉 Отлично! Вы тратите значительно меньше, чем в прошлом месяце');
-  }
-  if (avgPerDay * 30 > state.settings.dailyLimit * 30) {
-    advices.push('⚠️ Прогноз превышает ваш лимит — сократите расходы');
-  }
+  if (prevSpent && curSpent > prevSpent * 1.2) advices.push('⚠️ В этом месяце вы тратите на 20%+ больше, чем в прошлом');
+  if (prevSpent && curSpent < prevSpent * 0.8) advices.push('🎉 Отлично! Вы тратите значительно меньше, чем в прошлом месяце');
+  if (avgPerDay * 30 > state.settings.dailyLimit * 30) advices.push('⚠️ Прогноз превышает ваш лимит — сократите расходы');
   const savings = state.goals.reduce((s,g)=>s+(g.current||0),0);
-  if (savings > 0) {
-    advices.push(`💰 Вы накопили ${fmt(savings)} ₽ в целях — так держать!`);
-  }
+  if (savings > 0) advices.push(`💰 Вы накопили ${fmt(savings)} ₽ в целях — так держать!`);
   if (!advices.length) advices.push('Пока нет данных для советов');
   document.getElementById('advices').innerHTML = advices.map(a => `<div style="margin-bottom:8px">${a}</div>`).join('');
 }
@@ -2737,7 +2885,7 @@ function showConfetti(){
 async function unlockAchievement(id){
   if (state.achievements[id]) return;
   state.achievements[id] = Date.now();
-  await saveUser();
+  await saveAchievements();
   const a = ACHIEVEMENTS.find(x=>x.id===id);
   if (a) { showToast(`${a.emoji} Достижение: ${a.title}`); showConfetti(); playSound('success'); }
 }
@@ -3179,17 +3327,13 @@ payBtn.addEventListener('click', async () => {
     card.balance -= amt;
     await saveCards();
     await addHistory({ type:'out', category:state.payCategory, title:m, amount:amt, date:now() });
-    // Round-up
     if (state.settings.roundup && roundupTarget > 0) {
       const rounded = Math.ceil(amt/10)*10;
       const diff = rounded - amt;
       if (diff > 0 && diff <= 10 && card.balance >= diff) {
         card.balance -= diff;
         const goal = state.goals[roundupTarget - 1];
-        if (goal) {
-          goal.current = (goal.current||0) + diff;
-          await saveUser();
-        }
+        if (goal) { goal.current = (goal.current||0) + diff; await saveGoals(); }
       }
     }
     state.lastOperation = { type:'pay', amount:amt, merchant:m, category:state.payCategory, cardId:card.id };
@@ -3244,7 +3388,7 @@ function renderMyQr() {
   const container = document.getElementById('myQrCanvas');
   container.innerHTML = '';
   const phone = normalizePhone(state.user.phone);
-  const data = `bank:${phone}`;
+  const data = `kursivbank:${phone}`;
   try {
     const canvas = document.createElement('canvas');
     QRCode.toCanvas(canvas, data, { width: 260, margin: 1 }, function(err) {
@@ -3257,9 +3401,9 @@ function renderMyQr() {
 }
 async function shareQr() {
   const phone = formatPhone(state.user.phone);
-  const text = `Мой номер для переводов: ${phone}`;
+  const text = `Мой номер для переводов в ${BANK_NAME}: ${phone}`;
   if (navigator.share) {
-    try { await navigator.share({ title: 'Мой номер', text }); } catch(e){}
+    try { await navigator.share({ title: BANK_NAME, text }); } catch(e){}
   } else {
     try { await navigator.clipboard.writeText(text); showToast('📋 Скопировано'); } catch(e){ showToast('❌ Ошибка', true); }
   }
@@ -3391,6 +3535,7 @@ function confirmLogout(){
   hideLogoutConfirm();
   localStorage.removeItem('bank_phone');
   state.loggedIn=false; state.savedPin=null; state.pinBuffer='';
+  userDataLoaded = false;
   detachUserListeners();
   phoneInput.value=''; phoneBtn.disabled=true;
   goTo('screenPhone');
@@ -3457,9 +3602,14 @@ document.getElementById('childApproveToggle')?.addEventListener('change', async 
 document.addEventListener('contextmenu', e=>{
   if (e.target.tagName!=='INPUT' && e.target.tagName!=='TEXTAREA') e.preventDefault();
 });
-window.addEventListener('load', () => setTimeout(()=>window.scrollTo(0,1), 100));
-
-// Следим за системной темой
+window.addEventListener('load', () => {
+  applyDeviceClass();
+  setTimeout(()=>window.scrollTo(0,1), 100);
+});
+window.addEventListener('resize', () => {
+  applyDeviceClass();
+  updatePinHints();
+});
 window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
   if (state.settings.mode === 'auto') applySettings();
 });
@@ -3470,16 +3620,12 @@ buildPinPad('enterPinPad', true);
 buildPinPad('changePinPad');
 initSwipe();
 
-// Round-up target - первая цель
 setInterval(() => {
   if (state.goals.length && state.settings.roundup) roundupTarget = 1;
 }, 1000);
 
-// Проверка автопереводов и карманных денег при входе
 setTimeout(() => {
-  if (state.loggedIn) {
-    checkAutotransfers();
-  }
+  if (state.loggedIn) checkAutotransfers();
 }, 5000);
 
 tryAutoLogin();
