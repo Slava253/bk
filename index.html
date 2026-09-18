@@ -225,6 +225,7 @@
   .account-choice-icon{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
   .account-choice-icon.adult{background:linear-gradient(135deg,var(--primary),var(--primary2))}
   .account-choice-icon.child{background:linear-gradient(135deg,#f59e0b,#f5576c)}
+  .account-choice-icon.admin{background:linear-gradient(135deg,#dc2626,#7f1d1d)}
   .account-choice-title{color:var(--text);font-size:16px;font-weight:600;margin-bottom:4px}
   .account-choice-desc{color:var(--text-dim);font-size:12px;line-height:1.4}
   .child-item{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:12px;cursor:pointer;transition:.25s}
@@ -236,6 +237,7 @@
   .child-balance{color:var(--green);font-size:14px;font-weight:600;margin-left:auto}
   .badge-child{display:inline-block;background:linear-gradient(135deg,#f59e0b,#f5576c);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
   .badge-parent{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
+  .badge-admin{display:inline-block;background:linear-gradient(135deg,#dc2626,#7f1d1d);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
   .settings-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--card);border-radius:14px;margin-bottom:8px;cursor:pointer;transition:.2s}
   .settings-row:hover{background:rgba(128,128,128,0.12)}
   .settings-row .sr-label{color:var(--text);font-size:14px}
@@ -311,6 +313,7 @@
   .avatar-emoji.selected{border-color:var(--primary);background:rgba(102,126,234,0.2)}
   .big-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto;cursor:pointer;transition:.25s}
   .big-avatar:active{transform:scale(0.94)}
+  .big-avatar.admin{background:linear-gradient(135deg,#dc2626,#7f1d1d)}
   @media (max-width:380px){
     .actions{grid-template-columns:repeat(4,1fr)}
     .action-label{font-size:9px}
@@ -336,6 +339,9 @@
   .bonus-percent{font-size:26px;font-weight:800;position:absolute;top:20px;right:22px;z-index:1}
   .bonus-progress{height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;margin-top:12px;position:relative;z-index:1}
   .bonus-progress-fill{height:100%;background:#fff;border-radius:3px;transition:.5s}
+  /* Админ */
+  .admin-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#dc2626,#7f1d1d);color:#fff;font-size:11px;font-weight:600;padding:5px 12px;border-radius:12px;margin-left:8px}
+  .admin-search-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;margin-bottom:20px}
   @media (hover: hover) and (pointer: fine) {
     .pin-key {transition: background 0.15s, transform 0.1s, box-shadow 0.15s;}
     .pin-key:hover {background: rgba(102,126,234,0.15);box-shadow: 0 4px 12px rgba(102,126,234,0.2);}
@@ -409,6 +415,32 @@
         </div>
       </div>
       <button class="btn" id="registerBtn" disabled>Создать кошелёк</button>
+      <p class="back-link" onclick="goTo('screenPhone')">← Назад</p>
+    </div>
+  </div>
+
+  <!-- ВЫБОР РОЛИ (только для админского номера) -->
+  <div class="screen" id="screenRoleSelect">
+    <div class="auth-box">
+      <div class="logo" style="background:linear-gradient(135deg,#dc2626,#7f1d1d)">👑</div>
+      <h1>Выбор режима</h1>
+      <p class="sub">Этот номер зарегистрирован как администратор</p>
+      <div class="account-choices">
+        <div class="account-choice" onclick="selectRole('client')" id="choiceClient">
+          <div class="account-choice-icon adult">👤</div>
+          <div>
+            <div class="account-choice-title">Клиент</div>
+            <div class="account-choice-desc">Обычный режим: свои карты, переводы, оплата</div>
+          </div>
+        </div>
+        <div class="account-choice" onclick="selectRole('admin')" id="choiceAdmin">
+          <div class="account-choice-icon admin">👑</div>
+          <div>
+            <div class="account-choice-title">Администратор</div>
+            <div class="account-choice-desc">Просмотр баланса и истории клиентов по номеру</div>
+          </div>
+        </div>
+      </div>
       <p class="back-link" onclick="goTo('screenPhone')">← Назад</p>
     </div>
   </div>
@@ -488,6 +520,61 @@
       <span onclick="showHistory()">Все →</span>
     </div>
     <div id="homeHistory"></div>
+  </div>
+
+  <!-- АДМИН ГЛАВНЫЙ -->
+  <div class="screen" id="screenAdminHome">
+    <div class="top-bar">
+      <div>
+        <div class="greeting">Панель</div>
+        <div class="username">Администратора <span class="admin-badge">👑 ADMIN</span></div>
+      </div>
+      <div class="avatar" style="background:linear-gradient(135deg,#dc2626,#7f1d1d)" onclick="adminLogout()">👑</div>
+    </div>
+
+    <div class="admin-search-box">
+      <div style="color:var(--text);font-size:15px;font-weight:600;margin-bottom:12px">🔍 Поиск клиента</div>
+      <div style="color:var(--text-dim);font-size:12px;margin-bottom:8px">Введите номер телефона клиента</div>
+      <input type="tel" id="adminPhoneInput" placeholder="+7 900 000-00-00" style="text-align:center">
+      <button class="btn" id="adminSearchBtn" onclick="adminSearchClient()">Найти клиента</button>
+      <div id="adminSearchError" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:14px;padding:12px;margin-top:12px;text-align:left">
+        <div style="color:var(--red);font-size:13px" id="adminErrorText">Клиент не найден</div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="ttl">🕒 Последние просмотры</span></div>
+    <div id="adminRecentViews"></div>
+
+    <div class="section-title" style="margin-top:20px"><span class="ttl">⚙️ Управление</span></div>
+    <button class="btn gray small" onclick="adminLogout()">Выйти из админ-панели</button>
+    <button class="btn gray small" onclick="goTo('screenPhone')">Войти как другой пользователь</button>
+  </div>
+
+  <!-- АДМИН ПРОСМОТР КЛИЕНТА -->
+  <div class="screen" id="screenAdminClient">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenAdminHome')">←</div>
+      <div>
+        <div style="color:var(--text);font-size:17px;font-weight:600" id="adminClientName">Клиент</div>
+        <div style="color:var(--text-muted);font-size:12px" id="adminClientPhone">—</div>
+      </div>
+    </div>
+
+    <div class="balance-card" id="adminClientBalanceCard" style="background:linear-gradient(135deg,#dc2626,#7f1d1d)">
+      <div class="balance-label">Общий баланс клиента</div>
+      <div class="balance-amount" id="adminClientBalance">0 <span>₽</span></div>
+      <div class="balance-num" id="adminClientMainCard">•••• ----</div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:16px">
+      <div id="adminClientInfo" style="font-size:13px;color:var(--text-dim);line-height:1.7"></div>
+    </div>
+
+    <div class="section-title"><span class="ttl">💳 Карты клиента</span></div>
+    <div id="adminClientCards" style="margin-bottom:16px"></div>
+
+    <div class="section-title"><span class="ttl">📋 История операций</span><span id="adminTxCount"></span></div>
+    <div id="adminClientHistory"></div>
   </div>
 
   <!-- ИСТОРИЯ -->
@@ -1262,6 +1349,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 const BANK_NAME = 'Курсивбанк';
+/* Админский номер — для него доступен выбор роли Клиент/Админ */
+const ADMIN_PHONE = '79936050979';
 
 /* ==================== КОНСТАНТЫ ==================== */
 const CATEGORIES = {
@@ -1302,6 +1391,7 @@ const BONUS_SLOTS = 3;
 /* ==================== СОСТОЯНИЕ ==================== */
 const state = {
   user:{phone:'',firstName:'',lastName:'',type:'adult',avatar:'👤',birthDate:''},
+  role:'client', // 'client' | 'admin' — выбранная роль для админского номера
   cards:[], history:[], contacts:[], goals:[], budgets:[], achievements:{},
   autotransfers:[], loginHistory:[],
   bonus:{ monthKey:'', categories:[], earned:0, history:[] },
@@ -1313,7 +1403,9 @@ const state = {
   savedPin:null, pinMode:'create', pinBuffer:'', pinFirst:'', pinAttempts:0, lockedUntil:0,
   loggedIn:false, currentCardId:null, currentChildPhone:null, lastOperation:null, children:[],
   historyPeriod:'all', analyticsPeriod:'month', selectedAvatar:'👤',
-  bonusDraft: []
+  bonusDraft: [],
+  adminRecentViews: [],   // история просмотров клиентов в админке
+  adminCurrentClient:null // открытый в админке клиент
 };
 
 let currentUserRef=null, historyRef=null, childrenRef=null;
@@ -1321,19 +1413,23 @@ let autoLockTimer=null, requisitesTimer=null, roundupTarget=0;
 let userDataLoaded = false;
 
 /* ==================== УТИЛИТЫ ==================== */
-const screens = ['screenLoading','screenPhone','screenRegister',
+const screens = ['screenLoading','screenPhone','screenRegister','screenRoleSelect',
   'screenCreatePin','screenEnterPin','screenHome','screenHistory','screenAccount','screenBonus',
   'screenCards','screenCardDetails','screenCreateCard','screenContacts','screenGoals',
   'screenTheme','screenAnalytics','screenBudgets','screenLimits','screenAutotransfers',
   'screenChangePin','screenChildView','screenLoginHistory','screenMyQr',
-  'screenTopup','screenTransfer','screenPay','screenProcessing','screenSuccess'];
+  'screenTopup','screenTransfer','screenPay','screenProcessing','screenSuccess',
+  'screenAdminHome','screenAdminClient'];
 
 function goTo(id) {
   screens.forEach(s => document.getElementById(s)?.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   const nav = document.getElementById('bottomNav');
   const navScreens = ['screenHome','screenHistory','screenAnalytics','screenAccount'];
-  if (navScreens.includes(id)) {
+  // В админ-режиме нижняя навигация скрывается
+  if (state.role === 'admin') {
+    nav.style.display = 'none';
+  } else if (navScreens.includes(id)) {
     nav.style.display='flex';
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.screen===id));
   } else nav.style.display='none';
@@ -1357,6 +1453,7 @@ function goTo(id) {
   if (id==='screenChangePin') { state.pinMode='changeOld'; resetPin(); updateChangePinStep(); }
   if (id==='screenMyQr') renderMyQr();
   if (id==='screenLoginHistory') renderLoginHistory();
+  if (id==='screenAdminHome') renderAdminHome();
   updatePinHints();
   if (id === 'screenPhone' && detectDevice().type === 'desktop') {
     const inp = document.getElementById('phoneInput');
@@ -1439,7 +1536,6 @@ function showOperationError(btn, reason) {
   if (!btn) return;
   const original = btn.innerHTML;
   const originalBg = btn.style.background;
-
   btn.innerHTML = `<span style="display:inline-flex;align-items:center;justify-content:center;gap:8px">
     <span style="font-size:20px">❌</span>
     <span style="font-size:13px">${reason}</span>
@@ -1447,7 +1543,6 @@ function showOperationError(btn, reason) {
   btn.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
   if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
   playSound('error');
-
   const restore = () => {
     btn.innerHTML = original;
     btn.style.background = originalBg;
@@ -1675,29 +1770,209 @@ phoneBtn.addEventListener('click', async () => {
   phoneBtn.textContent = 'Проверяем...';
   phoneBtn.disabled = true;
   try {
+    // Админский номер — сразу показываем выбор роли
+    if (phone === ADMIN_PHONE) {
+      state.user.phone = phone;
+      localStorage.setItem('bank_phone', phone);
+      phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
+      goTo('screenRoleSelect');
+      return;
+    }
     const snap = await db.ref('users/'+phone).once('value');
     const data = snap.val();
     if (data && data.firstName && data.pinHash) {
       state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
+      state.role = 'client';
       localStorage.setItem('bank_phone', phone);
+      localStorage.setItem('bank_role', 'client');
       applySettings();
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenEnterPin');
     } else if (data && data.firstName && !data.pinHash) {
       state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
+      state.role = 'client';
       localStorage.setItem('bank_phone', phone);
+      localStorage.setItem('bank_role', 'client');
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenCreatePin');
     } else {
       state.user.phone = phone;
+      state.role = 'client';
       localStorage.setItem('bank_phone', phone);
+      localStorage.setItem('bank_role', 'client');
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenRegister');
     }
   } catch(e){ console.error(e); showToast('❌ Ошибка соединения', true); phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false; }
 });
+
+/* ==================== ВЫБОР РОЛИ (для админского номера) ==================== */
+function selectRole(role) {
+  state.role = role;
+  document.getElementById('choiceClient').classList.toggle('selected', role==='client');
+  document.getElementById('choiceAdmin').classList.toggle('selected', role==='admin');
+  localStorage.setItem('bank_role', role);
+  setTimeout(() => {
+    if (role === 'client') {
+      // Логин как обычный клиент
+      const phone = state.user.phone;
+      db.ref('users/'+phone).once('value').then(snap => {
+        const data = snap.val();
+        if (data && data.firstName && data.pinHash) {
+          state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
+          state.savedPin = data.pinHash;
+          state.settings = { ...state.settings, ...(data.settings||{}) };
+          applySettings();
+          goTo('screenEnterPin');
+        } else if (data && data.firstName && !data.pinHash) {
+          state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
+          goTo('screenCreatePin');
+        } else {
+          goTo('screenRegister');
+        }
+      }).catch(e => { console.error(e); goTo('screenRegister'); });
+    } else {
+      // Админ — вход без PIN
+      adminLogin();
+    }
+  }, 250);
+}
+
+/* ==================== АДМИН-РЕЖИМ ==================== */
+function adminLogin() {
+  state.role = 'admin';
+  state.loggedIn = true;
+  // Восстанавливаем сохранённые просмотры
+  try {
+    const saved = JSON.parse(localStorage.getItem('admin_recent_views') || '[]');
+    state.adminRecentViews = saved;
+  } catch(e){ state.adminRecentViews = []; }
+  goTo('screenAdminHome');
+  showToast('👑 Вход в админ-панель');
+}
+function adminLogout() {
+  state.role = 'client';
+  state.loggedIn = false;
+  localStorage.removeItem('bank_role');
+  goTo('screenPhone');
+  phoneInput.value = '';
+  phoneBtn.disabled = true;
+  showToast('👋 Вы вышли из админ-панели');
+}
+function renderAdminHome() {
+  const el = document.getElementById('adminRecentViews');
+  if (!state.adminRecentViews.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">👀</div>Пока нет просмотров</div>`;
+    return;
+  }
+  el.innerHTML = state.adminRecentViews.map((v, i) => `
+    <div class="card-select-item" onclick="adminOpenClient('${v.phone}')">
+      <div class="ci-icon" style="background:linear-gradient(135deg,#dc2626,#7f1d1d);display:flex;align-items:center;justify-content:center;font-size:16px">👤</div>
+      <div style="flex:1">
+        <div class="ci-num">${v.name || 'Клиент'}</div>
+        <div class="ci-bal">${formatPhone(v.phone)} • ${v.date}</div>
+      </div>
+      <div style="color:var(--text-muted);font-size:14px">›</div>
+    </div>
+  `).join('');
+}
+async function adminSearchClient() {
+  const inp = document.getElementById('adminPhoneInput');
+  const err = document.getElementById('adminSearchError');
+  const phone = normalizePhone(inp.value);
+  err.style.display = 'none';
+  if (phone.length !== 11) {
+    err.style.display = 'block';
+    document.getElementById('adminErrorText').textContent = '❌ Введите полный номер';
+    return;
+  }
+  await adminOpenClient(phone);
+}
+async function adminOpenClient(phone) {
+  const err = document.getElementById('adminSearchError');
+  try {
+    const snap = await db.ref('users/'+phone).once('value');
+    const data = snap.val();
+    if (!data || !data.firstName) {
+      err.style.display = 'block';
+      document.getElementById('adminErrorText').textContent = '❌ Клиент не найден';
+      return;
+    }
+    // Загружаем историю
+    const hSnap = await db.ref('history/'+phone).once('value');
+    const history = Object.values(hSnap.val() || {}).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    
+    state.adminCurrentClient = { phone, data, history };
+    
+    // Рендер
+    const fullName = (data.firstName + ' ' + (data.lastName||'')).trim();
+    document.getElementById('adminClientName').textContent = fullName;
+    document.getElementById('adminClientPhone').textContent = formatPhone(phone);
+    document.getElementById('adminClientBalanceCard').style.background = 'linear-gradient(135deg,#dc2626,#7f1d1d)';
+    const total = (data.cards||[]).reduce((s,c)=>s+(c.balance||0),0);
+    document.getElementById('adminClientBalance').innerHTML = fmt(total)+' <span>₽</span>';
+    document.getElementById('adminClientMainCard').textContent = data.cards?.[0] ? maskCard(data.cards[0].last) : '•••• ----';
+    
+    // Инфо
+    const age = calculateAge(data.birthDate);
+    const typeLabel = data.type === 'child' ? '👶 Детский' : '👤 Взрослый';
+    const ageLabel = age !== null ? `${age} лет` : '—';
+    document.getElementById('adminClientInfo').innerHTML = `
+      <div>${typeLabel} • ${ageLabel}</div>
+      <div>Дата рождения: ${data.birthDate ? new Date(data.birthDate).toLocaleDateString('ru-RU') : '—'}</div>
+      <div>Зарегистрирован: ${data.createdAt ? new Date(data.createdAt).toLocaleDateString('ru-RU') : '—'}</div>
+      <div>Родитель: ${data.parentName || '—'}</div>
+      <div>Всего операций: ${history.length}</div>
+    `;
+    
+    // Карты клиента
+    document.getElementById('adminClientCards').innerHTML = (data.cards||[]).map(c => `
+      <div class="card-select-item" style="cursor:default">
+        <div class="ci-icon" style="background:${c.color}"></div>
+        <div style="flex:1">
+          <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
+          ${c.name?`<div class="ci-name">${c.name}</div>`:''}
+          <div class="ci-bal">${fmt(c.balance)} ₽ ${c.frozen?'🔒':''}</div>
+        </div>
+      </div>
+    `).join('') || '<div class="empty">Нет карт</div>';
+    
+    // История
+    document.getElementById('adminTxCount').textContent = history.length + ' шт.';
+    document.getElementById('adminClientHistory').innerHTML = history.length
+      ? history.slice(0, 100).map(tx => {
+          const isIn = tx.type==='in';
+          const cat = CATEGORIES[tx.category] || CATEGORIES.other;
+          const sign = isIn ? '+' : '−';
+          return `
+            <div class="tx-item" style="cursor:default">
+              <div class="tx-icon ${isIn?'in':'out'}">${cat.emoji}</div>
+              <div class="tx-info">
+                <div class="tx-title">${tx.title}</div>
+                <div class="tx-date">${tx.date}</div>
+              </div>
+              <div class="tx-amount ${isIn?'in':'out'}">${sign}${fmt(tx.amount)} ₽</div>
+            </div>
+          `;
+        }).join('')
+      : '<div class="empty">Нет операций</div>';
+    
+    // Сохраняем в недавние
+    const existing = state.adminRecentViews.findIndex(v => v.phone === phone);
+    if (existing >= 0) state.adminRecentViews.splice(existing, 1);
+    state.adminRecentViews.unshift({ phone, name: fullName, date: now() });
+    if (state.adminRecentViews.length > 10) state.adminRecentViews = state.adminRecentViews.slice(0, 10);
+    localStorage.setItem('admin_recent_views', JSON.stringify(state.adminRecentViews));
+    
+    goTo('screenAdminClient');
+  } catch(e) {
+    console.error(e);
+    err.style.display = 'block';
+    document.getElementById('adminErrorText').textContent = '❌ Ошибка загрузки';
+  }
+}
 
 /* ==================== РЕГИСТРАЦИЯ ==================== */
 const firstName = document.getElementById('firstName');
@@ -1945,6 +2220,7 @@ function updateChangePinStep(){
 function openChangePin(){ state.pinMode='changeOld'; state.pinFirst=''; state.pinBuffer=''; goTo('screenChangePin'); }
 function pinLogout(){
   localStorage.removeItem('bank_phone');
+  localStorage.removeItem('bank_role');
   state.loggedIn=false; state.savedPin=null;
   detachUserListeners();
   phoneInput.value=''; phoneBtn.disabled=true;
@@ -1958,6 +2234,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     if (activeScreen.id === 'screenPhone' && !phoneBtn.disabled) { e.preventDefault(); phoneBtn.click(); return; }
     if (activeScreen.id === 'screenRegister' && !registerBtn.disabled) { e.preventDefault(); registerBtn.click(); return; }
+    if (activeScreen.id === 'screenAdminHome') { e.preventDefault(); adminSearchClient(); return; }
   }
   const pinScreens = ['screenCreatePin', 'screenEnterPin', 'screenChangePin'];
   if (!pinScreens.includes(activeScreen.id)) return;
@@ -1995,7 +2272,7 @@ function startAutoLock(){
 }
 document.addEventListener('visibilitychange', ()=>{
   if (document.hidden) clearTimeout(autoLockTimer);
-  else if (state.loggedIn && state.settings.autoLock) startAutoLock();
+  else if (state.loggedIn && state.settings.autoLock && state.role === 'client') startAutoLock();
 });
 
 /* ==================== ПОДПИСКИ ==================== */
@@ -2024,17 +2301,14 @@ function attachUserListeners() {
     state.loginHistory = data.loginHistory || [];
     state.settings = { ...state.settings, ...(data.settings||{}) };
     state.lastOperation = data.lastOperation || null;
-
     const currentMonthKey = monthKey();
     if (!data.bonus || data.bonus.monthKey !== currentMonthKey) {
       state.bonus = { monthKey: currentMonthKey, categories: [], earned: 0, history: data.bonus?.history || [] };
     } else {
       state.bonus = data.bonus;
     }
-
     userDataLoaded = true;
     applySettings();
-
     if (!state.selectedTopupCard) state.selectedTopupCard = state.cards[0]?.id || null;
     if (!state.transferFrom) state.transferFrom = state.cards[0]?.id || null;
     if (!state.transferFrom2) state.transferFrom2 = state.cards[0]?.id || null;
@@ -2113,7 +2387,6 @@ async function saveAutotransfers(){ if (userDataLoaded) await db.ref('users/'+st
 async function saveLoginHistory(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/loginHistory').set(state.loginHistory || []); }
 async function saveAchievements(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/achievements').set(state.achievements || {}); }
 async function saveBonus(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/bonus').set(state.bonus); }
-
 async function addHistory(tx){
   const ref = db.ref('history/'+state.user.phone).push();
   await ref.set({ ...tx, createdAt: firebase.database.ServerValue.TIMESTAMP });
@@ -2251,6 +2524,7 @@ async function performDeleteAccount() {
     await db.ref('parents/'+phone).remove();
     await db.ref('requests/'+phone).remove();
     localStorage.removeItem('bank_phone');
+    localStorage.removeItem('bank_role');
     localStorage.removeItem('bank_current_screen');
     detachUserListeners();
     state.loggedIn = false;
@@ -2375,7 +2649,7 @@ function initSwipe() {
     item._moved = false;
     item._dir = null;
     const content = item.querySelector('.tx-item-content');
-    content.style.transition = 'none';
+    if (content) content.style.transition = 'none';
   }, { passive: true });
   document.addEventListener('touchmove', (e) => {
     const item = e.target.closest('.tx-item');
@@ -2388,6 +2662,7 @@ function initSwipe() {
     if (item._dir !== 'h') return;
     item._moved = true;
     const content = item.querySelector('.tx-item-content');
+    if (!content) return;
     const clamped = Math.max(-100, Math.min(100, dx));
     content.style.transform = `translateX(${clamped}px)`;
   }, { passive: true });
@@ -2395,6 +2670,7 @@ function initSwipe() {
     const item = e.target.closest('.tx-item');
     if (!item || !item._moved) { if (item) item._startX = null; return; }
     const content = item.querySelector('.tx-item-content');
+    if (!content) { item._startX = null; return; }
     content.style.transition = 'transform 0.2s';
     const transform = content.style.transform;
     const dx = parseFloat((transform.match(/-?\d+/) || [0])[0]);
@@ -3494,6 +3770,7 @@ function hideLogoutConfirm(){ hideModal('logoutModal'); }
 function confirmLogout(){
   hideLogoutConfirm();
   localStorage.removeItem('bank_phone');
+  localStorage.removeItem('bank_role');
   state.loggedIn=false; state.savedPin=null; state.pinBuffer='';
   userDataLoaded = false;
   detachUserListeners();
@@ -3505,7 +3782,13 @@ function confirmLogout(){
 /* ==================== АВТОВХОД ==================== */
 async function tryAutoLogin(){
   const saved = localStorage.getItem('bank_phone');
+  const savedRole = localStorage.getItem('bank_role');
   if (!saved) { goTo('screenPhone'); return; }
+  // Если это админский номер и последняя роль была admin — вернём в панель
+  if (saved === ADMIN_PHONE && savedRole === 'admin') {
+    adminLogin();
+    return;
+  }
   try {
     const snap = await db.ref('users/'+saved).once('value');
     const data = snap.val();
@@ -3513,10 +3796,12 @@ async function tryAutoLogin(){
       state.user = { phone:saved, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
+      state.role = 'client';
       applySettings();
       goTo('screenEnterPin');
     } else {
       localStorage.removeItem('bank_phone');
+      localStorage.removeItem('bank_role');
       goTo('screenPhone');
     }
   } catch(e){ console.error(e); goTo('screenPhone'); }
@@ -3578,7 +3863,7 @@ setInterval(() => {
 }, 1000);
 
 setTimeout(() => {
-  if (state.loggedIn) checkAutotransfers();
+  if (state.loggedIn && state.role === 'client') checkAutotransfers();
 }, 5000);
 
 tryAutoLogin();
