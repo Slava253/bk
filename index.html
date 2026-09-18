@@ -32,35 +32,52 @@
   body.theme-pink{--balance-grad:linear-gradient(135deg,#ec4899,#8b5cf6)}
   body{background:var(--bg-grad);color:var(--text)}
 
-  /* ПРИЛОЖЕНИЕ ВСЕГДА НА ВЕСЬ ЭКРАН */
   .app{
     width:100%;max-width:100%;height:100vh;height:100dvh;
     position:relative;background:var(--bg-grad);overflow:hidden;
   }
 
-  /* На ПК и планшете контент центрируется */
+  /* ==== БАЗОВЫЙ стиль экрана (сначала!) ==== */
+  .screen{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
+    display:none;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    animation:fadeIn .35s ease;
+  }
+  .screen.active{display:block}
+  .screen::-webkit-scrollbar{width:0}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ==== На ПК и планшете — центрирование (ПОСЛЕ базового!) ==== */
   @media (min-width:768px) and (hover:hover) and (pointer:fine){
     .screen{
-      max-width:520px;
       left:50%;
       right:auto;
+      width:100%;
+      max-width:520px;
       transform:translateX(-50%);
-      padding-left:28px;
-      padding-right:28px;
-      animation: fadeInCentered .35s ease;
+      padding:calc(24px + env(safe-area-inset-top)) 28px calc(100px + env(safe-area-inset-bottom));
+      animation:fadeInCentered .35s ease;
     }
     .bottom-nav{
-      max-width:520px;
       left:50%;
       right:auto;
+      width:100%;
+      max-width:520px;
       transform:translateX(-50%);
-      padding-left:28px;
-      padding-right:28px;
+      padding:16px 28px calc(22px + env(safe-area-inset-bottom));
     }
     .pulse-notification{
-      max-width:520px;
       left:50%;
       right:auto;
+      width:calc(100% - 40px);
+      max-width:520px;
       transform:translateX(-50%) translateY(-200%);
     }
     .pulse-notification.show{
@@ -71,16 +88,6 @@
       to{opacity:1;transform:translateX(-50%) translateY(0)}
     }
   }
-
-  .screen{
-    position:absolute;top:0;bottom:0;left:0;right:0;
-    padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
-    display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;
-    animation:fadeIn .35s ease;
-  }
-  .screen.active{display:block}
-  .screen::-webkit-scrollbar{width:0}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 
   h1{color:var(--text);font-size:22px;margin-bottom:8px}
   .sub{color:var(--text-dim);font-size:14px;margin-bottom:24px}
