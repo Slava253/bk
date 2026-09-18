@@ -257,8 +257,6 @@
   .avatar-emoji.selected{border-color:var(--primary);background:rgba(102,126,234,0.2)}
   .big-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto;cursor:pointer;transition:.25s}
   .big-avatar:active{transform:scale(0.94)}
-  .fab{position:absolute;bottom:calc(90px + env(safe-area-inset-bottom));right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border:none;font-size:24px;box-shadow:0 12px 32px rgba(102,126,234,0.5);cursor:pointer;z-index:99;transition:.25s;display:flex;align-items:center;justify-content:center}
-  .fab:active{transform:scale(0.94)}
   @media (max-width:380px){
     .actions{grid-template-columns:repeat(4,1fr)}
     .action-label{font-size:9px}
@@ -270,28 +268,38 @@
   .pulse-notification-text{flex:1;font-size:13px;line-height:1.4}
   .pulse-notification-title{font-weight:600;margin-bottom:2px}
   .device-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(102,126,234,0.15);color:#a5b4fc;font-size:11px;padding:4px 10px;border-radius:12px;margin-top:6px}
+
+  /* Возрастной бейдж */
+  .age-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600}
+  .age-badge.young{background:linear-gradient(135deg,#f59e0b,#f5576c);color:#fff}
+  .age-badge.teen{background:linear-gradient(135deg,#0ea5e9,#667eea);color:#fff}
+  .age-badge.adult{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff}
+
+  /* Курсив-бонус */
+  .bonus-card{background:linear-gradient(135deg,#f59e0b 0%,#ef4444 50%,#ec4899 100%);border-radius:22px;padding:22px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(239,68,68,0.35);cursor:pointer;transition:.3s}
+  .bonus-card:active{transform:scale(0.99)}
+  .bonus-card::after{content:'';position:absolute;top:-40%;right:-20%;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.12)}
+  .bonus-title{font-size:15px;font-weight:700;margin-bottom:4px;font-style:italic;letter-spacing:0.5px}
+  .bonus-sub{font-size:12px;opacity:.9;margin-bottom:14px}
+  .bonus-cats{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+  .bonus-cat-pill{background:rgba(255,255,255,0.22);backdrop-filter:blur(10px);border-radius:14px;padding:8px 14px;font-size:12px;font-weight:600}
+  .bonus-percent{font-size:26px;font-weight:800;position:absolute;top:20px;right:22px;z-index:1}
+  .bonus-progress{height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;margin-top:12px;position:relative;z-index:1}
+  .bonus-progress-fill{height:100%;background:#fff;border-radius:3px;transition:.5s}
+
   @media (hover: hover) and (pointer: fine) {
-    .pin-key {
-      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-    }
-    .pin-key:hover {
-      background: rgba(102,126,234,0.15);
-      box-shadow: 0 4px 12px rgba(102,126,234,0.2);
-    }
-    .pin-key:active {
-      transform: scale(0.92);
-    }
-    .pin-dot.filled {
-      transform: scale(1.2);
-    }
+    .pin-key {transition: background 0.15s, transform 0.1s, box-shadow 0.15s;}
+    .pin-key:hover {background: rgba(102,126,234,0.15);box-shadow: 0 4px 12px rgba(102,126,234,0.2);}
+    .pin-key:active {transform: scale(0.92);}
+    .pin-dot.filled {transform: scale(1.2);}
   }
   @media (hover: none) {
-    .btn:hover { transform: none; box-shadow: 0 8px 24px rgba(102,126,234,0.3); }
-    .action-btn:hover { transform: none; background: var(--card); border-color: var(--border); }
-    .card-select-item:hover { background: var(--card); }
-    .tx-item:hover { background: var(--card); }
-    .nav-btn:hover svg { stroke: var(--text-dim); }
-    .nav-btn.active:hover svg { stroke: #fff; }
+    .btn:hover {transform: none;box-shadow: 0 8px 24px rgba(102,126,234,0.3);}
+    .action-btn:hover {transform: none;background: var(--card);border-color: var(--border);}
+    .card-select-item:hover {background: var(--card);}
+    .tx-item:hover {background: var(--card);}
+    .nav-btn:hover svg {stroke: var(--text-dim);}
+    .nav-btn.active:hover svg {stroke: #fff;}
   }
 </style>
 </head>
@@ -326,42 +334,23 @@
     </div>
   </div>
 
-  <!-- ТИП АККАУНТА -->
-  <div class="screen" id="screenAccountType">
-    <div class="auth-box">
-      <div class="logo">👥</div>
-      <h1>Тип аккаунта</h1>
-      <p class="sub">Выберите, какой аккаунт создать</p>
-      <div class="account-choices">
-        <div class="account-choice" onclick="selectAccountType('adult')" id="choiceAdult">
-          <div class="account-choice-icon adult">👤</div>
-          <div>
-            <div class="account-choice-title">Взрослый</div>
-            <div class="account-choice-desc">Полный доступ ко всем функциям банка</div>
-          </div>
-        </div>
-        <div class="account-choice" onclick="selectAccountType('child')" id="choiceChild">
-          <div class="account-choice-icon child">👶</div>
-          <div>
-            <div class="account-choice-title">Детский</div>
-            <div class="account-choice-desc">Родитель сможет видеть ваши траты</div>
-          </div>
-        </div>
-      </div>
-      <p class="back-link" onclick="goTo('screenPhone')">← Назад</p>
-    </div>
-  </div>
-
-  <!-- РЕГИСТРАЦИЯ -->
+  <!-- РЕГИСТРАЦИЯ (с датой рождения) -->
   <div class="screen" id="screenRegister">
     <div class="auth-box">
       <div class="logo">👤</div>
       <h1 id="regTitle">Знакомство</h1>
-      <p class="sub">Как вас зовут?</p>
+      <p class="sub">Заполните данные</p>
       <input type="text" id="firstName" placeholder="Имя" autocomplete="off">
       <input type="text" id="lastName" placeholder="Фамилия" autocomplete="off">
+      <div style="text-align:left;color:var(--text-dim);font-size:12px;margin-bottom:8px;padding-left:4px;">Дата рождения</div>
+      <input type="date" id="birthDate" max="">
+      <div id="ageInfo" style="display:none;background:rgba(102,126,234,0.1);border:1px solid rgba(102,126,234,0.3);border-radius:14px;padding:12px;margin-bottom:14px;text-align:left;font-size:13px;">
+        <div style="color:var(--text-dim);font-size:11px">Вам будет создан</div>
+        <div style="color:var(--text);font-size:15px;font-weight:600;" id="ageInfoText">—</div>
+      </div>
       <div id="parentPhoneWrap" style="display:none">
-        <input type="tel" id="parentPhone" placeholder="Телефон родителя +7 900 000-00-00" style="text-align:center">
+        <div style="text-align:left;color:var(--text-dim);font-size:12px;margin-bottom:8px;padding-left:4px;">Телефон родителя (обязательно для детей до 14 лет)</div>
+        <input type="tel" id="parentPhone" placeholder="+7 900 000-00-00" style="text-align:center">
         <div id="parentLookupInfo" style="display:none;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:14px;padding:12px;margin-bottom:14px;text-align:left">
           <div style="color:var(--text-dim);font-size:11px">Родитель</div>
           <div style="color:var(--text);font-size:15px;font-weight:600" id="parentName">—</div>
@@ -371,7 +360,7 @@
         </div>
       </div>
       <button class="btn" id="registerBtn" disabled>Создать кошелёк</button>
-      <p class="back-link" onclick="goTo('screenAccountType')">← Назад</p>
+      <p class="back-link" onclick="goTo('screenPhone')">← Назад</p>
     </div>
   </div>
 
@@ -423,6 +412,20 @@
       </div>
       <div class="balance-amount" id="totalBalance">0 <span>₽</span></div>
       <div class="balance-num" id="mainCardNum">•••• •••• •••• ----</div>
+    </div>
+
+    <!-- КУРСИВ-БОНУС на главном -->
+    <div class="bonus-card" onclick="goTo('screenBonus')">
+      <div class="bonus-percent" id="bonusPercentMain">5%</div>
+      <div class="bonus-title">⭐ Курсив-бонус</div>
+      <div class="bonus-sub" id="bonusSubMain">Выберите 3 категории на этот месяц</div>
+      <div class="bonus-cats" id="bonusCatsMain"></div>
+      <div class="bonus-progress">
+        <div class="bonus-progress-fill" id="bonusProgressMain" style="width:0%"></div>
+      </div>
+      <div style="font-size:11px;opacity:.85;margin-top:8px;position:relative;z-index:1;" id="bonusHintMain">
+        Нажмите, чтобы настроить категории
+      </div>
     </div>
 
     <div class="actions">
@@ -495,6 +498,9 @@
       <div id="accountDevice"></div>
     </div>
 
+    <div class="section-title"><span class="ttl">⭐ Курсив-бонус</span><span onclick="goTo('screenBonus')">Настроить →</span></div>
+    <div id="accountBonusPreview" style="margin-bottom:16px"></div>
+
     <div id="childrenSection" style="display:none">
       <div class="section-title"><span class="ttl">👶 Детские аккаунты</span></div>
       <div id="childrenList"></div>
@@ -556,8 +562,46 @@
       <label class="switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label>
     </div>
 
-    <button class="btn red" onclick="showLogoutConfirm()" style="margin-top:20px">Выйти из аккаунта</button>
+    <div class="section-title" style="margin-top:20px"><span class="ttl">⚠️ Опасная зона</span></div>
+    <button class="btn red" onclick="showLogoutConfirm()">Выйти из аккаунта</button>
+    <button class="btn red" style="background:linear-gradient(135deg,#7f1d1d,#450a0a);margin-bottom:20px" onclick="confirmDeleteAccount()">🗑 Удалить аккаунт навсегда</button>
     <button class="btn gray small" onclick="showLoginHistory()" style="margin-bottom:20px">📜 История входов</button>
+  </div>
+
+  <!-- КУРСИВ-БОНУС -->
+  <div class="screen" id="screenBonus">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenHome')">←</div>
+      <div>
+        <div style="color:var(--text);font-size:17px;font-weight:600">⭐ Курсив-бонус</div>
+        <div style="color:var(--text-muted);font-size:12px">Кэшбэк 5% по 3 категориям</div>
+      </div>
+    </div>
+
+    <div class="bonus-card" style="margin-bottom:20px">
+      <div class="bonus-percent" id="bonusPercentBig">5%</div>
+      <div class="bonus-title">Ваш кэшбэк в этом месяце</div>
+      <div class="bonus-sub" id="bonusPeriod">Октябрь 2026</div>
+      <div style="font-size:28px;font-weight:800;position:relative;z-index:1;" id="bonusEarned">0 ₽</div>
+      <div class="bonus-progress">
+        <div class="bonus-progress-fill" id="bonusProgressBig" style="width:0%"></div>
+      </div>
+      <div style="font-size:11px;opacity:.85;margin-top:8px;position:relative;z-index:1;" id="bonusLimitText">
+        Максимум 3000 ₽ в месяц
+      </div>
+    </div>
+
+    <div class="section-title">
+      <span class="ttl">Выберите 3 категории</span>
+      <span id="bonusSelectedCount">0/3</span>
+    </div>
+    <div id="bonusCategoriesList" style="margin-bottom:20px"></div>
+
+    <div class="section-title"><span class="ttl">📜 История начислений</span></div>
+    <div id="bonusHistory"></div>
+
+    <button class="btn green" id="bonusSaveBtn" onclick="saveBonusCategories()">💾 Сохранить категории</button>
+    <p class="back-link" onclick="goTo('screenHome')">← На главную</button>
   </div>
 
   <!-- АВТОПЕРЕВОДЫ -->
@@ -918,6 +962,9 @@
         <div class="cat-chip" data-cat="health">💊 Здоровье</div>
         <div class="cat-chip" data-cat="other">📦 Другое</div>
       </div>
+      <div id="payBonusHint" style="display:none;background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(239,68,68,0.15));border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#fbbf24">
+        ⭐ Кэшбэк 5% по категории «<span id="payBonusCatName">—</span>»
+      </div>
       <div class="amount-input-wrap">
         <input type="text" id="payAmount" placeholder="0" inputmode="numeric">
         <div class="currency">₽</div>
@@ -1120,6 +1167,30 @@
     </div>
   </div>
 
+  <!-- МОДАЛКА УДАЛЕНИЯ АККАУНТА -->
+  <div class="modal-overlay" id="deleteAccountModal">
+    <div class="modal">
+      <div class="modal-icon" style="background:rgba(239,68,68,0.25);">⚠️</div>
+      <div class="modal-title">Удалить аккаунт?</div>
+      <div class="modal-text" style="text-align:left">
+        <b style="color:var(--red)">Это действие необратимо!</b><br><br>
+        Будут удалены:
+        <br>• Все карты и их балансы
+        <br>• История операций
+        <br>• Контакты, цели, бюджеты
+        <br>• Достижения и автопереводы
+        <br>• Курсив-бонус и его настройки
+        <br><br>
+        Введите <b>УДАЛИТЬ</b> для подтверждения:
+      </div>
+      <input type="text" id="deleteConfirmInput" placeholder="УДАЛИТЬ" style="text-align:center;text-transform:uppercase;margin-bottom:14px;">
+      <div class="modal-buttons">
+        <button class="btn gray" onclick="hideModal('deleteAccountModal')">Отмена</button>
+        <button class="btn red" id="deleteAccountConfirmBtn" onclick="performDeleteAccount()" disabled>Удалить</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1146,12 +1217,21 @@ const BANK_NAME = 'Курсивбанк';
 
 /* ==================== КОНСТАНТЫ ==================== */
 const CATEGORIES = {
-  food:{name:'Еда',emoji:'🍔',color:'#ef4444'}, transport:{name:'Транспорт',emoji:'🚕',color:'#f59e0b'},
-  fun:{name:'Развлечения',emoji:'🎮',color:'#8b5cf6'}, shopping:{name:'Покупки',emoji:'🛍',color:'#ec4899'},
-  health:{name:'Здоровье',emoji:'💊',color:'#22c55e'}, other:{name:'Другое',emoji:'📦',color:'#6b7280'},
-  topup:{name:'Пополнение',emoji:'➕',color:'#22c55e'}, transfer:{name:'Перевод',emoji:'🔄',color:'#3b82f6'},
-  savings:{name:'Накопления',emoji:'💰',color:'#f59e0b'}, reserve:{name:'Резерв',emoji:'🛡',color:'#0ea5e9'}
+  food:{name:'Еда',emoji:'🍔',color:'#ef4444'},
+  transport:{name:'Транспорт',emoji:'🚕',color:'#f59e0b'},
+  fun:{name:'Развлечения',emoji:'🎮',color:'#8b5cf6'},
+  shopping:{name:'Покупки',emoji:'🛍',color:'#ec4899'},
+  health:{name:'Здоровье',emoji:'💊',color:'#22c55e'},
+  other:{name:'Другое',emoji:'📦',color:'#6b7280'},
+  topup:{name:'Пополнение',emoji:'➕',color:'#22c55e'},
+  transfer:{name:'Перевод',emoji:'🔄',color:'#3b82f6'},
+  savings:{name:'Накопления',emoji:'💰',color:'#f59e0b'},
+  reserve:{name:'Резерв',emoji:'🛡',color:'#0ea5e9'},
+  bonus:{name:'Кэшбэк',emoji:'⭐',color:'#f59e0b'}
 };
+
+// Категории, доступные для кэшбэка (исключаем технические)
+const BONUS_ELIGIBLE = ['food','transport','fun','shopping','health','other'];
 
 const ACHIEVEMENTS = [
   {id:'first_pay',emoji:'🎉',title:'Первая покупка',desc:'Совершите первую оплату'},
@@ -1163,7 +1243,8 @@ const ACHIEVEMENTS = [
   {id:'daily_streak',emoji:'🔥',title:'Постоянство',desc:'Заходите 7 дней подряд'},
   {id:'rounder',emoji:'🪙',title:'Копилка округлений',desc:'Накопите 500 ₽ округлениями'},
   {id:'social',emoji:'👥',title:'Социальный',desc:'Добавьте 3 контакта'},
-  {id:'budget_hero',emoji:'📊',title:'Хозяин бюджета',desc:'Не превышайте бюджет месяц'}
+  {id:'budget_hero',emoji:'📊',title:'Хозяин бюджета',desc:'Не превышайте бюджет месяц'},
+  {id:'bonus_first',emoji:'⭐',title:'Первый кэшбэк',desc:'Получите первый кэшбэк'}
 ];
 
 const AVATAR_EMOJIS = ['👤','👨','👩','🧑','👦','👧','👴','👵','🧔','👱‍♀️','👨‍💼','👩‍💼','🦸','🧙','🐱','🐶','🐼','🦊','🐨','🐯','🦁','🐸','🐧','🦄','😎','🤓','🥳','😇','🤖','👽'];
@@ -1171,11 +1252,17 @@ const MAX_PIN_ATTEMPTS = 3;
 const LOCK_DURATION_MS = 60 * 1000;
 const AUTO_LOCK_MS = 2 * 60 * 1000;
 
+// Курсив-бонус
+const BONUS_PERCENT = 5;              // 5% кэшбэк
+const BONUS_MAX_PER_MONTH = 3000;     // Максимум 3000 ₽ в месяц
+const BONUS_SLOTS = 3;                // 3 категории
+
 /* ==================== СОСТОЯНИЕ ==================== */
 const state = {
-  user:{phone:'',firstName:'',lastName:'',type:'adult',avatar:'👤'},
+  user:{phone:'',firstName:'',lastName:'',type:'adult',avatar:'👤',birthDate:''},
   cards:[], history:[], contacts:[], goals:[], budgets:[], achievements:{},
   autotransfers:[], loginHistory:[],
+  bonus:{ monthKey:'', categories:[], earned:0, history:[] },
   settings:{theme:'blue',mode:'dark',autoLock:true,bio:false,dailyLimit:50000,perOpLimit:15000,notifications:true,private:false,sound:true,roundup:false},
   selectedTopupCard:null, transferFrom:null, transferFrom2:null, transferFrom3:null,
   transferOwnFrom:null, transferOwnTo:null, transferRecipient:null,
@@ -1183,7 +1270,8 @@ const state = {
   payCard:null, payCard2:null, payCard3:null, payMethod:'shop', payCategory:'food',
   savedPin:null, pinMode:'create', pinBuffer:'', pinFirst:'', pinAttempts:0, lockedUntil:0,
   loggedIn:false, currentCardId:null, currentChildPhone:null, lastOperation:null, children:[],
-  historyPeriod:'all', analyticsPeriod:'month', selectedAvatar:'👤'
+  historyPeriod:'all', analyticsPeriod:'month', selectedAvatar:'👤',
+  bonusDraft: []  // временное состояние выбора категорий
 };
 
 let currentUserRef=null, historyRef=null, childrenRef=null;
@@ -1191,8 +1279,8 @@ let autoLockTimer=null, requisitesTimer=null, roundupTarget=0;
 let userDataLoaded = false;
 
 /* ==================== УТИЛИТЫ ==================== */
-const screens = ['screenLoading','screenPhone','screenAccountType','screenRegister',
-  'screenCreatePin','screenEnterPin','screenHome','screenHistory','screenAccount',
+const screens = ['screenLoading','screenPhone','screenRegister',
+  'screenCreatePin','screenEnterPin','screenHome','screenHistory','screenAccount','screenBonus',
   'screenCards','screenCardDetails','screenCreateCard','screenContacts','screenGoals',
   'screenTheme','screenAnalytics','screenBudgets','screenLimits','screenAutotransfers',
   'screenChangePin','screenChildView','screenLoginHistory','screenMyQr',
@@ -1210,6 +1298,7 @@ function goTo(id) {
   if (id==='screenHome') renderHome();
   if (id==='screenHistory') renderHistory();
   if (id==='screenAccount') renderAccount();
+  if (id==='screenBonus') renderBonusScreen();
   if (id==='screenCards') renderAllCards();
   if (id==='screenContacts') renderContacts();
   if (id==='screenGoals') renderGoals();
@@ -1246,6 +1335,15 @@ function nowFull(){
 function todayKey(){
   const d=new Date();
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function monthKey(){
+  const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+}
+function monthNameRu() {
+  const d = new Date();
+  const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+  return months[d.getMonth()] + ' ' + d.getFullYear();
 }
 function getCard(id){ return state.cards.find(c=>c.id===id); }
 function normalizePhone(input){
@@ -1293,14 +1391,22 @@ function showPulseNotification(title, text, icon='🔔') {
 }
 function hideModal(id){ document.getElementById(id).classList.remove('show'); }
 function showModal(id){ document.getElementById(id).classList.add('show'); }
-function generateCards(phone){
-  const last4=phone.slice(-4);
-  const rnd=()=>Math.floor(1000+Math.random()*9000);
-  return [
-    {id:1,brand:'VISA',last:last4,balance:5000,color:'linear-gradient(135deg,#1e3c72,#2a5298)',name:'',frozen:false,limit:0,expiry:'12/27',cvv:String(rnd()).slice(0,3)},
-    {id:2,brand:'MasterCard',last:String(rnd()),balance:2500,color:'linear-gradient(135deg,#c31432,#240b36)',name:'',frozen:false,limit:0,expiry:'09/26',cvv:String(rnd()).slice(0,3)},
-    {id:3,brand:'МИР',last:String(rnd()),balance:1000,color:'linear-gradient(135deg,#0f9b0f,#1a5c1a)',name:'',frozen:false,limit:0,expiry:'03/28',cvv:String(rnd()).slice(0,3)}
-  ];
+
+/* ==================== РАСЧЁТ ВОЗРАСТА ==================== */
+function calculateAge(birthDate) {
+  if (!birthDate) return null;
+  const bd = new Date(birthDate);
+  if (isNaN(bd.getTime())) return null;
+  const now = new Date();
+  let age = now.getFullYear() - bd.getFullYear();
+  const m = now.getMonth() - bd.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < bd.getDate())) age--;
+  return age;
+}
+
+function getAccountTypeByAge(age) {
+  if (age === null) return null;
+  return age >= 14 ? 'adult' : 'child';
 }
 
 /* ==================== ОПРЕДЕЛЕНИЕ УСТРОЙСТВА ==================== */
@@ -1312,10 +1418,7 @@ function detectDevice() {
   const isTabletUA = /iPad|Tablet|PlayBook|Silk|Android(?!.*Mobile)/i.test(ua);
   const isIPad = /Macintosh/i.test(ua) && isTouch;
   
-  let type = 'desktop';
-  let os = 'Unknown';
-  let browser = 'Unknown';
-  
+  let type = 'desktop', os = 'Unknown', browser = 'Unknown';
   if (isIPad || isTabletUA) type = 'tablet';
   else if (isMobileUA) type = 'mobile';
   else if (isTouch && window.innerWidth < 1024) type = 'tablet';
@@ -1336,7 +1439,6 @@ function detectDevice() {
   
   const emoji = { desktop:'🖥', mobile:'📱', tablet:'📲' }[type];
   const name = { desktop:'Компьютер', mobile:'Телефон', tablet:'Планшет' }[type];
-  
   return { type, name, emoji, os, browser, isTouch };
 }
 
@@ -1347,7 +1449,6 @@ function updatePinHints() {
     if (el) el.style.display = isPC ? 'block' : 'none';
   });
 }
-
 function applyDeviceClass() {
   const device = detectDevice();
   document.body.classList.remove('device-desktop', 'device-mobile', 'device-tablet');
@@ -1362,8 +1463,7 @@ function playSound(type) {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    osc.connect(gain); gain.connect(audioCtx.destination);
     if (type === 'notify') {
       osc.frequency.setValueAtTime(880, audioCtx.currentTime);
       osc.frequency.setValueAtTime(1100, audioCtx.currentTime + 0.1);
@@ -1422,7 +1522,10 @@ phoneBtn.addEventListener('click', async () => {
     const snap = await db.ref('users/'+phone).once('value');
     const data = snap.val();
     if (data && data.firstName && data.pinHash) {
-      state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤' };
+      state.user = {
+        phone, firstName:data.firstName, lastName:data.lastName||'',
+        type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||''
+      };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
       localStorage.setItem('bank_phone', phone);
@@ -1430,7 +1533,10 @@ phoneBtn.addEventListener('click', async () => {
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenEnterPin');
     } else if (data && data.firstName && !data.pinHash) {
-      state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤' };
+      state.user = {
+        phone, firstName:data.firstName, lastName:data.lastName||'',
+        type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||''
+      };
       localStorage.setItem('bank_phone', phone);
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenCreatePin');
@@ -1438,33 +1544,72 @@ phoneBtn.addEventListener('click', async () => {
       state.user.phone = phone;
       localStorage.setItem('bank_phone', phone);
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
-      goTo('screenAccountType');
+      goTo('screenRegister');
     }
   } catch(e){ console.error(e); showToast('❌ Ошибка соединения', true); phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false; }
 });
 
-/* ==================== ТИП АККАУНТА ==================== */
-function selectAccountType(type) {
-  state.user.type = type;
-  document.getElementById('choiceAdult').classList.toggle('selected', type==='adult');
-  document.getElementById('choiceChild').classList.toggle('selected', type==='child');
-  document.getElementById('regTitle').textContent = type==='child' ? 'Детский аккаунт' : 'Знакомство';
-  document.getElementById('parentPhoneWrap').style.display = type==='child' ? 'block' : 'none';
-  setTimeout(() => goTo('screenRegister'), 200);
-}
-
 /* ==================== РЕГИСТРАЦИЯ ==================== */
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
+const birthDate = document.getElementById('birthDate');
 const parentPhone = document.getElementById('parentPhone');
 const registerBtn = document.getElementById('registerBtn');
+
+// Ограничиваем max датой сегодня
+const today = new Date().toISOString().split('T')[0];
+birthDate.setAttribute('max', today);
+
 function checkRegForm() {
-  const ok = firstName.value.trim().length>=1 && lastName.value.trim().length>=1;
-  registerBtn.disabled = state.user.type==='child' ? !(ok && state.parentData) : !ok;
+  const fnOk = firstName.value.trim().length>=1;
+  const lnOk = lastName.value.trim().length>=1;
+  const bdOk = !!birthDate.value;
+  
+  let typeOk = false;
+  if (bdOk) {
+    const age = calculateAge(birthDate.value);
+    const type = getAccountTypeByAge(age);
+    if (type === 'adult') {
+      typeOk = true;
+    } else if (type === 'child') {
+      // Детский - нужен родитель
+      typeOk = !!state.parentData;
+    }
+  }
+  registerBtn.disabled = !(fnOk && lnOk && bdOk && typeOk);
 }
+
 firstName.addEventListener('input', checkRegForm);
 lastName.addEventListener('input', checkRegForm);
+birthDate.addEventListener('input', () => {
+  const bd = birthDate.value;
+  const ageInfo = document.getElementById('ageInfo');
+  const ageInfoText = document.getElementById('ageInfoText');
+  const parentWrap = document.getElementById('parentPhoneWrap');
+  
+  if (!bd) {
+    ageInfo.style.display = 'none';
+    parentWrap.style.display = 'none';
+    checkRegForm();
+    return;
+  }
+  
+  const age = calculateAge(bd);
+  const type = getAccountTypeByAge(age);
+  
+  ageInfo.style.display = 'block';
+  if (type === 'adult') {
+    ageInfoText.innerHTML = `👤 Взрослый аккаунт <span class="age-badge adult" style="margin-left:8px">${age} лет</span>`;
+    parentWrap.style.display = 'none';
+    state.parentData = null;
+  } else {
+    ageInfoText.innerHTML = `👶 Детский аккаунт <span class="age-badge young" style="margin-left:8px">${age} лет</span><div style="font-size:11px;color:var(--text-dim);margin-top:4px;">Нужен телефон родителя</div>`;
+    parentWrap.style.display = 'block';
+  }
+  checkRegForm();
+});
 
+// Автопоиск родителя
 let parentLookupTimer = null;
 parentPhone.addEventListener('input', e => {
   e.target.value = formatPhone(e.target.value);
@@ -1503,27 +1648,35 @@ registerBtn.addEventListener('click', async () => {
   const phone = state.user.phone;
   const fn = firstName.value.trim();
   const ln = lastName.value.trim();
+  const bd = birthDate.value;
+  const age = calculateAge(bd);
+  const type = getAccountTypeByAge(age);
+  
   registerBtn.textContent = 'Создаём кошелёк...'; registerBtn.disabled = true;
   try {
     const initialCards = generateCards(phone);
     const userData = {
-      phone, firstName:fn, lastName:ln, type:state.user.type, avatar:'👤',
+      phone, firstName:fn, lastName:ln, type, avatar:'👤', birthDate: bd,
       cards:initialCards, contacts:[], goals:[], budgets:[],
       achievements:{}, autotransfers:[], loginHistory:[],
+      bonus:{ monthKey:'', categories:[], earned:0, history:[] },
       settings:{theme:'blue',mode:'dark',autoLock:true,bio:false,dailyLimit:50000,perOpLimit:15000,notifications:true,private:false,sound:true,roundup:false},
       createdAt: firebase.database.ServerValue.TIMESTAMP
     };
-    if (state.user.type==='child' && state.parentData) {
+    if (type==='child' && state.parentData) {
       userData.parentPhone = state.parentData.phone;
       userData.parentName = (state.parentData.firstName+' '+(state.parentData.lastName||'')).trim();
     }
     await db.ref('users/'+phone).set(userData);
-    if (state.user.type==='child' && state.parentData) {
+    if (type==='child' && state.parentData) {
       await db.ref('parents/'+state.parentData.phone+'/children/'+phone).set({
         phone, firstName:fn, lastName:ln, addedAt: firebase.database.ServerValue.TIMESTAMP
       });
     }
-    state.user.firstName = fn; state.user.lastName = ln;
+    state.user.firstName = fn;
+    state.user.lastName = ln;
+    state.user.type = type;
+    state.user.birthDate = bd;
     registerBtn.textContent='Создать кошелёк'; registerBtn.disabled=false;
     goTo('screenCreatePin');
   } catch(e){ console.error(e); showToast('❌ Ошибка создания', true); registerBtn.textContent='Создать кошелёк'; registerBtn.disabled=false; }
@@ -1673,48 +1826,21 @@ function pinLogout(){
 document.addEventListener('keydown', (e) => {
   const activeScreen = document.querySelector('.screen.active');
   if (!activeScreen) return;
-  
-  // Обработка Enter на форме телефона и регистрации
   if (e.key === 'Enter') {
-    if (activeScreen.id === 'screenPhone' && !phoneBtn.disabled) {
-      e.preventDefault(); phoneBtn.click(); return;
-    }
-    if (activeScreen.id === 'screenRegister' && !registerBtn.disabled) {
-      e.preventDefault(); registerBtn.click(); return;
-    }
+    if (activeScreen.id === 'screenPhone' && !phoneBtn.disabled) { e.preventDefault(); phoneBtn.click(); return; }
+    if (activeScreen.id === 'screenRegister' && !registerBtn.disabled) { e.preventDefault(); registerBtn.click(); return; }
   }
-  
   const pinScreens = ['screenCreatePin', 'screenEnterPin', 'screenChangePin'];
   if (!pinScreens.includes(activeScreen.id)) return;
-  
-  // Цифры 0-9
-  if ((e.key >= '0' && e.key <= '9') ||
-      (e.code && e.code.startsWith('Numpad') && e.key >= '0' && e.key <= '9')) {
-    e.preventDefault();
-    pinInput(e.key);
-    return;
+  if ((e.key >= '0' && e.key <= '9') || (e.code && e.code.startsWith('Numpad') && e.key >= '0' && e.key <= '9')) {
+    e.preventDefault(); pinInput(e.key); return;
   }
-  
-  // Backspace — удалить
-  if (e.key === 'Backspace') {
-    e.preventDefault();
-    pinBackspace();
-    return;
-  }
-  
-  // Delete / Escape — очистить всё
+  if (e.key === 'Backspace') { e.preventDefault(); pinBackspace(); return; }
   if (e.key === 'Delete' || e.key === 'Escape') {
-    e.preventDefault();
-    state.pinBuffer = '';
-    updatePinDots();
-    return;
+    e.preventDefault(); state.pinBuffer = ''; updatePinDots(); return;
   }
-  
-  // Enter — подтвердить если 4 цифры
   if (e.key === 'Enter' && state.pinBuffer.length === 4) {
-    e.preventDefault();
-    handlePinComplete();
-    return;
+    e.preventDefault(); handlePinComplete(); return;
   }
 });
 
@@ -1769,6 +1895,7 @@ function attachUserListeners() {
     state.user.parentPhone = data.parentPhone||'';
     state.user.parentName = data.parentName||'';
     state.user.avatar = data.avatar||'👤';
+    state.user.birthDate = data.birthDate||'';
     state.savedPin = data.pinHash || state.savedPin;
     state.cards = data.cards || [];
     state.contacts = data.contacts || [];
@@ -1779,6 +1906,15 @@ function attachUserListeners() {
     state.loginHistory = data.loginHistory || [];
     state.settings = { ...state.settings, ...(data.settings||{}) };
     state.lastOperation = data.lastOperation || null;
+    
+    // Курсив-бонус: если месяц сменился — сбрасываем
+    const currentMonthKey = monthKey();
+    if (!data.bonus || data.bonus.monthKey !== currentMonthKey) {
+      state.bonus = { monthKey: currentMonthKey, categories: [], earned: 0, history: data.bonus?.history || [] };
+    } else {
+      state.bonus = data.bonus;
+    }
+    
     userDataLoaded = true;
     applySettings();
 
@@ -1800,6 +1936,7 @@ function attachUserListeners() {
     if (id==='screenHome') renderHome();
     if (id==='screenHistory') renderHistory();
     if (id==='screenAccount') renderAccount();
+    if (id==='screenBonus') renderBonusScreen();
     if (id==='screenCards') renderAllCards();
     if (id==='screenContacts') renderContacts();
     if (id==='screenGoals') renderGoals();
@@ -1819,9 +1956,7 @@ function attachUserListeners() {
     state.history = Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
     if (prevLen > 0 && state.history.length > prevLen) {
       const newTx = state.history[0];
-      if (newTx.type === 'in') {
-        showPulseNotification('💰 Поступление', `${newTx.title} — ${fmt(newTx.amount)} ₽`, '💰');
-      }
+      if (newTx.type === 'in') showPulseNotification('💰 Поступление', `${newTx.title} — ${fmt(newTx.amount)} ₽`, '💰');
     }
     const active = document.querySelector('.screen.active');
     if (!active) return;
@@ -1829,6 +1964,7 @@ function attachUserListeners() {
     if (active.id==='screenHistory') renderHistory();
     if (active.id==='screenAnalytics') renderAnalytics();
     if (active.id==='screenBudgets') renderBudgets();
+    if (active.id==='screenBonus') renderBonusScreen();
   });
   childrenRef = db.ref('parents/'+phone+'/children');
   childrenRef.on('value', snap => {
@@ -1844,7 +1980,7 @@ async function saveCards(){ await db.ref('users/'+state.user.phone+'/cards').set
 async function saveUser(){
   if (!userDataLoaded) return;
   const ref = db.ref('users/'+state.user.phone);
-  const updates = { settings: state.settings, avatar: state.user.avatar };
+  const updates = { settings: state.settings, avatar: state.user.avatar, bonus: state.bonus };
   if (state.lastOperation) updates.lastOperation = state.lastOperation;
   const snap = await ref.once('value');
   const dbData = snap.val() || {};
@@ -1862,6 +1998,7 @@ async function saveBudgets(){ if (userDataLoaded) await db.ref('users/'+state.us
 async function saveAutotransfers(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/autotransfers').set(state.autotransfers || []); }
 async function saveLoginHistory(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/loginHistory').set(state.loginHistory || []); }
 async function saveAchievements(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/achievements').set(state.achievements || {}); }
+async function saveBonus(){ if (userDataLoaded) await db.ref('users/'+state.user.phone+'/bonus').set(state.bonus); }
 
 async function addHistory(tx){
   const ref = db.ref('history/'+state.user.phone).push();
@@ -1869,9 +2006,7 @@ async function addHistory(tx){
 }
 function applySettings(){
   let mode = state.settings.mode;
-  if (mode === 'auto') {
-    mode = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  }
+  if (mode === 'auto') mode = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   document.body.classList.toggle('light', mode === 'light');
   document.body.className = document.body.className.replace(/theme-\w+/g,'').trim();
   if (state.settings.theme !== 'blue') document.body.classList.add('theme-'+state.settings.theme);
@@ -1880,6 +2015,226 @@ function applySettings(){
     const names = {blue:'Синяя',purple:'Фиолетовая',green:'Зелёная',red:'Красная',orange:'Оранжевая',teal:'Бирюзовая',pink:'Розовая'};
     const modeLabel = state.settings.mode === 'auto' ? '🔄 ' : (mode === 'light' ? '☀️ ' : '🌙 ');
     label.textContent = modeLabel + names[state.settings.theme];
+  }
+}
+
+/* ==================== КУРСИВ-БОНУС ==================== */
+function getBonusCategoryIds() {
+  return state.bonus?.categories || [];
+}
+function isBonusCategory(catId) {
+  return getBonusCategoryIds().includes(catId);
+}
+function calculateBonus(amount, category) {
+  if (!isBonusCategory(category)) return 0;
+  if (state.bonus.earned >= BONUS_MAX_PER_MONTH) return 0;
+  const bonus = Math.floor(amount * BONUS_PERCENT / 100);
+  const remaining = BONUS_MAX_PER_MONTH - state.bonus.earned;
+  return Math.min(bonus, remaining);
+}
+async function awardBonus(amount, category, merchantName) {
+  const bonus = calculateBonus(amount, category);
+  if (bonus <= 0) return 0;
+  state.bonus.earned = (state.bonus.earned || 0) + bonus;
+  if (!state.bonus.history) state.bonus.history = [];
+  state.bonus.history.unshift({
+    date: now(),
+    category,
+    merchant: merchantName,
+    amount,
+    bonus,
+    createdAt: Date.now()
+  });
+  if (state.bonus.history.length > 50) state.bonus.history = state.bonus.history.slice(0, 50);
+  
+  // Начисляем на первую карту
+  const card = state.cards[0];
+  if (card) {
+    card.balance += bonus;
+    await saveCards();
+  }
+  await saveBonus();
+  await addHistory({
+    type: 'in', category: 'bonus',
+    title: `Кэшбэк ${BONUS_PERCENT}% — ${merchantName}`,
+    amount: bonus, date: now()
+  });
+  await unlockAchievement('bonus_first');
+  return bonus;
+}
+function renderBonusScreen() {
+  const month = monthNameRu();
+  document.getElementById('bonusPeriod').textContent = month;
+  document.getElementById('bonusEarned').textContent = fmt(state.bonus.earned || 0) + ' ₽';
+  document.getElementById('bonusPercentBig').textContent = BONUS_PERCENT + '%';
+  const pct = Math.min(100, ((state.bonus.earned || 0) / BONUS_MAX_PER_MONTH) * 100);
+  document.getElementById('bonusProgressBig').style.width = pct + '%';
+  document.getElementById('bonusLimitText').textContent = `Максимум ${fmt(BONUS_MAX_PER_MONTH)} ₽ в месяц • Осталось ${fmt(Math.max(0, BONUS_MAX_PER_MONTH - (state.bonus.earned||0)))} ₽`;
+  
+  // Категории выбора
+  const selected = state.bonusDraft.length ? state.bonusDraft : (state.bonus.categories || []);
+  document.getElementById('bonusSelectedCount').textContent = `${selected.length}/${BONUS_SLOTS}`;
+  
+  document.getElementById('bonusCategoriesList').innerHTML = BONUS_ELIGIBLE.map(catId => {
+    const cat = CATEGORIES[catId];
+    const isSel = selected.includes(catId);
+    return `
+      <div class="cat-chip ${isSel?'selected':''}" style="padding:14px 16px;font-size:14px;display:flex;align-items:center;gap:10px;width:100%;justify-content:flex-start;margin-bottom:6px" onclick="toggleBonusCategory('${catId}')">
+        <span style="font-size:20px">${cat.emoji}</span>
+        <span style="flex:1;text-align:left">${cat.name}</span>
+        <span style="color:${isSel?'#fff':'var(--text-muted)'};font-weight:600">${isSel?'✓':'+'}</span>
+      </div>
+    `;
+  }).join('');
+  
+  // История начислений
+  const hist = state.bonus.history || [];
+  document.getElementById('bonusHistory').innerHTML = hist.length
+    ? hist.slice(0, 10).map(h => {
+        const cat = CATEGORIES[h.category] || CATEGORIES.other;
+        return `
+          <div class="card-select-item" style="cursor:default">
+            <div class="ci-icon" style="background:${cat.color};display:flex;align-items:center;justify-content:center;font-size:16px">${cat.emoji}</div>
+            <div style="flex:1">
+              <div class="ci-num">${h.merchant}</div>
+              <div class="ci-bal">${h.date}</div>
+            </div>
+            <div style="color:var(--green);font-weight:600">+${fmt(h.bonus)} ₽</div>
+          </div>
+        `;
+      }).join('')
+    : `<div class="empty"><div class="empty-icon">⭐</div>Пока нет начислений</div>`;
+}
+function toggleBonusCategory(catId) {
+  // Инициализируем draft
+  if (!state.bonusDraft.length) state.bonusDraft = [...(state.bonus.categories || [])];
+  const idx = state.bonusDraft.indexOf(catId);
+  if (idx >= 0) {
+    state.bonusDraft.splice(idx, 1);
+  } else {
+    if (state.bonusDraft.length >= BONUS_SLOTS) {
+      showToast(`❌ Можно выбрать максимум ${BONUS_SLOTS} категории`, true);
+      return;
+    }
+    state.bonusDraft.push(catId);
+  }
+  renderBonusScreen();
+}
+async function saveBonusCategories() {
+  if (!state.bonusDraft.length && !state.bonus.categories.length) {
+    showToast('❌ Выберите категории', true);
+    return;
+  }
+  state.bonus.categories = [...state.bonusDraft];
+  await saveBonus();
+  state.bonusDraft = [];
+  showToast('⭐ Категории сохранены');
+  renderBonusScreen();
+  renderHome();
+  renderAccount();
+}
+function renderBonusHomeCard() {
+  const cats = state.bonus.categories || [];
+  const bonusSub = document.getElementById('bonusSubMain');
+  const bonusCats = document.getElementById('bonusCatsMain');
+  const progressFill = document.getElementById('bonusProgressMain');
+  const hint = document.getElementById('bonusHintMain');
+  
+  if (!cats.length) {
+    bonusSub.textContent = 'Выберите 3 категории на этот месяц';
+    bonusCats.innerHTML = '';
+    hint.textContent = 'Нажмите, чтобы настроить категории';
+    progressFill.style.width = '0%';
+    return;
+  }
+  
+  bonusSub.textContent = `Начислено в этом месяце`;
+  bonusCats.innerHTML = cats.map(catId => {
+    const cat = CATEGORIES[catId] || CATEGORIES.other;
+    return `<div class="bonus-cat-pill">${cat.emoji} ${cat.name}</div>`;
+  }).join('');
+  const pct = Math.min(100, ((state.bonus.earned||0) / BONUS_MAX_PER_MONTH) * 100);
+  progressFill.style.width = pct + '%';
+  hint.textContent = `${fmt(state.bonus.earned||0)} из ${fmt(BONUS_MAX_PER_MONTH)} ₽ начислено`;
+}
+function renderBonusAccountPreview() {
+  const el = document.getElementById('accountBonusPreview');
+  if (!el) return;
+  const cats = state.bonus.categories || [];
+  if (!cats.length) {
+    el.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Категории не выбраны</div>`;
+    return;
+  }
+  el.innerHTML = `
+    <div style="background:var(--card);border-radius:14px;padding:14px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        ${cats.map(catId => {
+          const cat = CATEGORIES[catId] || CATEGORIES.other;
+          return `<span class="bonus-cat-pill" style="background:rgba(102,126,234,0.2);color:#a5b4fc">${cat.emoji} ${cat.name}</span>`;
+        }).join('')}
+      </div>
+      <div style="color:var(--text-dim);font-size:12px">Начислено: <b style="color:var(--green)">${fmt(state.bonus.earned||0)} ₽</b> из ${fmt(BONUS_MAX_PER_MONTH)} ₽</div>
+    </div>
+  `;
+}
+
+/* ==================== УДАЛЕНИЕ АККАУНТА ==================== */
+function confirmDeleteAccount() {
+  document.getElementById('deleteConfirmInput').value = '';
+  document.getElementById('deleteAccountConfirmBtn').disabled = true;
+  showModal('deleteAccountModal');
+}
+document.getElementById('deleteConfirmInput')?.addEventListener('input', e => {
+  const val = (e.target.value || '').trim().toUpperCase();
+  document.getElementById('deleteAccountConfirmBtn').disabled = val !== 'УДАЛИТЬ';
+});
+async function performDeleteAccount() {
+  const phone = state.user.phone;
+  if (!phone) return;
+  const btn = document.getElementById('deleteAccountConfirmBtn');
+  btn.textContent = 'Удаляем...';
+  btn.disabled = true;
+  try {
+    // Удаляем все данные пользователя
+    await db.ref('users/'+phone).remove();
+    await db.ref('history/'+phone).remove();
+    
+    // Если ребёнок — удаляем из списка детей родителя
+    if (state.user.parentPhone) {
+      await db.ref('parents/'+state.user.parentPhone+'/children/'+phone).remove();
+    }
+    // Если родитель — удаляем всех его детей из parents
+    await db.ref('parents/'+phone).remove();
+    
+    // Удаляем запросы
+    await db.ref('requests/'+phone).remove();
+    
+    // Очищаем localStorage
+    localStorage.removeItem('bank_phone');
+    localStorage.removeItem('bank_current_screen');
+    
+    // Сбрасываем состояние
+    detachUserListeners();
+    state.loggedIn = false;
+    state.savedPin = null;
+    state.user = { phone:'', firstName:'', lastName:'', type:'adult', avatar:'👤', birthDate:'' };
+    state.cards = [];
+    state.history = [];
+    state.contacts = [];
+    state.goals = [];
+    state.budgets = [];
+    state.bonus = { monthKey:'', categories:[], earned:0, history:[] };
+    
+    hideModal('deleteAccountModal');
+    phoneInput.value = '';
+    phoneBtn.disabled = true;
+    goTo('screenPhone');
+    showToast('🗑 Аккаунт удалён навсегда');
+  } catch(e) {
+    console.error(e);
+    showToast('❌ Ошибка удаления', true);
+    btn.textContent = 'Удалить';
+    btn.disabled = false;
   }
 }
 
@@ -1946,6 +2301,8 @@ function renderHome(){
     animateBalance(el, total);
   }
   document.getElementById('mainCardNum').textContent = state.cards[0] ? maskCard(state.cards[0].last) : '•••• ----';
+
+  renderBonusHomeCard();
 
   const recent = state.history.slice(0,5);
   document.getElementById('homeHistory').innerHTML = recent.length
@@ -2085,12 +2442,7 @@ document.getElementById('historyPeriods')?.addEventListener('click', e => {
 });
 function filterByPeriod(items, period) {
   const now = Date.now();
-  if (period === 'today') {
-    return items.filter(t => {
-      const d = new Date(t.createdAt||0);
-      return d.toDateString() === new Date().toDateString();
-    });
-  }
+  if (period === 'today') return items.filter(t => new Date(t.createdAt||0).toDateString() === new Date().toDateString());
   if (period === 'week') return items.filter(t => (t.createdAt||0) >= now - 7*24*60*60*1000);
   if (period === 'month') return items.filter(t => (t.createdAt||0) >= now - 30*24*60*60*1000);
   if (period === 'quarter') return items.filter(t => (t.createdAt||0) >= now - 90*24*60*60*1000);
@@ -2114,10 +2466,7 @@ function renderHistory(){
     if (filter==='in' || filter==='out') items = items.filter(t => t.type===filter);
     else items = items.filter(t => t.category===filter);
   }
-  if (search) items = items.filter(t =>
-    (t.title||'').toLowerCase().includes(search) ||
-    (t.comment||'').toLowerCase().includes(search)
-  );
+  if (search) items = items.filter(t => (t.title||'').toLowerCase().includes(search) || (t.comment||'').toLowerCase().includes(search));
   if (!items.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">📋</div>Ничего не найдено</div>`; return; }
   el.innerHTML = items.map(t => renderTxItem(t)).join('');
 }
@@ -2148,10 +2497,16 @@ function renderAccount(){
   document.getElementById('userAvatar').textContent = u.avatar || initial.toUpperCase() || '👤';
 
   let badges = '';
+  const age = calculateAge(u.birthDate);
   if (u.type==='child') {
     badges += '<span class="badge-child">👶 Детский</span>';
+    if (age !== null) badges += ` <span class="age-badge young">${age} лет</span>`;
     if (u.parentName) badges += `<div style="color:var(--text-dim);font-size:11px;margin-top:8px">Родитель: ${u.parentName}</div>`;
-  } else badges += '<span class="badge-parent">👤 Взрослый</span>';
+  } else {
+    badges += '<span class="badge-parent">👤 Взрослый</span>';
+    if (age !== null) badges += ` <span class="age-badge adult">${age} лет</span>`;
+  }
+  if (u.birthDate) badges += `<div style="color:var(--text-muted);font-size:11px;margin-top:6px">День рождения: ${new Date(u.birthDate).toLocaleDateString('ru-RU')}</div>`;
   document.getElementById('accountBadges').innerHTML = badges;
 
   const device = detectDevice();
@@ -2164,6 +2519,8 @@ function renderAccount(){
       </div>
     `;
   }
+
+  renderBonusAccountPreview();
 
   const cs = document.getElementById('childrenSection');
   const cl = document.getElementById('childrenList');
@@ -2324,10 +2681,8 @@ async function copyCardRequisites() {
   if (!c) return;
   const num = '4276 '+String(Math.floor(1000+Math.random()*9000))+' '+String(Math.floor(1000+Math.random()*9000))+' '+c.last;
   const text = `${BANK_NAME}\n${num}\n${c.expiry||'12/27'}\nCVV: ${c.cvv||'123'}`;
-  try {
-    await navigator.clipboard.writeText(text);
-    showToast('📋 Реквизиты скопированы');
-  } catch(e) { showToast('❌ Не удалось скопировать', true); }
+  try { await navigator.clipboard.writeText(text); showToast('📋 Реквизиты скопированы'); }
+  catch(e) { showToast('❌ Не удалось скопировать', true); }
 }
 async function saveCardDetails(){
   const c = getCard(state.currentCardId);
@@ -2584,7 +2939,7 @@ function openAddBudget(){
   document.getElementById('gmText').textContent = 'Лимит на категорию в месяц';
   document.getElementById('gmExtra').innerHTML = `
     <select id="newBudgetCat" style="margin-bottom:14px">
-      ${Object.entries(CATEGORIES).filter(([k])=>!['topup','transfer'].includes(k)).map(([k,v])=>`<option value="${k}">${v.emoji} ${v.name}</option>`).join('')}
+      ${Object.entries(CATEGORIES).filter(([k])=>!['topup','transfer','bonus'].includes(k)).map(([k,v])=>`<option value="${k}">${v.emoji} ${v.name}</option>`).join('')}
     </select>
     <input type="text" id="newBudgetLimit" placeholder="Лимит ₽" inputmode="numeric" style="text-align:center">
   `;
@@ -2668,12 +3023,8 @@ function openAddAutotransfer() {
   document.getElementById('gmTitle').textContent = 'Новый автоперевод';
   document.getElementById('gmText').textContent = 'Ежемесячный перевод между картами';
   document.getElementById('gmExtra').innerHTML = `
-    <select id="atFrom" style="margin-bottom:10px">
-      ${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}
-    </select>
-    <select id="atTo" style="margin-bottom:10px">
-      ${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}
-    </select>
+    <select id="atFrom" style="margin-bottom:10px">${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}</select>
+    <select id="atTo" style="margin-bottom:10px">${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}</select>
     <input type="text" id="atAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
     <input type="text" id="atDay" placeholder="День месяца (1-28)" inputmode="numeric" value="1" style="text-align:center">
   `;
@@ -2696,17 +3047,17 @@ async function deleteAutotransfer(i){ state.autotransfers.splice(i,1); await sav
 async function checkAutotransfers() {
   const today = new Date();
   const day = today.getDate();
-  const monthKey = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0');
+  const mk = monthKey();
   let changed = false;
   for (const at of state.autotransfers) {
     if (at.day !== day) continue;
-    if (at.lastRun === monthKey) continue;
+    if (at.lastRun === mk) continue;
     const from = getCard(at.fromId);
     const to = getCard(at.toId);
     if (!from || !to || from.frozen || from.balance < at.amount) continue;
     from.balance -= at.amount;
     to.balance += at.amount;
-    at.lastRun = monthKey;
+    at.lastRun = mk;
     await addHistory({ type:'out', category:'transfer', title:`Автоперевод → ${to.brand} ${maskCard(to.last)}`, amount:at.amount, date:now() });
     await addHistory({ type:'in', category:'transfer', title:`Автоперевод ← ${from.brand} ${maskCard(from.last)}`, amount:at.amount, date:now() });
     changed = true;
@@ -2769,8 +3120,7 @@ function renderAnalytics(){
   segments.forEach(([cat,val]) => {
     const color = (CATEGORIES[cat]||CATEGORIES.other).color;
     const len = (val/total)*c;
-    svg.innerHTML += `<circle cx="50" cy="50" r="${r}" fill="none" stroke="${color}" stroke-width="15"
-      stroke-dasharray="${len} ${c-len}" stroke-dashoffset="${-offset}" transform="rotate(-90 50 50)"/>`;
+    svg.innerHTML += `<circle cx="50" cy="50" r="${r}" fill="none" stroke="${color}" stroke-width="15" stroke-dasharray="${len} ${c-len}" stroke-dashoffset="${-offset}" transform="rotate(-90 50 50)"/>`;
     offset += len;
   });
   document.getElementById('donutTotal').textContent = fmt(total)+' ₽';
@@ -2816,28 +3166,15 @@ function renderAnalytics(){
   ops.forEach(t => { if (t.category==='pay') merchants[t.title] = (merchants[t.title]||0)+t.amount; });
   const top = Object.entries(merchants).sort((a,b)=>b[1]-a[1]).slice(0,5);
   document.getElementById('topMerchants').innerHTML = top.length
-    ? top.map(([name,val]) => `
-        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px">
-          <span style="color:var(--text)">${name}</span>
-          <span style="color:var(--text-dim)">${fmt(val)} ₽</span>
-        </div>
-      `).join('')
+    ? top.map(([name,val]) => `<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px"><span style="color:var(--text)">${name}</span><span style="color:var(--text-dim)">${fmt(val)} ₽</span></div>`).join('')
     : `<div style="color:var(--text-dim);font-size:12px">Нет покупок</div>`;
 
   const now2 = new Date();
   const curMonth = now2.getMonth(), curYear = now2.getFullYear();
   const prevMonth = curMonth===0?11:curMonth-1;
   const prevYear = curMonth===0?curYear-1:curYear;
-  const curSpent = state.history.filter(t => {
-    if (t.type!=='out') return false;
-    const d = new Date(t.createdAt||0);
-    return d.getMonth()===curMonth && d.getFullYear()===curYear;
-  }).reduce((s,t)=>s+t.amount,0);
-  const prevSpent = state.history.filter(t => {
-    if (t.type!=='out') return false;
-    const d = new Date(t.createdAt||0);
-    return d.getMonth()===prevMonth && d.getFullYear()===prevYear;
-  }).reduce((s,t)=>s+t.amount,0);
+  const curSpent = state.history.filter(t => { if (t.type!=='out') return false; const d = new Date(t.createdAt||0); return d.getMonth()===curMonth && d.getFullYear()===curYear; }).reduce((s,t)=>s+t.amount,0);
+  const prevSpent = state.history.filter(t => { if (t.type!=='out') return false; const d = new Date(t.createdAt||0); return d.getMonth()===prevMonth && d.getFullYear()===prevYear; }).reduce((s,t)=>s+t.amount,0);
   const diff = prevSpent ? ((curSpent-prevSpent)/prevSpent)*100 : 0;
   document.getElementById('monthCompare').innerHTML = `
     Этот месяц: <b style="color:var(--text)">${fmt(curSpent)} ₽</b><br>
@@ -2864,6 +3201,8 @@ function renderAnalytics(){
   if (avgPerDay * 30 > state.settings.dailyLimit * 30) advices.push('⚠️ Прогноз превышает ваш лимит — сократите расходы');
   const savings = state.goals.reduce((s,g)=>s+(g.current||0),0);
   if (savings > 0) advices.push(`💰 Вы накопили ${fmt(savings)} ₽ в целях — так держать!`);
+  const bonus = state.bonus.earned || 0;
+  if (bonus > 0) advices.push(`⭐ Курсив-бонус принёс вам ${fmt(bonus)} ₽ в этом месяце`);
   if (!advices.length) advices.push('Пока нет данных для советов');
   document.getElementById('advices').innerHTML = advices.map(a => `<div style="margin-bottom:8px">${a}</div>`).join('');
 }
@@ -2898,19 +3237,16 @@ async function checkAchievements(){
   const total = state.cards.reduce((s,c)=>s+c.balance,0);
   if (total >= 50000) await unlockAchievement('saver');
   if (state.contacts.length >= 3) await unlockAchievement('social');
+  if ((state.bonus.earned||0) > 0) await unlockAchievement('bonus_first');
 }
 
 /* ==================== ПОПОЛНЕНИЕ ==================== */
 function renderTopupCards(){
   const el = document.getElementById('topupCards');
   el.innerHTML = state.cards.map(c => `
-    <div class="card-select-item ${state.selectedTopupCard===c.id?'selected':''} ${c.frozen?'frozen':''}"
-         onclick="${c.frozen?'':`selectTopupCard(${c.id})`}">
+    <div class="card-select-item ${state.selectedTopupCard===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTopupCard(${c.id})`}">
       <div class="ci-icon" style="background:${c.color}"></div>
-      <div>
-        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-        <div class="ci-bal">Баланс: ${fmt(c.balance)} ₽</div>
-      </div>
+      <div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">Баланс: ${fmt(c.balance)} ₽</div></div>
       ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
     </div>
   `).join('');
@@ -2955,10 +3291,7 @@ function renderTransferCards(){
   const html = state.cards.map(c => `
     <div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}">
       <div class="ci-icon" style="background:${c.color}"></div>
-      <div>
-        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-        <div class="ci-bal">${fmt(c.balance)} ₽</div>
-      </div>
+      <div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">${fmt(c.balance)} ₽</div></div>
       ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
     </div>
   `).join('');
@@ -2987,59 +3320,37 @@ function renderTransferCards(){
 }
 function renderTransferOwnCards(){
   if (state.transferOwnFrom == null) state.transferOwnFrom = state.cards[0]?.id ?? null;
-  if (state.transferOwnTo == null) {
-    const other = state.cards.find(c => c.id !== state.transferOwnFrom);
-    state.transferOwnTo = other?.id ?? null;
-  }
+  if (state.transferOwnTo == null) { const other = state.cards.find(c => c.id !== state.transferOwnFrom); state.transferOwnTo = other?.id ?? null; }
   const fromEl = document.getElementById('transferOwnFrom');
   if (!fromEl) return;
   fromEl.innerHTML = state.cards.filter(c => c.id !== state.transferOwnTo).map(c => `
-    <div class="card-select-item ${state.transferOwnFrom===c.id?'selected':''} ${c.frozen?'frozen':''}"
-         onclick="${c.frozen?'':`selectTransferOwnFrom(${c.id})`}">
+    <div class="card-select-item ${state.transferOwnFrom===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTransferOwnFrom(${c.id})`}">
       <div class="ci-icon" style="background:${c.color}"></div>
-      <div style="flex:1">
-        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-        ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-        <div class="ci-bal">${fmt(c.balance)} ₽</div>
-      </div>
+      <div style="flex:1"><div class="ci-num">${c.brand} ${maskCard(c.last)}</div>${c.name?`<div class="ci-name">${c.name}</div>`:''}<div class="ci-bal">${fmt(c.balance)} ₽</div></div>
       ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
     </div>
   `).join('');
   const toEl = document.getElementById('transferOwnTo');
   toEl.innerHTML = state.cards.filter(c => c.id !== state.transferOwnFrom).map(c => `
-    <div class="card-select-item ${state.transferOwnTo===c.id?'selected':''} ${c.frozen?'frozen':''}"
-         onclick="${c.frozen?'':`selectTransferOwnTo(${c.id})`}">
+    <div class="card-select-item ${state.transferOwnTo===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTransferOwnTo(${c.id})`}">
       <div class="ci-icon" style="background:${c.color}"></div>
-      <div style="flex:1">
-        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-        ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-        <div class="ci-bal">${fmt(c.balance)} ₽</div>
-      </div>
+      <div style="flex:1"><div class="ci-num">${c.brand} ${maskCard(c.last)}</div>${c.name?`<div class="ci-name">${c.name}</div>`:''}<div class="ci-bal">${fmt(c.balance)} ₽</div></div>
       ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
     </div>
   `).join('');
 }
 function selectTransferOwnFrom(id){
-  if (state.transferOwnTo === id) {
-    const other = state.cards.find(c => c.id !== id && !c.frozen);
-    if (other) state.transferOwnTo = other.id;
-  }
+  if (state.transferOwnTo === id) { const other = state.cards.find(c => c.id !== id && !c.frozen); if (other) state.transferOwnTo = other.id; }
   state.transferOwnFrom = id;
-  renderTransferOwnCards();
-  checkTransferForm();
+  renderTransferOwnCards(); checkTransferForm();
 }
-function selectTransferOwnTo(id){
-  state.transferOwnTo = id;
-  renderTransferOwnCards();
-  checkTransferForm();
-}
+function selectTransferOwnTo(id){ state.transferOwnTo = id; renderTransferOwnCards(); checkTransferForm(); }
 function renderTransferContacts(){
   const el = document.getElementById('transferContacts');
   if (!state.contacts.length) { el.innerHTML=''; return; }
   el.innerHTML = state.contacts.map(c => `
     <span class="contact-chip" onclick="quickTransferTo('${c.phone}')">
-      <div class="cc-av">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div>
-      ${c.firstName}
+      <div class="cc-av">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div>${c.firstName}
     </span>
   `).join('');
 }
@@ -3061,10 +3372,7 @@ transferPhone.addEventListener('input', e=>{
   if (norm.length===11) phoneLookupTimer = setTimeout(()=>lookupRecipient(norm), 400);
   checkTransferForm();
 });
-transferCardNumber?.addEventListener('input', e=>{
-  e.target.value = formatCardNumber(e.target.value);
-  checkTransferForm();
-});
+transferCardNumber?.addEventListener('input', e=>{ e.target.value = formatCardNumber(e.target.value); checkTransferForm(); });
 async function lookupRecipient(phone){
   if (phone===normalizePhone(state.user.phone)) {
     recipientError.style.display='block';
@@ -3123,27 +3431,17 @@ transferBtn.addEventListener('click', async () => {
       await checkAchievements();
       await showProcessingThenSuccess('Перевод выполнен', amt, [
         { label:'Откуда', value:`${from.brand} ${maskCard(from.last)}` },
-        { label:'Куда',   value:`${to.brand} ${maskCard(to.last)}` },
-        { label:'Сумма',  value:fmt(amt)+' ₽' },
-        { label:'Дата',   value:now() }
+        { label:'Куда', value:`${to.brand} ${maskCard(to.last)}` },
+        { label:'Сумма', value:fmt(amt)+' ₽' },
+        { label:'Дата', value:now() }
       ]);
     } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); transferBtn.disabled=false; }
     return;
   }
   let from, toPhone, toName;
-  if (state.transferMethod==='phone') {
-    from = getCard(state.transferFrom);
-    toPhone = state.transferRecipient.phone;
-    toName = (state.transferRecipient.firstName+' '+(state.transferRecipient.lastName||'')).trim();
-  } else if (state.transferMethod==='card') {
-    from = getCard(state.transferFrom2);
-    toPhone = null;
-    toName = 'Карта '+transferCardNumber.value;
-  } else {
-    from = getCard(state.transferFrom3);
-    toPhone = null;
-    toName = 'QR-получатель';
-  }
+  if (state.transferMethod==='phone') { from = getCard(state.transferFrom); toPhone = state.transferRecipient.phone; toName = (state.transferRecipient.firstName+' '+(state.transferRecipient.lastName||'')).trim(); }
+  else if (state.transferMethod==='card') { from = getCard(state.transferFrom2); toPhone = null; toName = 'Карта '+transferCardNumber.value; }
+  else { from = getCard(state.transferFrom3); toPhone = null; toName = 'QR-получатель'; }
   if (!from || from.frozen || amt<=0 || amt>from.balance) return;
   if (!checkLimits(amt)) return;
   transferBtn.disabled = true;
@@ -3151,11 +3449,7 @@ transferBtn.addEventListener('click', async () => {
     from.balance -= amt;
     await saveCards();
     const comment = transferComment.value.trim();
-    await addHistory({
-      type:'out', category:'transfer',
-      title: state.transferMethod==='phone' ? 'Перевод для '+toName+' ('+formatPhone(toPhone)+')' : 'Перевод на '+toName,
-      amount:amt, date:now(), comment
-    });
+    await addHistory({ type:'out', category:'transfer', title: state.transferMethod==='phone' ? 'Перевод для '+toName+' ('+formatPhone(toPhone)+')' : 'Перевод на '+toName, amount:amt, date:now(), comment });
     if (toPhone) {
       await db.ref('users/'+toPhone+'/cards').transaction(cards => {
         if (!cards || !cards.length) cards = [{ id:1, brand:'VISA', last:toPhone.slice(-4), balance:0, color:'linear-gradient(135deg,#1e3c72,#2a5298)', frozen:false, limit:0 }];
@@ -3165,8 +3459,7 @@ transferBtn.addEventListener('click', async () => {
       await db.ref('history/'+toPhone).push().set({
         type:'in', category:'transfer',
         title:'Перевод от '+(state.user.firstName+' '+(state.user.lastName||'')).trim()+' ('+formatPhone(state.user.phone)+')',
-        amount:amt, date:now(), comment,
-        createdAt: firebase.database.ServerValue.TIMESTAMP
+        amount:amt, date:now(), comment, createdAt: firebase.database.ServerValue.TIMESTAMP
       });
     }
     transferAmount.value=''; transferPhone.value=''; transferCardNumber.value='';
@@ -3178,7 +3471,7 @@ transferBtn.addEventListener('click', async () => {
       { label:'Получатель', value: toName },
       ...(toPhone?[{ label:'Телефон', value:formatPhone(toPhone) }]:[]),
       { label:'Сумма', value:fmt(amt)+' ₽' },
-      { label:'Дата',  value:now() }
+      { label:'Дата', value:now() }
     ]);
   } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); transferBtn.disabled=false; }
 });
@@ -3228,11 +3521,7 @@ function openRequest(){
     const sum = parseInt(document.getElementById('reqSum').value)||0;
     if (phone.length!==11 || !sum) { showToast('❌ Заполните поля', true); return; }
     try {
-      await db.ref('requests/'+phone).push().set({
-        from: state.user.phone,
-        fromName: (state.user.firstName+' '+(state.user.lastName||'')).trim(),
-        amount: sum, createdAt: firebase.database.ServerValue.TIMESTAMP
-      });
+      await db.ref('requests/'+phone).push().set({ from: state.user.phone, fromName: (state.user.firstName+' '+(state.user.lastName||'')).trim(), amount: sum, createdAt: firebase.database.ServerValue.TIMESTAMP });
       hideModal('genericModal');
       showToast('📩 Запрос отправлен');
     } catch(e){ console.error(e); }
@@ -3254,10 +3543,7 @@ function renderPayCards(){
   const html = state.cards.map(c => `
     <div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}">
       <div class="ci-icon" style="background:${c.color}"></div>
-      <div>
-        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-        <div class="ci-bal">${fmt(c.balance)} ₽</div>
-      </div>
+      <div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">${fmt(c.balance)} ₽</div></div>
       ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
     </div>
   `).join('');
@@ -3272,8 +3558,7 @@ function renderPayCards(){
         if (id==='payCards') state.payCard=cid;
         if (id==='payCards2') state.payCard2=cid;
         if (id==='payCards3') state.payCard3=cid;
-        renderPayCards();
-        checkPayForm();
+        renderPayCards(); checkPayForm();
       };
     });
   });
@@ -3289,8 +3574,20 @@ document.getElementById('payCategories')?.addEventListener('click', e=>{
     document.querySelectorAll('#payCategories .cat-chip').forEach(c=>c.classList.remove('selected'));
     e.target.classList.add('selected');
     state.payCategory = e.target.dataset.cat;
+    updatePayBonusHint();
   }
 });
+function updatePayBonusHint() {
+  const hint = document.getElementById('payBonusHint');
+  const nameEl = document.getElementById('payBonusCatName');
+  if (isBonusCategory(state.payCategory)) {
+    const cat = CATEGORIES[state.payCategory];
+    nameEl.textContent = cat.name;
+    hint.style.display = 'block';
+  } else {
+    hint.style.display = 'none';
+  }
+}
 const payAmount = document.getElementById('payAmount');
 const payMerchant = document.getElementById('payMerchant');
 const payBtn = document.getElementById('payBtn');
@@ -3327,6 +3624,11 @@ payBtn.addEventListener('click', async () => {
     card.balance -= amt;
     await saveCards();
     await addHistory({ type:'out', category:state.payCategory, title:m, amount:amt, date:now() });
+    
+    // Курсив-бонус
+    const bonus = await awardBonus(amt, state.payCategory, m);
+    
+    // Округление в цель
     if (state.settings.roundup && roundupTarget > 0) {
       const rounded = Math.ceil(amt/10)*10;
       const diff = rounded - amt;
@@ -3343,10 +3645,12 @@ payBtn.addEventListener('click', async () => {
     await showProcessingThenSuccess('Оплата прошла', amt, [
       { label:'Магазин', value:m },
       { label:'Категория', value:(CATEGORIES[state.payCategory]?.emoji||'')+' '+(CATEGORIES[state.payCategory]?.name||'') },
-      { label:'Карта',   value:card.brand+' '+maskCard(card.last) },
-      { label:'Сумма',   value:fmt(amt)+' ₽' },
-      { label:'Дата',    value:now() }
+      { label:'Карта', value:card.brand+' '+maskCard(card.last) },
+      { label:'Сумма', value:fmt(amt)+' ₽' },
+      ...(bonus>0?[{ label:'⭐ Кэшбэк', value:'+'+fmt(bonus)+' ₽' }]:[]),
+      { label:'Дата', value:now() }
     ]);
+    if (bonus > 0) showPulseNotification('⭐ Курсив-бонус', `+${fmt(bonus)} ₽ кэшбэка за ${m}`, '⭐');
   } else if (state.payMethod==='req') {
     const amt = parseInt(document.getElementById('reqAmount').value)||0;
     const org = document.getElementById('reqOrg').value.trim();
@@ -3362,7 +3666,7 @@ payBtn.addEventListener('click', async () => {
       { label:'Организация', value:org },
       { label:'Карта', value:card.brand+' '+maskCard(card.last) },
       { label:'Сумма', value:fmt(amt)+' ₽' },
-      { label:'Дата',  value:now() }
+      { label:'Дата', value:now() }
     ]);
   } else {
     const amt = parseInt(document.getElementById('autoAmount').value)||0;
@@ -3395,18 +3699,13 @@ function renderMyQr() {
       if (!err) { container.appendChild(canvas); }
       else { container.innerHTML = `<div style="color:#000;font-size:12px">${data}</div>`; }
     });
-  } catch(e) {
-    container.innerHTML = `<div style="color:#000;font-size:12px">${data}</div>`;
-  }
+  } catch(e) { container.innerHTML = `<div style="color:#000;font-size:12px">${data}</div>`; }
 }
 async function shareQr() {
   const phone = formatPhone(state.user.phone);
   const text = `Мой номер для переводов в ${BANK_NAME}: ${phone}`;
-  if (navigator.share) {
-    try { await navigator.share({ title: BANK_NAME, text }); } catch(e){}
-  } else {
-    try { await navigator.clipboard.writeText(text); showToast('📋 Скопировано'); } catch(e){ showToast('❌ Ошибка', true); }
-  }
+  if (navigator.share) { try { await navigator.share({ title: BANK_NAME, text }); } catch(e){} }
+  else { try { await navigator.clipboard.writeText(text); showToast('📋 Скопировано'); } catch(e){ showToast('❌ Ошибка', true); } }
 }
 
 /* ==================== ОБРАБОТКА ==================== */
@@ -3430,16 +3729,8 @@ function showProcessingThenSuccess(title, amount, receiptRows){
     }, 1800);
   });
 }
-function setAmount(id, value){
-  const el = document.getElementById(id);
-  el.value = value;
-  el.dispatchEvent(new Event('input'));
-}
-function openOp(type){
-  if (type==='topup')    goTo('screenTopup');
-  if (type==='transfer') goTo('screenTransfer');
-  if (type==='pay')      goTo('screenPay');
-}
+function setAmount(id, value){ const el = document.getElementById(id); el.value = value; el.dispatchEvent(new Event('input')); }
+function openOp(type){ if (type==='topup') goTo('screenTopup'); if (type==='transfer') goTo('screenTransfer'); if (type==='pay') { goTo('screenPay'); updatePayBonusHint(); } }
 
 /* ==================== ПРОСМОТР РЕБЁНКА ==================== */
 async function openChildView(childPhone){
@@ -3455,15 +3746,12 @@ async function openChildView(childPhone){
   document.getElementById('childApproveToggle').checked = !!data.limits?.approveLarge;
   const hSnap = await db.ref('history/'+childPhone).once('value');
   const items = Object.values(hSnap.val()||{}).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-  document.getElementById('childViewHistory').innerHTML = items.length
-    ? items.map(renderTxItem).join('')
-    : `<div class="empty"><div class="empty-icon">📋</div>Операций нет</div>`;
+  document.getElementById('childViewHistory').innerHTML = items.length ? items.map(renderTxItem).join('') : `<div class="empty"><div class="empty-icon">📋</div>Операций нет</div>`;
   state.currentChildPhone = childPhone;
   goTo('screenChildView');
 }
 function openTopupChild(){
-  const phone = state.currentChildPhone;
-  if (!phone) return;
+  const phone = state.currentChildPhone; if (!phone) return;
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '💰';
   document.getElementById('gmTitle').textContent = 'Пополнить ребёнку';
@@ -3477,24 +3765,15 @@ function openTopupChild(){
     from.balance -= amt;
     await saveCards();
     await addHistory({ type:'out', category:'transfer', title:'Пополнение ребёнку', amount:amt, date:now() });
-    await db.ref('users/'+phone+'/cards').transaction(cards => {
-      if (!cards || !cards.length) return cards;
-      cards[0].balance = (cards[0].balance||0) + amt;
-      return cards;
-    });
-    await db.ref('history/'+phone).push().set({
-      type:'in', category:'topup',
-      title:'Пополнение от родителя',
-      amount:amt, date:now(), createdAt: firebase.database.ServerValue.TIMESTAMP
-    });
+    await db.ref('users/'+phone+'/cards').transaction(cards => { if (!cards || !cards.length) return cards; cards[0].balance = (cards[0].balance||0) + amt; return cards; });
+    await db.ref('history/'+phone).push().set({ type:'in', category:'topup', title:'Пополнение от родителя', amount:amt, date:now(), createdAt: firebase.database.ServerValue.TIMESTAMP });
     hideModal('genericModal');
     showToast('💰 Ребёнку пополнено');
     openChildView(phone);
   };
 }
 function openChildLimits(){
-  const phone = state.currentChildPhone;
-  if (!phone) return;
+  const phone = state.currentChildPhone; if (!phone) return;
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '📊';
   document.getElementById('gmTitle').textContent = 'Лимит ребёнка';
@@ -3509,8 +3788,7 @@ function openChildLimits(){
   };
 }
 function setChildAllowance(){
-  const phone = state.currentChildPhone;
-  if (!phone) return;
+  const phone = state.currentChildPhone; if (!phone) return;
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '💵';
   document.getElementById('gmTitle').textContent = 'Карманные деньги';
@@ -3550,7 +3828,7 @@ async function tryAutoLogin(){
     const snap = await db.ref('users/'+saved).once('value');
     const data = snap.val();
     if (data && data.firstName && data.pinHash) {
-      state.user = { phone:saved, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤' };
+      state.user = { phone:saved, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
       applySettings();
@@ -3592,8 +3870,7 @@ document.getElementById('soundToggle')?.addEventListener('change', async e=>{
   showToast(e.target.checked?'🔊 Звуки вкл':'🔇 Выкл');
 });
 document.getElementById('childApproveToggle')?.addEventListener('change', async e=>{
-  const phone = state.currentChildPhone;
-  if (!phone) return;
+  const phone = state.currentChildPhone; if (!phone) return;
   await db.ref('users/'+phone+'/limits/approveLarge').set(e.target.checked);
   showToast(e.target.checked?'✅ Одобрение вкл':'❌ Выкл');
 });
@@ -3602,14 +3879,8 @@ document.getElementById('childApproveToggle')?.addEventListener('change', async 
 document.addEventListener('contextmenu', e=>{
   if (e.target.tagName!=='INPUT' && e.target.tagName!=='TEXTAREA') e.preventDefault();
 });
-window.addEventListener('load', () => {
-  applyDeviceClass();
-  setTimeout(()=>window.scrollTo(0,1), 100);
-});
-window.addEventListener('resize', () => {
-  applyDeviceClass();
-  updatePinHints();
-});
+window.addEventListener('load', () => { applyDeviceClass(); setTimeout(()=>window.scrollTo(0,1), 100); });
+window.addEventListener('resize', () => { applyDeviceClass(); updatePinHints(); });
 window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
   if (state.settings.mode === 'auto') applySettings();
 });
