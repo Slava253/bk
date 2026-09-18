@@ -38,28 +38,50 @@
     position:relative;background:var(--bg-grad);overflow:hidden;
   }
 
-  /* На ПК и планшете контент центрируется и ограничивается по ширине */
+  /* На ПК и планшете контент центрируется */
   @media (min-width:768px) and (hover:hover) and (pointer:fine){
     .screen{
-      max-width:520px;left:50%;transform:translateX(-50%);
-      padding-left:28px;padding-right:28px;
+      max-width:520px;
+      left:50%;
+      right:auto;
+      transform:translateX(-50%);
+      padding-left:28px;
+      padding-right:28px;
       animation: fadeInCentered .35s ease;
     }
     .bottom-nav{
-      max-width:520px;left:50%;transform:translateX(-50%);
-      padding-left:28px;padding-right:28px;
+      max-width:520px;
+      left:50%;
+      right:auto;
+      transform:translateX(-50%);
+      padding-left:28px;
+      padding-right:28px;
     }
-    .pulse-notification{max-width:520px;left:50%;transform:translateX(-50%) translateY(-200%)}
-    .pulse-notification.show{transform:translateX(-50%) translateY(0)}
+    .pulse-notification{
+      max-width:520px;
+      left:50%;
+      right:auto;
+      transform:translateX(-50%) translateY(-200%);
+    }
+    .pulse-notification.show{
+      transform:translateX(-50%) translateY(0);
+    }
     @keyframes fadeInCentered{
       from{opacity:0;transform:translateX(-50%) translateY(15px)}
       to{opacity:1;transform:translateX(-50%) translateY(0)}
     }
   }
 
-  .screen{position:absolute;top:0;bottom:0;left:0;right:0;padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:fadeIn .35s ease}
-  .screen.active{display:block}.screen::-webkit-scrollbar{width:0}
+  .screen{
+    position:absolute;top:0;bottom:0;left:0;right:0;
+    padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
+    display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    animation:fadeIn .35s ease;
+  }
+  .screen.active{display:block}
+  .screen::-webkit-scrollbar{width:0}
   @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+
   h1{color:var(--text);font-size:22px;margin-bottom:8px}
   .sub{color:var(--text-dim);font-size:14px;margin-bottom:24px}
   input,select,textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;color:var(--text);font-size:16px;outline:none;transition:.25s;margin-bottom:14px;font-family:inherit}
@@ -74,7 +96,6 @@
   .btn.gray{background:var(--card);box-shadow:none;color:var(--text)}
   .btn.gray:hover{background:rgba(128,128,128,0.15);box-shadow:none}
   .btn.small{padding:10px;font-size:13px;margin-bottom:0}
-  /* Кнопки операций — всегда активны */
   .btn.op-btn:disabled{opacity:1;cursor:pointer;transform:none;pointer-events:auto}
   .back-link{display:block;text-align:center;color:var(--text-muted);font-size:13px;margin-top:8px;cursor:pointer;transition:.2s}
   .back-link:hover{color:var(--text-dim)}
@@ -1439,7 +1460,6 @@ function getTopupErrorReason() {
   if (amt <= 0) return 'Введите сумму';
   return null;
 }
-
 function getTransferErrorReason() {
   const amt = parseInt(transferAmount.value) || 0;
   let from = null;
@@ -1447,31 +1467,23 @@ function getTransferErrorReason() {
   if (state.transferMethod === 'card') from = getCard(state.transferFrom2);
   if (state.transferMethod === 'own') from = getCard(state.transferOwnFrom);
   if (state.transferMethod === 'qr') from = getCard(state.transferFrom3);
-
   if (!from) return 'Выберите карту';
   if (from.frozen) return 'Карта заморожена';
-
   if (state.transferMethod === 'phone') {
     if (!state.transferRecipient) {
-      if (!transferPhone.value.trim() || normalizePhone(transferPhone.value).length < 11) {
-        return 'Введите номер получателя';
-      }
+      if (!transferPhone.value.trim() || normalizePhone(transferPhone.value).length < 11) return 'Введите номер получателя';
       return 'Получатель не найден';
     }
   }
   if (state.transferMethod === 'card') {
-    if (transferCardNumber.value.replace(/\D/g,'').length !== 16) {
-      return 'Введите номер карты (16 цифр)';
-    }
+    if (transferCardNumber.value.replace(/\D/g,'').length !== 16) return 'Введите номер карты (16 цифр)';
   }
   if (state.transferMethod === 'own') {
     if (!state.transferOwnTo) return 'Выберите карту получателя';
     if (state.transferOwnFrom === state.transferOwnTo) return 'Выберите разные карты';
   }
-
   if (amt <= 0) return 'Введите сумму';
   if (amt > from.balance) return `Недостаточно средств (макс. ${fmt(from.balance)} ₽)`;
-
   if (state.transferMethod !== 'own') {
     if (amt > state.settings.perOpLimit) return `Максимум за операцию: ${fmt(state.settings.perOpLimit)} ₽`;
     const today = todayKey();
@@ -1483,10 +1495,8 @@ function getTransferErrorReason() {
     }).reduce((s,t) => s + t.amount, 0);
     if (spent + amt > state.settings.dailyLimit) return `Дневной лимит: ${fmt(state.settings.dailyLimit)} ₽`;
   }
-
   return null;
 }
-
 function getPayErrorReason() {
   if (state.payMethod === 'shop') {
     const amt = parseInt(payAmount.value) || 0;
@@ -1555,31 +1565,26 @@ function detectDevice() {
   const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(ua);
   const isTabletUA = /iPad|Tablet|PlayBook|Silk|Android(?!.*Mobile)/i.test(ua);
   const isIPad = /Macintosh/i.test(ua) && isTouch;
-
   let type = 'desktop', os = 'Unknown', browser = 'Unknown';
   if (isIPad || isTabletUA) type = 'tablet';
   else if (isMobileUA) type = 'mobile';
   else if (isTouch && window.innerWidth < 1024) type = 'tablet';
   else type = 'desktop';
-
   if (/Windows/i.test(ua)) os = 'Windows';
   else if (/Mac OS X/i.test(ua) || /Macintosh/i.test(ua)) os = 'macOS';
   else if (/Android/i.test(ua)) os = 'Android';
   else if (/iPhone|iPad|iPod/i.test(ua)) os = 'iOS';
   else if (/Linux/i.test(ua)) os = 'Linux';
-
   if (/Edg\//i.test(ua)) browser = 'Edge';
   else if (/YaBrowser/i.test(ua)) browser = 'Yandex';
   else if (/OPR\//i.test(ua) || /Opera/i.test(ua)) browser = 'Opera';
   else if (/Chrome\//i.test(ua)) browser = 'Chrome';
   else if (/Firefox\//i.test(ua)) browser = 'Firefox';
   else if (/Safari\//i.test(ua)) browser = 'Safari';
-
   const emoji = { desktop:'🖥', mobile:'📱', tablet:'📲' }[type];
   const name = { desktop:'Компьютер', mobile:'Телефон', tablet:'Планшет' }[type];
   return { type, name, emoji, os, browser, isTouch };
 }
-
 function updatePinHints() {
   const isPC = detectDevice().type === 'desktop';
   ['pinHint_createPin','pinHint_enterPin','pinHint_changePin'].forEach(id => {
