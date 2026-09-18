@@ -32,61 +32,24 @@
   body.theme-pink{--balance-grad:linear-gradient(135deg,#ec4899,#8b5cf6)}
   body{background:var(--bg-grad);color:var(--text)}
 
-  .app{
-    width:100%;max-width:100%;height:100vh;height:100dvh;
-    position:relative;background:var(--bg-grad);overflow:hidden;
-  }
+  .app{width:100%;max-width:100%;height:100vh;height:100dvh;position:relative;background:var(--bg-grad);overflow:hidden}
 
-  /* ==== БАЗОВЫЙ стиль экрана (сначала!) ==== */
   .screen{
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
+    position:absolute;top:0;bottom:0;left:0;right:0;
     padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
-    display:none;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
+    display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;
     animation:fadeIn .35s ease;
   }
   .screen.active{display:block}
   .screen::-webkit-scrollbar{width:0}
   @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 
-  /* ==== На ПК и планшете — центрирование (ПОСЛЕ базового!) ==== */
   @media (min-width:768px) and (hover:hover) and (pointer:fine){
-    .screen{
-      left:50%;
-      right:auto;
-      width:100%;
-      max-width:520px;
-      transform:translateX(-50%);
-      padding:calc(24px + env(safe-area-inset-top)) 28px calc(100px + env(safe-area-inset-bottom));
-      animation:fadeInCentered .35s ease;
-    }
-    .bottom-nav{
-      left:50%;
-      right:auto;
-      width:100%;
-      max-width:520px;
-      transform:translateX(-50%);
-      padding:16px 28px calc(22px + env(safe-area-inset-bottom));
-    }
-    .pulse-notification{
-      left:50%;
-      right:auto;
-      width:calc(100% - 40px);
-      max-width:520px;
-      transform:translateX(-50%) translateY(-200%);
-    }
-    .pulse-notification.show{
-      transform:translateX(-50%) translateY(0);
-    }
-    @keyframes fadeInCentered{
-      from{opacity:0;transform:translateX(-50%) translateY(15px)}
-      to{opacity:1;transform:translateX(-50%) translateY(0)}
-    }
+    .screen{left:50%;right:auto;width:100%;max-width:520px;transform:translateX(-50%);padding:calc(24px + env(safe-area-inset-top)) 28px calc(100px + env(safe-area-inset-bottom));animation:fadeInCentered .35s ease}
+    .bottom-nav{left:50%;right:auto;width:100%;max-width:520px;transform:translateX(-50%);padding:16px 28px calc(22px + env(safe-area-inset-bottom))}
+    .pulse-notification{left:50%;right:auto;width:calc(100% - 40px);max-width:520px;transform:translateX(-50%) translateY(-200%)}
+    .pulse-notification.show{transform:translateX(-50%) translateY(0)}
+    @keyframes fadeInCentered{from{opacity:0;transform:translateX(-50%) translateY(15px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
   }
 
   h1{color:var(--text);font-size:22px;margin-bottom:8px}
@@ -104,9 +67,20 @@
   .btn.gray:hover{background:rgba(128,128,128,0.15);box-shadow:none}
   .btn.small{padding:10px;font-size:13px;margin-bottom:0}
   .btn.op-btn:disabled{opacity:1;cursor:pointer;transform:none;pointer-events:auto}
+  .btn.admin{background:linear-gradient(135deg,#dc2626,#7f1d1d);box-shadow:0 8px 24px rgba(220,38,38,0.35)}
+  .btn .btn-spinner{
+    display:inline-block;width:18px;height:18px;
+    border:2.5px solid rgba(255,255,255,0.3);
+    border-top-color:#fff;border-radius:50%;
+    animation:btnspin .7s linear infinite;
+    vertical-align:middle;
+  }
+  @keyframes btnspin{to{transform:rotate(360deg)}}
+  .btn.loading{pointer-events:none}
   .back-link{display:block;text-align:center;color:var(--text-muted);font-size:13px;margin-top:8px;cursor:pointer;transition:.2s}
   .back-link:hover{color:var(--text-dim)}
   .logo{width:80px;height:80px;margin:40px auto 20px;border-radius:22px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 12px 32px rgba(102,126,234,0.4);font-family:Georgia,serif;font-style:italic;font-weight:bold;color:#fff;letter-spacing:-2px}
+  .logo.admin{background:linear-gradient(135deg,#dc2626,#7f1d1d);box-shadow:0 12px 32px rgba(220,38,38,0.4)}
   .auth-box{text-align:center}
   .auth-box h1{font-size:26px;letter-spacing:-0.5px}
   .brand-italic{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:bold}
@@ -115,6 +89,7 @@
   .username{color:var(--text);font-size:18px;font-weight:600;margin-top:2px}
   .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:16px;cursor:pointer;transition:.25s}
   .avatar:active{transform:scale(0.94)}
+  .avatar.admin{background:linear-gradient(135deg,#dc2626,#7f1d1d)}
   .balance-card{border-radius:22px;padding:24px;background:var(--balance-grad);color:#fff;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,0.3);cursor:pointer;transition:.3s}
   .balance-card:active{transform:scale(0.99)}
   .balance-card::after{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.08)}
@@ -214,6 +189,7 @@
   .modal-overlay.show .modal{transform:scale(1)}
   .modal-icon{width:60px;height:60px;margin:0 auto 16px;border-radius:50%;background:rgba(239,68,68,0.15);display:flex;align-items:center;justify-content:center;font-size:28px}
   .modal-icon.green{background:rgba(34,197,94,0.15)}
+  .modal-icon.admin{background:rgba(220,38,38,0.2)}
   .modal-title{color:var(--text);font-size:18px;font-weight:600;margin-bottom:8px}
   .modal-text{color:var(--text-dim);font-size:13px;margin-bottom:22px;line-height:1.5}
   .modal-buttons{display:flex;gap:10px}
@@ -234,7 +210,6 @@
   .child-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#f5576c);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:15px}
   .child-name{color:var(--text);font-size:15px;font-weight:600}
   .child-phone{color:var(--text-muted);font-size:11px;margin-top:2px}
-  .child-balance{color:var(--green);font-size:14px;font-weight:600;margin-left:auto}
   .badge-child{display:inline-block;background:linear-gradient(135deg,#f59e0b,#f5576c);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
   .badge-parent{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
   .badge-admin{display:inline-block;background:linear-gradient(135deg,#dc2626,#7f1d1d);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-left:8px;vertical-align:middle}
@@ -339,9 +314,12 @@
   .bonus-percent{font-size:26px;font-weight:800;position:absolute;top:20px;right:22px;z-index:1}
   .bonus-progress{height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;margin-top:12px;position:relative;z-index:1}
   .bonus-progress-fill{height:100%;background:#fff;border-radius:3px;transition:.5s}
-  /* Админ */
   .admin-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#dc2626,#7f1d1d);color:#fff;font-size:11px;font-weight:600;padding:5px 12px;border-radius:12px;margin-left:8px}
   .admin-search-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;margin-bottom:20px}
+  .admin-action-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px;background:var(--card);border:1px solid var(--border);border-radius:14px;cursor:pointer;transition:.25s;color:var(--text)}
+  .admin-action-btn:hover{background:rgba(220,38,38,0.15);border-color:#dc2626}
+  .admin-action-btn .aa-icon{font-size:22px}
+  .admin-action-btn .aa-label{font-size:10px;color:var(--text-dim);text-align:center}
   @media (hover: hover) and (pointer: fine) {
     .pin-key {transition: background 0.15s, transform 0.1s, box-shadow 0.15s;}
     .pin-key:hover {background: rgba(102,126,234,0.15);box-shadow: 0 4px 12px rgba(102,126,234,0.2);}
@@ -419,10 +397,10 @@
     </div>
   </div>
 
-  <!-- ВЫБОР РОЛИ (только для админского номера) -->
+  <!-- ВЫБОР РОЛИ (только для админского номера, после PIN) -->
   <div class="screen" id="screenRoleSelect">
     <div class="auth-box">
-      <div class="logo" style="background:linear-gradient(135deg,#dc2626,#7f1d1d)">👑</div>
+      <div class="logo admin">👑</div>
       <h1>Выбор режима</h1>
       <p class="sub">Этот номер зарегистрирован как администратор</p>
       <div class="account-choices">
@@ -437,11 +415,11 @@
           <div class="account-choice-icon admin">👑</div>
           <div>
             <div class="account-choice-title">Администратор</div>
-            <div class="account-choice-desc">Просмотр баланса и истории клиентов по номеру</div>
+            <div class="account-choice-desc">Просмотр и управление балансами клиентов</div>
           </div>
         </div>
       </div>
-      <p class="back-link" onclick="goTo('screenPhone')">← Назад</p>
+      <p class="back-link" onclick="pinLogout()">← Выйти</p>
     </div>
   </div>
 
@@ -527,16 +505,16 @@
     <div class="top-bar">
       <div>
         <div class="greeting">Панель</div>
-        <div class="username">Администратора <span class="admin-badge">👑 ADMIN</span></div>
+        <div class="username">Администратора <span class="admin-badge">👑</span></div>
       </div>
-      <div class="avatar" style="background:linear-gradient(135deg,#dc2626,#7f1d1d)" onclick="adminLogout()">👑</div>
+      <div class="avatar admin" onclick="goTo('screenAdminAccount')">👑</div>
     </div>
 
     <div class="admin-search-box">
       <div style="color:var(--text);font-size:15px;font-weight:600;margin-bottom:12px">🔍 Поиск клиента</div>
       <div style="color:var(--text-dim);font-size:12px;margin-bottom:8px">Введите номер телефона клиента</div>
       <input type="tel" id="adminPhoneInput" placeholder="+7 900 000-00-00" style="text-align:center">
-      <button class="btn" id="adminSearchBtn" onclick="adminSearchClient()">Найти клиента</button>
+      <button class="btn admin" id="adminSearchBtn" onclick="adminSearchClient()">Найти клиента</button>
       <div id="adminSearchError" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:14px;padding:12px;margin-top:12px;text-align:left">
         <div style="color:var(--red);font-size:13px" id="adminErrorText">Клиент не найден</div>
       </div>
@@ -544,10 +522,6 @@
 
     <div class="section-title"><span class="ttl">🕒 Последние просмотры</span></div>
     <div id="adminRecentViews"></div>
-
-    <div class="section-title" style="margin-top:20px"><span class="ttl">⚙️ Управление</span></div>
-    <button class="btn gray small" onclick="adminLogout()">Выйти из админ-панели</button>
-    <button class="btn gray small" onclick="goTo('screenPhone')">Войти как другой пользователь</button>
   </div>
 
   <!-- АДМИН ПРОСМОТР КЛИЕНТА -->
@@ -560,7 +534,7 @@
       </div>
     </div>
 
-    <div class="balance-card" id="adminClientBalanceCard" style="background:linear-gradient(135deg,#dc2626,#7f1d1d)">
+    <div class="balance-card" style="background:linear-gradient(135deg,#dc2626,#7f1d1d);cursor:default">
       <div class="balance-label">Общий баланс клиента</div>
       <div class="balance-amount" id="adminClientBalance">0 <span>₽</span></div>
       <div class="balance-num" id="adminClientMainCard">•••• ----</div>
@@ -570,11 +544,76 @@
       <div id="adminClientInfo" style="font-size:13px;color:var(--text-dim);line-height:1.7"></div>
     </div>
 
+    <div class="section-title"><span class="ttl">⚡ Управление финансами</span></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px">
+      <div class="admin-action-btn" onclick="adminAction('topup')">
+        <div class="aa-icon">➕</div>
+        <div class="aa-label">Пополнить</div>
+      </div>
+      <div class="admin-action-btn" onclick="adminAction('withdraw')">
+        <div class="aa-icon">➖</div>
+        <div class="aa-label">Списать</div>
+      </div>
+      <div class="admin-action-btn" onclick="adminAction('freeze')">
+        <div class="aa-icon">🔒</div>
+        <div class="aa-label">Заморозить</div>
+      </div>
+      <div class="admin-action-btn" onclick="adminAction('setbalance')">
+        <div class="aa-icon">✏️</div>
+        <div class="aa-label">Установить</div>
+      </div>
+    </div>
+
     <div class="section-title"><span class="ttl">💳 Карты клиента</span></div>
     <div id="adminClientCards" style="margin-bottom:16px"></div>
 
     <div class="section-title"><span class="ttl">📋 История операций</span><span id="adminTxCount"></span></div>
     <div id="adminClientHistory"></div>
+  </div>
+
+  <!-- АДМИН ПРОФИЛЬ -->
+  <div class="screen" id="screenAdminAccount">
+    <div class="op-header">
+      <div class="op-back" onclick="goTo('screenAdminHome')">←</div>
+      <div>
+        <div style="color:var(--text);font-size:17px;font-weight:600">Профиль</div>
+        <div style="color:var(--text-muted);font-size:12px">Администратор</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;text-align:center;margin-bottom:20px">
+      <div class="big-avatar admin">👑</div>
+      <div style="color:var(--text);font-size:18px;font-weight:600;margin-top:12px" id="adminAccountName">—</div>
+      <div style="color:var(--text-dim);font-size:13px;margin-top:4px" id="adminAccountPhone">—</div>
+      <div style="margin-top:10px">
+        <span class="badge-admin">👑 Администратор</span>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="ttl">⚙️ Режим работы</span></div>
+    <div class="settings-row" onclick="switchToClientMode()" style="border:1px solid rgba(102,126,234,0.4);background:rgba(102,126,234,0.1)">
+      <div class="sr-label">👤 Переключиться в режим клиента</div>
+      <div class="sr-arrow">›</div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><span class="ttl">⚙️ Настройки</span></div>
+    <div class="settings-row" onclick="goTo('screenTheme')">
+      <div class="sr-label">🎨 Тема оформления</div>
+      <div class="sr-value" id="themeLabelAdmin">Тёмная</div>
+      <div class="sr-arrow">›</div>
+    </div>
+    <div class="settings-row">
+      <div class="sr-label">🔔 Уведомления</div>
+      <label class="switch"><input type="checkbox" id="adminNotifToggle" checked><span class="slider"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="sr-label">🔊 Звуки</div>
+      <label class="switch"><input type="checkbox" id="adminSoundToggle" checked><span class="slider"></span></label>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><span class="ttl">⚠️ Опасная зона</span></div>
+    <button class="btn red" onclick="adminLogout()">Выйти из админ-панели</button>
+    <button class="btn gray small" onclick="pinLogout()" style="margin-bottom:20px">Сменить номер</button>
   </div>
 
   <!-- ИСТОРИЯ -->
@@ -631,6 +670,15 @@
       <div style="color:var(--text-dim);font-size:13px;margin-top:4px" id="accountPhone">—</div>
       <div style="margin-top:10px" id="accountBadges"></div>
       <div id="accountDevice"></div>
+    </div>
+
+    <!-- Кнопка переключения режима (только для админского номера) -->
+    <div id="adminSwitchBlock" style="display:none;margin-bottom:16px">
+      <div class="section-title"><span class="ttl">⚙️ Режим работы</span></div>
+      <div class="settings-row" onclick="switchToAdminMode()" style="border:1px solid rgba(220,38,38,0.4);background:rgba(220,38,38,0.1)">
+        <div class="sr-label">👑 Переключиться в режим администратора</div>
+        <div class="sr-arrow">›</div>
+      </div>
     </div>
 
     <div class="section-title"><span class="ttl">⭐ Курсив-бонус</span><span onclick="goTo('screenBonus')">Настроить →</span></div>
@@ -1349,7 +1397,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 const BANK_NAME = 'Курсивбанк';
-/* Админский номер — для него доступен выбор роли Клиент/Админ */
+/* Админский номер — для него после PIN доступен выбор роли Клиент/Админ */
 const ADMIN_PHONE = '79936050979';
 
 /* ==================== КОНСТАНТЫ ==================== */
@@ -1364,7 +1412,8 @@ const CATEGORIES = {
   transfer:{name:'Перевод',emoji:'🔄',color:'#3b82f6'},
   savings:{name:'Накопления',emoji:'💰',color:'#f59e0b'},
   reserve:{name:'Резерв',emoji:'🛡',color:'#0ea5e9'},
-  bonus:{name:'Кэшбэк',emoji:'⭐',color:'#f59e0b'}
+  bonus:{name:'Кэшбэк',emoji:'⭐',color:'#f59e0b'},
+  admin:{name:'Админ',emoji:'👑',color:'#dc2626'}
 };
 const BONUS_ELIGIBLE = ['food','transport','fun','shopping','health','other'];
 const ACHIEVEMENTS = [
@@ -1391,7 +1440,7 @@ const BONUS_SLOTS = 3;
 /* ==================== СОСТОЯНИЕ ==================== */
 const state = {
   user:{phone:'',firstName:'',lastName:'',type:'adult',avatar:'👤',birthDate:''},
-  role:'client', // 'client' | 'admin' — выбранная роль для админского номера
+  role:'client',
   cards:[], history:[], contacts:[], goals:[], budgets:[], achievements:{},
   autotransfers:[], loginHistory:[],
   bonus:{ monthKey:'', categories:[], earned:0, history:[] },
@@ -1404,8 +1453,10 @@ const state = {
   loggedIn:false, currentCardId:null, currentChildPhone:null, lastOperation:null, children:[],
   historyPeriod:'all', analyticsPeriod:'month', selectedAvatar:'👤',
   bonusDraft: [],
-  adminRecentViews: [],   // история просмотров клиентов в админке
-  adminCurrentClient:null // открытый в админке клиент
+  adminRecentViews: [],
+  adminCurrentClient:null,
+  /* После ввода PIN админского номера — ждём выбора роли */
+  pendingRoleChoice: false
 };
 
 let currentUserRef=null, historyRef=null, childrenRef=null;
@@ -1419,17 +1470,16 @@ const screens = ['screenLoading','screenPhone','screenRegister','screenRoleSelec
   'screenTheme','screenAnalytics','screenBudgets','screenLimits','screenAutotransfers',
   'screenChangePin','screenChildView','screenLoginHistory','screenMyQr',
   'screenTopup','screenTransfer','screenPay','screenProcessing','screenSuccess',
-  'screenAdminHome','screenAdminClient'];
+  'screenAdminHome','screenAdminClient','screenAdminAccount'];
 
 function goTo(id) {
   screens.forEach(s => document.getElementById(s)?.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   const nav = document.getElementById('bottomNav');
   const navScreens = ['screenHome','screenHistory','screenAnalytics','screenAccount'];
-  // В админ-режиме нижняя навигация скрывается
-  if (state.role === 'admin') {
+  if (state.role === 'admin' && (id === 'screenAdminHome' || id === 'screenAdminClient' || id === 'screenAdminAccount')) {
     nav.style.display = 'none';
-  } else if (navScreens.includes(id)) {
+  } else if (navScreens.includes(id) && state.role === 'client') {
     nav.style.display='flex';
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.screen===id));
   } else nav.style.display='none';
@@ -1454,6 +1504,7 @@ function goTo(id) {
   if (id==='screenMyQr') renderMyQr();
   if (id==='screenLoginHistory') renderLoginHistory();
   if (id==='screenAdminHome') renderAdminHome();
+  if (id==='screenAdminAccount') renderAdminAccount();
   updatePinHints();
   if (id === 'screenPhone' && detectDevice().type === 'desktop') {
     const inp = document.getElementById('phoneInput');
@@ -1531,26 +1582,58 @@ function showPulseNotification(title, text, icon='🔔') {
 function hideModal(id){ document.getElementById(id).classList.remove('show'); }
 function showModal(id){ document.getElementById(id).classList.add('show'); }
 
-/* ==================== ПОКАЗ ОШИБКИ С КРЕСТОМ ==================== */
-function showOperationError(btn, reason) {
-  if (!btn) return;
-  const original = btn.innerHTML;
+/* ==================== УНИВЕРСАЛЬНАЯ КНОПКА ОПЕРАЦИИ ==================== */
+/* 1) Показывает анимацию обработки
+   2) Проверяет причину ошибки
+   3) Если ошибка — крест с причиной
+   4) Если ок — выполняет действие */
+async function runOperation(btn, checkFn, actionFn, minDelayMs = 900) {
+  if (!btn || btn.classList.contains('loading')) return;
+  
+  const originalHTML = btn.innerHTML;
   const originalBg = btn.style.background;
-  btn.innerHTML = `<span style="display:inline-flex;align-items:center;justify-content:center;gap:8px">
-    <span style="font-size:20px">❌</span>
-    <span style="font-size:13px">${reason}</span>
+  
+  // 1. Анимация обработки
+  btn.classList.add('loading');
+  btn.innerHTML = `<span style="display:inline-flex;align-items:center;justify-content:center;gap:10px">
+    <span class="btn-spinner"></span>
+    <span>Обработка…</span>
   </span>`;
-  btn.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
-  if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-  playSound('error');
-  const restore = () => {
-    btn.innerHTML = original;
-    btn.style.background = originalBg;
-    btn.onclick = null;
-  };
-  btn.onclick = (e) => { e.stopImmediatePropagation(); clearTimeout(btn._errTimer); restore(); };
-  clearTimeout(btn._errTimer);
-  btn._errTimer = setTimeout(restore, 2500);
+  playSound('click');
+  
+  // 2. Проверка + минимальная задержка
+  const startTime = Date.now();
+  const reason = checkFn ? checkFn() : null;
+  const elapsed = Date.now() - startTime;
+  if (elapsed < minDelayMs) await new Promise(r => setTimeout(r, minDelayMs - elapsed));
+  
+  // 3. Ошибка — крест с причиной
+  if (reason) {
+    btn.classList.remove('loading');
+    btn.innerHTML = `<span style="display:inline-flex;align-items:center;justify-content:center;gap:8px">
+      <span style="font-size:20px">❌</span>
+      <span style="font-size:13px">${reason}</span>
+    </span>`;
+    btn.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
+    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+    playSound('error');
+    
+    const restore = () => {
+      btn.innerHTML = originalHTML;
+      btn.style.background = originalBg;
+      btn.onclick = null;
+    };
+    btn.onclick = (e) => { e.stopImmediatePropagation(); clearTimeout(btn._errTimer); restore(); };
+    clearTimeout(btn._errTimer);
+    btn._errTimer = setTimeout(restore, 2500);
+    return;
+  }
+  
+  // 4. Всё ок
+  btn.classList.remove('loading');
+  btn.innerHTML = originalHTML;
+  btn.style.background = originalBg;
+  if (typeof actionFn === 'function') await actionFn();
 }
 
 /* ==================== ПРИЧИНЫ ОШИБОК ==================== */
@@ -1770,72 +1853,58 @@ phoneBtn.addEventListener('click', async () => {
   phoneBtn.textContent = 'Проверяем...';
   phoneBtn.disabled = true;
   try {
-    // Админский номер — сразу показываем выбор роли
-    if (phone === ADMIN_PHONE) {
-      state.user.phone = phone;
-      localStorage.setItem('bank_phone', phone);
-      phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
-      goTo('screenRoleSelect');
-      return;
-    }
     const snap = await db.ref('users/'+phone).once('value');
     const data = snap.val();
     if (data && data.firstName && data.pinHash) {
       state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
-      state.role = 'client';
       localStorage.setItem('bank_phone', phone);
-      localStorage.setItem('bank_role', 'client');
       applySettings();
+      // Для админского номера — сразу на PIN, потом выбор роли
+      state.pendingRoleChoice = (phone === ADMIN_PHONE);
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenEnterPin');
     } else if (data && data.firstName && !data.pinHash) {
       state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
-      state.role = 'client';
       localStorage.setItem('bank_phone', phone);
-      localStorage.setItem('bank_role', 'client');
+      state.pendingRoleChoice = (phone === ADMIN_PHONE);
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenCreatePin');
+    } else if (phone === ADMIN_PHONE) {
+      // Первый вход админа — регистрация + PIN
+      state.user.phone = phone;
+      state.pendingRoleChoice = true;
+      localStorage.setItem('bank_phone', phone);
+      phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
+      goTo('screenRegister');
     } else {
       state.user.phone = phone;
-      state.role = 'client';
+      state.pendingRoleChoice = false;
       localStorage.setItem('bank_phone', phone);
-      localStorage.setItem('bank_role', 'client');
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenRegister');
     }
   } catch(e){ console.error(e); showToast('❌ Ошибка соединения', true); phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false; }
 });
 
-/* ==================== ВЫБОР РОЛИ (для админского номера) ==================== */
+/* ==================== ВЫБОР РОЛИ ==================== */
 function selectRole(role) {
   state.role = role;
   document.getElementById('choiceClient').classList.toggle('selected', role==='client');
   document.getElementById('choiceAdmin').classList.toggle('selected', role==='admin');
   localStorage.setItem('bank_role', role);
   setTimeout(() => {
-    if (role === 'client') {
-      // Логин как обычный клиент
-      const phone = state.user.phone;
-      db.ref('users/'+phone).once('value').then(snap => {
-        const data = snap.val();
-        if (data && data.firstName && data.pinHash) {
-          state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
-          state.savedPin = data.pinHash;
-          state.settings = { ...state.settings, ...(data.settings||{}) };
-          applySettings();
-          goTo('screenEnterPin');
-        } else if (data && data.firstName && !data.pinHash) {
-          state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
-          goTo('screenCreatePin');
-        } else {
-          goTo('screenRegister');
-        }
-      }).catch(e => { console.error(e); goTo('screenRegister'); });
-    } else {
-      // Админ — вход без PIN
+    if (role === 'admin') {
       adminLogin();
+    } else {
+      // Обычный клиентский режим
+      state.loggedIn = true;
+      attachUserListeners();
+      logLogin();
+      goTo('screenHome');
+      showToast('👋 Добро пожаловать!');
+      startAutoLock();
     }
   }, 250);
 }
@@ -1844,7 +1913,6 @@ function selectRole(role) {
 function adminLogin() {
   state.role = 'admin';
   state.loggedIn = true;
-  // Восстанавливаем сохранённые просмотры
   try {
     const saved = JSON.parse(localStorage.getItem('admin_recent_views') || '[]');
     state.adminRecentViews = saved;
@@ -1860,6 +1928,22 @@ function adminLogout() {
   phoneInput.value = '';
   phoneBtn.disabled = true;
   showToast('👋 Вы вышли из админ-панели');
+}
+function switchToClientMode() {
+  state.role = 'client';
+  localStorage.setItem('bank_role', 'client');
+  attachUserListeners();
+  logLogin();
+  goTo('screenHome');
+  showToast('👤 Режим клиента');
+  startAutoLock();
+}
+function switchToAdminMode() {
+  state.role = 'admin';
+  localStorage.setItem('bank_role', 'admin');
+  detachUserListeners();
+  goTo('screenAdminHome');
+  showToast('👑 Режим администратора');
 }
 function renderAdminHome() {
   const el = document.getElementById('adminRecentViews');
@@ -1877,6 +1961,10 @@ function renderAdminHome() {
       <div style="color:var(--text-muted);font-size:14px">›</div>
     </div>
   `).join('');
+}
+function renderAdminAccount() {
+  document.getElementById('adminAccountName').textContent = 'Администратор';
+  document.getElementById('adminAccountPhone').textContent = formatPhone(ADMIN_PHONE);
 }
 async function adminSearchClient() {
   const inp = document.getElementById('adminPhoneInput');
@@ -1900,78 +1988,201 @@ async function adminOpenClient(phone) {
       document.getElementById('adminErrorText').textContent = '❌ Клиент не найден';
       return;
     }
-    // Загружаем историю
     const hSnap = await db.ref('history/'+phone).once('value');
     const history = Object.values(hSnap.val() || {}).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-    
     state.adminCurrentClient = { phone, data, history };
-    
-    // Рендер
-    const fullName = (data.firstName + ' ' + (data.lastName||'')).trim();
-    document.getElementById('adminClientName').textContent = fullName;
-    document.getElementById('adminClientPhone').textContent = formatPhone(phone);
-    document.getElementById('adminClientBalanceCard').style.background = 'linear-gradient(135deg,#dc2626,#7f1d1d)';
-    const total = (data.cards||[]).reduce((s,c)=>s+(c.balance||0),0);
-    document.getElementById('adminClientBalance').innerHTML = fmt(total)+' <span>₽</span>';
-    document.getElementById('adminClientMainCard').textContent = data.cards?.[0] ? maskCard(data.cards[0].last) : '•••• ----';
-    
-    // Инфо
-    const age = calculateAge(data.birthDate);
-    const typeLabel = data.type === 'child' ? '👶 Детский' : '👤 Взрослый';
-    const ageLabel = age !== null ? `${age} лет` : '—';
-    document.getElementById('adminClientInfo').innerHTML = `
-      <div>${typeLabel} • ${ageLabel}</div>
-      <div>Дата рождения: ${data.birthDate ? new Date(data.birthDate).toLocaleDateString('ru-RU') : '—'}</div>
-      <div>Зарегистрирован: ${data.createdAt ? new Date(data.createdAt).toLocaleDateString('ru-RU') : '—'}</div>
-      <div>Родитель: ${data.parentName || '—'}</div>
-      <div>Всего операций: ${history.length}</div>
-    `;
-    
-    // Карты клиента
-    document.getElementById('adminClientCards').innerHTML = (data.cards||[]).map(c => `
-      <div class="card-select-item" style="cursor:default">
-        <div class="ci-icon" style="background:${c.color}"></div>
-        <div style="flex:1">
-          <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-          ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-          <div class="ci-bal">${fmt(c.balance)} ₽ ${c.frozen?'🔒':''}</div>
-        </div>
-      </div>
-    `).join('') || '<div class="empty">Нет карт</div>';
-    
-    // История
-    document.getElementById('adminTxCount').textContent = history.length + ' шт.';
-    document.getElementById('adminClientHistory').innerHTML = history.length
-      ? history.slice(0, 100).map(tx => {
-          const isIn = tx.type==='in';
-          const cat = CATEGORIES[tx.category] || CATEGORIES.other;
-          const sign = isIn ? '+' : '−';
-          return `
-            <div class="tx-item" style="cursor:default">
-              <div class="tx-icon ${isIn?'in':'out'}">${cat.emoji}</div>
-              <div class="tx-info">
-                <div class="tx-title">${tx.title}</div>
-                <div class="tx-date">${tx.date}</div>
-              </div>
-              <div class="tx-amount ${isIn?'in':'out'}">${sign}${fmt(tx.amount)} ₽</div>
-            </div>
-          `;
-        }).join('')
-      : '<div class="empty">Нет операций</div>';
-    
-    // Сохраняем в недавние
+    renderAdminClient();
     const existing = state.adminRecentViews.findIndex(v => v.phone === phone);
     if (existing >= 0) state.adminRecentViews.splice(existing, 1);
+    const fullName = (data.firstName + ' ' + (data.lastName||'')).trim();
     state.adminRecentViews.unshift({ phone, name: fullName, date: now() });
     if (state.adminRecentViews.length > 10) state.adminRecentViews = state.adminRecentViews.slice(0, 10);
     localStorage.setItem('admin_recent_views', JSON.stringify(state.adminRecentViews));
-    
     goTo('screenAdminClient');
   } catch(e) {
     console.error(e);
     err.style.display = 'block';
     document.getElementById('adminErrorText').textContent = '❌ Ошибка загрузки';
   }
+}
+function renderAdminClient() {
+  const c = state.adminCurrentClient;
+  if (!c) return;
+  const data = c.data;
+  const fullName = (data.firstName + ' ' + (data.lastName||'')).trim();
+  document.getElementById('adminClientName').textContent = fullName;
+  document.getElementById('adminClientPhone').textContent = formatPhone(c.phone);
+  const total = (data.cards||[]).reduce((s,cc)=>s+(cc.balance||0),0);
+  document.getElementById('adminClientBalance').innerHTML = fmt(total)+' <span>₽</span>';
+  document.getElementById('adminClientMainCard').textContent = data.cards?.[0] ? maskCard(data.cards[0].last) : '•••• ----';
+  const age = calculateAge(data.birthDate);
+  const typeLabel = data.type === 'child' ? '👶 Детский' : '👤 Взрослый';
+  const ageLabel = age !== null ? `${age} лет` : '—';
+  document.getElementById('adminClientInfo').innerHTML = `
+    <div>${typeLabel} • ${ageLabel}</div>
+    <div>Дата рождения: ${data.birthDate ? new Date(data.birthDate).toLocaleDateString('ru-RU') : '—'}</div>
+    <div>Зарегистрирован: ${data.createdAt ? new Date(data.createdAt).toLocaleDateString('ru-RU') : '—'}</div>
+    <div>Родитель: ${data.parentName || '—'}</div>
+    <div>Всего операций: ${c.history.length}</div>
+  `;
+  document.getElementById('adminClientCards').innerHTML = (data.cards||[]).map((cc, idx) => `
+    <div class="card-select-item" style="cursor:default">
+      <div class="ci-icon" style="background:${cc.color}"></div>
+      <div style="flex:1">
+        <div class="ci-num">${cc.brand} ${maskCard(cc.last)}</div>
+        ${cc.name?`<div class="ci-name">${cc.name}</div>`:''}
+        <div class="ci-bal">${fmt(cc.balance)} ₽ ${cc.frozen?'🔒 Заморожена':''}</div>
+      </div>
+      <button class="btn ${cc.frozen?'green':'gray'} small" style="width:auto;padding:6px 10px" onclick="adminToggleFreezeCard(${idx})">${cc.frozen?'🔓':'🔒'}</button>
+    </div>
+  `).join('') || '<div class="empty">Нет карт</div>';
+  document.getElementById('adminTxCount').textContent = c.history.length + ' шт.';
+  document.getElementById('adminClientHistory').innerHTML = c.history.length
+    ? c.history.slice(0, 100).map(tx => {
+        const isIn = tx.type==='in';
+        const cat = CATEGORIES[tx.category] || CATEGORIES.other;
+        const sign = isIn ? '+' : '−';
+        return `
+          <div class="tx-item" style="cursor:default">
+            <div class="tx-icon ${isIn?'in':'out'}">${cat.emoji}</div>
+            <div class="tx-info">
+              <div class="tx-title">${tx.title}</div>
+              <div class="tx-date">${tx.date}</div>
+            </div>
+            <div class="tx-amount ${isIn?'in':'out'}">${sign}${fmt(tx.amount)} ₽</div>
+          </div>
+        `;
+      }).join('')
+    : '<div class="empty">Нет операций</div>';
+}
+
+/* ============ УПРАВЛЕНИЕ ФИНАНСАМИ КЛИЕНТА ============ */
+async function saveClientData() {
+  const c = state.adminCurrentClient;
+  if (!c) return;
+  await db.ref('users/'+c.phone+'/cards').set(c.data.cards || []);
+}
+async function saveClientHistory(record) {
+  const c = state.adminCurrentClient;
+  if (!c) return;
+  await db.ref('history/'+c.phone).push().set({
+    ...record,
+    createdAt: firebase.database.ServerValue.TIMESTAMP
+  });
+  // Локально тоже обновим
+  c.history.unshift({ ...record, createdAt: Date.now() });
+}
+function adminAction(action) {
+  const c = state.adminCurrentClient;
+  if (!c) return;
+  const cards = c.data.cards || [];
+  if (!cards.length) { showToast('❌ У клиента нет карт', true); return; }
+  
+  if (action === 'topup') {
+    showModal('genericModal');
+    document.getElementById('gmIcon').textContent = '➕';
+    document.getElementById('gmTitle').textContent = 'Пополнить карту клиента';
+    document.getElementById('gmText').textContent = 'Выберите карту и сумму';
+    document.getElementById('gmExtra').innerHTML = `
+      <select id="admCardIdx" style="margin-bottom:10px">
+        ${cards.map((cc,i)=>`<option value="${i}">${cc.brand} ${maskCard(cc.last)} — ${fmt(cc.balance)} ₽</option>`).join('')}
+      </select>
+      <input type="text" id="admAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
+    `;
+    document.getElementById('gmConfirm').onclick = async () => {
+      const idx = parseInt(document.getElementById('admCardIdx').value);
+      const amt = parseInt(document.getElementById('admAmount').value)||0;
+      if (amt <= 0) { showToast('❌ Введите сумму', true); return; }
+      const card = cards[idx];
+      card.balance = (card.balance||0) + amt;
+      await saveClientData();
+      await saveClientHistory({
+        type: 'in', category: 'admin',
+        title: `Пополнение администратором (${formatPhone(ADMIN_PHONE)})`,
+        amount: amt, date: now()
+      });
+      hideModal('genericModal');
+      showToast(`✅ +${fmt(amt)} ₽ на ${card.brand} ${maskCard(card.last)}`);
+      renderAdminClient();
+    };
+  } else if (action === 'withdraw') {
+    showModal('genericModal');
+    document.getElementById('gmIcon').textContent = '➖';
+    document.getElementById('gmTitle').textContent = 'Списать с карты клиента';
+    document.getElementById('gmText').textContent = 'Выберите карту и сумму';
+    document.getElementById('gmExtra').innerHTML = `
+      <select id="admCardIdx" style="margin-bottom:10px">
+        ${cards.map((cc,i)=>`<option value="${i}">${cc.brand} ${maskCard(cc.last)} — ${fmt(cc.balance)} ₽</option>`).join('')}
+      </select>
+      <input type="text" id="admAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
+    `;
+    document.getElementById('gmConfirm').onclick = async () => {
+      const idx = parseInt(document.getElementById('admCardIdx').value);
+      const amt = parseInt(document.getElementById('admAmount').value)||0;
+      if (amt <= 0) { showToast('❌ Введите сумму', true); return; }
+      const card = cards[idx];
+      if (card.balance < amt) { showToast('❌ Недостаточно средств у клиента', true); return; }
+      card.balance -= amt;
+      await saveClientData();
+      await saveClientHistory({
+        type: 'out', category: 'admin',
+        title: `Списание администратором (${formatPhone(ADMIN_PHONE)})`,
+        amount: amt, date: now()
+      });
+      hideModal('genericModal');
+      showToast(`✅ −${fmt(amt)} ₽ с ${card.brand} ${maskCard(card.last)}`);
+      renderAdminClient();
+    };
+  } else if (action === 'setbalance') {
+    showModal('genericModal');
+    document.getElementById('gmIcon').textContent = '✏️';
+    document.getElementById('gmTitle').textContent = 'Установить баланс';
+    document.getElementById('gmText').textContent = 'Введите новое значение баланса';
+    document.getElementById('gmExtra').innerHTML = `
+      <select id="admCardIdx" style="margin-bottom:10px">
+        ${cards.map((cc,i)=>`<option value="${i}">${cc.brand} ${maskCard(cc.last)} — ${fmt(cc.balance)} ₽</option>`).join('')}
+      </select>
+      <input type="text" id="admAmount" placeholder="Новый баланс ₽" inputmode="numeric" style="text-align:center">
+    `;
+    document.getElementById('gmConfirm').onclick = async () => {
+      const idx = parseInt(document.getElementById('admCardIdx').value);
+      const newBal = parseInt(document.getElementById('admAmount').value);
+      if (isNaN(newBal) || newBal < 0) { showToast('❌ Введите корректную сумму', true); return; }
+      const card = cards[idx];
+      const oldBal = card.balance;
+      card.balance = newBal;
+      const diff = newBal - oldBal;
+      await saveClientData();
+      await saveClientHistory({
+        type: diff >= 0 ? 'in' : 'out', category: 'admin',
+        title: `Корректировка баланса администратором (${formatPhone(ADMIN_PHONE)})`,
+        amount: Math.abs(diff), date: now()
+      });
+      hideModal('genericModal');
+      showToast(`✅ Баланс установлен: ${fmt(newBal)} ₽`);
+      renderAdminClient();
+    };
+  } else if (action === 'freeze') {
+    // Просто откроем список карт для заморозки/разморозки
+    renderAdminClient();
+    showToast('💡 Нажмите 🔒 на карте, чтобы заморозить/разморозить');
+  }
+}
+async function adminToggleFreezeCard(idx) {
+  const c = state.adminCurrentClient;
+  if (!c) return;
+  const cards = c.data.cards || [];
+  const card = cards[idx];
+  if (!card) return;
+  card.frozen = !card.frozen;
+  await saveClientData();
+  await saveClientHistory({
+    type: card.frozen ? 'out' : 'in', category: 'admin',
+    title: `${card.frozen?'Заморозка':'Разморозка'} карты администратором`,
+    amount: 0, date: now()
+  });
+  showToast(card.frozen ? '🔒 Карта заморожена' : '🔓 Карта разморожена');
+  renderAdminClient();
 }
 
 /* ==================== РЕГИСТРАЦИЯ ==================== */
@@ -2136,8 +2347,16 @@ function handlePinComplete(){
     }
     if (hashPin(pin) === state.savedPin) {
       state.pinAttempts = 0;
-      state.loggedIn = true;
       document.getElementById('enterPinError').textContent='';
+      // Если это админский номер → сначала выбор роли, потом уже вход
+      if (state.pendingRoleChoice && normalizePhone(state.user.phone) === ADMIN_PHONE) {
+        state.pendingRoleChoice = false;
+        goTo('screenRoleSelect');
+        return;
+      }
+      // Обычный вход
+      state.role = 'client';
+      state.loggedIn = true;
       attachUserListeners();
       logLogin();
       goTo('screenHome');
@@ -2199,6 +2418,14 @@ async function saveNewPin(pin){
     const hash = hashPin(pin);
     await db.ref('users/'+state.user.phone+'/pinHash').set(hash);
     state.savedPin = hash;
+    // Если это был админский номер — после создания PIN просим выбор роли
+    if (state.pendingRoleChoice && normalizePhone(state.user.phone) === ADMIN_PHONE) {
+      state.pendingRoleChoice = false;
+      showToast('✅ PIN-код сохранён');
+      goTo('screenRoleSelect');
+      return;
+    }
+    state.role = 'client';
     state.loggedIn = true;
     attachUserListeners();
     logLogin();
@@ -2222,12 +2449,13 @@ function pinLogout(){
   localStorage.removeItem('bank_phone');
   localStorage.removeItem('bank_role');
   state.loggedIn=false; state.savedPin=null;
+  state.pendingRoleChoice = false;
   detachUserListeners();
   phoneInput.value=''; phoneBtn.disabled=true;
   goTo('screenPhone');
 }
 
-/* ==================== ВВОД PIN С КЛАВИАТУРЫ ПК ==================== */
+/* ==================== КЛАВИАТУРА ПК ==================== */
 document.addEventListener('keydown', (e) => {
   const activeScreen = document.querySelector('.screen.active');
   if (!activeScreen) return;
@@ -2262,7 +2490,7 @@ function startAutoLock(){
   clearTimeout(autoLockTimer);
   if (!state.settings.autoLock) return;
   autoLockTimer = setTimeout(()=>{
-    if (state.loggedIn) {
+    if (state.loggedIn && state.role === 'client') {
       state.loggedIn=false;
       detachUserListeners();
       goTo('screenEnterPin');
@@ -2397,12 +2625,10 @@ function applySettings(){
   document.body.classList.toggle('light', mode === 'light');
   document.body.className = document.body.className.replace(/theme-\w+/g,'').trim();
   if (state.settings.theme !== 'blue') document.body.classList.add('theme-'+state.settings.theme);
-  const label = document.getElementById('themeLabel');
-  if (label) {
-    const names = {blue:'Синяя',purple:'Фиолетовая',green:'Зелёная',red:'Красная',orange:'Оранжевая',teal:'Бирюзовая',pink:'Розовая'};
-    const modeLabel = state.settings.mode === 'auto' ? '🔄 ' : (mode === 'light' ? '☀️ ' : '🌙 ');
-    label.textContent = modeLabel + names[state.settings.theme];
-  }
+  const labels = [document.getElementById('themeLabel'), document.getElementById('themeLabelAdmin')];
+  const names = {blue:'Синяя',purple:'Фиолетовая',green:'Зелёная',red:'Красная',orange:'Оранжевая',teal:'Бирюзовая',pink:'Розовая'};
+  const modeLabel = state.settings.mode === 'auto' ? '🔄 ' : (mode === 'light' ? '☀️ ' : '🌙 ');
+  labels.forEach(label => { if (label) label.textContent = modeLabel + names[state.settings.theme]; });
 }
 
 /* ==================== КУРСИВ-БОНУС ==================== */
@@ -2770,12 +2996,20 @@ function renderAccount(){
     badges += '<span class="badge-parent">👤 Взрослый</span>';
     if (age !== null) badges += ` <span class="age-badge adult">${age} лет</span>`;
   }
+  if (normalizePhone(u.phone) === ADMIN_PHONE) {
+    badges += ` <span class="badge-admin">👑 Админ-номер</span>`;
+  }
   if (u.birthDate) badges += `<div style="color:var(--text-muted);font-size:11px;margin-top:6px">День рождения: ${new Date(u.birthDate).toLocaleDateString('ru-RU')}</div>`;
   document.getElementById('accountBadges').innerHTML = badges;
   const device = detectDevice();
   const deviceRow = document.getElementById('accountDevice');
   if (deviceRow) {
     deviceRow.innerHTML = `<div style="color:var(--text-dim);font-size:11px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">${device.emoji} Текущее устройство: <b style="color:var(--text)">${device.name}</b><br><span style="opacity:0.7">${device.os} • ${device.browser}</span></div>`;
+  }
+  // Кнопка переключения в админку (для админского номера)
+  const admBlock = document.getElementById('adminSwitchBlock');
+  if (admBlock) {
+    admBlock.style.display = (normalizePhone(u.phone) === ADMIN_PHONE) ? 'block' : 'none';
   }
   renderBonusAccountPreview();
   const cs = document.getElementById('childrenSection');
@@ -3064,7 +3298,7 @@ function openAddBudget(){
   document.getElementById('gmIcon').textContent = '💰';
   document.getElementById('gmTitle').textContent = 'Новый бюджет';
   document.getElementById('gmText').textContent = 'Лимит на категорию в месяц';
-  document.getElementById('gmExtra').innerHTML = `<select id="newBudgetCat" style="margin-bottom:14px">${Object.entries(CATEGORIES).filter(([k])=>!['topup','transfer','bonus'].includes(k)).map(([k,v])=>`<option value="${k}">${v.emoji} ${v.name}</option>`).join('')}</select><input type="text" id="newBudgetLimit" placeholder="Лимит ₽" inputmode="numeric" style="text-align:center">`;
+  document.getElementById('gmExtra').innerHTML = `<select id="newBudgetCat" style="margin-bottom:14px">${Object.entries(CATEGORIES).filter(([k])=>!['topup','transfer','bonus','admin'].includes(k)).map(([k,v])=>`<option value="${k}">${v.emoji} ${v.name}</option>`).join('')}</select><input type="text" id="newBudgetLimit" placeholder="Лимит ₽" inputmode="numeric" style="text-align:center">`;
   document.getElementById('gmConfirm').onclick = async () => {
     const category = document.getElementById('newBudgetCat').value;
     const limit = parseInt(document.getElementById('newBudgetLimit').value)||0;
@@ -3298,24 +3532,24 @@ function selectTopupCard(id){ state.selectedTopupCard=id; renderTopupCards(); }
 const topupAmount = document.getElementById('topupAmount');
 const topupBtn = document.getElementById('topupBtn');
 topupAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); });
-topupBtn.addEventListener('click', async () => {
-  const err = getTopupErrorReason();
-  if (err) { showOperationError(topupBtn, err); return; }
-  const amt = parseInt(topupAmount.value)||0;
-  const card = getCard(state.selectedTopupCard);
-  if (!card || amt<=0) return;
-  card.balance += amt;
-  await saveCards();
-  await addHistory({ type:'in', category:'topup', title:'Пополнение '+card.brand+' '+maskCard(card.last), amount:amt, date:now() });
-  state.lastOperation = { type:'topup', amount:amt, cardId:card.id };
-  await saveUser();
-  topupAmount.value='';
-  await checkAchievements();
-  await showProcessingThenSuccess('Пополнение выполнено', amt, [
-    { label:'Карта', value:card.brand+' '+maskCard(card.last) },
-    { label:'Сумма', value:fmt(amt)+' ₽' },
-    { label:'Дата',  value:now() }
-  ]);
+topupBtn.addEventListener('click', () => {
+  runOperation(topupBtn, getTopupErrorReason, async () => {
+    const amt = parseInt(topupAmount.value)||0;
+    const card = getCard(state.selectedTopupCard);
+    if (!card || amt<=0) return;
+    card.balance += amt;
+    await saveCards();
+    await addHistory({ type:'in', category:'topup', title:'Пополнение '+card.brand+' '+maskCard(card.last), amount:amt, date:now() });
+    state.lastOperation = { type:'topup', amount:amt, cardId:card.id };
+    await saveUser();
+    topupAmount.value='';
+    await checkAchievements();
+    await showProcessingThenSuccess('Пополнение выполнено', amt, [
+      { label:'Карта', value:card.brand+' '+maskCard(card.last) },
+      { label:'Сумма', value:fmt(amt)+' ₽' },
+      { label:'Дата',  value:now() }
+    ]);
+  });
 });
 
 /* ==================== ПЕРЕВОД ==================== */
@@ -3414,68 +3648,67 @@ async function lookupRecipient(phone){
 transferAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); });
 transferComment.addEventListener('input', e=>state.transferComment = e.target.value);
 
-transferBtn.addEventListener('click', async () => {
-  const err = getTransferErrorReason();
-  if (err) { showOperationError(transferBtn, err); return; }
+transferBtn.addEventListener('click', () => {
+  runOperation(transferBtn, getTransferErrorReason, async () => {
+    const amt = parseInt(transferAmount.value)||0;
 
-  const amt = parseInt(transferAmount.value)||0;
+    if (state.transferMethod === 'own') {
+      const from = getCard(state.transferOwnFrom);
+      const to = getCard(state.transferOwnTo);
+      if (!from || !to || from.id === to.id) return;
+      try {
+        from.balance -= amt;
+        to.balance += amt;
+        await saveCards();
+        const comment = transferComment.value.trim();
+        await addHistory({ type:'out', category:'transfer', title:`Между своими: → ${to.brand} ${maskCard(to.last)}`, amount:amt, date:now(), comment });
+        await addHistory({ type:'in', category:'transfer', title:`Между своими: ← ${from.brand} ${maskCard(from.last)}`, amount:amt, date:now(), comment });
+        transferAmount.value=''; transferComment.value=''; state.transferComment='';
+        await checkAchievements();
+        await showProcessingThenSuccess('Перевод выполнен', amt, [
+          { label:'Откуда', value:`${from.brand} ${maskCard(from.last)}` },
+          { label:'Куда', value:`${to.brand} ${maskCard(to.last)}` },
+          { label:'Сумма', value:fmt(amt)+' ₽' },
+          { label:'Дата', value:now() }
+        ]);
+      } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); }
+      return;
+    }
 
-  if (state.transferMethod === 'own') {
-    const from = getCard(state.transferOwnFrom);
-    const to = getCard(state.transferOwnTo);
-    if (!from || !to || from.id === to.id) return;
+    let from, toPhone, toName;
+    if (state.transferMethod==='phone') { from = getCard(state.transferFrom); toPhone = state.transferRecipient.phone; toName = (state.transferRecipient.firstName+' '+(state.transferRecipient.lastName||'')).trim(); }
+    else if (state.transferMethod==='card') { from = getCard(state.transferFrom2); toPhone = null; toName = 'Карта '+transferCardNumber.value; }
+    else { from = getCard(state.transferFrom3); toPhone = null; toName = 'QR-получатель'; }
+    if (!from || amt<=0 || amt>from.balance) return;
     try {
       from.balance -= amt;
-      to.balance += amt;
       await saveCards();
       const comment = transferComment.value.trim();
-      await addHistory({ type:'out', category:'transfer', title:`Между своими: → ${to.brand} ${maskCard(to.last)}`, amount:amt, date:now(), comment });
-      await addHistory({ type:'in', category:'transfer', title:`Между своими: ← ${from.brand} ${maskCard(from.last)}`, amount:amt, date:now(), comment });
-      transferAmount.value=''; transferComment.value=''; state.transferComment='';
+      await addHistory({ type:'out', category:'transfer', title: state.transferMethod==='phone' ? 'Перевод для '+toName+' ('+formatPhone(toPhone)+')' : 'Перевод на '+toName, amount:amt, date:now(), comment });
+      if (toPhone) {
+        await db.ref('users/'+toPhone+'/cards').transaction(cards => {
+          if (!cards || !cards.length) cards = [{ id:1, brand:'VISA', last:toPhone.slice(-4), balance:0, color:'linear-gradient(135deg,#1e3c72,#2a5298)', frozen:false, limit:0 }];
+          cards[0].balance = (cards[0].balance||0) + amt;
+          return cards;
+        });
+        await db.ref('history/'+toPhone).push().set({
+          type:'in', category:'transfer',
+          title:'Перевод от '+(state.user.firstName+' '+(state.user.lastName||'')).trim()+' ('+formatPhone(state.user.phone)+')',
+          amount:amt, date:now(), comment, createdAt: firebase.database.ServerValue.TIMESTAMP
+        });
+      }
+      transferAmount.value=''; transferPhone.value=''; transferCardNumber.value='';
+      transferComment.value=''; state.transferComment='';
+      state.transferRecipient=null; recipientInfo.style.display='none';
       await checkAchievements();
       await showProcessingThenSuccess('Перевод выполнен', amt, [
-        { label:'Откуда', value:`${from.brand} ${maskCard(from.last)}` },
-        { label:'Куда', value:`${to.brand} ${maskCard(to.last)}` },
+        { label:'Получатель', value: toName },
+        ...(toPhone?[{ label:'Телефон', value:formatPhone(toPhone) }]:[]),
         { label:'Сумма', value:fmt(amt)+' ₽' },
         { label:'Дата', value:now() }
       ]);
     } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); }
-    return;
-  }
-
-  let from, toPhone, toName;
-  if (state.transferMethod==='phone') { from = getCard(state.transferFrom); toPhone = state.transferRecipient.phone; toName = (state.transferRecipient.firstName+' '+(state.transferRecipient.lastName||'')).trim(); }
-  else if (state.transferMethod==='card') { from = getCard(state.transferFrom2); toPhone = null; toName = 'Карта '+transferCardNumber.value; }
-  else { from = getCard(state.transferFrom3); toPhone = null; toName = 'QR-получатель'; }
-  if (!from || amt<=0 || amt>from.balance) return;
-  try {
-    from.balance -= amt;
-    await saveCards();
-    const comment = transferComment.value.trim();
-    await addHistory({ type:'out', category:'transfer', title: state.transferMethod==='phone' ? 'Перевод для '+toName+' ('+formatPhone(toPhone)+')' : 'Перевод на '+toName, amount:amt, date:now(), comment });
-    if (toPhone) {
-      await db.ref('users/'+toPhone+'/cards').transaction(cards => {
-        if (!cards || !cards.length) cards = [{ id:1, brand:'VISA', last:toPhone.slice(-4), balance:0, color:'linear-gradient(135deg,#1e3c72,#2a5298)', frozen:false, limit:0 }];
-        cards[0].balance = (cards[0].balance||0) + amt;
-        return cards;
-      });
-      await db.ref('history/'+toPhone).push().set({
-        type:'in', category:'transfer',
-        title:'Перевод от '+(state.user.firstName+' '+(state.user.lastName||'')).trim()+' ('+formatPhone(state.user.phone)+')',
-        amount:amt, date:now(), comment, createdAt: firebase.database.ServerValue.TIMESTAMP
-      });
-    }
-    transferAmount.value=''; transferPhone.value=''; transferCardNumber.value='';
-    transferComment.value=''; state.transferComment='';
-    state.transferRecipient=null; recipientInfo.style.display='none';
-    await checkAchievements();
-    await showProcessingThenSuccess('Перевод выполнен', amt, [
-      { label:'Получатель', value: toName },
-      ...(toPhone?[{ label:'Телефон', value:formatPhone(toPhone) }]:[]),
-      { label:'Сумма', value:fmt(amt)+' ₽' },
-      { label:'Дата', value:now() }
-    ]);
-  } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); }
+  });
 });
 
 /* ==================== РАЗДЕЛЕНИЕ / ЗАПРОС ==================== */
@@ -3585,71 +3818,70 @@ payMerchant.addEventListener('input', ()=>{});
   document.getElementById(id)?.addEventListener('input', ()=>{});
 });
 
-payBtn.addEventListener('click', async () => {
-  const err = getPayErrorReason();
-  if (err) { showOperationError(payBtn, err); return; }
-
-  if (state.payMethod==='shop') {
-    const amt = parseInt(payAmount.value)||0;
-    const m = payMerchant.value.trim();
-    const card = getCard(state.payCard);
-    if (!card || amt<=0 || amt>card.balance) return;
-    card.balance -= amt;
-    await saveCards();
-    await addHistory({ type:'out', category:state.payCategory, title:m, amount:amt, date:now() });
-    const bonus = await awardBonus(amt, state.payCategory, m);
-    if (state.settings.roundup && roundupTarget > 0) {
-      const rounded = Math.ceil(amt/10)*10;
-      const diff = rounded - amt;
-      if (diff > 0 && diff <= 10 && card.balance >= diff) {
-        card.balance -= diff;
-        const goal = state.goals[roundupTarget - 1];
-        if (goal) { goal.current = (goal.current||0) + diff; await saveGoals(); }
+payBtn.addEventListener('click', () => {
+  runOperation(payBtn, getPayErrorReason, async () => {
+    if (state.payMethod==='shop') {
+      const amt = parseInt(payAmount.value)||0;
+      const m = payMerchant.value.trim();
+      const card = getCard(state.payCard);
+      if (!card || amt<=0 || amt>card.balance) return;
+      card.balance -= amt;
+      await saveCards();
+      await addHistory({ type:'out', category:state.payCategory, title:m, amount:amt, date:now() });
+      const bonus = await awardBonus(amt, state.payCategory, m);
+      if (state.settings.roundup && roundupTarget > 0) {
+        const rounded = Math.ceil(amt/10)*10;
+        const diff = rounded - amt;
+        if (diff > 0 && diff <= 10 && card.balance >= diff) {
+          card.balance -= diff;
+          const goal = state.goals[roundupTarget - 1];
+          if (goal) { goal.current = (goal.current||0) + diff; await saveGoals(); }
+        }
       }
+      state.lastOperation = { type:'pay', amount:amt, merchant:m, category:state.payCategory, cardId:card.id };
+      await saveUser();
+      payAmount.value=''; payMerchant.value='';
+      await checkAchievements();
+      await showProcessingThenSuccess('Оплата прошла', amt, [
+        { label:'Магазин', value:m },
+        { label:'Категория', value:(CATEGORIES[state.payCategory]?.emoji||'')+' '+(CATEGORIES[state.payCategory]?.name||'') },
+        { label:'Карта', value:card.brand+' '+maskCard(card.last) },
+        { label:'Сумма', value:fmt(amt)+' ₽' },
+        ...(bonus>0?[{ label:'⭐ Кэшбэк', value:'+'+fmt(bonus)+' ₽' }]:[]),
+        { label:'Дата', value:now() }
+      ]);
+      if (bonus > 0) showPulseNotification('⭐ Курсив-бонус', `+${fmt(bonus)} ₽ кэшбэка за ${m}`, '⭐');
+    } else if (state.payMethod==='req') {
+      const amt = parseInt(document.getElementById('reqAmount').value)||0;
+      const org = document.getElementById('reqOrg').value.trim();
+      const card = getCard(state.payCard2);
+      if (!card || amt<=0 || amt>card.balance) return;
+      card.balance -= amt;
+      await saveCards();
+      await addHistory({ type:'out', category:'other', title:'Оплата: '+org, amount:amt, date:now() });
+      await checkAchievements();
+      await showProcessingThenSuccess('Платёж отправлен', amt, [
+        { label:'Организация', value:org },
+        { label:'Карта', value:card.brand+' '+maskCard(card.last) },
+        { label:'Сумма', value:fmt(amt)+' ₽' },
+        { label:'Дата', value:now() }
+      ]);
+    } else {
+      const amt = parseInt(document.getElementById('autoAmount').value)||0;
+      const name = document.getElementById('autoName').value.trim();
+      const period = document.getElementById('autoPeriod').value;
+      const card = getCard(state.payCard3);
+      if (!card || amt<=0 || amt>card.balance) return;
+      card.balance -= amt;
+      await saveCards();
+      await addHistory({ type:'out', category:'other', title:'Автоплатёж: '+name, amount:amt, date:now() });
+      await showProcessingThenSuccess('Автоплатёж создан', amt, [
+        { label:'Название', value:name },
+        { label:'Период', value:period==='month'?'Ежемесячно':period==='week'?'Еженедельно':'Ежедневно' },
+        { label:'Сумма', value:fmt(amt)+' ₽' }
+      ]);
     }
-    state.lastOperation = { type:'pay', amount:amt, merchant:m, category:state.payCategory, cardId:card.id };
-    await saveUser();
-    payAmount.value=''; payMerchant.value='';
-    await checkAchievements();
-    await showProcessingThenSuccess('Оплата прошла', amt, [
-      { label:'Магазин', value:m },
-      { label:'Категория', value:(CATEGORIES[state.payCategory]?.emoji||'')+' '+(CATEGORIES[state.payCategory]?.name||'') },
-      { label:'Карта', value:card.brand+' '+maskCard(card.last) },
-      { label:'Сумма', value:fmt(amt)+' ₽' },
-      ...(bonus>0?[{ label:'⭐ Кэшбэк', value:'+'+fmt(bonus)+' ₽' }]:[]),
-      { label:'Дата', value:now() }
-    ]);
-    if (bonus > 0) showPulseNotification('⭐ Курсив-бонус', `+${fmt(bonus)} ₽ кэшбэка за ${m}`, '⭐');
-  } else if (state.payMethod==='req') {
-    const amt = parseInt(document.getElementById('reqAmount').value)||0;
-    const org = document.getElementById('reqOrg').value.trim();
-    const card = getCard(state.payCard2);
-    if (!card || amt<=0 || amt>card.balance) return;
-    card.balance -= amt;
-    await saveCards();
-    await addHistory({ type:'out', category:'other', title:'Оплата: '+org, amount:amt, date:now() });
-    await checkAchievements();
-    await showProcessingThenSuccess('Платёж отправлен', amt, [
-      { label:'Организация', value:org },
-      { label:'Карта', value:card.brand+' '+maskCard(card.last) },
-      { label:'Сумма', value:fmt(amt)+' ₽' },
-      { label:'Дата', value:now() }
-    ]);
-  } else {
-    const amt = parseInt(document.getElementById('autoAmount').value)||0;
-    const name = document.getElementById('autoName').value.trim();
-    const period = document.getElementById('autoPeriod').value;
-    const card = getCard(state.payCard3);
-    if (!card || amt<=0 || amt>card.balance) return;
-    card.balance -= amt;
-    await saveCards();
-    await addHistory({ type:'out', category:'other', title:'Автоплатёж: '+name, amount:amt, date:now() });
-    await showProcessingThenSuccess('Автоплатёж создан', amt, [
-      { label:'Название', value:name },
-      { label:'Период', value:period==='month'?'Ежемесячно':period==='week'?'Еженедельно':'Ежедневно' },
-      { label:'Сумма', value:fmt(amt)+' ₽' }
-    ]);
-  }
+  });
 });
 
 /* ==================== МОЙ QR ==================== */
@@ -3784,11 +4016,7 @@ async function tryAutoLogin(){
   const saved = localStorage.getItem('bank_phone');
   const savedRole = localStorage.getItem('bank_role');
   if (!saved) { goTo('screenPhone'); return; }
-  // Если это админский номер и последняя роль была admin — вернём в панель
-  if (saved === ADMIN_PHONE && savedRole === 'admin') {
-    adminLogin();
-    return;
-  }
+  // Если это админский номер и последняя роль была admin — просим PIN, потом выбор роли
   try {
     const snap = await db.ref('users/'+saved).once('value');
     const data = snap.val();
@@ -3796,7 +4024,8 @@ async function tryAutoLogin(){
       state.user = { phone:saved, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
-      state.role = 'client';
+      // Для админского номера всегда сначала PIN, потом выбор роли
+      state.pendingRoleChoice = (normalizePhone(saved) === ADMIN_PHONE);
       applySettings();
       goTo('screenEnterPin');
     } else {
@@ -3834,6 +4063,14 @@ document.getElementById('privateToggle')?.addEventListener('change', async e=>{
 document.getElementById('soundToggle')?.addEventListener('change', async e=>{
   state.settings.sound = e.target.checked;
   await saveUser();
+  showToast(e.target.checked?'🔊 Звуки вкл':'🔇 Выкл');
+});
+document.getElementById('adminNotifToggle')?.addEventListener('change', e=>{
+  state.settings.notifications = e.target.checked;
+  showToast(e.target.checked?'🔔 Уведомления вкл':'🔕 Выкл');
+});
+document.getElementById('adminSoundToggle')?.addEventListener('change', e=>{
+  state.settings.sound = e.target.checked;
   showToast(e.target.checked?'🔊 Звуки вкл':'🔇 Выкл');
 });
 document.getElementById('childApproveToggle')?.addEventListener('change', async e=>{
