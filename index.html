@@ -31,9 +31,33 @@
   body.theme-teal{--balance-grad:linear-gradient(135deg,#0ea5e9,#14b8a6)}
   body.theme-pink{--balance-grad:linear-gradient(135deg,#ec4899,#8b5cf6)}
   body{background:var(--bg-grad);color:var(--text)}
-  .app{width:100%;max-width:100%;height:100vh;height:100dvh;position:relative;background:var(--bg-grad);overflow:hidden}
-  @media (min-width:500px){body{padding:20px;align-items:center}.app{max-width:400px;height:780px;max-height:95vh;border-radius:32px;box-shadow:0 30px 80px rgba(0,0,0,0.6);border:1px solid var(--border)}}
-  .screen{position:absolute;inset:0;padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:fadeIn .35s ease}
+
+  /* ПРИЛОЖЕНИЕ ВСЕГДА НА ВЕСЬ ЭКРАН */
+  .app{
+    width:100%;max-width:100%;height:100vh;height:100dvh;
+    position:relative;background:var(--bg-grad);overflow:hidden;
+  }
+
+  /* На ПК и планшете контент центрируется и ограничивается по ширине */
+  @media (min-width:768px) and (hover:hover) and (pointer:fine){
+    .screen{
+      max-width:520px;left:50%;transform:translateX(-50%);
+      padding-left:28px;padding-right:28px;
+      animation: fadeInCentered .35s ease;
+    }
+    .bottom-nav{
+      max-width:520px;left:50%;transform:translateX(-50%);
+      padding-left:28px;padding-right:28px;
+    }
+    .pulse-notification{max-width:520px;left:50%;transform:translateX(-50%) translateY(-200%)}
+    .pulse-notification.show{transform:translateX(-50%) translateY(0)}
+    @keyframes fadeInCentered{
+      from{opacity:0;transform:translateX(-50%) translateY(15px)}
+      to{opacity:1;transform:translateX(-50%) translateY(0)}
+    }
+  }
+
+  .screen{position:absolute;top:0;bottom:0;left:0;right:0;padding:calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:fadeIn .35s ease}
   .screen.active{display:block}.screen::-webkit-scrollbar{width:0}
   @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
   h1{color:var(--text);font-size:22px;margin-bottom:8px}
@@ -50,6 +74,8 @@
   .btn.gray{background:var(--card);box-shadow:none;color:var(--text)}
   .btn.gray:hover{background:rgba(128,128,128,0.15);box-shadow:none}
   .btn.small{padding:10px;font-size:13px;margin-bottom:0}
+  /* Кнопки операций — всегда активны */
+  .btn.op-btn:disabled{opacity:1;cursor:pointer;transform:none;pointer-events:auto}
   .back-link{display:block;text-align:center;color:var(--text-muted);font-size:13px;margin-top:8px;cursor:pointer;transition:.2s}
   .back-link:hover{color:var(--text-dim)}
   .logo{width:80px;height:80px;margin:40px auto 20px;border-radius:22px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 12px 32px rgba(102,126,234,0.4);font-family:Georgia,serif;font-style:italic;font-weight:bold;color:#fff;letter-spacing:-2px}
@@ -268,14 +294,10 @@
   .pulse-notification-text{flex:1;font-size:13px;line-height:1.4}
   .pulse-notification-title{font-weight:600;margin-bottom:2px}
   .device-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(102,126,234,0.15);color:#a5b4fc;font-size:11px;padding:4px 10px;border-radius:12px;margin-top:6px}
-
-  /* Возрастной бейдж */
   .age-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600}
   .age-badge.young{background:linear-gradient(135deg,#f59e0b,#f5576c);color:#fff}
   .age-badge.teen{background:linear-gradient(135deg,#0ea5e9,#667eea);color:#fff}
   .age-badge.adult{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff}
-
-  /* Курсив-бонус */
   .bonus-card{background:linear-gradient(135deg,#f59e0b 0%,#ef4444 50%,#ec4899 100%);border-radius:22px;padding:22px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(239,68,68,0.35);cursor:pointer;transition:.3s}
   .bonus-card:active{transform:scale(0.99)}
   .bonus-card::after{content:'';position:absolute;top:-40%;right:-20%;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.12)}
@@ -286,7 +308,6 @@
   .bonus-percent{font-size:26px;font-weight:800;position:absolute;top:20px;right:22px;z-index:1}
   .bonus-progress{height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;margin-top:12px;position:relative;z-index:1}
   .bonus-progress-fill{height:100%;background:#fff;border-radius:3px;transition:.5s}
-
   @media (hover: hover) and (pointer: fine) {
     .pin-key {transition: background 0.15s, transform 0.1s, box-shadow 0.15s;}
     .pin-key:hover {background: rgba(102,126,234,0.15);box-shadow: 0 4px 12px rgba(102,126,234,0.2);}
@@ -334,7 +355,7 @@
     </div>
   </div>
 
-  <!-- РЕГИСТРАЦИЯ (с датой рождения) -->
+  <!-- РЕГИСТРАЦИЯ -->
   <div class="screen" id="screenRegister">
     <div class="auth-box">
       <div class="logo">👤</div>
@@ -414,7 +435,6 @@
       <div class="balance-num" id="mainCardNum">•••• •••• •••• ----</div>
     </div>
 
-    <!-- КУРСИВ-БОНУС на главном -->
     <div class="bonus-card" onclick="goTo('screenBonus')">
       <div class="bonus-percent" id="bonusPercentMain">5%</div>
       <div class="bonus-title">⭐ Курсив-бонус</div>
@@ -601,7 +621,7 @@
     <div id="bonusHistory"></div>
 
     <button class="btn green" id="bonusSaveBtn" onclick="saveBonusCategories()">💾 Сохранить категории</button>
-    <p class="back-link" onclick="goTo('screenHome')">← На главную</button>
+    <p class="back-link" onclick="goTo('screenHome')">← На главную</p>
   </div>
 
   <!-- АВТОПЕРЕВОДЫ -->
@@ -859,7 +879,7 @@
       <button onclick="setAmount('topupAmount',3000)">3 000</button>
       <button onclick="setAmount('topupAmount',5000)">5 000</button>
     </div>
-    <button class="btn green" id="topupBtn" disabled>Пополнить</button>
+    <button class="btn green op-btn" id="topupBtn">Пополнить</button>
   </div>
 
   <!-- ПЕРЕВОД -->
@@ -929,7 +949,7 @@
 
     <input type="text" id="transferComment" placeholder="💬 Комментарий" maxlength="60">
 
-    <button class="btn" id="transferBtn" disabled>Перевести</button>
+    <button class="btn op-btn" id="transferBtn">Перевести</button>
     <button class="btn gray small" onclick="openSplit()">➗ Разделить счёт</button>
     <button class="btn gray small" onclick="openRequest()">📩 Запросить деньги</button>
   </div>
@@ -1002,7 +1022,7 @@
       </select>
     </div>
 
-    <button class="btn" id="payBtn" disabled>Оплатить</button>
+    <button class="btn op-btn" id="payBtn">Оплатить</button>
   </div>
 
   <!-- ОБРАБОТКА -->
@@ -1229,10 +1249,7 @@ const CATEGORIES = {
   reserve:{name:'Резерв',emoji:'🛡',color:'#0ea5e9'},
   bonus:{name:'Кэшбэк',emoji:'⭐',color:'#f59e0b'}
 };
-
-// Категории, доступные для кэшбэка (исключаем технические)
 const BONUS_ELIGIBLE = ['food','transport','fun','shopping','health','other'];
-
 const ACHIEVEMENTS = [
   {id:'first_pay',emoji:'🎉',title:'Первая покупка',desc:'Совершите первую оплату'},
   {id:'first_trans',emoji:'💸',title:'Первый перевод',desc:'Отправьте первый перевод'},
@@ -1246,16 +1263,13 @@ const ACHIEVEMENTS = [
   {id:'budget_hero',emoji:'📊',title:'Хозяин бюджета',desc:'Не превышайте бюджет месяц'},
   {id:'bonus_first',emoji:'⭐',title:'Первый кэшбэк',desc:'Получите первый кэшбэк'}
 ];
-
 const AVATAR_EMOJIS = ['👤','👨','👩','🧑','👦','👧','👴','👵','🧔','👱‍♀️','👨‍💼','👩‍💼','🦸','🧙','🐱','🐶','🐼','🦊','🐨','🐯','🦁','🐸','🐧','🦄','😎','🤓','🥳','😇','🤖','👽'];
 const MAX_PIN_ATTEMPTS = 3;
 const LOCK_DURATION_MS = 60 * 1000;
 const AUTO_LOCK_MS = 2 * 60 * 1000;
-
-// Курсив-бонус
-const BONUS_PERCENT = 5;              // 5% кэшбэк
-const BONUS_MAX_PER_MONTH = 3000;     // Максимум 3000 ₽ в месяц
-const BONUS_SLOTS = 3;                // 3 категории
+const BONUS_PERCENT = 5;
+const BONUS_MAX_PER_MONTH = 3000;
+const BONUS_SLOTS = 3;
 
 /* ==================== СОСТОЯНИЕ ==================== */
 const state = {
@@ -1271,7 +1285,7 @@ const state = {
   savedPin:null, pinMode:'create', pinBuffer:'', pinFirst:'', pinAttempts:0, lockedUntil:0,
   loggedIn:false, currentCardId:null, currentChildPhone:null, lastOperation:null, children:[],
   historyPeriod:'all', analyticsPeriod:'month', selectedAvatar:'👤',
-  bonusDraft: []  // временное состояние выбора категорий
+  bonusDraft: []
 };
 
 let currentUserRef=null, historyRef=null, childrenRef=null;
@@ -1392,6 +1406,131 @@ function showPulseNotification(title, text, icon='🔔') {
 function hideModal(id){ document.getElementById(id).classList.remove('show'); }
 function showModal(id){ document.getElementById(id).classList.add('show'); }
 
+/* ==================== ПОКАЗ ОШИБКИ С КРЕСТОМ ==================== */
+function showOperationError(btn, reason) {
+  if (!btn) return;
+  const original = btn.innerHTML;
+  const originalBg = btn.style.background;
+
+  btn.innerHTML = `<span style="display:inline-flex;align-items:center;justify-content:center;gap:8px">
+    <span style="font-size:20px">❌</span>
+    <span style="font-size:13px">${reason}</span>
+  </span>`;
+  btn.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
+  if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+  playSound('error');
+
+  const restore = () => {
+    btn.innerHTML = original;
+    btn.style.background = originalBg;
+    btn.onclick = null;
+  };
+  btn.onclick = (e) => { e.stopImmediatePropagation(); clearTimeout(btn._errTimer); restore(); };
+  clearTimeout(btn._errTimer);
+  btn._errTimer = setTimeout(restore, 2500);
+}
+
+/* ==================== ПРИЧИНЫ ОШИБОК ==================== */
+function getTopupErrorReason() {
+  const amt = parseInt(topupAmount.value) || 0;
+  const card = getCard(state.selectedTopupCard);
+  if (!card) return 'Выберите карту';
+  if (card.frozen) return 'Карта заморожена';
+  if (amt <= 0) return 'Введите сумму';
+  return null;
+}
+
+function getTransferErrorReason() {
+  const amt = parseInt(transferAmount.value) || 0;
+  let from = null;
+  if (state.transferMethod === 'phone') from = getCard(state.transferFrom);
+  if (state.transferMethod === 'card') from = getCard(state.transferFrom2);
+  if (state.transferMethod === 'own') from = getCard(state.transferOwnFrom);
+  if (state.transferMethod === 'qr') from = getCard(state.transferFrom3);
+
+  if (!from) return 'Выберите карту';
+  if (from.frozen) return 'Карта заморожена';
+
+  if (state.transferMethod === 'phone') {
+    if (!state.transferRecipient) {
+      if (!transferPhone.value.trim() || normalizePhone(transferPhone.value).length < 11) {
+        return 'Введите номер получателя';
+      }
+      return 'Получатель не найден';
+    }
+  }
+  if (state.transferMethod === 'card') {
+    if (transferCardNumber.value.replace(/\D/g,'').length !== 16) {
+      return 'Введите номер карты (16 цифр)';
+    }
+  }
+  if (state.transferMethod === 'own') {
+    if (!state.transferOwnTo) return 'Выберите карту получателя';
+    if (state.transferOwnFrom === state.transferOwnTo) return 'Выберите разные карты';
+  }
+
+  if (amt <= 0) return 'Введите сумму';
+  if (amt > from.balance) return `Недостаточно средств (макс. ${fmt(from.balance)} ₽)`;
+
+  if (state.transferMethod !== 'own') {
+    if (amt > state.settings.perOpLimit) return `Максимум за операцию: ${fmt(state.settings.perOpLimit)} ₽`;
+    const today = todayKey();
+    const spent = state.history.filter(t => {
+      if (t.type !== 'out') return false;
+      const d = new Date(t.createdAt || 0);
+      const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      return key === today;
+    }).reduce((s,t) => s + t.amount, 0);
+    if (spent + amt > state.settings.dailyLimit) return `Дневной лимит: ${fmt(state.settings.dailyLimit)} ₽`;
+  }
+
+  return null;
+}
+
+function getPayErrorReason() {
+  if (state.payMethod === 'shop') {
+    const amt = parseInt(payAmount.value) || 0;
+    const m = payMerchant.value.trim();
+    const card = getCard(state.payCard);
+    if (!card) return 'Выберите карту';
+    if (card.frozen) return 'Карта заморожена';
+    if (!m) return 'Введите название магазина';
+    if (amt <= 0) return 'Введите сумму';
+    if (amt > card.balance) return `Недостаточно средств (макс. ${fmt(card.balance)} ₽)`;
+    if (amt > state.settings.perOpLimit) return `Максимум за операцию: ${fmt(state.settings.perOpLimit)} ₽`;
+    const today = todayKey();
+    const spent = state.history.filter(t => {
+      if (t.type !== 'out') return false;
+      const d = new Date(t.createdAt || 0);
+      const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      return key === today;
+    }).reduce((s,t) => s + t.amount, 0);
+    if (spent + amt > state.settings.dailyLimit) return `Дневной лимит: ${fmt(state.settings.dailyLimit)} ₽`;
+    return null;
+  }
+  if (state.payMethod === 'req') {
+    const amt = parseInt(document.getElementById('reqAmount').value) || 0;
+    const card = getCard(state.payCard2);
+    if (!card) return 'Выберите карту';
+    if (card.frozen) return 'Карта заморожена';
+    if (!document.getElementById('reqOrg').value.trim()) return 'Введите организацию';
+    if (!document.getElementById('reqINN').value.trim()) return 'Введите ИНН';
+    if (!document.getElementById('reqBIK').value.trim()) return 'Введите БИК';
+    if (!document.getElementById('reqAccount').value.trim()) return 'Введите счёт';
+    if (amt <= 0) return 'Введите сумму';
+    if (amt > card.balance) return 'Недостаточно средств';
+    return null;
+  }
+  const amt = parseInt(document.getElementById('autoAmount').value) || 0;
+  const card = getCard(state.payCard3);
+  if (!card) return 'Выберите карту';
+  if (card.frozen) return 'Карта заморожена';
+  if (!document.getElementById('autoName').value.trim()) return 'Введите название';
+  if (amt <= 0) return 'Введите сумму';
+  if (amt > card.balance) return 'Недостаточно средств';
+  return null;
+}
+
 /* ==================== РАСЧЁТ ВОЗРАСТА ==================== */
 function calculateAge(birthDate) {
   if (!birthDate) return null;
@@ -1403,7 +1542,6 @@ function calculateAge(birthDate) {
   if (m < 0 || (m === 0 && now.getDate() < bd.getDate())) age--;
   return age;
 }
-
 function getAccountTypeByAge(age) {
   if (age === null) return null;
   return age >= 14 ? 'adult' : 'child';
@@ -1417,26 +1555,26 @@ function detectDevice() {
   const isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(ua);
   const isTabletUA = /iPad|Tablet|PlayBook|Silk|Android(?!.*Mobile)/i.test(ua);
   const isIPad = /Macintosh/i.test(ua) && isTouch;
-  
+
   let type = 'desktop', os = 'Unknown', browser = 'Unknown';
   if (isIPad || isTabletUA) type = 'tablet';
   else if (isMobileUA) type = 'mobile';
   else if (isTouch && window.innerWidth < 1024) type = 'tablet';
   else type = 'desktop';
-  
+
   if (/Windows/i.test(ua)) os = 'Windows';
   else if (/Mac OS X/i.test(ua) || /Macintosh/i.test(ua)) os = 'macOS';
   else if (/Android/i.test(ua)) os = 'Android';
   else if (/iPhone|iPad|iPod/i.test(ua)) os = 'iOS';
   else if (/Linux/i.test(ua)) os = 'Linux';
-  
+
   if (/Edg\//i.test(ua)) browser = 'Edge';
   else if (/YaBrowser/i.test(ua)) browser = 'Yandex';
   else if (/OPR\//i.test(ua) || /Opera/i.test(ua)) browser = 'Opera';
   else if (/Chrome\//i.test(ua)) browser = 'Chrome';
   else if (/Firefox\//i.test(ua)) browser = 'Firefox';
   else if (/Safari\//i.test(ua)) browser = 'Safari';
-  
+
   const emoji = { desktop:'🖥', mobile:'📱', tablet:'📲' }[type];
   const name = { desktop:'Компьютер', mobile:'Телефон', tablet:'Планшет' }[type];
   return { type, name, emoji, os, browser, isTouch };
@@ -1482,6 +1620,12 @@ function playSound(type) {
       gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
       osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.05);
+    } else if (type === 'error') {
+      osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(200, audioCtx.currentTime + 0.1);
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+      osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.25);
     }
   } catch(e) {}
 }
@@ -1522,10 +1666,7 @@ phoneBtn.addEventListener('click', async () => {
     const snap = await db.ref('users/'+phone).once('value');
     const data = snap.val();
     if (data && data.firstName && data.pinHash) {
-      state.user = {
-        phone, firstName:data.firstName, lastName:data.lastName||'',
-        type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||''
-      };
+      state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
       state.savedPin = data.pinHash;
       state.settings = { ...state.settings, ...(data.settings||{}) };
       localStorage.setItem('bank_phone', phone);
@@ -1533,10 +1674,7 @@ phoneBtn.addEventListener('click', async () => {
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenEnterPin');
     } else if (data && data.firstName && !data.pinHash) {
-      state.user = {
-        phone, firstName:data.firstName, lastName:data.lastName||'',
-        type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||''
-      };
+      state.user = { phone, firstName:data.firstName, lastName:data.lastName||'', type:data.type||'adult', avatar:data.avatar||'👤', birthDate:data.birthDate||'' };
       localStorage.setItem('bank_phone', phone);
       phoneBtn.textContent='Продолжить'; phoneBtn.disabled=false;
       goTo('screenCreatePin');
@@ -1556,7 +1694,6 @@ const birthDate = document.getElementById('birthDate');
 const parentPhone = document.getElementById('parentPhone');
 const registerBtn = document.getElementById('registerBtn');
 
-// Ограничиваем max датой сегодня
 const today = new Date().toISOString().split('T')[0];
 birthDate.setAttribute('max', today);
 
@@ -1564,21 +1701,15 @@ function checkRegForm() {
   const fnOk = firstName.value.trim().length>=1;
   const lnOk = lastName.value.trim().length>=1;
   const bdOk = !!birthDate.value;
-  
   let typeOk = false;
   if (bdOk) {
     const age = calculateAge(birthDate.value);
     const type = getAccountTypeByAge(age);
-    if (type === 'adult') {
-      typeOk = true;
-    } else if (type === 'child') {
-      // Детский - нужен родитель
-      typeOk = !!state.parentData;
-    }
+    if (type === 'adult') typeOk = true;
+    else if (type === 'child') typeOk = !!state.parentData;
   }
   registerBtn.disabled = !(fnOk && lnOk && bdOk && typeOk);
 }
-
 firstName.addEventListener('input', checkRegForm);
 lastName.addEventListener('input', checkRegForm);
 birthDate.addEventListener('input', () => {
@@ -1586,17 +1717,9 @@ birthDate.addEventListener('input', () => {
   const ageInfo = document.getElementById('ageInfo');
   const ageInfoText = document.getElementById('ageInfoText');
   const parentWrap = document.getElementById('parentPhoneWrap');
-  
-  if (!bd) {
-    ageInfo.style.display = 'none';
-    parentWrap.style.display = 'none';
-    checkRegForm();
-    return;
-  }
-  
+  if (!bd) { ageInfo.style.display = 'none'; parentWrap.style.display = 'none'; checkRegForm(); return; }
   const age = calculateAge(bd);
   const type = getAccountTypeByAge(age);
-  
   ageInfo.style.display = 'block';
   if (type === 'adult') {
     ageInfoText.innerHTML = `👤 Взрослый аккаунт <span class="age-badge adult" style="margin-left:8px">${age} лет</span>`;
@@ -1609,7 +1732,6 @@ birthDate.addEventListener('input', () => {
   checkRegForm();
 });
 
-// Автопоиск родителя
 let parentLookupTimer = null;
 parentPhone.addEventListener('input', e => {
   e.target.value = formatPhone(e.target.value);
@@ -1651,7 +1773,6 @@ registerBtn.addEventListener('click', async () => {
   const bd = birthDate.value;
   const age = calculateAge(bd);
   const type = getAccountTypeByAge(age);
-  
   registerBtn.textContent = 'Создаём кошелёк...'; registerBtn.disabled = true;
   try {
     const initialCards = generateCards(phone);
@@ -1669,9 +1790,7 @@ registerBtn.addEventListener('click', async () => {
     }
     await db.ref('users/'+phone).set(userData);
     if (type==='child' && state.parentData) {
-      await db.ref('parents/'+state.parentData.phone+'/children/'+phone).set({
-        phone, firstName:fn, lastName:ln, addedAt: firebase.database.ServerValue.TIMESTAMP
-      });
+      await db.ref('parents/'+state.parentData.phone+'/children/'+phone).set({ phone, firstName:fn, lastName:ln, addedAt: firebase.database.ServerValue.TIMESTAMP });
     }
     state.user.firstName = fn;
     state.user.lastName = ln;
@@ -1783,9 +1902,7 @@ function showLockCountdown(){
     if (left>0) {
       document.getElementById('enterPinError').textContent = `⏳ Заблокировано на ${left} сек`;
       setTimeout(tick,1000);
-    } else {
-      document.getElementById('enterPinError').textContent='';
-    }
+    } else { document.getElementById('enterPinError').textContent=''; }
   };
   tick();
   showToast('🔒 3 неверных попытки. Вход заблокирован', true);
@@ -1836,12 +1953,8 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault(); pinInput(e.key); return;
   }
   if (e.key === 'Backspace') { e.preventDefault(); pinBackspace(); return; }
-  if (e.key === 'Delete' || e.key === 'Escape') {
-    e.preventDefault(); state.pinBuffer = ''; updatePinDots(); return;
-  }
-  if (e.key === 'Enter' && state.pinBuffer.length === 4) {
-    e.preventDefault(); handlePinComplete(); return;
-  }
+  if (e.key === 'Delete' || e.key === 'Escape') { e.preventDefault(); state.pinBuffer = ''; updatePinDots(); return; }
+  if (e.key === 'Enter' && state.pinBuffer.length === 4) { e.preventDefault(); handlePinComplete(); return; }
 });
 
 /* ==================== БИОМЕТРИЯ ==================== */
@@ -1851,14 +1964,7 @@ async function tryBiometric(){
     const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
     if (!available) { showToast('❌ Биометрия недоступна', true); return; }
     showToast('👆 Подтвердите биометрию');
-    setTimeout(()=>{
-      state.loggedIn=true;
-      attachUserListeners();
-      logLogin();
-      goTo('screenHome');
-      showToast('✅ Вход выполнен');
-      startAutoLock();
-    }, 500);
+    setTimeout(()=>{ state.loggedIn=true; attachUserListeners(); logLogin(); goTo('screenHome'); showToast('✅ Вход выполнен'); startAutoLock(); }, 500);
   } catch(e){ console.error(e); showToast('❌ Ошибка биометрии', true); }
 }
 
@@ -1906,15 +2012,14 @@ function attachUserListeners() {
     state.loginHistory = data.loginHistory || [];
     state.settings = { ...state.settings, ...(data.settings||{}) };
     state.lastOperation = data.lastOperation || null;
-    
-    // Курсив-бонус: если месяц сменился — сбрасываем
+
     const currentMonthKey = monthKey();
     if (!data.bonus || data.bonus.monthKey !== currentMonthKey) {
       state.bonus = { monthKey: currentMonthKey, categories: [], earned: 0, history: data.bonus?.history || [] };
     } else {
       state.bonus = data.bonus;
     }
-    
+
     userDataLoaded = true;
     applySettings();
 
@@ -1926,10 +2031,7 @@ function attachUserListeners() {
     if (!state.payCard2) state.payCard2 = state.cards[0]?.id || null;
     if (!state.payCard3) state.payCard3 = state.cards[0]?.id || null;
     if (!state.transferOwnFrom) state.transferOwnFrom = state.cards[0]?.id || null;
-    if (!state.transferOwnTo) {
-      const other = state.cards.find(c=>c.id!==state.transferOwnFrom);
-      state.transferOwnTo = other?.id || null;
-    }
+    if (!state.transferOwnTo) { const other = state.cards.find(c=>c.id!==state.transferOwnFrom); state.transferOwnTo = other?.id || null; }
     const active = document.querySelector('.screen.active');
     if (!active) return;
     const id = active.id;
@@ -2019,12 +2121,8 @@ function applySettings(){
 }
 
 /* ==================== КУРСИВ-БОНУС ==================== */
-function getBonusCategoryIds() {
-  return state.bonus?.categories || [];
-}
-function isBonusCategory(catId) {
-  return getBonusCategoryIds().includes(catId);
-}
+function getBonusCategoryIds() { return state.bonus?.categories || []; }
+function isBonusCategory(catId) { return getBonusCategoryIds().includes(catId); }
 function calculateBonus(amount, category) {
   if (!isBonusCategory(category)) return 0;
   if (state.bonus.earned >= BONUS_MAX_PER_MONTH) return 0;
@@ -2037,94 +2135,49 @@ async function awardBonus(amount, category, merchantName) {
   if (bonus <= 0) return 0;
   state.bonus.earned = (state.bonus.earned || 0) + bonus;
   if (!state.bonus.history) state.bonus.history = [];
-  state.bonus.history.unshift({
-    date: now(),
-    category,
-    merchant: merchantName,
-    amount,
-    bonus,
-    createdAt: Date.now()
-  });
+  state.bonus.history.unshift({ date: now(), category, merchant: merchantName, amount, bonus, createdAt: Date.now() });
   if (state.bonus.history.length > 50) state.bonus.history = state.bonus.history.slice(0, 50);
-  
-  // Начисляем на первую карту
   const card = state.cards[0];
-  if (card) {
-    card.balance += bonus;
-    await saveCards();
-  }
+  if (card) { card.balance += bonus; await saveCards(); }
   await saveBonus();
-  await addHistory({
-    type: 'in', category: 'bonus',
-    title: `Кэшбэк ${BONUS_PERCENT}% — ${merchantName}`,
-    amount: bonus, date: now()
-  });
+  await addHistory({ type: 'in', category: 'bonus', title: `Кэшбэк ${BONUS_PERCENT}% — ${merchantName}`, amount: bonus, date: now() });
   await unlockAchievement('bonus_first');
   return bonus;
 }
 function renderBonusScreen() {
-  const month = monthNameRu();
-  document.getElementById('bonusPeriod').textContent = month;
+  document.getElementById('bonusPeriod').textContent = monthNameRu();
   document.getElementById('bonusEarned').textContent = fmt(state.bonus.earned || 0) + ' ₽';
   document.getElementById('bonusPercentBig').textContent = BONUS_PERCENT + '%';
   const pct = Math.min(100, ((state.bonus.earned || 0) / BONUS_MAX_PER_MONTH) * 100);
   document.getElementById('bonusProgressBig').style.width = pct + '%';
   document.getElementById('bonusLimitText').textContent = `Максимум ${fmt(BONUS_MAX_PER_MONTH)} ₽ в месяц • Осталось ${fmt(Math.max(0, BONUS_MAX_PER_MONTH - (state.bonus.earned||0)))} ₽`;
-  
-  // Категории выбора
   const selected = state.bonusDraft.length ? state.bonusDraft : (state.bonus.categories || []);
   document.getElementById('bonusSelectedCount').textContent = `${selected.length}/${BONUS_SLOTS}`;
-  
   document.getElementById('bonusCategoriesList').innerHTML = BONUS_ELIGIBLE.map(catId => {
     const cat = CATEGORIES[catId];
     const isSel = selected.includes(catId);
-    return `
-      <div class="cat-chip ${isSel?'selected':''}" style="padding:14px 16px;font-size:14px;display:flex;align-items:center;gap:10px;width:100%;justify-content:flex-start;margin-bottom:6px" onclick="toggleBonusCategory('${catId}')">
-        <span style="font-size:20px">${cat.emoji}</span>
-        <span style="flex:1;text-align:left">${cat.name}</span>
-        <span style="color:${isSel?'#fff':'var(--text-muted)'};font-weight:600">${isSel?'✓':'+'}</span>
-      </div>
-    `;
+    return `<div class="cat-chip ${isSel?'selected':''}" style="padding:14px 16px;font-size:14px;display:flex;align-items:center;gap:10px;width:100%;justify-content:flex-start;margin-bottom:6px" onclick="toggleBonusCategory('${catId}')"><span style="font-size:20px">${cat.emoji}</span><span style="flex:1;text-align:left">${cat.name}</span><span style="color:${isSel?'#fff':'var(--text-muted)'};font-weight:600">${isSel?'✓':'+'}</span></div>`;
   }).join('');
-  
-  // История начислений
   const hist = state.bonus.history || [];
   document.getElementById('bonusHistory').innerHTML = hist.length
     ? hist.slice(0, 10).map(h => {
         const cat = CATEGORIES[h.category] || CATEGORIES.other;
-        return `
-          <div class="card-select-item" style="cursor:default">
-            <div class="ci-icon" style="background:${cat.color};display:flex;align-items:center;justify-content:center;font-size:16px">${cat.emoji}</div>
-            <div style="flex:1">
-              <div class="ci-num">${h.merchant}</div>
-              <div class="ci-bal">${h.date}</div>
-            </div>
-            <div style="color:var(--green);font-weight:600">+${fmt(h.bonus)} ₽</div>
-          </div>
-        `;
+        return `<div class="card-select-item" style="cursor:default"><div class="ci-icon" style="background:${cat.color};display:flex;align-items:center;justify-content:center;font-size:16px">${cat.emoji}</div><div style="flex:1"><div class="ci-num">${h.merchant}</div><div class="ci-bal">${h.date}</div></div><div style="color:var(--green);font-weight:600">+${fmt(h.bonus)} ₽</div></div>`;
       }).join('')
     : `<div class="empty"><div class="empty-icon">⭐</div>Пока нет начислений</div>`;
 }
 function toggleBonusCategory(catId) {
-  // Инициализируем draft
   if (!state.bonusDraft.length) state.bonusDraft = [...(state.bonus.categories || [])];
   const idx = state.bonusDraft.indexOf(catId);
-  if (idx >= 0) {
-    state.bonusDraft.splice(idx, 1);
-  } else {
-    if (state.bonusDraft.length >= BONUS_SLOTS) {
-      showToast(`❌ Можно выбрать максимум ${BONUS_SLOTS} категории`, true);
-      return;
-    }
+  if (idx >= 0) state.bonusDraft.splice(idx, 1);
+  else {
+    if (state.bonusDraft.length >= BONUS_SLOTS) { showToast(`❌ Можно выбрать максимум ${BONUS_SLOTS} категории`, true); return; }
     state.bonusDraft.push(catId);
   }
   renderBonusScreen();
 }
 async function saveBonusCategories() {
-  if (!state.bonusDraft.length && !state.bonus.categories.length) {
-    showToast('❌ Выберите категории', true);
-    return;
-  }
+  if (!state.bonusDraft.length && !state.bonus.categories.length) { showToast('❌ Выберите категории', true); return; }
   state.bonus.categories = [...state.bonusDraft];
   await saveBonus();
   state.bonusDraft = [];
@@ -2139,7 +2192,6 @@ function renderBonusHomeCard() {
   const bonusCats = document.getElementById('bonusCatsMain');
   const progressFill = document.getElementById('bonusProgressMain');
   const hint = document.getElementById('bonusHintMain');
-  
   if (!cats.length) {
     bonusSub.textContent = 'Выберите 3 категории на этот месяц';
     bonusCats.innerHTML = '';
@@ -2147,7 +2199,6 @@ function renderBonusHomeCard() {
     progressFill.style.width = '0%';
     return;
   }
-  
   bonusSub.textContent = `Начислено в этом месяце`;
   bonusCats.innerHTML = cats.map(catId => {
     const cat = CATEGORIES[catId] || CATEGORIES.other;
@@ -2161,21 +2212,8 @@ function renderBonusAccountPreview() {
   const el = document.getElementById('accountBonusPreview');
   if (!el) return;
   const cats = state.bonus.categories || [];
-  if (!cats.length) {
-    el.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Категории не выбраны</div>`;
-    return;
-  }
-  el.innerHTML = `
-    <div style="background:var(--card);border-radius:14px;padding:14px">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        ${cats.map(catId => {
-          const cat = CATEGORIES[catId] || CATEGORIES.other;
-          return `<span class="bonus-cat-pill" style="background:rgba(102,126,234,0.2);color:#a5b4fc">${cat.emoji} ${cat.name}</span>`;
-        }).join('')}
-      </div>
-      <div style="color:var(--text-dim);font-size:12px">Начислено: <b style="color:var(--green)">${fmt(state.bonus.earned||0)} ₽</b> из ${fmt(BONUS_MAX_PER_MONTH)} ₽</div>
-    </div>
-  `;
+  if (!cats.length) { el.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Категории не выбраны</div>`; return; }
+  el.innerHTML = `<div style="background:var(--card);border-radius:14px;padding:14px"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">${cats.map(catId => { const cat = CATEGORIES[catId] || CATEGORIES.other; return `<span class="bonus-cat-pill" style="background:rgba(102,126,234,0.2);color:#a5b4fc">${cat.emoji} ${cat.name}</span>`; }).join('')}</div><div style="color:var(--text-dim);font-size:12px">Начислено: <b style="color:var(--green)">${fmt(state.bonus.earned||0)} ₽</b> из ${fmt(BONUS_MAX_PER_MONTH)} ₽</div></div>`;
 }
 
 /* ==================== УДАЛЕНИЕ АККАУНТА ==================== */
@@ -2195,25 +2233,13 @@ async function performDeleteAccount() {
   btn.textContent = 'Удаляем...';
   btn.disabled = true;
   try {
-    // Удаляем все данные пользователя
     await db.ref('users/'+phone).remove();
     await db.ref('history/'+phone).remove();
-    
-    // Если ребёнок — удаляем из списка детей родителя
-    if (state.user.parentPhone) {
-      await db.ref('parents/'+state.user.parentPhone+'/children/'+phone).remove();
-    }
-    // Если родитель — удаляем всех его детей из parents
+    if (state.user.parentPhone) await db.ref('parents/'+state.user.parentPhone+'/children/'+phone).remove();
     await db.ref('parents/'+phone).remove();
-    
-    // Удаляем запросы
     await db.ref('requests/'+phone).remove();
-    
-    // Очищаем localStorage
     localStorage.removeItem('bank_phone');
     localStorage.removeItem('bank_current_screen');
-    
-    // Сбрасываем состояние
     detachUserListeners();
     state.loggedIn = false;
     state.savedPin = null;
@@ -2224,7 +2250,6 @@ async function performDeleteAccount() {
     state.goals = [];
     state.budgets = [];
     state.bonus = { monthKey:'', categories:[], earned:0, history:[] };
-    
     hideModal('deleteAccountModal');
     phoneInput.value = '';
     phoneBtn.disabled = true;
@@ -2241,11 +2266,7 @@ async function performDeleteAccount() {
 /* ==================== ЛОГ ВХОДОВ ==================== */
 async function logLogin() {
   const device = detectDevice();
-  const entry = {
-    date: nowFull(),
-    device: `${device.emoji} ${device.name} • ${device.os} • ${device.browser}`,
-    type: device.type
-  };
+  const entry = { date: nowFull(), device: `${device.emoji} ${device.name} • ${device.os} • ${device.browser}`, type: device.type };
   state.loginHistory.unshift(entry);
   if (state.loginHistory.length > 20) state.loginHistory = state.loginHistory.slice(0, 20);
   await saveLoginHistory();
@@ -2253,21 +2274,10 @@ async function logLogin() {
 function showLoginHistory() { goTo('screenLoginHistory'); }
 function renderLoginHistory() {
   const el = document.getElementById('loginHistoryList');
-  if (!state.loginHistory.length) {
-    el.innerHTML = `<div class="empty"><div class="empty-icon">📜</div>Пока нет входов</div>`;
-    return;
-  }
+  if (!state.loginHistory.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">📜</div>Пока нет входов</div>`; return; }
   el.innerHTML = state.loginHistory.map((h, i) => {
     const isCurrent = i === 0;
-    return `
-      <div style="background:var(--card);border-radius:14px;padding:14px;margin-bottom:8px;${isCurrent ? 'border:1px solid var(--primary);' : ''}">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-          <div style="color:var(--text);font-size:14px;font-weight:500">${h.device || 'Устройство'}</div>
-          ${isCurrent ? '<span style="font-size:10px;color:var(--primary);background:rgba(102,126,234,0.15);padding:2px 8px;border-radius:10px">Сейчас</span>' : ''}
-        </div>
-        <div style="color:var(--text-muted);font-size:11px">${h.date}</div>
-      </div>
-    `;
+    return `<div style="background:var(--card);border-radius:14px;padding:14px;margin-bottom:8px;${isCurrent ? 'border:1px solid var(--primary);' : ''}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="color:var(--text);font-size:14px;font-weight:500">${h.device || 'Устройство'}</div>${isCurrent ? '<span style="font-size:10px;color:var(--primary);background:rgba(102,126,234,0.15);padding:2px 8px;border-radius:10px">Сейчас</span>' : ''}</div><div style="color:var(--text-muted);font-size:11px">${h.date}</div></div>`;
   }).join('');
 }
 
@@ -2292,22 +2302,14 @@ function renderHome(){
   document.getElementById('userAvatar').textContent = u.avatar || '👤';
   const eye = document.getElementById('eyeBtn');
   if (eye) eye.textContent = state.settings.private ? '🙈' : '👁';
-
   const total = state.cards.reduce((s,c)=>s+(c.balance||0),0);
   const el = document.getElementById('totalBalance');
-  if (state.settings.private) {
-    el.innerHTML = '•••• <span>₽</span>';
-  } else {
-    animateBalance(el, total);
-  }
+  if (state.settings.private) el.innerHTML = '•••• <span>₽</span>';
+  else animateBalance(el, total);
   document.getElementById('mainCardNum').textContent = state.cards[0] ? maskCard(state.cards[0].last) : '•••• ----';
-
   renderBonusHomeCard();
-
   const recent = state.history.slice(0,5);
-  document.getElementById('homeHistory').innerHTML = recent.length
-    ? recent.map(renderTxItem).join('')
-    : `<div class="empty"><div class="empty-icon">📋</div>Операций пока нет</div>`;
+  document.getElementById('homeHistory').innerHTML = recent.length ? recent.map(renderTxItem).join('') : `<div class="empty"><div class="empty-icon">📋</div>Операций пока нет</div>`;
 }
 function animateBalance(el, target) {
   const duration = 600;
@@ -2331,25 +2333,9 @@ function renderTxItem(tx, withSwipe = true){
   const catLabel = tx.category && CATEGORIES[tx.category] ? `<span class="tx-cat">${cat.emoji} ${cat.name}</span>` : '';
   const comment = tx.comment ? `<div style="color:#a5b4fc;font-size:11px;margin-top:2px;font-style:italic">"${tx.comment}"</div>` : '';
   const amt = state.settings.private ? '•••• ₽' : (sign + fmt(tx.amount) + ' ₽');
-  return `
-    <div class="tx-item" data-txid="${tx.id||''}" onclick="onTxClick('${tx.id||''}')">
-      ${withSwipe ? '<div class="tx-swipe-bg left">🔁</div><div class="tx-swipe-bg right">🗑</div>' : ''}
-      <div class="tx-item-content">
-        <div class="tx-icon ${cls}">${cat.emoji}</div>
-        <div class="tx-info">
-          <div class="tx-title">${tx.title}${catLabel}</div>
-          <div class="tx-date">${tx.date}</div>
-          ${comment}
-        </div>
-        <div class="tx-amount ${cls}">${amt}</div>
-      </div>
-    </div>
-  `;
+  return `<div class="tx-item" data-txid="${tx.id||''}" onclick="onTxClick('${tx.id||''}')">${withSwipe ? '<div class="tx-swipe-bg left">🔁</div><div class="tx-swipe-bg right">🗑</div>' : ''}<div class="tx-item-content"><div class="tx-icon ${cls}">${cat.emoji}</div><div class="tx-info"><div class="tx-title">${tx.title}${catLabel}</div><div class="tx-date">${tx.date}</div>${comment}</div><div class="tx-amount ${cls}">${amt}</div></div></div>`;
 }
-function onTxClick(id) {
-  if (window._txSwiped) { window._txSwiped = false; return; }
-  repeatTx(id);
-}
+function onTxClick(id) { if (window._txSwiped) { window._txSwiped = false; return; } repeatTx(id); }
 function repeatTx(id){
   const tx = state.history.find(t => t.id === id) || state.history[0];
   if (!tx) return;
@@ -2401,17 +2387,9 @@ function initSwipe() {
     const transform = content.style.transform;
     const dx = parseFloat((transform.match(/-?\d+/) || [0])[0]);
     const id = item.dataset.txid;
-    if (dx > 60) {
-      content.style.transform = 'translateX(0)';
-      window._txSwiped = true;
-      repeatTx(id);
-    } else if (dx < -60) {
-      content.style.transform = 'translateX(0)';
-      window._txSwiped = true;
-      confirmDeleteTx(id);
-    } else {
-      content.style.transform = 'translateX(0)';
-    }
+    if (dx > 60) { content.style.transform = 'translateX(0)'; window._txSwiped = true; repeatTx(id); }
+    else if (dx < -60) { content.style.transform = 'translateX(0)'; window._txSwiped = true; confirmDeleteTx(id); }
+    else content.style.transform = 'translateX(0)';
     item._startX = null;
   }, { passive: true });
 }
@@ -2472,7 +2450,6 @@ function renderHistory(){
 }
 document.getElementById('dateFrom')?.addEventListener('change', renderHistory);
 document.getElementById('dateTo')?.addEventListener('change', renderHistory);
-
 function exportHistoryCSV(){
   if (!state.history.length) { showToast('❌ Нет операций', true); return; }
   const rows = [['Дата','Тип','Категория','Название','Сумма','Комментарий']];
@@ -2495,7 +2472,6 @@ function renderAccount(){
   document.getElementById('accountName').textContent = full;
   document.getElementById('accountPhone').textContent = formatPhone(u.phone);
   document.getElementById('userAvatar').textContent = u.avatar || initial.toUpperCase() || '👤';
-
   let badges = '';
   const age = calculateAge(u.birthDate);
   if (u.type==='child') {
@@ -2508,96 +2484,32 @@ function renderAccount(){
   }
   if (u.birthDate) badges += `<div style="color:var(--text-muted);font-size:11px;margin-top:6px">День рождения: ${new Date(u.birthDate).toLocaleDateString('ru-RU')}</div>`;
   document.getElementById('accountBadges').innerHTML = badges;
-
   const device = detectDevice();
   const deviceRow = document.getElementById('accountDevice');
   if (deviceRow) {
-    deviceRow.innerHTML = `
-      <div style="color:var(--text-dim);font-size:11px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
-        ${device.emoji} Текущее устройство: <b style="color:var(--text)">${device.name}</b><br>
-        <span style="opacity:0.7">${device.os} • ${device.browser}</span>
-      </div>
-    `;
+    deviceRow.innerHTML = `<div style="color:var(--text-dim);font-size:11px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">${device.emoji} Текущее устройство: <b style="color:var(--text)">${device.name}</b><br><span style="opacity:0.7">${device.os} • ${device.browser}</span></div>`;
   }
-
   renderBonusAccountPreview();
-
   const cs = document.getElementById('childrenSection');
   const cl = document.getElementById('childrenList');
   if (u.type==='adult' && state.children?.length) {
     cs.style.display='block';
-    cl.innerHTML = state.children.map(ch => `
-      <div class="child-item" onclick="openChildView('${ch.phone}')">
-        <div class="child-header">
-          <div class="child-avatar">${(ch.firstName?.[0]||'')+(ch.lastName?.[0]||'')}</div>
-          <div style="flex:1">
-            <div class="child-name">${ch.firstName} ${ch.lastName||''}</div>
-            <div class="child-phone">${formatPhone(ch.phone)}</div>
-          </div>
-        </div>
-      </div>
-    `).join('');
+    cl.innerHTML = state.children.map(ch => `<div class="child-item" onclick="openChildView('${ch.phone}')"><div class="child-header"><div class="child-avatar">${(ch.firstName?.[0]||'')+(ch.lastName?.[0]||'')}</div><div style="flex:1"><div class="child-name">${ch.firstName} ${ch.lastName||''}</div><div class="child-phone">${formatPhone(ch.phone)}</div></div></div></div>`).join('');
   } else cs.style.display='none';
-
-  document.getElementById('accountCardsList').innerHTML = state.cards.slice(0,3).map(c => `
-    <div class="card-select-item" onclick="openCardDetails(${c.id})">
-      <div class="ci-icon" style="background:${c.color}"></div>
-      <div style="flex:1">
-        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-        ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-        <div class="ci-bal">${maskAmount(c.balance)}</div>
-      </div>
-      ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
-    </div>
-  `).join('');
-
+  document.getElementById('accountCardsList').innerHTML = state.cards.slice(0,3).map(c => `<div class="card-select-item" onclick="openCardDetails(${c.id})"><div class="ci-icon" style="background:${c.color}"></div><div style="flex:1"><div class="ci-num">${c.brand} ${maskCard(c.last)}</div>${c.name?`<div class="ci-name">${c.name}</div>`:''}<div class="ci-bal">${maskAmount(c.balance)}</div></div>${c.frozen?'<div class="frozen-badge">🔒</div>':''}</div>`).join('');
   const cEl = document.getElementById('accountContactsList');
   if (!state.contacts.length) cEl.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Нет контактов</div>`;
-  else cEl.innerHTML = state.contacts.slice(0,5).map(c => `
-    <span class="contact-chip" onclick="quickTransferTo('${c.phone}')">
-      <div class="cc-av">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div>
-      ${c.firstName}
-    </span>
-  `).join('');
-
+  else cEl.innerHTML = state.contacts.slice(0,5).map(c => `<span class="contact-chip" onclick="quickTransferTo('${c.phone}')"><div class="cc-av">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div>${c.firstName}</span>`).join('');
   const gEl = document.getElementById('accountGoalsList');
   if (!state.goals.length) gEl.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Нет целей</div>`;
-  else gEl.innerHTML = state.goals.slice(0,3).map(g => `
-    <div class="goal-item" onclick="goTo('screenGoals')">
-      <div class="goal-head">
-        <div class="goal-name">${g.emoji||'🎯'} ${g.name}</div>
-        <div style="color:var(--text-dim);font-size:12px">${maskAmount(g.current||0)} / ${maskAmount(g.target)}</div>
-      </div>
-      <div class="goal-bar"><div class="goal-fill" style="width:${Math.min(100,((g.current||0)/g.target)*100)}%"></div></div>
-    </div>
-  `).join('');
-
+  else gEl.innerHTML = state.goals.slice(0,3).map(g => `<div class="goal-item" onclick="goTo('screenGoals')"><div class="goal-head"><div class="goal-name">${g.emoji||'🎯'} ${g.name}</div><div style="color:var(--text-dim);font-size:12px">${maskAmount(g.current||0)} / ${maskAmount(g.target)}</div></div><div class="goal-bar"><div class="goal-fill" style="width:${Math.min(100,((g.current||0)/g.target)*100)}%"></div></div></div>`).join('');
   const aEl = document.getElementById('accountAutotransfersList');
   if (!state.autotransfers.length) aEl.innerHTML = `<div class="empty" style="padding:14px;font-size:12px">Нет автопереводов</div>`;
   else aEl.innerHTML = state.autotransfers.slice(0,2).map(a => {
-    const from = getCard(a.fromId);
-    const to = getCard(a.toId);
-    return `
-      <div class="card-select-item" onclick="goTo('screenAutotransfers')">
-        <div class="ci-icon" style="background:${from?.color||'#666'}"></div>
-        <div style="flex:1">
-          <div class="ci-num">${from?.brand||'?'} → ${to?.brand||'?'}</div>
-          <div class="ci-bal">${fmt(a.amount)} ₽ • ${a.day}-го числа</div>
-        </div>
-      </div>
-    `;
+    const from = getCard(a.fromId); const to = getCard(a.toId);
+    return `<div class="card-select-item" onclick="goTo('screenAutotransfers')"><div class="ci-icon" style="background:${from?.color||'#666'}"></div><div style="flex:1"><div class="ci-num">${from?.brand||'?'} → ${to?.brand||'?'}</div><div class="ci-bal">${fmt(a.amount)} ₽ • ${a.day}-го числа</div></div></div>`;
   }).join('');
-
-  document.getElementById('accountAchievements').innerHTML = ACHIEVEMENTS.map(a => `
-    <div class="achievement ${state.achievements[a.id]?'unlocked':''}">
-      <div class="achievement-icon">${a.emoji}</div>
-      <div>
-        <div class="achievement-title">${a.title}</div>
-        <div class="achievement-desc">${a.desc}</div>
-      </div>
-    </div>
-  `).join('');
-
+  document.getElementById('accountAchievements').innerHTML = ACHIEVEMENTS.map(a => `<div class="achievement ${state.achievements[a.id]?'unlocked':''}"><div class="achievement-icon">${a.emoji}</div><div><div class="achievement-title">${a.title}</div><div class="achievement-desc">${a.desc}</div></div></div>`).join('');
   document.getElementById('budgetsCount').textContent = state.budgets.length;
   document.getElementById('limitsSummary').textContent = fmt(state.settings.dailyLimit)+' ₽/д';
   document.getElementById('autoLockToggle').checked = state.settings.autoLock;
@@ -2611,9 +2523,7 @@ function renderAccount(){
 function openAvatarPicker() {
   state.selectedAvatar = state.user.avatar || '👤';
   const picker = document.getElementById('avatarPicker');
-  picker.innerHTML = AVATAR_EMOJIS.map(e => `
-    <div class="avatar-emoji ${e===state.selectedAvatar?'selected':''}" onclick="pickAvatar('${e}',this)">${e}</div>
-  `).join('');
+  picker.innerHTML = AVATAR_EMOJIS.map(e => `<div class="avatar-emoji ${e===state.selectedAvatar?'selected':''}" onclick="pickAvatar('${e}',this)">${e}</div>`).join('');
   showModal('avatarModal');
 }
 function pickAvatar(e, el) {
@@ -2632,17 +2542,7 @@ async function saveAvatar() {
 
 /* ==================== КАРТЫ ==================== */
 function renderAllCards(){
-  document.getElementById('allCardsList').innerHTML = state.cards.map(c => `
-    <div class="card-select-item ${c.frozen?'frozen':''}" onclick="openCardDetails(${c.id})">
-      <div class="ci-icon" style="background:${c.color}"></div>
-      <div style="flex:1">
-        <div class="ci-num">${c.brand} ${maskCard(c.last)}</div>
-        ${c.name?`<div class="ci-name">${c.name}</div>`:''}
-        <div class="ci-bal">${maskAmount(c.balance)}</div>
-      </div>
-      ${c.frozen?'<div class="frozen-badge">🔒 Заморожена</div>':''}
-    </div>
-  `).join('');
+  document.getElementById('allCardsList').innerHTML = state.cards.map(c => `<div class="card-select-item ${c.frozen?'frozen':''}" onclick="openCardDetails(${c.id})"><div class="ci-icon" style="background:${c.color}"></div><div style="flex:1"><div class="ci-num">${c.brand} ${maskCard(c.last)}</div>${c.name?`<div class="ci-name">${c.name}</div>`:''}<div class="ci-bal">${maskAmount(c.balance)}</div></div>${c.frozen?'<div class="frozen-badge">🔒 Заморожена</div>':''}</div>`).join('');
 }
 function openCardDetails(id){
   if (!id) return;
@@ -2670,10 +2570,7 @@ function showCardRequisites(){
   document.getElementById('cdNumber').textContent = '4276 '+String(Math.floor(1000+Math.random()*9000))+' '+String(Math.floor(1000+Math.random()*9000))+' '+c.last;
   document.getElementById('cdCvv').textContent = c.cvv||'123';
   clearTimeout(requisitesTimer);
-  requisitesTimer = setTimeout(()=>{
-    document.getElementById('cdNumber').textContent = '•••• •••• •••• '+c.last;
-    document.getElementById('cdCvv').textContent = '•••';
-  }, 15000);
+  requisitesTimer = setTimeout(()=>{ document.getElementById('cdNumber').textContent = '•••• •••• •••• '+c.last; document.getElementById('cdCvv').textContent = '•••'; }, 15000);
   showToast('👁 Реквизиты видны 15 секунд');
 }
 async function copyCardRequisites() {
@@ -2713,10 +2610,7 @@ function confirmDeleteCard(){
     hideModal('genericModal');
     state.cards = state.cards.filter(x => x.id!==c.id);
     if (state.transferOwnFrom === c.id) state.transferOwnFrom = state.cards[0]?.id || null;
-    if (state.transferOwnTo === c.id) {
-      const other = state.cards.find(x => x.id !== state.transferOwnFrom);
-      state.transferOwnTo = other?.id || null;
-    }
+    if (state.transferOwnTo === c.id) { const other = state.cards.find(x => x.id !== state.transferOwnFrom); state.transferOwnTo = other?.id || null; }
     if (state.selectedTopupCard === c.id) state.selectedTopupCard = state.cards[0]?.id || null;
     if (state.transferFrom === c.id) state.transferFrom = state.cards[0]?.id || null;
     if (state.transferFrom2 === c.id) state.transferFrom2 = state.cards[0]?.id || null;
@@ -2755,11 +2649,7 @@ async function createNewCard(){
   const initial = parseInt(document.getElementById('newCardBalance').value)||0;
   const last = String(Math.floor(1000+Math.random()*9000));
   const newId = Math.max(...state.cards.map(c=>c.id||0), 0)+1;
-  state.cards.push({
-    id:newId, brand, last, balance:initial, color, name, frozen:false, limit:0,
-    expiry:'12/'+String(new Date().getFullYear()%100+3),
-    cvv:String(Math.floor(100+Math.random()*900))
-  });
+  state.cards.push({ id:newId, brand, last, balance:initial, color, name, frozen:false, limit:0, expiry:'12/'+String(new Date().getFullYear()%100+3), cvv:String(Math.floor(100+Math.random()*900)) });
   await saveCards();
   showToast('💳 Карта выпущена');
   goTo('screenCards');
@@ -2769,16 +2659,7 @@ async function createNewCard(){
 function renderContacts(){
   const el = document.getElementById('contactsList');
   if (!state.contacts.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">📇</div>Нет контактов</div>`; return; }
-  el.innerHTML = state.contacts.map(c => `
-    <div class="card-select-item" onclick="quickTransferTo('${c.phone}')">
-      <div class="ci-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div>
-      <div style="flex:1">
-        <div class="ci-num">${c.firstName} ${c.lastName||''}</div>
-        <div class="ci-bal">${formatPhone(c.phone)}</div>
-      </div>
-      <button class="btn red small" style="width:auto;padding:6px 10px" onclick="event.stopPropagation();removeContact('${c.phone}')">🗑</button>
-    </div>
-  `).join('');
+  el.innerHTML = state.contacts.map(c => `<div class="card-select-item" onclick="quickTransferTo('${c.phone}')"><div class="ci-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div><div style="flex:1"><div class="ci-num">${c.firstName} ${c.lastName||''}</div><div class="ci-bal">${formatPhone(c.phone)}</div></div><button class="btn red small" style="width:auto;padding:6px 10px" onclick="event.stopPropagation();removeContact('${c.phone}')">🗑</button></div>`).join('');
 }
 async function removeContact(phone){
   state.contacts = state.contacts.filter(c => c.phone !== phone);
@@ -2815,48 +2696,21 @@ function openAddContact(){
 function quickTransferTo(phone){
   goTo('screenTransfer');
   switchTransferMethod('phone', document.querySelector('#screenTransfer .cat-chip'));
-  setTimeout(()=>{
-    document.getElementById('transferPhone').value = formatPhone(phone);
-    document.getElementById('transferPhone').dispatchEvent(new Event('input'));
-  }, 200);
+  setTimeout(()=>{ document.getElementById('transferPhone').value = formatPhone(phone); document.getElementById('transferPhone').dispatchEvent(new Event('input')); }, 200);
 }
 
 /* ==================== ЦЕЛИ ==================== */
 function renderGoals(){
   const el = document.getElementById('goalsList');
   if (!state.goals.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">🎯</div>Нет целей</div>`; return; }
-  el.innerHTML = state.goals.map((g,i) => `
-    <div class="goal-item">
-      <div class="goal-head">
-        <div class="goal-name">${g.emoji||'🎯'} ${g.name}</div>
-        <div class="goal-emoji">${Math.round(((g.current||0)/g.target)*100)}%</div>
-      </div>
-      <div class="goal-amounts">${maskAmount(g.current||0)} / ${maskAmount(g.target)}</div>
-      <div class="goal-bar"><div class="goal-fill" style="width:${Math.min(100,((g.current||0)/g.target)*100)}%"></div></div>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button class="btn green small" onclick="addToGoal(${i})">➕ Добавить</button>
-        <button class="btn red small" onclick="deleteGoal(${i})">🗑</button>
-      </div>
-    </div>
-  `).join('');
+  el.innerHTML = state.goals.map((g,i) => `<div class="goal-item"><div class="goal-head"><div class="goal-name">${g.emoji||'🎯'} ${g.name}</div><div class="goal-emoji">${Math.round(((g.current||0)/g.target)*100)}%</div></div><div class="goal-amounts">${maskAmount(g.current||0)} / ${maskAmount(g.target)}</div><div class="goal-bar"><div class="goal-fill" style="width:${Math.min(100,((g.current||0)/g.target)*100)}%"></div></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn green small" onclick="addToGoal(${i})">➕ Добавить</button><button class="btn red small" onclick="deleteGoal(${i})">🗑</button></div></div>`).join('');
 }
 function openAddGoal(){
   showModal('genericModal');
   document.getElementById('gmIcon').textContent = '🎯';
   document.getElementById('gmTitle').textContent = 'Новая цель';
   document.getElementById('gmText').textContent = 'На что копим?';
-  document.getElementById('gmExtra').innerHTML = `
-    <input type="text" id="newGoalName" placeholder="Название (Отпуск)" style="text-align:center">
-    <input type="text" id="newGoalTarget" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
-    <div class="cat-picker" style="justify-content:center">
-      <div class="cat-chip selected" data-emoji="🎯" onclick="pickGoalEmoji(this)">🎯</div>
-      <div class="cat-chip" data-emoji="✈️" onclick="pickGoalEmoji(this)">✈️</div>
-      <div class="cat-chip" data-emoji="🚗" onclick="pickGoalEmoji(this)">🚗</div>
-      <div class="cat-chip" data-emoji="🏠" onclick="pickGoalEmoji(this)">🏠</div>
-      <div class="cat-chip" data-emoji="💻" onclick="pickGoalEmoji(this)">💻</div>
-      <div class="cat-chip" data-emoji="🎁" onclick="pickGoalEmoji(this)">🎁</div>
-    </div>
-  `;
+  document.getElementById('gmExtra').innerHTML = `<input type="text" id="newGoalName" placeholder="Название (Отпуск)" style="text-align:center"><input type="text" id="newGoalTarget" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center"><div class="cat-picker" style="justify-content:center"><div class="cat-chip selected" data-emoji="🎯" onclick="pickGoalEmoji(this)">🎯</div><div class="cat-chip" data-emoji="✈️" onclick="pickGoalEmoji(this)">✈️</div><div class="cat-chip" data-emoji="🚗" onclick="pickGoalEmoji(this)">🚗</div><div class="cat-chip" data-emoji="🏠" onclick="pickGoalEmoji(this)">🏠</div><div class="cat-chip" data-emoji="💻" onclick="pickGoalEmoji(this)">💻</div><div class="cat-chip" data-emoji="🎁" onclick="pickGoalEmoji(this)">🎁</div></div>`;
   document.getElementById('gmConfirm').onclick = async () => {
     const name = document.getElementById('newGoalName').value.trim();
     const target = parseInt(document.getElementById('newGoalTarget').value)||0;
@@ -2910,26 +2764,11 @@ function renderBudgets(){
   const month = new Date().getMonth();
   const year = new Date().getFullYear();
   el.innerHTML = state.budgets.map((b,i) => {
-    const spent = state.history.filter(t => {
-      if (t.type!=='out' || t.category!==b.category) return false;
-      const d = new Date(t.createdAt || Date.now());
-      return d.getMonth()===month && d.getFullYear()===year;
-    }).reduce((s,t)=>s+t.amount,0);
+    const spent = state.history.filter(t => { if (t.type!=='out' || t.category!==b.category) return false; const d = new Date(t.createdAt || Date.now()); return d.getMonth()===month && d.getFullYear()===year; }).reduce((s,t)=>s+t.amount,0);
     const pct = Math.min(100, (spent/b.limit)*100);
     const cls = pct>=100?'danger':pct>=80?'warn':'';
     const cat = CATEGORIES[b.category]||CATEGORIES.other;
-    return `
-      <div class="budget-item">
-        <div class="budget-head">
-          <div class="budget-name">${cat.emoji} ${cat.name}</div>
-          <div class="budget-vals">${fmt(spent)} / ${fmt(b.limit)} ₽</div>
-        </div>
-        <div class="budget-bar"><div class="budget-fill ${cls}" style="width:${pct}%"></div></div>
-        <div style="display:flex;justify-content:flex-end;margin-top:8px">
-          <button class="btn red small" style="width:auto;padding:6px 12px" onclick="deleteBudget(${i})">🗑</button>
-        </div>
-      </div>
-    `;
+    return `<div class="budget-item"><div class="budget-head"><div class="budget-name">${cat.emoji} ${cat.name}</div><div class="budget-vals">${fmt(spent)} / ${fmt(b.limit)} ₽</div></div><div class="budget-bar"><div class="budget-fill ${cls}" style="width:${pct}%"></div></div><div style="display:flex;justify-content:flex-end;margin-top:8px"><button class="btn red small" style="width:auto;padding:6px 12px" onclick="deleteBudget(${i})">🗑</button></div></div>`;
   }).join('');
 }
 function openAddBudget(){
@@ -2937,12 +2776,7 @@ function openAddBudget(){
   document.getElementById('gmIcon').textContent = '💰';
   document.getElementById('gmTitle').textContent = 'Новый бюджет';
   document.getElementById('gmText').textContent = 'Лимит на категорию в месяц';
-  document.getElementById('gmExtra').innerHTML = `
-    <select id="newBudgetCat" style="margin-bottom:14px">
-      ${Object.entries(CATEGORIES).filter(([k])=>!['topup','transfer','bonus'].includes(k)).map(([k,v])=>`<option value="${k}">${v.emoji} ${v.name}</option>`).join('')}
-    </select>
-    <input type="text" id="newBudgetLimit" placeholder="Лимит ₽" inputmode="numeric" style="text-align:center">
-  `;
+  document.getElementById('gmExtra').innerHTML = `<select id="newBudgetCat" style="margin-bottom:14px">${Object.entries(CATEGORIES).filter(([k])=>!['topup','transfer','bonus'].includes(k)).map(([k,v])=>`<option value="${k}">${v.emoji} ${v.name}</option>`).join('')}</select><input type="text" id="newBudgetLimit" placeholder="Лимит ₽" inputmode="numeric" style="text-align:center">`;
   document.getElementById('gmConfirm').onclick = async () => {
     const category = document.getElementById('newBudgetCat').value;
     const limit = parseInt(document.getElementById('newBudgetLimit').value)||0;
@@ -2962,19 +2796,8 @@ function renderLimits(){
   document.getElementById('dailyLimitInput').value = state.settings.dailyLimit||50000;
   document.getElementById('perOpLimitInput').value = state.settings.perOpLimit||15000;
   const today = todayKey();
-  const spent = state.history.filter(t => {
-    if (t.type!=='out') return false;
-    const d = new Date(t.createdAt||0);
-    const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    return key===today;
-  }).reduce((s,t)=>s+t.amount,0);
-  document.getElementById('todayUsage').innerHTML = `
-    <div class="receipt">
-      <div class="receipt-row"><span class="receipt-label">Потрачено сегодня</span><span class="receipt-value">${fmt(spent)} ₽</span></div>
-      <div class="receipt-row"><span class="receipt-label">Дневной лимит</span><span class="receipt-value">${fmt(state.settings.dailyLimit)} ₽</span></div>
-      <div class="receipt-row"><span class="receipt-label">Осталось</span><span class="receipt-value" style="color:var(--green)">${fmt(Math.max(0,state.settings.dailyLimit-spent))} ₽</span></div>
-    </div>
-  `;
+  const spent = state.history.filter(t => { if (t.type!=='out') return false; const d = new Date(t.createdAt||0); const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); return key===today; }).reduce((s,t)=>s+t.amount,0);
+  document.getElementById('todayUsage').innerHTML = `<div class="receipt"><div class="receipt-row"><span class="receipt-label">Потрачено сегодня</span><span class="receipt-value">${fmt(spent)} ₽</span></div><div class="receipt-row"><span class="receipt-label">Дневной лимит</span><span class="receipt-value">${fmt(state.settings.dailyLimit)} ₽</span></div><div class="receipt-row"><span class="receipt-label">Осталось</span><span class="receipt-value" style="color:var(--green)">${fmt(Math.max(0,state.settings.dailyLimit-spent))} ₽</span></div></div>`;
 }
 async function saveLimits(){
   state.settings.dailyLimit = parseInt(document.getElementById('dailyLimitInput').value)||50000;
@@ -2983,37 +2806,15 @@ async function saveLimits(){
   showToast('💾 Лимиты сохранены');
   renderLimits();
 }
-function checkLimits(amount){
-  if (amount > state.settings.perOpLimit) { showToast(`❌ Максимум за операцию: ${fmt(state.settings.perOpLimit)} ₽`, true); return false; }
-  const today = todayKey();
-  const spent = state.history.filter(t => {
-    if (t.type!=='out') return false;
-    const d = new Date(t.createdAt||0);
-    const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    return key===today;
-  }).reduce((s,t)=>s+t.amount,0);
-  if (spent + amount > state.settings.dailyLimit) { showToast(`❌ Дневной лимит: ${fmt(state.settings.dailyLimit)} ₽`, true); return false; }
-  return true;
-}
 
 /* ==================== АВТОПЕРЕВОДЫ ==================== */
 function renderAutotransfers(){
   const el = document.getElementById('autotransfersList');
   if (!state.autotransfers.length) { el.innerHTML = `<div class="empty"><div class="empty-icon">🔁</div>Нет автопереводов</div>`; return; }
   el.innerHTML = state.autotransfers.map((a,i) => {
-    const from = getCard(a.fromId);
-    const to = getCard(a.toId);
+    const from = getCard(a.fromId); const to = getCard(a.toId);
     if (!from || !to) return '';
-    return `
-      <div class="card-select-item">
-        <div class="ci-icon" style="background:${from.color}"></div>
-        <div style="flex:1">
-          <div class="ci-num">${from.brand} ${maskCard(from.last)} → ${to.brand} ${maskCard(to.last)}</div>
-          <div class="ci-bal">${fmt(a.amount)} ₽ • каждый месяц ${a.day}-го числа</div>
-        </div>
-        <button class="btn red small" style="width:auto;padding:6px 10px" onclick="deleteAutotransfer(${i})">🗑</button>
-      </div>
-    `;
+    return `<div class="card-select-item"><div class="ci-icon" style="background:${from.color}"></div><div style="flex:1"><div class="ci-num">${from.brand} ${maskCard(from.last)} → ${to.brand} ${maskCard(to.last)}</div><div class="ci-bal">${fmt(a.amount)} ₽ • каждый месяц ${a.day}-го числа</div></div><button class="btn red small" style="width:auto;padding:6px 10px" onclick="deleteAutotransfer(${i})">🗑</button></div>`;
   }).join('');
 }
 function openAddAutotransfer() {
@@ -3022,12 +2823,7 @@ function openAddAutotransfer() {
   document.getElementById('gmIcon').textContent = '🔁';
   document.getElementById('gmTitle').textContent = 'Новый автоперевод';
   document.getElementById('gmText').textContent = 'Ежемесячный перевод между картами';
-  document.getElementById('gmExtra').innerHTML = `
-    <select id="atFrom" style="margin-bottom:10px">${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}</select>
-    <select id="atTo" style="margin-bottom:10px">${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}</select>
-    <input type="text" id="atAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
-    <input type="text" id="atDay" placeholder="День месяца (1-28)" inputmode="numeric" value="1" style="text-align:center">
-  `;
+  document.getElementById('gmExtra').innerHTML = `<select id="atFrom" style="margin-bottom:10px">${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}</select><select id="atTo" style="margin-bottom:10px">${state.cards.map(c=>`<option value="${c.id}">${c.brand} ${maskCard(c.last)} — ${fmt(c.balance)} ₽</option>`).join('')}</select><input type="text" id="atAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center"><input type="text" id="atDay" placeholder="День месяца (1-28)" inputmode="numeric" value="1" style="text-align:center">`;
   document.getElementById('gmConfirm').onclick = async () => {
     const fromId = parseInt(document.getElementById('atFrom').value);
     const toId = parseInt(document.getElementById('atTo').value);
@@ -3052,8 +2848,7 @@ async function checkAutotransfers() {
   for (const at of state.autotransfers) {
     if (at.day !== day) continue;
     if (at.lastRun === mk) continue;
-    const from = getCard(at.fromId);
-    const to = getCard(at.toId);
+    const from = getCard(at.fromId); const to = getCard(at.toId);
     if (!from || !to || from.frozen || from.balance < at.amount) continue;
     from.balance -= at.amount;
     to.balance += at.amount;
@@ -3062,11 +2857,7 @@ async function checkAutotransfers() {
     await addHistory({ type:'in', category:'transfer', title:`Автоперевод ← ${from.brand} ${maskCard(from.last)}`, amount:at.amount, date:now() });
     changed = true;
   }
-  if (changed) {
-    await saveCards();
-    await saveAutotransfers();
-    showPulseNotification('🔁 Автоперевод', 'Ежемесячный перевод выполнен', '🔁');
-  }
+  if (changed) { await saveCards(); await saveAutotransfers(); showPulseNotification('🔁 Автоперевод', 'Ежемесячный перевод выполнен', '🔁'); }
 }
 
 /* ==================== ТЕМА ==================== */
@@ -3111,7 +2902,6 @@ function renderAnalytics(){
   const byCat = {};
   ops.forEach(t => { byCat[t.category||'other'] = (byCat[t.category||'other']||0) + t.amount; });
   const total = Object.values(byCat).reduce((s,v)=>s+v,0) || 1;
-
   const segments = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
   let offset = 0;
   const r = 40, c = 2*Math.PI*r;
@@ -3124,51 +2914,23 @@ function renderAnalytics(){
     offset += len;
   });
   document.getElementById('donutTotal').textContent = fmt(total)+' ₽';
-  document.getElementById('donutLegend').innerHTML = segments.slice(0,6).map(([cat,val]) => `
-    <div class="legend-item">
-      <div class="legend-dot" style="background:${(CATEGORIES[cat]||CATEGORIES.other).color}"></div>
-      <div class="legend-name">${(CATEGORIES[cat]||CATEGORIES.other).emoji} ${(CATEGORIES[cat]||CATEGORIES.other).name}</div>
-      <div class="legend-val">${fmt(val)} ₽</div>
-    </div>
-  `).join('') || '<div style="color:var(--text-dim);font-size:12px;text-align:center">Нет расходов</div>';
-
+  document.getElementById('donutLegend').innerHTML = segments.slice(0,6).map(([cat,val]) => `<div class="legend-item"><div class="legend-dot" style="background:${(CATEGORIES[cat]||CATEGORIES.other).color}"></div><div class="legend-name">${(CATEGORIES[cat]||CATEGORIES.other).emoji} ${(CATEGORIES[cat]||CATEGORIES.other).name}</div><div class="legend-val">${fmt(val)} ₽</div></div>`).join('') || '<div style="color:var(--text-dim);font-size:12px;text-align:center">Нет расходов</div>';
   const daily = {};
   const daysArr = [];
   if (period === 'year') {
-    for (let i=11;i>=0;i--) {
-      const d = new Date();
-      d.setMonth(d.getMonth()-i);
-      const key = String(d.getMonth()+1).padStart(2,'0');
-      daily[key] = 0; daysArr.push(key);
-    }
-    ops.forEach(t => {
-      const d = new Date(t.createdAt||0);
-      const key = String(d.getMonth()+1).padStart(2,'0');
-      if (daily[key]!==undefined) daily[key] += t.amount;
-    });
+    for (let i=11;i>=0;i--) { const d = new Date(); d.setMonth(d.getMonth()-i); const key = String(d.getMonth()+1).padStart(2,'0'); daily[key] = 0; daysArr.push(key); }
+    ops.forEach(t => { const d = new Date(t.createdAt||0); const key = String(d.getMonth()+1).padStart(2,'0'); if (daily[key]!==undefined) daily[key] += t.amount; });
   } else {
-    for (let i=29;i>=0;i--) {
-      const d = new Date(Date.now()-i*24*60*60*1000);
-      const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0');
-      daily[key] = 0; daysArr.push(key);
-    }
-    ops.forEach(t => {
-      const d = new Date(t.createdAt||0);
-      const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0');
-      if (daily[key]!==undefined) daily[key] += t.amount;
-    });
+    for (let i=29;i>=0;i--) { const d = new Date(Date.now()-i*24*60*60*1000); const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0'); daily[key] = 0; daysArr.push(key); }
+    ops.forEach(t => { const d = new Date(t.createdAt||0); const key = d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0'); if (daily[key]!==undefined) daily[key] += t.amount; });
   }
   const maxDaily = Math.max(...Object.values(daily), 1);
   document.getElementById('barsChart').innerHTML = daysArr.map(k => `<div class="bar" style="height:${(daily[k]/maxDaily)*100}%" title="${k}: ${fmt(daily[k])} ₽"></div>`).join('');
   document.getElementById('barsLabels').innerHTML = daysArr.map((k,i) => i%5===0 ? `<span>${k}</span>` : `<span></span>`).join('');
-
   const merchants = {};
   ops.forEach(t => { if (t.category==='pay') merchants[t.title] = (merchants[t.title]||0)+t.amount; });
   const top = Object.entries(merchants).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  document.getElementById('topMerchants').innerHTML = top.length
-    ? top.map(([name,val]) => `<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px"><span style="color:var(--text)">${name}</span><span style="color:var(--text-dim)">${fmt(val)} ₽</span></div>`).join('')
-    : `<div style="color:var(--text-dim);font-size:12px">Нет покупок</div>`;
-
+  document.getElementById('topMerchants').innerHTML = top.length ? top.map(([name,val]) => `<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px"><span style="color:var(--text)">${name}</span><span style="color:var(--text-dim)">${fmt(val)} ₽</span></div>`).join('') : `<div style="color:var(--text-dim);font-size:12px">Нет покупок</div>`;
   const now2 = new Date();
   const curMonth = now2.getMonth(), curYear = now2.getFullYear();
   const prevMonth = curMonth===0?11:curMonth-1;
@@ -3176,26 +2938,14 @@ function renderAnalytics(){
   const curSpent = state.history.filter(t => { if (t.type!=='out') return false; const d = new Date(t.createdAt||0); return d.getMonth()===curMonth && d.getFullYear()===curYear; }).reduce((s,t)=>s+t.amount,0);
   const prevSpent = state.history.filter(t => { if (t.type!=='out') return false; const d = new Date(t.createdAt||0); return d.getMonth()===prevMonth && d.getFullYear()===prevYear; }).reduce((s,t)=>s+t.amount,0);
   const diff = prevSpent ? ((curSpent-prevSpent)/prevSpent)*100 : 0;
-  document.getElementById('monthCompare').innerHTML = `
-    Этот месяц: <b style="color:var(--text)">${fmt(curSpent)} ₽</b><br>
-    Прошлый: <b style="color:var(--text)">${fmt(prevSpent)} ₽</b><br>
-    ${prevSpent?(diff>0?`<span style="color:var(--red)">▲ +${diff.toFixed(1)}%</span> больше`:`<span style="color:var(--green)">▼ ${diff.toFixed(1)}%</span> меньше`):'—'}
-  `;
-
+  document.getElementById('monthCompare').innerHTML = `Этот месяц: <b style="color:var(--text)">${fmt(curSpent)} ₽</b><br>Прошлый: <b style="color:var(--text)">${fmt(prevSpent)} ₽</b><br>${prevSpent?(diff>0?`<span style="color:var(--red)">▲ +${diff.toFixed(1)}%</span> больше`:`<span style="color:var(--green)">▼ ${diff.toFixed(1)}%</span> меньше`):'—'}`;
   const daysInMonth = new Date(curYear, curMonth+1, 0).getDate();
   const daysPassed = new Date().getDate();
   const avgPerDay = daysPassed > 0 ? curSpent / daysPassed : 0;
   const forecast = avgPerDay * daysInMonth;
-  document.getElementById('forecast').innerHTML = `
-    Средний расход в день: <b style="color:var(--text)">${fmt(Math.round(avgPerDay))} ₽</b><br>
-    Прогноз на конец месяца: <b style="color:${forecast > state.settings.dailyLimit*30 ? 'var(--red)' : 'var(--green)'}">${fmt(Math.round(forecast))} ₽</b>
-  `;
-
+  document.getElementById('forecast').innerHTML = `Средний расход в день: <b style="color:var(--text)">${fmt(Math.round(avgPerDay))} ₽</b><br>Прогноз на конец месяца: <b style="color:${forecast > state.settings.dailyLimit*30 ? 'var(--red)' : 'var(--green)'}">${fmt(Math.round(forecast))} ₽</b>`;
   const advices = [];
-  if (segments.length) {
-    const topCat = segments[0];
-    advices.push(`💡 Больше всего вы тратите на <b style="color:var(--text)">${(CATEGORIES[topCat[0]]||CATEGORIES.other).name}</b> — ${fmt(topCat[1])} ₽`);
-  }
+  if (segments.length) { const topCat = segments[0]; advices.push(`💡 Больше всего вы тратите на <b style="color:var(--text)">${(CATEGORIES[topCat[0]]||CATEGORIES.other).name}</b> — ${fmt(topCat[1])} ₽`); }
   if (prevSpent && curSpent > prevSpent * 1.2) advices.push('⚠️ В этом месяце вы тратите на 20%+ больше, чем в прошлом');
   if (prevSpent && curSpent < prevSpent * 0.8) advices.push('🎉 Отлично! Вы тратите значительно меньше, чем в прошлом месяце');
   if (avgPerDay * 30 > state.settings.dailyLimit * 30) advices.push('⚠️ Прогноз превышает ваш лимит — сократите расходы');
@@ -3240,33 +2990,38 @@ async function checkAchievements(){
   if ((state.bonus.earned||0) > 0) await unlockAchievement('bonus_first');
 }
 
+/* ==================== ГЕНЕРАЦИЯ КАРТ ==================== */
+function generateCards(phone){
+  const last4=phone.slice(-4);
+  const rnd=()=>Math.floor(1000+Math.random()*9000);
+  return [
+    {id:1,brand:'VISA',last:last4,balance:5000,color:'linear-gradient(135deg,#1e3c72,#2a5298)',name:'',frozen:false,limit:0,expiry:'12/27',cvv:String(rnd()).slice(0,3)},
+    {id:2,brand:'MasterCard',last:String(rnd()),balance:2500,color:'linear-gradient(135deg,#c31432,#240b36)',name:'',frozen:false,limit:0,expiry:'09/26',cvv:String(rnd()).slice(0,3)},
+    {id:3,brand:'МИР',last:String(rnd()),balance:1000,color:'linear-gradient(135deg,#0f9b0f,#1a5c1a)',name:'',frozen:false,limit:0,expiry:'03/28',cvv:String(rnd()).slice(0,3)}
+  ];
+}
+
 /* ==================== ПОПОЛНЕНИЕ ==================== */
 function renderTopupCards(){
   const el = document.getElementById('topupCards');
-  el.innerHTML = state.cards.map(c => `
-    <div class="card-select-item ${state.selectedTopupCard===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTopupCard(${c.id})`}">
-      <div class="ci-icon" style="background:${c.color}"></div>
-      <div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">Баланс: ${fmt(c.balance)} ₽</div></div>
-      ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
-    </div>
-  `).join('');
+  el.innerHTML = state.cards.map(c => `<div class="card-select-item ${state.selectedTopupCard===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTopupCard(${c.id})`}"><div class="ci-icon" style="background:${c.color}"></div><div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">Баланс: ${fmt(c.balance)} ₽</div></div>${c.frozen?'<div class="frozen-badge">🔒</div>':''}</div>`).join('');
 }
-function selectTopupCard(id){ state.selectedTopupCard=id; renderTopupCards(); checkTopupForm(); }
+function selectTopupCard(id){ state.selectedTopupCard=id; renderTopupCards(); }
 const topupAmount = document.getElementById('topupAmount');
 const topupBtn = document.getElementById('topupBtn');
-topupAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); checkTopupForm(); });
-function checkTopupForm(){ topupBtn.disabled = (parseInt(topupAmount.value)||0)<=0; }
+topupAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); });
 topupBtn.addEventListener('click', async () => {
+  const err = getTopupErrorReason();
+  if (err) { showOperationError(topupBtn, err); return; }
   const amt = parseInt(topupAmount.value)||0;
   const card = getCard(state.selectedTopupCard);
   if (!card || amt<=0) return;
-  if (card.frozen) { showToast('❌ Карта заморожена', true); return; }
   card.balance += amt;
   await saveCards();
   await addHistory({ type:'in', category:'topup', title:'Пополнение '+card.brand+' '+maskCard(card.last), amount:amt, date:now() });
   state.lastOperation = { type:'topup', amount:amt, cardId:card.id };
   await saveUser();
-  topupAmount.value=''; topupBtn.disabled=true;
+  topupAmount.value='';
   await checkAchievements();
   await showProcessingThenSuccess('Пополнение выполнено', amt, [
     { label:'Карта', value:card.brand+' '+maskCard(card.last) },
@@ -3285,16 +3040,9 @@ function switchTransferMethod(m, el){
     if (div) div.style.display = x===m?'block':'none';
   });
   if (m === 'own') renderTransferOwnCards();
-  checkTransferForm();
 }
 function renderTransferCards(){
-  const html = state.cards.map(c => `
-    <div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}">
-      <div class="ci-icon" style="background:${c.color}"></div>
-      <div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">${fmt(c.balance)} ₽</div></div>
-      ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
-    </div>
-  `).join('');
+  const html = state.cards.map(c => `<div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}"><div class="ci-icon" style="background:${c.color}"></div><div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">${fmt(c.balance)} ₽</div></div>${c.frozen?'<div class="frozen-badge">🔒</div>':''}</div>`).join('');
   document.getElementById('transferFromCards').innerHTML = html;
   document.getElementById('transferFromCards2').innerHTML = html;
   document.getElementById('transferFromCards3').innerHTML = html;
@@ -3307,7 +3055,6 @@ function renderTransferCards(){
         if (id==='transferFromCards2') state.transferFrom2=cid;
         if (id==='transferFromCards3') state.transferFrom3=cid;
         renderTransferCards();
-        checkTransferForm();
       };
     });
   });
@@ -3323,36 +3070,20 @@ function renderTransferOwnCards(){
   if (state.transferOwnTo == null) { const other = state.cards.find(c => c.id !== state.transferOwnFrom); state.transferOwnTo = other?.id ?? null; }
   const fromEl = document.getElementById('transferOwnFrom');
   if (!fromEl) return;
-  fromEl.innerHTML = state.cards.filter(c => c.id !== state.transferOwnTo).map(c => `
-    <div class="card-select-item ${state.transferOwnFrom===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTransferOwnFrom(${c.id})`}">
-      <div class="ci-icon" style="background:${c.color}"></div>
-      <div style="flex:1"><div class="ci-num">${c.brand} ${maskCard(c.last)}</div>${c.name?`<div class="ci-name">${c.name}</div>`:''}<div class="ci-bal">${fmt(c.balance)} ₽</div></div>
-      ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
-    </div>
-  `).join('');
+  fromEl.innerHTML = state.cards.filter(c => c.id !== state.transferOwnTo).map(c => `<div class="card-select-item ${state.transferOwnFrom===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTransferOwnFrom(${c.id})`}"><div class="ci-icon" style="background:${c.color}"></div><div style="flex:1"><div class="ci-num">${c.brand} ${maskCard(c.last)}</div>${c.name?`<div class="ci-name">${c.name}</div>`:''}<div class="ci-bal">${fmt(c.balance)} ₽</div></div>${c.frozen?'<div class="frozen-badge">🔒</div>':''}</div>`).join('');
   const toEl = document.getElementById('transferOwnTo');
-  toEl.innerHTML = state.cards.filter(c => c.id !== state.transferOwnFrom).map(c => `
-    <div class="card-select-item ${state.transferOwnTo===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTransferOwnTo(${c.id})`}">
-      <div class="ci-icon" style="background:${c.color}"></div>
-      <div style="flex:1"><div class="ci-num">${c.brand} ${maskCard(c.last)}</div>${c.name?`<div class="ci-name">${c.name}</div>`:''}<div class="ci-bal">${fmt(c.balance)} ₽</div></div>
-      ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
-    </div>
-  `).join('');
+  toEl.innerHTML = state.cards.filter(c => c.id !== state.transferOwnFrom).map(c => `<div class="card-select-item ${state.transferOwnTo===c.id?'selected':''} ${c.frozen?'frozen':''}" onclick="${c.frozen?'':`selectTransferOwnTo(${c.id})`}"><div class="ci-icon" style="background:${c.color}"></div><div style="flex:1"><div class="ci-num">${c.brand} ${maskCard(c.last)}</div>${c.name?`<div class="ci-name">${c.name}</div>`:''}<div class="ci-bal">${fmt(c.balance)} ₽</div></div>${c.frozen?'<div class="frozen-badge">🔒</div>':''}</div>`).join('');
 }
 function selectTransferOwnFrom(id){
   if (state.transferOwnTo === id) { const other = state.cards.find(c => c.id !== id && !c.frozen); if (other) state.transferOwnTo = other.id; }
   state.transferOwnFrom = id;
-  renderTransferOwnCards(); checkTransferForm();
+  renderTransferOwnCards();
 }
-function selectTransferOwnTo(id){ state.transferOwnTo = id; renderTransferOwnCards(); checkTransferForm(); }
+function selectTransferOwnTo(id){ state.transferOwnTo = id; renderTransferOwnCards(); }
 function renderTransferContacts(){
   const el = document.getElementById('transferContacts');
   if (!state.contacts.length) { el.innerHTML=''; return; }
-  el.innerHTML = state.contacts.map(c => `
-    <span class="contact-chip" onclick="quickTransferTo('${c.phone}')">
-      <div class="cc-av">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div>${c.firstName}
-    </span>
-  `).join('');
+  el.innerHTML = state.contacts.map(c => `<span class="contact-chip" onclick="quickTransferTo('${c.phone}')"><div class="cc-av">${(c.firstName?.[0]||'')+(c.lastName?.[0]||'')}</div>${c.firstName}</span>`).join('');
 }
 const transferPhone = document.getElementById('transferPhone');
 const transferCardNumber = document.getElementById('transferCardNumber');
@@ -3370,14 +3101,13 @@ transferPhone.addEventListener('input', e=>{
   state.transferRecipient=null;
   clearTimeout(phoneLookupTimer);
   if (norm.length===11) phoneLookupTimer = setTimeout(()=>lookupRecipient(norm), 400);
-  checkTransferForm();
 });
-transferCardNumber?.addEventListener('input', e=>{ e.target.value = formatCardNumber(e.target.value); checkTransferForm(); });
+transferCardNumber?.addEventListener('input', e=>{ e.target.value = formatCardNumber(e.target.value); });
 async function lookupRecipient(phone){
   if (phone===normalizePhone(state.user.phone)) {
     recipientError.style.display='block';
     document.getElementById('recipientErrorText').textContent='❌ Это ваш собственный номер';
-    state.transferRecipient=null; checkTransferForm(); return;
+    state.transferRecipient=null; return;
   }
   try {
     const snap = await db.ref('users/'+phone).once('value');
@@ -3392,33 +3122,20 @@ async function lookupRecipient(phone){
       document.getElementById('recipientErrorText').textContent='❌ Получатель не найден';
     }
   } catch(e){ console.error(e); }
-  checkTransferForm();
 }
-transferAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); checkTransferForm(); });
+transferAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); });
 transferComment.addEventListener('input', e=>state.transferComment = e.target.value);
-function checkTransferForm(){
-  const amt = parseInt(transferAmount.value)||0;
-  let from = null;
-  if (state.transferMethod==='phone') from = getCard(state.transferFrom);
-  if (state.transferMethod==='card') from = getCard(state.transferFrom2);
-  if (state.transferMethod==='own') from = getCard(state.transferOwnFrom);
-  if (state.transferMethod==='qr') from = getCard(state.transferFrom3);
-  let recipientOk = false;
-  if (state.transferMethod==='phone') recipientOk = !!state.transferRecipient;
-  if (state.transferMethod==='card') recipientOk = (transferCardNumber.value.replace(/\D/g,'').length===16);
-  if (state.transferMethod==='own') recipientOk = !!(state.transferOwnTo && state.transferOwnFrom && state.transferOwnFrom !== state.transferOwnTo);
-  if (state.transferMethod==='qr') recipientOk = true;
-  transferBtn.disabled = !(amt>0 && from && !from.frozen && amt<=from.balance && recipientOk);
-}
+
 transferBtn.addEventListener('click', async () => {
+  const err = getTransferErrorReason();
+  if (err) { showOperationError(transferBtn, err); return; }
+
   const amt = parseInt(transferAmount.value)||0;
+
   if (state.transferMethod === 'own') {
     const from = getCard(state.transferOwnFrom);
     const to = getCard(state.transferOwnTo);
     if (!from || !to || from.id === to.id) return;
-    if (from.frozen || to.frozen) { showToast('❌ Одна из карт заморожена', true); return; }
-    if (amt <= 0 || amt > from.balance) { showToast('❌ Недостаточно средств', true); return; }
-    transferBtn.disabled = true;
     try {
       from.balance -= amt;
       to.balance += amt;
@@ -3427,7 +3144,6 @@ transferBtn.addEventListener('click', async () => {
       await addHistory({ type:'out', category:'transfer', title:`Между своими: → ${to.brand} ${maskCard(to.last)}`, amount:amt, date:now(), comment });
       await addHistory({ type:'in', category:'transfer', title:`Между своими: ← ${from.brand} ${maskCard(from.last)}`, amount:amt, date:now(), comment });
       transferAmount.value=''; transferComment.value=''; state.transferComment='';
-      transferBtn.disabled=true;
       await checkAchievements();
       await showProcessingThenSuccess('Перевод выполнен', amt, [
         { label:'Откуда', value:`${from.brand} ${maskCard(from.last)}` },
@@ -3435,16 +3151,15 @@ transferBtn.addEventListener('click', async () => {
         { label:'Сумма', value:fmt(amt)+' ₽' },
         { label:'Дата', value:now() }
       ]);
-    } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); transferBtn.disabled=false; }
+    } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); }
     return;
   }
+
   let from, toPhone, toName;
   if (state.transferMethod==='phone') { from = getCard(state.transferFrom); toPhone = state.transferRecipient.phone; toName = (state.transferRecipient.firstName+' '+(state.transferRecipient.lastName||'')).trim(); }
   else if (state.transferMethod==='card') { from = getCard(state.transferFrom2); toPhone = null; toName = 'Карта '+transferCardNumber.value; }
   else { from = getCard(state.transferFrom3); toPhone = null; toName = 'QR-получатель'; }
-  if (!from || from.frozen || amt<=0 || amt>from.balance) return;
-  if (!checkLimits(amt)) return;
-  transferBtn.disabled = true;
+  if (!from || amt<=0 || amt>from.balance) return;
   try {
     from.balance -= amt;
     await saveCards();
@@ -3465,7 +3180,6 @@ transferBtn.addEventListener('click', async () => {
     transferAmount.value=''; transferPhone.value=''; transferCardNumber.value='';
     transferComment.value=''; state.transferComment='';
     state.transferRecipient=null; recipientInfo.style.display='none';
-    transferBtn.disabled=true;
     await checkAchievements();
     await showProcessingThenSuccess('Перевод выполнен', amt, [
       { label:'Получатель', value: toName },
@@ -3473,7 +3187,7 @@ transferBtn.addEventListener('click', async () => {
       { label:'Сумма', value:fmt(amt)+' ₽' },
       { label:'Дата', value:now() }
     ]);
-  } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); transferBtn.disabled=false; }
+  } catch(e){ console.error(e); showToast('❌ Ошибка перевода', true); }
 });
 
 /* ==================== РАЗДЕЛЕНИЕ / ЗАПРОС ==================== */
@@ -3482,11 +3196,7 @@ function openSplit(){
   document.getElementById('gmIcon').textContent = '➗';
   document.getElementById('gmTitle').textContent = 'Разделить счёт';
   document.getElementById('gmText').textContent = 'Введите сумму и количество человек';
-  document.getElementById('gmExtra').innerHTML = `
-    <input type="text" id="splitTotal" placeholder="Общая сумма ₽" inputmode="numeric" style="text-align:center">
-    <input type="text" id="splitCount" placeholder="Человек" inputmode="numeric" value="2" style="text-align:center">
-    <div id="splitResult" style="color:var(--text-dim);font-size:13px;text-align:center;padding:12px"></div>
-  `;
+  document.getElementById('gmExtra').innerHTML = `<input type="text" id="splitTotal" placeholder="Общая сумма ₽" inputmode="numeric" style="text-align:center"><input type="text" id="splitCount" placeholder="Человек" inputmode="numeric" value="2" style="text-align:center"><div id="splitResult" style="color:var(--text-dim);font-size:13px;text-align:center;padding:12px"></div>`;
   const calc = ()=>{
     const t = parseInt(document.getElementById('splitTotal').value)||0;
     const c = Math.max(2, parseInt(document.getElementById('splitCount').value)||2);
@@ -3511,10 +3221,7 @@ function openRequest(){
   document.getElementById('gmIcon').textContent = '📩';
   document.getElementById('gmTitle').textContent = 'Запросить деньги';
   document.getElementById('gmText').textContent = 'Отправьте запрос другу';
-  document.getElementById('gmExtra').innerHTML = `
-    <input type="tel" id="reqPhone" placeholder="+7 900 000-00-00" style="text-align:center">
-    <input type="text" id="reqSum" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
-  `;
+  document.getElementById('gmExtra').innerHTML = `<input type="tel" id="reqPhone" placeholder="+7 900 000-00-00" style="text-align:center"><input type="text" id="reqSum" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">`;
   document.getElementById('reqPhone').addEventListener('input', e=>e.target.value = formatPhone(e.target.value));
   document.getElementById('gmConfirm').onclick = async () => {
     const phone = normalizePhone(document.getElementById('reqPhone').value);
@@ -3537,16 +3244,9 @@ function switchPayMethod(m, el){
     const div = document.getElementById('payMethod_'+x);
     if (div) div.style.display = x===m?'block':'none';
   });
-  checkPayForm();
 }
 function renderPayCards(){
-  const html = state.cards.map(c => `
-    <div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}">
-      <div class="ci-icon" style="background:${c.color}"></div>
-      <div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">${fmt(c.balance)} ₽</div></div>
-      ${c.frozen?'<div class="frozen-badge">🔒</div>':''}
-    </div>
-  `).join('');
+  const html = state.cards.map(c => `<div class="card-select-item ${c.frozen?'frozen':''}" data-cid="${c.id}"><div class="ci-icon" style="background:${c.color}"></div><div><div class="ci-num">${c.brand} ${maskCard(c.last)}</div><div class="ci-bal">${fmt(c.balance)} ₽</div></div>${c.frozen?'<div class="frozen-badge">🔒</div>':''}</div>`).join('');
   ['payCards','payCards2','payCards3'].forEach(id=>{
     const el = document.getElementById(id);
     if (!el) return;
@@ -3558,7 +3258,7 @@ function renderPayCards(){
         if (id==='payCards') state.payCard=cid;
         if (id==='payCards2') state.payCard2=cid;
         if (id==='payCards3') state.payCard3=cid;
-        renderPayCards(); checkPayForm();
+        renderPayCards();
       };
     });
   });
@@ -3591,44 +3291,25 @@ function updatePayBonusHint() {
 const payAmount = document.getElementById('payAmount');
 const payMerchant = document.getElementById('payMerchant');
 const payBtn = document.getElementById('payBtn');
-payAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); checkPayForm(); });
-payMerchant.addEventListener('input', checkPayForm);
+payAmount.addEventListener('input', e=>{ e.target.value=e.target.value.replace(/\D/g,'').slice(0,9); });
+payMerchant.addEventListener('input', ()=>{});
 ['reqOrg','reqINN','reqBIK','reqAccount','reqAmount','autoName','autoAmount'].forEach(id=>{
-  document.getElementById(id)?.addEventListener('input', checkPayForm);
+  document.getElementById(id)?.addEventListener('input', ()=>{});
 });
-function checkPayForm(){
-  if (state.payMethod==='shop') {
-    const amt = parseInt(payAmount.value)||0;
-    const m = payMerchant.value.trim();
-    const card = getCard(state.payCard);
-    payBtn.disabled = !(amt>0 && m.length>0 && card && !card.frozen && amt<=card.balance);
-  } else if (state.payMethod==='req') {
-    const amt = parseInt(document.getElementById('reqAmount').value)||0;
-    const card = getCard(state.payCard2);
-    const ok = document.getElementById('reqOrg').value.trim() && document.getElementById('reqINN').value.trim() && document.getElementById('reqBIK').value.trim() && document.getElementById('reqAccount').value.trim();
-    payBtn.disabled = !(amt>0 && ok && card && !card.frozen && amt<=card.balance);
-  } else {
-    const amt = parseInt(document.getElementById('autoAmount').value)||0;
-    const card = getCard(state.payCard3);
-    const name = document.getElementById('autoName').value.trim();
-    payBtn.disabled = !(amt>0 && name && card && !card.frozen && amt<=card.balance);
-  }
-}
+
 payBtn.addEventListener('click', async () => {
+  const err = getPayErrorReason();
+  if (err) { showOperationError(payBtn, err); return; }
+
   if (state.payMethod==='shop') {
     const amt = parseInt(payAmount.value)||0;
     const m = payMerchant.value.trim();
     const card = getCard(state.payCard);
-    if (!card || card.frozen || amt<=0 || amt>card.balance) return;
-    if (!checkLimits(amt)) return;
+    if (!card || amt<=0 || amt>card.balance) return;
     card.balance -= amt;
     await saveCards();
     await addHistory({ type:'out', category:state.payCategory, title:m, amount:amt, date:now() });
-    
-    // Курсив-бонус
     const bonus = await awardBonus(amt, state.payCategory, m);
-    
-    // Округление в цель
     if (state.settings.roundup && roundupTarget > 0) {
       const rounded = Math.ceil(amt/10)*10;
       const diff = rounded - amt;
@@ -3640,7 +3321,7 @@ payBtn.addEventListener('click', async () => {
     }
     state.lastOperation = { type:'pay', amount:amt, merchant:m, category:state.payCategory, cardId:card.id };
     await saveUser();
-    payAmount.value=''; payMerchant.value=''; payBtn.disabled=true;
+    payAmount.value=''; payMerchant.value='';
     await checkAchievements();
     await showProcessingThenSuccess('Оплата прошла', amt, [
       { label:'Магазин', value:m },
@@ -3655,12 +3336,10 @@ payBtn.addEventListener('click', async () => {
     const amt = parseInt(document.getElementById('reqAmount').value)||0;
     const org = document.getElementById('reqOrg').value.trim();
     const card = getCard(state.payCard2);
-    if (!card || card.frozen || amt<=0 || amt>card.balance) return;
-    if (!checkLimits(amt)) return;
+    if (!card || amt<=0 || amt>card.balance) return;
     card.balance -= amt;
     await saveCards();
     await addHistory({ type:'out', category:'other', title:'Оплата: '+org, amount:amt, date:now() });
-    payBtn.disabled=true;
     await checkAchievements();
     await showProcessingThenSuccess('Платёж отправлен', amt, [
       { label:'Организация', value:org },
@@ -3673,11 +3352,10 @@ payBtn.addEventListener('click', async () => {
     const name = document.getElementById('autoName').value.trim();
     const period = document.getElementById('autoPeriod').value;
     const card = getCard(state.payCard3);
-    if (!card || card.frozen || amt<=0 || amt>card.balance) return;
+    if (!card || amt<=0 || amt>card.balance) return;
     card.balance -= amt;
     await saveCards();
     await addHistory({ type:'out', category:'other', title:'Автоплатёж: '+name, amount:amt, date:now() });
-    payBtn.disabled=true;
     await showProcessingThenSuccess('Автоплатёж создан', amt, [
       { label:'Название', value:name },
       { label:'Период', value:period==='month'?'Ежемесячно':period==='week'?'Еженедельно':'Ежедневно' },
@@ -3715,12 +3393,7 @@ function showProcessingThenSuccess(title, amount, receiptRows){
     setTimeout(()=>{
       document.getElementById('successTitle').textContent = title;
       document.getElementById('successAmount').textContent = fmt(amount)+' ₽';
-      document.getElementById('successReceipt').innerHTML = receiptRows.map(r=>`
-        <div class="receipt-row">
-          <span class="receipt-label">${r.label}</span>
-          <span class="receipt-value">${r.value}</span>
-        </div>
-      `).join('');
+      document.getElementById('successReceipt').innerHTML = receiptRows.map(r=>`<div class="receipt-row"><span class="receipt-label">${r.label}</span><span class="receipt-value">${r.value}</span></div>`).join('');
       goTo('screenSuccess');
       showConfetti();
       playSound('success');
@@ -3793,10 +3466,7 @@ function setChildAllowance(){
   document.getElementById('gmIcon').textContent = '💵';
   document.getElementById('gmTitle').textContent = 'Карманные деньги';
   document.getElementById('gmText').textContent = 'Ежемесячное пополнение';
-  document.getElementById('gmExtra').innerHTML = `
-    <input type="text" id="allowanceAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center">
-    <select id="allowanceDay">${[1,5,10,15,20,25].map(d=>`<option value="${d}">${d}-е число</option>`).join('')}</select>
-  `;
+  document.getElementById('gmExtra').innerHTML = `<input type="text" id="allowanceAmount" placeholder="Сумма ₽" inputmode="numeric" style="text-align:center"><select id="allowanceDay">${[1,5,10,15,20,25].map(d=>`<option value="${d}">${d}-е число</option>`).join('')}</select>`;
   document.getElementById('gmConfirm').onclick = async () => {
     const amt = parseInt(document.getElementById('allowanceAmount').value)||0;
     const day = parseInt(document.getElementById('allowanceDay').value)||1;
